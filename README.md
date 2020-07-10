@@ -1,1 +1,1 @@
-       ![](/assets/Logo/TheHive.png)
+   ![](/assets/Logo/TheHive.png)
