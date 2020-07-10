@@ -1,3 +1,1 @@
-# Raspihive
-
-![](assets/TheHive.jpg)
+   ![](/assets/Logo/TheHive.png)
