@@ -40,12 +40,12 @@ def auswahl_linkes_menue():
         print("OK")
     what_is_selected_links.value = optionen_links.value
     if what_is_selected_links.value == 'Hornet Node installieren':
-        dirname = os.environ['HOME'] + "/hornet"
+        #dirname = os.environ['HOME'] + "/hornet"
         os.makedirs(dirname)
-        os.system("sudo apt install build-essential")
-        os.system("sudo apt install git")
-        os.system("sudo apt install snapd")
-        os.system("sudo snap install go --classic")
+        os.system("sudo apt install -y build-essential")
+        os.system("sudo apt install -y git")
+        os.system("sudo apt install -y snapd")
+        os.system("sudo snap install -y go --classic")
         os.system("sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz")
         os.system("sudo chown paul:paul HORNET-0.4.1_Linux_x86_64.tar.gz")
         os.system("sudo tar -xf HORNET-0.4.1_Linux_x86_64.tar.gz")
@@ -88,8 +88,8 @@ button = PushButton(app, command=auswahl_rechtes_menue, text="ausführen rechts"
 
 # Logo (png müsste man mit auf den Pi laden und dann den Pfad angeben...)
 #iota = Picture(app, image="/home/paul/Dokumente/iota.gif", grid=[2,2], visible=True)
-box = Box(app, layout="grid", grid=[2,1])
-button1 = Picture(box, image="/home/paul/Bilder/iota.png", width=310, height=310, grid=[0,0], visible=True)
+#box = Box(app, layout="grid", grid=[2,1])
+#button1 = Picture(box, image="/home/paul/Bilder/iota.png", width=310, height=310, grid=[0,0], visible=True)
 
 # zeit
 button = PushButton(app, command = Zeit, text="Datum und Uhrzeit", grid=[2,3], align="left")
