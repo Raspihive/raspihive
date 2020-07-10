@@ -41,7 +41,7 @@ def auswahl_linkes_menue():
     what_is_selected_links.value = optionen_links.value
     if what_is_selected_links.value == 'Hornet Node installieren':
         #dirname = os.environ['HOME'] + "/hornet"
-        os.makedirs(dirname)
+        #os.makedirs(dirname)
         os.system("sudo apt install -y build-essential")
         os.system("sudo apt install -y git")
         os.system("sudo apt install -y snapd")
