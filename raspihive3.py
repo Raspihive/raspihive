@@ -9,12 +9,12 @@ localtime = time.asctime( time.localtime(time.time()) )
 ###############################################################################
 # start functions
 
-def file_function():
+def update_os_function():
     print("Update Raspberry Pi")
     subprocess.call('echo  | sudo apt update && sudo apt full-upgrade', shell=True)
     print("Raspberry Pi updated - OK")
 
-def file_function2():
+def update_packages_function2():
     print("Update packages")
     os.system("sudo apt install -y build-essential")
     os.system("sudo apt install -y git")
@@ -22,7 +22,7 @@ def file_function2():
     os.system("sudo snap install -y go --classic")
     print("Packages updated - OK")
 
-def Hornet_function():
+def Hornet_install_function():
     print("Hornet option")
     dirname = os.environ['HOME'] + "/test"
     os.makedirs(dirname)
@@ -88,10 +88,10 @@ text = Text(app, text="", size=16, font="Times New Roman", color="black", grid=[
 #app.title = ("A different title")
 
 menubar = MenuBar(app,
-                  toplevel=["Auswahl", "Node installer", "Tools"],
+                  toplevel=["Update-menu", "Node installer", "Tools"],
                   options=[
-                      [ ["Update Raspberry Pi", file_function], ["Update packages", file_function2] ],
-                      [ ["Install Hornet Node", Hornet_function], ["Install GoShimmer", GoShimmer_function] ],
+                      [ ["Update Raspberry Pi", update_os_function], ["Update packages", update_packages_function2] ],
+                      [ ["Install Hornet Node", Hornet_install_function], ["Install GoShimmer", GoShimmer_function] ],
                       [ ["Ping", Ping_function], ["Show system time", Time_function] ]
                   ])
 
