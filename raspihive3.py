@@ -1,6 +1,6 @@
 ###############################################################################
 # libraries
-from guizero import App, Window, Combo, Text, CheckBox, ButtonGroup, PushButton, info, Picture, Box, MenuBar, yesno
+from guizero import App, Window, Combo, Text, TextBox, CheckBox, ButtonGroup, PushButton, info, Picture, Box, MenuBar, yesno
 import tkinter, time, subprocess, os, sys, getpass, os.path
 ###############################################################################
 
@@ -39,10 +39,10 @@ def Hornet_function():
 
 
 def GoShimmer_function():
-    username = getpass.getuser()
-    #dirname = os.environ['HOME'] + "/goshimmer"
-    #os.makedirs(dirname)
-    os.system("sudo mkdir goshimmer ")
+    #username = getpass.getuser()
+    dirname = os.environ['HOME'] + "/goshimmer"
+    os.makedirs(dirname)
+    #os.system("sudo mkdir goshimmer ")
     print("GoShimmer Node successfully installed")
 
 def Ping_function():
@@ -67,6 +67,9 @@ def Time_function():
     text.value = ("Local time is:", localtime)
     
 
+def entertext():
+    displaytext.value = gettext.value
+    print(displaytext.value)
 
 # Ask the user if they really want to close the window
 def do_this_when_closed():
@@ -81,7 +84,7 @@ def do_this_when_closed():
 # Start main programm - App-Anfang grid = Spalten und Zeilen
 
 app = App(title="Raspihive", bg = (235, 215, 182), width=320, height=480, layout="grid")
-text = Text(app, text="Welcome to Raspihive", size=16, font="Times New Roman", color="black", grid=[2,0], align="top")
+text = Text(app, text="", size=16, font="Times New Roman", color="black", grid=[2,0], align="top")
 #app.title = ("A different title")
 
 menubar = MenuBar(app,
@@ -99,7 +102,9 @@ menubar = MenuBar(app,
 #picture1 = Picture(app, image="/home/paul/Dokumente/Raspihive-Projekt-akt/Python_Codeschnipsel/iota.gif", grid=[0,0])
 
 
-
+displaytext = Text(app, text="Welcome to Raspihive", size=12, font="Times New Roman", color="black", grid=[0,0])
+gettext = TextBox(app, width=10, grid=[2,0])
+update_text = PushButton(app, command=entertext, text="enter", grid=[6,0])
 
 
 
