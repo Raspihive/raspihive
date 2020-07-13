@@ -1,12 +1,11 @@
 ###############################################################################
 # libraries
 from guizero import App, Window, Combo, Text, CheckBox, ButtonGroup, PushButton, info, Picture, Box, MenuBar, yesno
-import tkinter, time, subprocess, os, sys
+import tkinter, time, subprocess, os, sys, getpass, os.path
 ###############################################################################
 
 # Globale Variablen
 localtime = time.asctime( time.localtime(time.time()) )
-
 ###############################################################################
 # start functions
 
@@ -25,14 +24,25 @@ def file_function2():
 
 def Hornet_function():
     print("Hornet option")
-    os.system("sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz")
-    os.system("sudo chown pi:pi HORNET-0.4.1_Linux_x86_64.tar.gz")
-    os.system("sudo tar -xf HORNET-0.4.1_Linux_x86_64.tar.gz")
-    os.system("sudo chown pi:pi -R HORNET-0.4.1_Linux_x86_64")
+    dirname = os.environ['HOME'] + "/test"
+    os.makedirs(dirname)
+    #os.system("sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz -P /home/paul/test/")
+    #os.system("sudo chown paul:paul /home/paul/test/HORNET-0.4.1_Linux_x86_64.tar.gz")
+    #os.system("sudo tar -xf /home/paul/test/HORNET-0.4.1_Linux_x86_64.tar.gz")
+    #os.system("sudo chown paul:paul -R /home/paul/test/HORNET-0.4.1_Linux_x86_64")
+    #os.chmod('/home/paul/test/HORNET-0.4.1_Linux_x86_64.tar.gz', 0o755)
+    os.system("sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz -P /home/pi/test")
+    os.system("sudo chown pi:pi /home/pi/test/HORNET-0.4.1_Linux_x86_64.tar.gz")
+    os.system("sudo tar -xzf /home/pi/test/HORNET-0.4.1_Linux_x86_64.tar.gz -C /home/pi/test/")
+    os.system("sudo chown pi:pi -R /home/pi/test/HORNET-0.4.1_Linux_x86_64")
     print("Hornet Node successfully installed")
 
 
 def GoShimmer_function():
+    username = getpass.getuser()
+    #dirname = os.environ['HOME'] + "/goshimmer"
+    #os.makedirs(dirname)
+    os.system("sudo mkdir goshimmer ")
     print("GoShimmer Node successfully installed")
 
 def Ping_function():
@@ -71,7 +81,7 @@ def do_this_when_closed():
 # Start main programm - App-Anfang grid = Spalten und Zeilen
 
 app = App(title="Raspihive", bg = (235, 215, 182), width=320, height=480, layout="grid")
-text = Text(app, text="Welcome to Raspihive", size=16, font="Times New Roman", color="black", grid=[2,0])
+text = Text(app, text="Welcome to Raspihive", size=16, font="Times New Roman", color="black", grid=[2,0], align="top")
 #app.title = ("A different title")
 
 menubar = MenuBar(app,
@@ -85,7 +95,8 @@ menubar = MenuBar(app,
 
 
 
-
+# insert logo here
+#picture1 = Picture(app, image="/home/paul/Dokumente/Raspihive-Projekt-akt/Python_Codeschnipsel/iota.gif", grid=[0,0])
 
 
 
