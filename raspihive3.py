@@ -71,6 +71,12 @@ def entertext():
     displaytext.value = gettext.value
     print(displaytext.value)
 
+def pw(): # passes the entered pw to shell
+    p = passEntry.value#get password from entry
+    print(p)
+    cmd='ls'
+    call('echo {} | sudo -S {}'.format(p, cmd), shell=True)
+
 # Ask the user if they really want to close the window
 def do_this_when_closed():
     if app.yesno("Close", "Do you want to quit?"):
@@ -107,7 +113,10 @@ gettext = TextBox(app, width=10, grid=[2,0])
 update_text = PushButton(app, command=entertext, text="enter", grid=[6,0])
 
 
-
+# get password from entry  
+passEntry = TextBox(app)
+passEntry.tk.config(show="*")
+submit = PushButton(app, text='Show Console',command=pw)   
 
 
 
