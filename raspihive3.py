@@ -29,7 +29,7 @@ def update_os_function():
         tk.Tk().withdraw()
         pwd = tkinter.simpledialog.askstring("[sudo] password for %u:", "Enter password:", show='*') 
         print("now you have root privileges")
-        cmd='sudo apt update && sudo apt full-upgrade'
+        cmd='sudo apt update && sudo apt -y full-upgrade'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
 
     """
