@@ -2,7 +2,19 @@
 # libraries
 from guizero import App, Window, Combo, Text, TextBox, CheckBox, ButtonGroup, PushButton, info, Picture, Box, MenuBar, yesno
 import tkinter, time, subprocess, os, sys, getpass, os.path
+import tkinter as tk
 from subprocess import call 
+from tkinter import Tk as tk 
+import tkinter.simpledialog
+
+from subprocess import Popen, PIPE
+import subprocess as sp, os, getpass, sys
+from subprocess import call  
+import subprocess
+from guizero import App, TextBox, Text, PushButton, Slider, Picture
+from tkinter import Tk as tk 
+import tkinter as tk
+import tkinter.simpledialog
 ###############################################################################
 
 # Globale Variablen
@@ -11,9 +23,20 @@ localtime = time.asctime( time.localtime(time.time()) )
 # start functions
 
 def update_os_function():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")
+        #exit("You need to have root privileges to run this script.\nPlease try again, this time using 'sudo'. Exiting.")
+        tk.Tk().withdraw()
+        pwd = tkinter.simpledialog.askstring("[sudo] password for %u:", "Enter password:", show='*') 
+        print("now you have root privileges")
+        cmd='sudo apt update && sudo apt full-upgrade'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+
+    """
     print("Update Raspberry Pi")
     subprocess.call('echo  | sudo apt update && sudo apt full-upgrade', shell=True)
     print("Raspberry Pi updated - OK")
+    """
 
 def update_packages_function2():
     print("Update packages")
