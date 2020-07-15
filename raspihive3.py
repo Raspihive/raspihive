@@ -52,7 +52,7 @@ def Hornet_install_function():
         print("Hornet option")
         dirname = os.environ['HOME'] + "/test"
         os.makedirs(dirname)
-        cmd='sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz -P /home/pi/hornet && sudo chown pi:pi /home/pi/test/HORNET-0.4.1_Linux_x86_64.tar.gz && sudo tar -xzf /home/pi/test/HORNET-0.4.1_Linux_x86_64.tar.gz -C /home/pi/test/ && sudo chown pi:pi -R /home/pi/test/HORNET-0.4.1_Linux_x86_64  '
+        cmd='sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz -P /home/pi/hornet && sudo chown pi:pi /home/pi/hornet/HORNET-0.4.1_Linux_x86_64.tar.gz && sudo tar -xzf /home/pi/hornet/HORNET-0.4.1_Linux_x86_64.tar.gz -C /home/pi/hornet/ && sudo chown pi:pi -R /home/pi/hornet/HORNET-0.4.1_Linux_x86_64  '
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         print("Hornet Node successfully installed")
    
