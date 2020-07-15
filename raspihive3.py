@@ -3,16 +3,11 @@
 from guizero import App, Window, Combo, Text, TextBox, CheckBox, ButtonGroup, PushButton, info, Picture, Box, MenuBar, yesno
 import tkinter, time, subprocess, os, sys, getpass, os.path
 import tkinter as tk
-from subprocess import call 
+from subprocess import call, Popen, PIPE
 from tkinter import Tk as tk 
 import tkinter.simpledialog
-
-from subprocess import Popen, PIPE
-import subprocess as sp, os, getpass, sys
-from subprocess import call  
+import subprocess as sp, os, getpass, sys  
 import subprocess
-from guizero import App, TextBox, Text, PushButton, Slider, Picture
-from tkinter import Tk as tk 
 import tkinter as tk
 import tkinter.simpledialog
 ###############################################################################
@@ -25,49 +20,56 @@ localtime = time.asctime( time.localtime(time.time()) )
 def update_os_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")
-        #exit("You need to have root privileges to run this script.\nPlease try again, this time using 'sudo'. Exiting.")
         tk.Tk().withdraw()
-        pwd = tkinter.simpledialog.askstring("[sudo] password for %u:", "Enter password:", show='*') 
+        #username = getpass.getuser()
+        pwd = tkinter.simpledialog.askstring("[sudo] password for user:", "Enter password:", show='*') 
         print("now you have root privileges")
         cmd='sudo apt update && sudo apt -y full-upgrade'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-
-    """
-    print("Update Raspberry Pi")
-    subprocess.call('echo  | sudo apt update && sudo apt full-upgrade', shell=True)
-    print("Raspberry Pi updated - OK")
-    """
+        print("Raspberry Pi updated - OK")
+        #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
+        #exit("Raspberry Pi updated - OK \n  Exiting.")
 
 def update_packages_function2():
-    print("Update packages")
-    os.system("sudo apt install -y build-essential")
-    os.system("sudo apt install -y git")
-    os.system("sudo apt install -y snapd")
-    os.system("sudo snap install -y go --classic")
-    print("Packages updated - OK")
+    if os.geteuid() != 0:
+        print("You need to have root privileges")
+        tk.Tk().withdraw()
+        #username = getpass.getuser()
+        pwd = tkinter.simpledialog.askstring("[sudo] password for user:", "Enter password:", show='*') 
+        print("now you have root privileges")
+        cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install -y go --classic'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        print("Packages updated - OK")
+        
 
 def Hornet_install_function():
-    print("Hornet option")
-    dirname = os.environ['HOME'] + "/test"
-    os.makedirs(dirname)
-    #os.system("sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz -P /home/paul/test/")
-    #os.system("sudo chown paul:paul /home/paul/test/HORNET-0.4.1_Linux_x86_64.tar.gz")
-    #os.system("sudo tar -xf /home/paul/test/HORNET-0.4.1_Linux_x86_64.tar.gz")
-    #os.system("sudo chown paul:paul -R /home/paul/test/HORNET-0.4.1_Linux_x86_64")
-    #os.chmod('/home/paul/test/HORNET-0.4.1_Linux_x86_64.tar.gz', 0o755)
-    os.system("sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz -P /home/pi/test")
-    os.system("sudo chown pi:pi /home/pi/test/HORNET-0.4.1_Linux_x86_64.tar.gz")
-    os.system("sudo tar -xzf /home/pi/test/HORNET-0.4.1_Linux_x86_64.tar.gz -C /home/pi/test/")
-    os.system("sudo chown pi:pi -R /home/pi/test/HORNET-0.4.1_Linux_x86_64")
-    print("Hornet Node successfully installed")
-
+    if os.geteuid() != 0:
+        print("You need to have root privileges")
+        tk.Tk().withdraw()
+        #username = getpass.getuser()
+        pwd = tkinter.simpledialog.askstring("[sudo] password for user:", "Enter password:", show='*') 
+        print("now you have root privileges")
+        print("Hornet option")
+        dirname = os.environ['HOME'] + "/test"
+        os.makedirs(dirname)
+        cmd='sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz -P /home/pi/hornet && sudo chown pi:pi /home/pi/test/HORNET-0.4.1_Linux_x86_64.tar.gz && sudo tar -xzf /home/pi/test/HORNET-0.4.1_Linux_x86_64.tar.gz -C /home/pi/test/ && sudo chown pi:pi -R /home/pi/test/HORNET-0.4.1_Linux_x86_64  '
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        print("Hornet Node successfully installed")
+   
 
 def GoShimmer_function():
-    #username = getpass.getuser()
-    dirname = os.environ['HOME'] + "/goshimmer"
-    os.makedirs(dirname)
-    #os.system("sudo mkdir goshimmer ")
-    print("GoShimmer Node successfully installed")
+    if os.geteuid() != 0:
+        print("You need to have root privileges")
+        tk.Tk().withdraw()
+        #username = getpass.getuser()
+        pwd = tkinter.simpledialog.askstring("[sudo] password for user:", "Enter password:", show='*') 
+        print("now you have root privileges")
+        dirname = os.environ['HOME'] + "/goshimmer"
+        os.makedirs(dirname)
+        cmd='sudo git clone -v https://github.com/iotaledger/goshimmer.git /home/pi/goshimmer'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        print("GoShimmer Node successfully installed")
+        
 
 def Ping_function():
     print("Ping")
