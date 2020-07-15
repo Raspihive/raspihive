@@ -98,12 +98,6 @@ def entertext():
     print(displaytext.value)
 
 
-def pw(): # passes the entered pw to shell - experimental
-    p = passEntry.value#get password from entry
-    print(p)
-    cmd='ls'
-    call('echo {} | sudo -S {}'.format(p, cmd), shell=True)
-
 # Ask the user if they really want to close the window
 def do_this_when_closed():
     if app.yesno("Close", "Do you want to quit?"):
@@ -138,13 +132,6 @@ menubar = MenuBar(app,
 displaytext = Text(app, text="Welcome to Raspihive", size=12, font="Times New Roman", color="black", grid=[0,0])
 gettext = TextBox(app, width=10, grid=[2,0])
 update_text = PushButton(app, command=entertext, text="enter", grid=[6,0])
-
-
-# get password from entry - experimental
-passEntry = TextBox(app, text="Enter pw here: ", grid=[8,0])
-submit = PushButton(app, text='enter pw',command=pw, grid=[8,4]) 
-
-
 
 
 
