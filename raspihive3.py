@@ -10,7 +10,6 @@ import subprocess as sp, os, getpass, sys
 import subprocess
 import tkinter as tk
 import tkinter.simpledialog
-from guizero import *
 
 ###############################################################################
 # Globale Variablen
@@ -18,12 +17,26 @@ localtime = time.asctime( time.localtime(time.time()) )
 ###############################################################################
 # start functions
 
-def hello():
+def report():
     print ("hello!")
+    #Test for user display
+    password = StringVar()
+    passwordClear = StringVar()
+    label_1 = ttk.Label(root, text='Type your password: ')
+    label_1.grid()
+    entry_1 = ttk.Entry(root, textvariable=password, width=6, show='*')
+    entry_1.grid()
+    entry_1.focus()
+    label_2 = ttk.Label(root, text='Your password is: ')
+    label_2.grid()
+    label_3 = ttk.Label(root, textvariable=passwordClear)
+    label_3.grid()
+    button_1 = ttk.Button(root, text='show', command=showPass, width=6)
+    button_1.grid()
+    
     
 
 def about():
-    print ("hello!")
     info("info", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
 
 def update_os_function():
@@ -101,8 +114,6 @@ def Time_function():
     print("Time: ")
     
 
-def show_entry_fields():
-   print("First Name: %s" % (e1.get()))
 
 def showPass():
     passwordClear.set(password.get())   
@@ -148,7 +159,7 @@ pingmenu.activebackground='red'
 
 
 helpmenu = Menu(menubar, tearoff=0,bg='green',fg='blue')
-helpmenu.add_command(label="Report bug", command=hello)
+helpmenu.add_command(label="Report bug", command=report)
 helpmenu.add_command(label="About", command=about)
 menubar.add_cascade(label="Help", menu=helpmenu)
 helpmenu.activebackground='red'
@@ -156,35 +167,21 @@ helpmenu.activebackground='red'
 root.config(menu=menubar)
 
 
-"""
-Label(root, text="Raspihive").grid(row=0)
-e1 = Entry(root)
-e1.grid(row=0, column=1)
-Button(root, text='Quit', command=root.quit).grid(row=3, column=0, sticky=W, pady=4)
-Button(root, text='Show', command=show_entry_fields).grid(row=3, column=1, sticky=W, pady=4)
-
-# Label und Buttons erstellen.
-anweisungs_label = Label(root, text="Ich bin eine Anweisung:\n  Klicke auf 'Ändern'.").grid(row=5, column=5, sticky=W, pady=4)
-change_button = Button(root, text="Ändern", command=button_action)
-change_button.grid(row=6, column=5, sticky=W, pady=4)
-change_button.config(anweisungs_label)
-"""
 
 #Test for user display
 password = StringVar()
 passwordClear = StringVar()
 
 label_1 = ttk.Label(root, text='Type your password: ')
-label_1.grid()
+label_1.grid(row=1,column=1)
 entry_1 = ttk.Entry(root, textvariable=password, width=6, show='*')
-entry_1.grid()
-entry_1.focus()
+entry_1.grid(row=2, column=1)
 label_2 = ttk.Label(root, text='Your password is: ')
-label_2.grid()
+label_2.grid(row=3, column=1)
 label_3 = ttk.Label(root, textvariable=passwordClear)
-label_3.grid()
-button_1 = ttk.Button(root, text='show', command=showPass, width=6)
-button_1.grid()
+label_3.grid(row=4, column=1)
+button_1 = ttk.Button(root, text='show', command=showPass, width=5)
+button_1.grid(row=5,column=1)
 
 
 
