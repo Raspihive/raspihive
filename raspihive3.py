@@ -20,6 +20,11 @@ localtime = time.asctime( time.localtime(time.time()) )
 
 def hello():
     print ("hello!")
+    
+
+def about():
+    print ("hello!")
+    info("info", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
 
 def update_os_function():
     if os.geteuid() != 0:
@@ -144,7 +149,7 @@ pingmenu.activebackground='red'
 
 helpmenu = Menu(menubar, tearoff=0,bg='green',fg='blue')
 helpmenu.add_command(label="Report bug", command=hello)
-helpmenu.add_command(label="About", command=hello)
+helpmenu.add_command(label="About", command=about)
 menubar.add_cascade(label="Help", menu=helpmenu)
 helpmenu.activebackground='red'
 
