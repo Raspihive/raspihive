@@ -8,9 +8,7 @@ from tkinter import Tk as tk, Menu, FLAT, Label, Entry, Button, W, StringVar, tt
 import tkinter.simpledialog
 import subprocess as sp, os, getpass, sys  
 import subprocess
-import tkinter as tk
 import tkinter.simpledialog
-
 ###############################################################################
 # Globale Variablen
 localtime = time.asctime( time.localtime(time.time()) )
@@ -21,8 +19,6 @@ def report():
     print ("hello!")
     #Test for user display
     info("info", " If you found a bug or experienced any issues, please write as at: https://raspihive.org/ ")
-    
-    
 
 def about():
     info("info", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
@@ -98,10 +94,15 @@ def Ping_function():
                 print(output.strip())
             break
 
-def Time_function():
-    print("Time: ")
-    
 
+def Time_function():
+    print("Time: ", localtime)
+
+def clock():
+    t=time.strftime('%I:%M:%S',time.localtime())
+    if t!='':
+        label1.config(text=t,font='times 25')
+    root.after(100,clock)
 
 def showPass():
     passwordClear.set(password.get())   
@@ -116,6 +117,9 @@ def showPass():
 app=App(title='Raspihive',bg=(53, 60, 81), layout="grid")
 root = app.tk
 
+label1=Label(root)
+label1.grid(row=8, column=8)
+clock()
 
 #creates menubar
 menubar = Menu(root,relief=FLAT,bd=0)
@@ -170,6 +174,7 @@ label_3 = ttk.Label(root, textvariable=passwordClear)
 label_3.grid(row=4, column=1)
 button_1 = ttk.Button(root, text='show', command=showPass, width=5)
 button_1.grid(row=5,column=1)
+
 
 
 
