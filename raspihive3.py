@@ -20,19 +20,7 @@ localtime = time.asctime( time.localtime(time.time()) )
 def report():
     print ("hello!")
     #Test for user display
-    password = StringVar()
-    passwordClear = StringVar()
-    label_1 = ttk.Label(root, text='Type your password: ')
-    label_1.grid()
-    entry_1 = ttk.Entry(root, textvariable=password, width=6, show='*')
-    entry_1.grid()
-    entry_1.focus()
-    label_2 = ttk.Label(root, text='Your password is: ')
-    label_2.grid()
-    label_3 = ttk.Label(root, textvariable=passwordClear)
-    label_3.grid()
-    button_1 = ttk.Button(root, text='show', command=showPass, width=6)
-    button_1.grid()
+    info("info", " If you found a bug or experienced any issues, please write as at: https://raspihive.org/ ")
     
     
 
