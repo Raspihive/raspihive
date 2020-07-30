@@ -8,6 +8,7 @@ from tkinter import Tk as tk, Menu, FLAT, Label, Entry, Button, W, StringVar, tt
 import tkinter.simpledialog
 import subprocess as sp, os, getpass, sys  
 import subprocess
+import tkinter as tk
 import tkinter.simpledialog
 ###############################################################################
 # Globale Variablen
