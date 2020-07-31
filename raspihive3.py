@@ -7,6 +7,9 @@ import subprocess as sp, os, getpass, sys
 import subprocess
 import tkinter as tk, time, os, sys, getpass, os.path
 import tkinter.simpledialog
+
+import tkinter as tk
+import tkinter.ttk as ttk
 ###############################################################################
 # Globale Variablen
 localtime = time.asctime( time.localtime(time.time()) )
@@ -105,7 +108,13 @@ def clock():
 def showPass():
     passwordClear.set(password.get())   
 
-
+def update_progress_bar():
+    x = barVar.get()
+    if x < 100:
+        barVar.set(x+0.5)
+        root.after(50, update_progress_bar)
+    else:
+        print("Complete")
     
 ###############################################################################
 # end functions
@@ -113,8 +122,9 @@ def showPass():
 ###############################################################################
 # Start main programm - App-Anfang grid = Spalten und Zeilen
 
+
 app=App(title='Raspihive',bg=(53, 60, 81), layout="grid")
-root = app.tk
+root = app.tk #MainWindow = root
 
 label1=Label(root)
 label1.grid(row=8, column=8)
@@ -175,7 +185,12 @@ button_1 = ttk.Button(root, text='show', command=showPass, width=5)
 button_1.grid(row=5,column=1)
 
 
-
+barVar = tk.DoubleVar()
+barVar.set(0)
+bar = ttk.Progressbar(root, length=200, style='black.Horizontal.TProgressbar', variable=barVar, mode='determinate')
+bar.grid(row=1, column=0)
+button= tk.Button(root, text='Click', command=update_progress_bar)
+button.grid(row=0, column=0)
 
 
 
