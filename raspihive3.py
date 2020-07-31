@@ -1,15 +1,14 @@
 ###############################################################################
 # libraries
 from guizero import App, Window, Combo, Text, TextBox, CheckBox, ButtonGroup, PushButton, info, Picture, Box, MenuBar, yesno
-import tkinter, time, subprocess, os, sys, getpass, os.path
-import tkinter as tk
 from subprocess import call, Popen, PIPE
 from tkinter import Tk as tk, Menu, FLAT, Label, Entry, Button, W, StringVar, ttk
-import tkinter.simpledialog
 import subprocess as sp, os, getpass, sys  
 import subprocess
-import tkinter as tk
+import tkinter as tk, time, os, sys, getpass, os.path
 import tkinter.simpledialog
+from tkinter import *
+from tkinter.ttk import *
 ###############################################################################
 # Globale Variablen
 localtime = time.asctime( time.localtime(time.time()) )
@@ -19,7 +18,7 @@ localtime = time.asctime( time.localtime(time.time()) )
 def report():
     print ("hello!")
     #Test for user display
-    info("info", " If you found a bug or experienced any issues, please write as at: https://raspihive.org/ ")
+    info("info", " If you found a bug or experience any issues, please write as at: https://raspihive.org/ ")
 
 def about():
     info("info", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
@@ -109,6 +108,7 @@ def showPass():
     passwordClear.set(password.get())   
 
 
+    
 ###############################################################################
 # end functions
 
