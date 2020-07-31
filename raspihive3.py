@@ -7,8 +7,6 @@ import subprocess as sp, os, getpass, sys
 import subprocess
 import tkinter as tk, time, os, sys, getpass, os.path
 import tkinter.simpledialog
-from tkinter import *
-from tkinter.ttk import *
 ###############################################################################
 # Globale Variablen
 localtime = time.asctime( time.localtime(time.time()) )
