@@ -19,10 +19,10 @@ localtime = time.asctime( time.localtime(time.time()) )
 def report():
     print ("hello!")
     #Test for user display
-    info("info", " If you found a bug or experience any issues, please write as at: https://raspihive.org/ ")
+    info("Report bug", " If you found a bug or experience any issues, please write as at: https://raspihive.org/ ")
 
 def about():
-    info("info", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
+    info("About", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
 
 def update_os_function():
     if os.geteuid() != 0:
@@ -30,12 +30,25 @@ def update_os_function():
         tk.Tk().withdraw()
         #username = getpass.getuser()
         pwd = tkinter.simpledialog.askstring("[sudo] password for user:", "Enter password:", show='*') 
+        #username entered
         print("now you have root privileges")
-        cmd='sudo apt update && sudo apt -y full-upgrade'
-        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        print("Raspberry Pi updated - OK")
-        #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
-        #exit("Raspberry Pi updated - OK \n  Exiting.")
+        #Starting progress bar
+        progress_bar['value'] = 0
+        root.update()
+ 
+        while progress_bar['value'] < 100:
+            progress_bar['value'] += 50
+            #Keep updating the master object to redraw the progress bar
+            root.update()
+            cmd='sudo apt update && sudo apt -y full-upgrade'
+            call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+            print("Raspberry Pi updated - OK")
+            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
+            #exit("Raspberry Pi updated - OK \n  Exiting.")
+            time.sleep(0.5)
+        #End progress bar loop
+
+            
 
 def update_packages_function2():
     if os.geteuid() != 0:
@@ -43,10 +56,23 @@ def update_packages_function2():
         tk.Tk().withdraw()
         #username = getpass.getuser()
         pwd = tkinter.simpledialog.askstring("[sudo] password for user:", "Enter password:", show='*') 
+        #username entered
         print("now you have root privileges")
-        cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install -y go --classic'
-        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        print("Packages updated - OK")
+        #Starting progress bar
+        progress_bar['value'] = 0
+        root.update()
+ 
+        while progress_bar['value'] < 100:
+            progress_bar['value'] += 50
+            #Keep updating the master object to redraw the progress bar
+            root.update()
+            cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install -y go --classic'
+            call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+            print("Packages updated - OK")
+            time.sleep(0.5)
+        #End progress bar loop
+        
+        
         
 
 def Hornet_install_function():
@@ -108,24 +134,32 @@ def clock():
 def showPass():
     passwordClear.set(password.get())   
 
-def update_progress_bar():
-    x = barVar.get()
-    if x < 100:
-        barVar.set(x+0.5)
-        root.after(50, update_progress_bar)
-    else:
-        print("Complete")
     
 ###############################################################################
 # end functions
 
 ###############################################################################
 # Start main programm - App-Anfang grid = Spalten und Zeilen
-
-
 app=App(title='Raspihive',bg=(53, 60, 81), layout="grid")
 root = app.tk #MainWindow = root
 
+
+# Create a progressbar widget
+progress_bar = ttk.Progressbar(root, orient="horizontal",
+                              mode="determinate", maximum=100, value=0)
+ 
+# And a label for it
+label_1 = tk.Label(root, text="Progress bar")
+
+# Use the grid manager
+label_1.grid(row=8, column=0)
+progress_bar.grid(row=8, column=1)
+ 
+# Necessary, as the root object needs to draw the progressbar widget
+# Otherwise, it will not be visible on the screen
+root.update()
+
+#Clock
 label1=Label(root)
 label1.grid(row=8, column=8)
 clock()
@@ -183,14 +217,6 @@ label_3 = ttk.Label(root, textvariable=passwordClear)
 label_3.grid(row=4, column=1)
 button_1 = ttk.Button(root, text='show', command=showPass, width=5)
 button_1.grid(row=5,column=1)
-
-
-barVar = tk.DoubleVar()
-barVar.set(0)
-bar = ttk.Progressbar(root, length=200, style='black.Horizontal.TProgressbar', variable=barVar, mode='determinate')
-bar.grid(row=1, column=0)
-button= tk.Button(root, text='Click', command=update_progress_bar)
-button.grid(row=0, column=0)
 
 
 
