@@ -82,7 +82,7 @@ def update_packages_function2():
         #End progress bar loop
     info("Packages update", "The packages are succesfully updated")
         
-        
+       
 
 def Hornet_install_function():
     if os.geteuid() != 0:
@@ -97,7 +97,7 @@ def Hornet_install_function():
         cmd='sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz -P /home/pi/hornet && sudo chown pi:pi /home/pi/hornet/HORNET-0.4.1_Linux_x86_64.tar.gz && sudo tar -xzf /home/pi/hornet/HORNET-0.4.1_Linux_x86_64.tar.gz -C /home/pi/hornet/ && sudo chown pi:pi -R /home/pi/hornet/HORNET-0.4.1_Linux_x86_64  '
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         print("Hornet Node successfully installed")
-   
+    info("Hornet installer", "Hornet node succesfully installed")
 
 def GoShimmer_function():
     if os.geteuid() != 0:
@@ -111,7 +111,7 @@ def GoShimmer_function():
         cmd='sudo git clone -v https://github.com/iotaledger/goshimmer.git /home/pi/goshimmer'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         print("GoShimmer Node successfully installed")
-        
+    info("GoShimmer installer", "GoShimmer node succesfully installed")
 
 def Ping_function():
     print("Ping")
