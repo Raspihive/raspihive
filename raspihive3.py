@@ -52,7 +52,7 @@ def update_os_function():
             #exit("Raspberry Pi updated - OK \n  Exiting.")
             time.sleep(0.5)
         #End progress bar loop
-
+    info("Raspberry Pi update", "Raspberry Pi succesfully updated ")
             
 
 def update_packages_function2():
@@ -80,7 +80,7 @@ def update_packages_function2():
             print("Packages updated - OK")
             time.sleep(0.5)
         #End progress bar loop
-        
+    info("Packages update", "The packages are succesfully updated")
         
         
 
