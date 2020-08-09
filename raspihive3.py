@@ -19,7 +19,7 @@ localtime = time.asctime( time.localtime(time.time()) )
 def report():
     print ("hello!")
     #Test for user display
-    info("Report bug", " If you found a bug or experience any issues, please write as at: https://raspihive.org/ ")
+    info("Report a bug", " If you found a bug or experience any issues, please write as at: https://raspihive.org/ ")
 
 def about():
     info("About", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
@@ -33,6 +33,11 @@ def update_os_function():
         #username entered
         print("now you have root privileges")
         #Starting progress bar
+        
+        # Create a progressbar widget
+        progress_bar = ttk.Progressbar(root, orient="horizontal",
+                              mode="determinate", maximum=100, value=0)
+        progress_bar.grid(row=8, column=1)
         progress_bar['value'] = 0
         root.update()
  
@@ -59,6 +64,10 @@ def update_packages_function2():
         #username entered
         print("now you have root privileges")
         #Starting progress bar
+        # Create a progressbar widget
+        progress_bar = ttk.Progressbar(root, orient="horizontal",
+                              mode="determinate", maximum=100, value=0)
+        progress_bar.grid(row=8, column=1)
         progress_bar['value'] = 0
         root.update()
  
@@ -144,17 +153,11 @@ app=App(title='Raspihive',bg=(53, 60, 81), layout="grid")
 root = app.tk #MainWindow = root
 
 
-# Create a progressbar widget
-progress_bar = ttk.Progressbar(root, orient="horizontal",
-                              mode="determinate", maximum=100, value=0)
- 
 # And a label for it
-label_1 = tk.Label(root, text="Progress bar")
-
+label_1 = tk.Label(root, text="Status")
 # Use the grid manager
 label_1.grid(row=8, column=0)
-progress_bar.grid(row=8, column=1)
- 
+
 # Necessary, as the root object needs to draw the progressbar widget
 # Otherwise, it will not be visible on the screen
 root.update()
