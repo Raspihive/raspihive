@@ -29,7 +29,7 @@ def update_os_function():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(root, orient="horizontal",
                               mode="determinate", maximum=100, value=0)
-        progress_bar.grid(row=1, column=1)
+        progress_bar.grid(row=0, column=1)
         progress_bar['value'] = 0
         root.update()
  
@@ -59,7 +59,7 @@ def update_packages_function2():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(root, orient="horizontal",
                               mode="determinate", maximum=100, value=0)
-        progress_bar.grid(row=8, column=1)
+        progress_bar.grid(row=0, column=1)
         progress_bar['value'] = 0
         root.update()
  
@@ -177,18 +177,18 @@ helpmenu.activebackground='red'
 root.config(menu=menubar)
 #end of menu
 
-# And a label for it
-label_1 = tk.Label(root, text="Status")
-# Use the grid manager
-label_1.grid(row=1, column=0)
-
 # Necessary, as the root object needs to draw the progressbar widget
 # Otherwise, it will not be visible on the screen
 root.update()
 
-#Clock
+# Label for Status
+label_1 = tk.Label(root, text="Status")
+# Use the grid manager
+label_1.grid(row=0, column=0, padx='0', pady='0')
+
+# Label for Clock
 label1=Label(root)
-label1.grid(row=0, column=0)
+label1.grid(row=0, column=1, padx='250', pady='0')
 clock()
 
 
