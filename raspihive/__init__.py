@@ -99,19 +99,9 @@ def Hornet_install_function():
         print("Hornet Node successfully installed")
     info("Hornet installer", "Hornet node succesfully installed")
 
-def GoShimmer_function():
-    if os.geteuid() != 0:
-        print("You need to have root privileges")
-        tk.Tk().withdraw()
-        #username = getpass.getuser()
-        pwd = tkinter.simpledialog.askstring("[sudo] password for user:", "Enter password:", show='*') 
-        print("now you have root privileges")
-        dirname = os.environ['HOME'] + "/goshimmer"
-        os.makedirs(dirname)
-        cmd='sudo git clone -v https://github.com/iotaledger/goshimmer.git /home/pi/goshimmer'
-        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        print("GoShimmer Node successfully installed")
-    info("GoShimmer installer", "GoShimmer node succesfully installed")
+def Bee_install_function():
+    
+    info("Bee node installer", "Bee node succesfully installed")
 
 def Ping_function():
     print("Ping")
@@ -186,7 +176,7 @@ menubar.add_cascade(label="Update-menu", menu=filemenu)
 editmenu = Menu(menubar, tearoff=0, relief=FLAT, font=("Verdana", 12),activebackground='red')
 editmenu.config(bg = "GREEN") 
 editmenu.add_command(label="Install Hornet Node", command=Hornet_install_function)
-editmenu.add_command(label="Install GoShimmer", command=GoShimmer_function)
+editmenu.add_command(label="Install Bee Node", command=Bee_install_function)
 menubar.add_cascade(label="Node installer", menu=editmenu)
 
 pingmenu = Menu(menubar, tearoff=0,bg='green',fg='blue')
