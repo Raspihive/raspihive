@@ -29,7 +29,7 @@ def update_os_function():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(root, orient="horizontal",
                               mode="determinate", maximum=100, value=0)
-        progress_bar.grid(row=8, column=1)
+        progress_bar.grid(row=1, column=1)
         progress_bar['value'] = 0
         root.update()
  
