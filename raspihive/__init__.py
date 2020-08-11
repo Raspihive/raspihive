@@ -16,14 +16,6 @@ localtime = time.asctime( time.localtime(time.time()) )
 ###############################################################################
 # start functions
 
-def report():
-    print ("hello!")
-    #Test for user display
-    info("Report a bug", " If you found a bug or experience any issues, please write as at: https://raspihive.org/ ")
-
-def about():
-    info("About", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
-
 def update_os_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")
@@ -127,11 +119,16 @@ def Time_function():
 def clock():
     t=time.strftime('%I:%M:%S',time.localtime())
     if t!='':
-        label1.config(text=t,font='times 25')
+        label1.config(text=t,font='times 12')
     root.after(100,clock)
 
-def showPass():
-    passwordClear.set(password.get())   
+def report():
+    #info for user display message
+    info("Report a bug", " If you found a bug or experience any issues, please write as at: https://raspihive.org/ ")
+
+def about():
+    #info for user display message
+    info("About", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
 
     
 ###############################################################################
@@ -141,21 +138,6 @@ def showPass():
 # Start main programm - App-Anfang grid = Spalten und Zeilen
 app=App(title='Raspihive',bg=(53, 60, 81), layout="grid")
 root = app.tk #MainWindow = root
-
-
-# And a label for it
-label_1 = tk.Label(root, text="Status")
-# Use the grid manager
-label_1.grid(row=8, column=0)
-
-# Necessary, as the root object needs to draw the progressbar widget
-# Otherwise, it will not be visible on the screen
-root.update()
-
-#Clock
-label1=Label(root)
-label1.grid(row=8, column=8)
-clock()
 
 #creates menubar
 menubar = Menu(root,relief=FLAT,bd=0)
@@ -193,23 +175,21 @@ menubar.add_cascade(label="Help", menu=helpmenu)
 helpmenu.activebackground='red'
 
 root.config(menu=menubar)
+#end of menu
 
+# And a label for it
+label_1 = tk.Label(root, text="Status")
+# Use the grid manager
+label_1.grid(row=1, column=0)
 
+# Necessary, as the root object needs to draw the progressbar widget
+# Otherwise, it will not be visible on the screen
+root.update()
 
-#Test for user display
-password = StringVar()
-passwordClear = StringVar()
-
-label_1 = ttk.Label(root, text='Type your password: ')
-label_1.grid(row=1,column=1)
-entry_1 = ttk.Entry(root, textvariable=password, width=6, show='*')
-entry_1.grid(row=2, column=1)
-label_2 = ttk.Label(root, text='Your password is: ')
-label_2.grid(row=3, column=1)
-label_3 = ttk.Label(root, textvariable=passwordClear)
-label_3.grid(row=4, column=1)
-button_1 = ttk.Button(root, text='show', command=showPass, width=5)
-button_1.grid(row=5,column=1)
+#Clock
+label1=Label(root)
+label1.grid(row=0, column=0)
+clock()
 
 
 
