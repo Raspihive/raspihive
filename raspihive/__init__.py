@@ -16,13 +16,12 @@ localtime = time.asctime( time.localtime(time.time()) )
 ###############################################################################
 # start functions
 
-def update_os_function():
-    if os.geteuid() != 0:
-        print("You need to have root privileges")
-        tk.Tk().withdraw()
-        #username = getpass.getuser()
-        pwd = tkinter.simpledialog.askstring("[sudo] password for user:", "Enter password:", show='*') 
-        #username entered
+# Function to validate the password 
+def password_check(pwd):
+    if len(pwd) < 4: 
+        print('length should be at least 4') 
+        info("Raspberry Pi updat", "invalid password") 
+    elif len(pwd) > 4:
         print("now you have root privileges")
         #Starting progress bar
         
@@ -32,7 +31,7 @@ def update_os_function():
         progress_bar.grid(row=0, column=1)
         progress_bar['value'] = 0
         root.update()
- 
+    
         while progress_bar['value'] < 100:
             progress_bar['value'] += 50
             #Keep updating the master object to redraw the progress bar
@@ -44,8 +43,21 @@ def update_os_function():
             #exit("Raspberry Pi updated - OK \n  Exiting.")
             time.sleep(0.5)
         #End progress bar loop
-    info("Raspberry Pi update", "Raspberry Pi succesfully updated ")
-            
+        info("Raspberry Pi update", "Raspberry Pi succesfully updated ")
+
+def update_os_function():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")
+        tk.Tk().withdraw()
+        #username = getpass.getuser()
+        pwd = tkinter.simpledialog.askstring("[sudo] password for user:", "Enter password:", show='*') 
+        #password entered
+    #CheckPW    
+    if (password_check(pwd)): 
+        print("test")
+        
+    
+                       
 
 def update_packages_function2():
     if os.geteuid() != 0:
@@ -86,7 +98,7 @@ def Hornet_install_function():
         print("Hornet option")
         dirname = os.environ['HOME'] + "/test"
         os.makedirs(dirname)
-        cmd='sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.1/HORNET-0.4.1_Linux_x86_64.tar.gz -P /home/pi/hornet && sudo chown pi:pi /home/pi/hornet/HORNET-0.4.1_Linux_x86_64.tar.gz && sudo tar -xzf /home/pi/hornet/HORNET-0.4.1_Linux_x86_64.tar.gz -C /home/pi/hornet/ && sudo chown pi:pi -R /home/pi/hornet/HORNET-0.4.1_Linux_x86_64  '
+        cmd='sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.2/HORNET-0.4.2_Linux_x86_64.tar.gz -P /home/pi/hornet && sudo chown pi:pi /home/pi/hornet/HORNET-0.4.2_Linux_x86_64.tar.gz && sudo tar -xzf /home/pi/hornet/HORNET-0.4.2_Linux_x86_64.tar.gz -C /home/pi/hornet/ && sudo chown pi:pi -R /home/pi/hornet/HORNET-0.4.2_Linux_x86_64  '
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         print("Hornet Node successfully installed")
     info("Hornet installer", "Hornet node succesfully installed")
@@ -94,6 +106,20 @@ def Hornet_install_function():
 def Bee_install_function():
     
     info("Bee node installer", "Bee node succesfully installed")
+
+def SSL_reverse_proxy_install_function():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")
+        tk.Tk().withdraw()
+        #username = getpass.getuser()
+        pwd = tkinter.simpledialog.askstring("[sudo] password for user:", "Enter password:", show='*') 
+        print("now you have root privileges")
+        cmd='sudo apt update && sudo apt -y full-upgrade'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        print("SSL installed - OK")
+    info("SSL installer", "SSL successfully installed and configured")
+
+
 
 def Ping_function():
     print("Ping")
@@ -159,6 +185,7 @@ editmenu = Menu(menubar, tearoff=0, relief=FLAT, font=("Verdana", 12),activeback
 editmenu.config(bg = "GREEN") 
 editmenu.add_command(label="Install Hornet Node", command=Hornet_install_function)
 editmenu.add_command(label="Install Bee Node", command=Bee_install_function)
+editmenu.add_command(label="Install ssl for trinity and secured dashboard access", command=SSL_reverse_proxy_install_function)
 menubar.add_cascade(label="Node installer", menu=editmenu)
 
 pingmenu = Menu(menubar, tearoff=0,bg='green',fg='blue')
