@@ -27,7 +27,7 @@ def password_check(pwd):
         
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(root, orient="horizontal",
-                              mode="determinate", maximum=100, value=0)
+                              mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=1, column=0, padx='0', pady='0')
         progress_bar['value'] = 0
         root.update()
