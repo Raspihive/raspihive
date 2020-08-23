@@ -249,11 +249,20 @@ def SSL_reverse_proxy_install_function():
         sys.exit
 
     if os.geteuid()==0:
+
+        #PW function in new window
+        app=App(title='Raspihive',bg=(53, 60, 81), width=300, height=80, layout="grid")
+        root = app.tk #MainWindow = root
+
         usernameLabel = Label(root, text="User Name").grid(row=1, column=0, padx='0', pady='0')
         usernameEntry = Entry(root, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+
         passwordLabel = Label(root,text="Password").grid(row=2, column=0, padx='0', pady='0')  
         passwordEntry = Entry(root, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+
         loginButton = Button(root, text="Authentication", command=validateLogin_SSL_reverse_proxy_install_function).grid(row=3, column=1, padx='0', pady='0') 
+
+        app.display()
 
 def validateLogin_SSL_reverse_proxy_install_function(username, password):
     # print("username entered :", username.get())
