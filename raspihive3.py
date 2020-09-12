@@ -1,44 +1,132 @@
+#This Programm is made with love from the IOTA-Community for the IOTA-Community. 
+
 ###############################################################################
 # libraries
-from guizero import App, Window, Combo, Text, TextBox, CheckBox, ButtonGroup, PushButton, info, Picture, Box, MenuBar, yesno
-from subprocess import call, Popen, PIPE
 from tkinter import Tk as tk, Menu, FLAT, Label, Entry, Button, W, StringVar, ttk
+from subprocess import call, Popen, PIPE
 import subprocess as sp, os, getpass, sys  
-import subprocess
-import getpass
+import subprocess, sys, socket, pwd, os, crypt, getpass, spwd
 import tkinter as tk, time, os, sys, getpass, os.path
 import tkinter.simpledialog
-import tkinter as tk
 import tkinter.ttk as ttk
-
-import crypt, getpass, spwd
-
-# importing pwd module  
-import pwd, sys, os
+from tkinter import messagebox
 from functools import partial
-
-#Test
-import sys
-import socket
+# Needed for ping function
 from queue import Queue
 from ipaddress import ip_address
 from threading import Thread
 from subprocess import check_output
-from tkinter.ttk import (
-    Label, Entry,
-    )
-from tkinter import (
-    Tk, Button, Text, StringVar, END,
-    Toplevel, BOTH
-)
+from tkinter.ttk import (Label, Entry)
+from tkinter import (Tk, Button, Text, StringVar, END, Toplevel, BOTH)
+# Test
+from tkinter import Frame
+
+
 # from tkinter.messagebox import showinfo
 # we need to make our own showinfo widget
 ###############################################################################
 # Globale Variablen
 localtime = time.asctime( time.localtime(time.time()) )
-###############################################################################
+##############################################################################
+##############################################################################
 # start functions
+#####################################Start of Window frames############################################
 
+
+class mainWindow(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self._frame = None
+        self.switch_frame(StartPage)
+
+    def switch_frame(self, frame_class):
+        """Destroys current frame and replaces it with a new one."""
+        new_frame = frame_class(self)
+        if self._frame is not None:
+            self._frame.destroy()
+        self._frame = new_frame
+        self._frame.grid()
+
+class StartPage(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        tk.Label(self, text="This is the start page", bg="lightblue").grid(row=0, column=0, padx='0', pady='0')
+        # For page one
+        tk.Button(self, text="Update menu", bg="lightblue", command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='10', pady='0')
+        # For page two
+        tk.Button(self, text="Node menu", bg="lightblue", command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='10', pady='0')
+        # For page three
+        tk.Button(self, text="Tools", bg="lightblue", command=lambda: master.switch_frame(PageThree)).grid(row=2, column=0, padx='10', pady='0')
+        # For page four
+        tk.Button(self, text="Help", bg="lightblue", command=lambda: master.switch_frame(PageFour)).grid(row=2, column=1, padx='10', pady='0')
+
+        
+
+class PageOne(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+
+        tk.Label(self, text="Update menu Page One", bg="lightblue").grid(row=0, column=0, padx='0', pady='0')
+        tk.Button(self, text="Return to start page", bg="lightblue", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
+        """
+        tk.Label(self, text="Update OS").grid(row=1, column=0, padx='0', pady='0')
+        tk.Button(self, text="update", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=1, padx='0', pady='0')
+        """
+        label1 = tk.Label(self, text = "Update OS", bg="lightblue").grid(row=2, column=0, padx='0', pady='0')
+        button1 = tk.Button(self, text = "os-update", bg="lightblue", command=update_os_function).grid(row=2, column=1, padx='0', pady='0')
+
+        label2 = tk.Label(self, text = "Update packages", bg="lightblue").grid(row=3, column=0, padx='0', pady='0')
+        button2 = tk.Button(self, text = "p-update", bg="lightblue", command=update_packages_function).grid(row=3, column=1, padx='0', pady='0')
+
+        label3 = tk.Label(self, text = "Update hornet node", bg="lightblue").grid(row=4, column=0, padx='0', pady='0')
+        button3 = tk.Button(self, text = "h-update", bg="lightblue", command=update_hornet_node).grid(row=4, column=1, padx='0', pady='0')
+
+
+class PageTwo(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+
+        tk.Label(self, text="This is page two", bg="lightblue").grid(row=0, column=0, padx='0', pady='0')
+        tk.Button(self, text="Return to start page", bg="lightblue", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
+
+        label1 = tk.Label(self, text = "Install Hornet-Node", bg="lightblue").grid(row=2, column=0, padx='0', pady='0')
+        button1 = tk.Button(self, text = "install hornet", bg="lightblue", command=Hornet_install_function).grid(row=2, column=1, padx='0', pady='0')
+
+        label2 = tk.Label(self, text = "Install Bee-Node", bg="lightblue").grid(row=3, column=0, padx='0', pady='0')
+        button2 = tk.Button(self, text = "install bee", bg="lightblue", command=Bee_install_function).grid(row=3, column=1, padx='0', pady='0')
+
+        label3 = tk.Label(self, text = "Install reverse proxy + ssl cert", bg="lightblue").grid(row=4, column=0, padx='0', pady='0')
+        button3 = tk.Button(self, text = "install rp + ssl", bg="lightblue", command=SSL_reverse_proxy_install_function).grid(row=4, column=1, padx='0', pady='0')
+
+class PageThree(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+
+        tk.Label(self, text="This is page three", bg="lightblue").grid(row=0, column=0, padx='0', pady='0')
+        tk.Button(self, text="Return to start page", bg="lightblue", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
+
+        label1 = tk.Label(self, text = " Host connectivity test ", bg="lightblue").grid(row=2, column=0, padx='0', pady='0')
+        button1 = tk.Button(self, text = "open ping function", bg="lightblue", command=Ping_function).grid(row=2, column=1, padx='0', pady='0')
+
+class PageFour(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+
+        tk.Label(self, text="This is page four", bg="lightblue").grid(row=0, column=0, padx='0', pady='0')
+        tk.Button(self, text="Return to start page", bg="lightblue", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
+
+        label1 = tk.Label(self, text = " About Raspihive ", bg="lightblue").grid(row=2, column=0, padx='0', pady='0')
+        button1 = tk.Button(self, text = "About", bg="lightblue", command=about).grid(row=2, column=1, padx='0', pady='0')
+
+        label2 = tk.Label(self, text = "Bug Report", bg="lightblue").grid(row=3, column=0, padx='0', pady='0')
+        button2 = tk.Button(self, text = "report", bg="lightblue", command=report).grid(row=3, column=1, padx='0', pady='0')
+ 
+        
+
+
+
+#####################################End of Window frames############################################
+#Start of PW module
 def check_pass(username, user_password):
     # username = input("Enter The Username: ")
     try:
@@ -55,52 +143,125 @@ def check_pass(username, user_password):
             sys.exit('This script must be run as root!')
     except Exception as e:
         print('eeee:', e)
+# End of PW module      
+
 
 def update_os_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
-        info("Raspberry Pi Authentication", "You need to have root privileges")
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
-
     
     if os.geteuid()==0:
-        
         #PW function in new window
-        app=App(title='Raspihive',bg=(53, 60, 81), width=300, height=80, layout="grid")
-        root = app.tk #MainWindow = root
-        
-        usernameLabel = Label(root, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(root, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
 
-        passwordLabel = Label(root,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(root, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
 
-        loginButton = Button(root, text="Authentication", command=validateLogin_update_os_function).grid(row=3, column=1, padx='0', pady='0')
-        
-        app.display()
-#
-def update_hornet_node():
+        loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function).grid(row=3, column=1, padx='0', pady='0')
+
+
+def validateLogin_update_os_function(username, password):
+    # print("username entered :", username.get())
+    # print("password entered :", password.get())
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+        #Starting progress bar
+        # Create a progressbar widget
+        progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
+        progress_bar.grid(row=1, column=0, padx='0', pady='0')
+        progress_bar['value'] = 0
+        app.update()
+    
+        while progress_bar['value'] < 100:
+            progress_bar['value'] += 50
+            #Keep updating the master object to redraw the progress bar
+            app.update()
+            cmd='sudo apt update && sudo apt -y full-upgrade'
+            call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+            print("Raspberry Pi updated - OK")
+            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
+            #exit("Raspberry Pi updated - OK \n  Exiting.")
+            time.sleep(0.5)
+        #End progress bar loop
+        messagebox.showinfo("Raspberry Pi update", "Raspberry Pi succesfully updated ") 
+    else:
+        print("You entered a wrong username or password")
+    #return (set later if needed)
+
+
+def update_packages_function():
+    #PW function in new window
     if os.geteuid() != 0:
         print("You need to have root privileges")  
-        info("Raspberry Pi Authentication", "You need to have root privileges")
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
+        sys.exit
+
+    if os.geteuid()==0:
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+
+        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+
+        loginButton = Button(app, text="Authentication", command=validateLogin_update_packages_function).grid(row=3, column=1, padx='0', pady='0') 
+
+      
+
+def validateLogin_update_packages_function(username, password):
+    # print("username entered :", username.get())
+    # print("password entered :", password.get())
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+        #Starting progress bar
+        # Create a progressbar widget
+        progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0)
+        progress_bar.grid(row=0, column=1)
+        progress_bar['value'] = 0
+        app.update()
+ 
+        while progress_bar['value'] < 100:
+            progress_bar['value'] += 50
+            #Keep updating the master object to redraw the progress bar
+            app.update()
+            cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install -y go --classic'
+            call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+            print("Packages updated - OK")
+            time.sleep(0.5)
+        #End progress bar loop
+        messagebox.showinfo("Packages update", "The packages are succesfully updated") 
+    else:
+        print("The password you entered is wrong.")
+        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong") 
+    #return (set later if needed)
+
+def update_hornet_node():
+    #PW function in new window
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
         sys.exit
 
     
     if os.geteuid()==0:
-        
         #PW function in new window
-        app=App(title='Raspihive',bg=(53, 60, 81), width=300, height=80, layout="grid")
-        root = app.tk #MainWindow = root
-        
-        usernameLabel = Label(root, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(root, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
 
-        passwordLabel = Label(root,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(root, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
 
-        loginButton = Button(root, text="Authentication", command=validateLogin_update_os_function).grid(row=3, column=1, padx='0', pady='0')
-        
-        app.display()
+        loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function).grid(row=3, column=1, padx='0', pady='0')
 
 
 def validateLogin_update_hornet_node(username, password):
@@ -114,15 +275,15 @@ def validateLogin_update_hornet_node(username, password):
         print("You are in!")
         #Starting progress bar
         # Create a progressbar widget
-        progress_bar = ttk.Progressbar(root, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
+        progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=1, column=0, padx='0', pady='0')
         progress_bar['value'] = 0
-        root.update()
+        app.update()
     
         while progress_bar['value'] < 100:
             progress_bar['value'] += 50
             #Keep updating the master object to redraw the progress bar
-            root.update()
+            app.update()
             cmd='sudo apt-get update && sudo apt-get upgrade hornet'
             call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
             print("Raspberry Pi updated - OK")
@@ -130,118 +291,27 @@ def validateLogin_update_hornet_node(username, password):
             #exit("Raspberry Pi updated - OK \n  Exiting.")
             time.sleep(0.5)
         #End progress bar loop
-        info("Raspberry Pi update", "Raspberry Pi succesfully updated ")
+        messagebox.showinfo("Raspberry Pi update", "Raspberry Pi succesfully updated ") 
     else:
         print("You entered a wrong username or password")
     #return (set later if needed)
-
-def validateLogin_update_os_function(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
-    print('password check:', check_pass(username.get(), password.get()))
-    pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
-
-    if pwd == True: # Needs to match with user password on the system 
-        print("You are in!")
-        #Starting progress bar
-        # Create a progressbar widget
-        progress_bar = ttk.Progressbar(root, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
-        progress_bar.grid(row=1, column=0, padx='0', pady='0')
-        progress_bar['value'] = 0
-        root.update()
-    
-        while progress_bar['value'] < 100:
-            progress_bar['value'] += 50
-            #Keep updating the master object to redraw the progress bar
-            root.update()
-            cmd='sudo apt update && sudo apt -y full-upgrade'
-            call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-            print("Raspberry Pi updated - OK")
-            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
-            #exit("Raspberry Pi updated - OK \n  Exiting.")
-            time.sleep(0.5)
-        #End progress bar loop
-        info("Raspberry Pi update", "Raspberry Pi succesfully updated ")
-    else:
-        print("You entered a wrong username or password")
-    #return (set later if needed)
-
-def update_packages_function():
-    if os.geteuid() != 0:
-        print("You need to have root privileges")  
-        info("Raspberry Pi Authentication", "You need to have root privileges")
-        sys.exit
-
-    if os.geteuid()==0:
-
-        #PW function in new window
-        app=App(title='Raspihive',bg=(53, 60, 81), width=300, height=80, layout="grid")
-        root = app.tk #MainWindow = root
-
-        usernameLabel = Label(root, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(root, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
-
-        passwordLabel = Label(root,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(root, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
-
-        loginButton = Button(root, text="Authentication", command=validateLogin_update_packages_function).grid(row=3, column=1, padx='0', pady='0') 
-
-        app.display()
-
-def validateLogin_update_packages_function(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
-    print('password check:', check_pass(username.get(), password.get()))
-    pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
-
-    if pwd == True: # Needs to match with user password on the system 
-        print("You are in!")
-        #Starting progress bar
-        # Create a progressbar widget
-        progress_bar = ttk.Progressbar(root, orient="horizontal", mode="determinate", maximum=100, value=0)
-        progress_bar.grid(row=0, column=1)
-        progress_bar['value'] = 0
-        root.update()
- 
-        while progress_bar['value'] < 100:
-            progress_bar['value'] += 50
-            #Keep updating the master object to redraw the progress bar
-            root.update()
-            cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install -y go --classic'
-            call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-            print("Packages updated - OK")
-            time.sleep(0.5)
-        #End progress bar loop
-        info("Packages update", "The packages are succesfully updated")
-    else:
-        print("The password you entered is wrong.")
-        info("Raspberry Pi update", "The password you entered is wrong")
-    #return (set later if needed)
-
 
 def Hornet_install_function():
+    #PW function in new window
     if os.geteuid() != 0:
         print("You need to have root privileges")  
-        info("Raspberry Pi Authentication", "You need to have root privileges")
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
         sys.exit
 
     if os.geteuid()==0:
-
         #PW function in new window
-        app=App(title='Raspihive',bg=(53, 60, 81), width=300, height=80, layout="grid")
-        root = app.tk #MainWindow = root
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
 
-        usernameLabel = Label(root, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(root, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
 
-        passwordLabel = Label(root,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(root, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
-
-        loginButton = Button(root, text="Authentication", command=validateLogin_Hornet_install_function).grid(row=3, column=1, padx='0', pady='0') 
-
-        app.display()
+        loginButton = Button(app, text="Authentication", command=validateLogin_Hornet_install_function).grid(row=3, column=1, padx='0', pady='0') 
 
 def validateLogin_Hornet_install_function(username, password):
     # print("username entered :", username.get())
@@ -257,33 +327,29 @@ def validateLogin_Hornet_install_function(username, password):
         cmd='sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.2/HORNET-0.4.2_Linux_x86_64.tar.gz -P /home/pi/hornet && sudo chown pi:pi /home/pi/hornet/HORNET-0.4.2_Linux_x86_64.tar.gz && sudo tar -xzf /home/pi/hornet/HORNET-0.4.2_Linux_x86_64.tar.gz -C /home/pi/hornet/ && sudo chown pi:pi -R /home/pi/hornet/HORNET-0.4.2_Linux_x86_64  '
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         print("Hornet Node successfully installed")
-        info("Hornet installer", "Hornet node succesfully installed")
+        messagebox.showinfo("Hornet installer", "Hornet node succesfully installed") 
     else:
         print("The password you entered is wrong.")
-        info("Raspberry Pi update", "The password you entered is wrong")
+        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong") 
+
 
 def Bee_install_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
-        info("Raspberry Pi Authentication", "You need to have root privileges")
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
 
     if os.geteuid()==0:
-
         #PW function in new window
-        app=App(title='Raspihive',bg=(53, 60, 81), width=300, height=80, layout="grid")
-        root = app.tk #MainWindow = root
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
 
-        usernameLabel = Label(root, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(root, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
 
-        passwordLabel = Label(root,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(root, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+        loginButton = Button(app, text="Authentication", command=validateLogin_Bee_install_function).grid(row=3, column=1, padx='0', pady='0') 
 
-        loginButton = Button(root, text="Authentication", command=validateLogin_Bee_install_function).grid(row=3, column=1, padx='0', pady='0') 
-
-        app.display()
-
+      
 def validateLogin_Bee_install_function(username, password):
     # print("username entered :", username.get())
     # print("password entered :", password.get())
@@ -293,32 +359,28 @@ def validateLogin_Bee_install_function(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        info("Bee node installer", "Bee node succesfully installed")
+        messagebox.showinfo("Bee node installer", "Bee node succesfully installed")
     else:
         print("The password you entered is wrong.")
-        info("Raspberry Pi update", "The password you entered is wrong")
+        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong") 
 
 def SSL_reverse_proxy_install_function():
+    #PW function in new window
     if os.geteuid() != 0:
         print("You need to have root privileges") 
-        info("Raspberry Pi Authentication", "You need to have root privileges") 
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
         sys.exit
 
     if os.geteuid()==0:
-
         #PW function in new window
-        app=App(title='Raspihive',bg=(53, 60, 81), width=300, height=80, layout="grid")
-        root = app.tk #MainWindow = root
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
 
-        usernameLabel = Label(root, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(root, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
 
-        passwordLabel = Label(root,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(root, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+        loginButton = Button(app, text="Authentication", command=validateLogin_SSL_reverse_proxy_install_function).grid(row=3, column=1, padx='0', pady='0') 
 
-        loginButton = Button(root, text="Authentication", command=validateLogin_SSL_reverse_proxy_install_function).grid(row=3, column=1, padx='0', pady='0') 
-
-        app.display()
 
 def validateLogin_SSL_reverse_proxy_install_function(username, password):
     # print("username entered :", username.get())
@@ -330,11 +392,13 @@ def validateLogin_SSL_reverse_proxy_install_function(username, password):
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
         print("SSL installed - OK")
-        info("SSL installer", "SSL successfully installed and configured")
+        messagebox.showinfo("SSL installer", "SSL successfully installed and configured") 
     else:
         print("The password you entered is wrong.")
-        info("Raspberry Pi update", "The password you entered is wrong")
+        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
 
+
+# Start of Ping function
 def Ping_function():
 
     def validate_ip(ip):
@@ -425,7 +489,7 @@ def Ping_function():
             self.ping_active = False
  
     App().mainloop()
-         
+# End of Ping function
 
 def Time_function():
     print("Time: ", localtime)
@@ -434,88 +498,51 @@ def clock():
     t=time.strftime('%I:%M:%S',time.localtime())
     if t!='':
         label1.config(text=t,font='times 12')
-    root.after(100,clock)
+    app.after(100,clock)
 
 def report():
     #info for user display message
-    info("Report a bug", " If you found a bug or experience any issues, please write as at: https://raspihive.org/ ")
+    messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
 
 def about():
     #info for user display message
-    info("About", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
-
+    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions ")
 
 ###############################################################################
 # end functions
+###############################################################################
+###############################################################################
+# Start main programm
+###############################################################################
+
+if __name__ == "__main__":
+    app = mainWindow()
+    app.title("Raspihive")
+    app.geometry("600x180")
+    #app.config(bg="black")
+
+    
+    app.columnconfigure(0, weight=1)
+    app.columnconfigure(1, weight=2)
+
+    
+
+    # Label for Clock
+    label1=Label(app)
+    label1.grid(row=0, column=1, padx='40', pady='0')
+    clock()
+
+
+    #Start PW check
+    username = StringVar()
+    password = StringVar()
+    validateLogin_update_os_function = partial(validateLogin_update_os_function, username, password)
+    validateLogin_update_packages_function = partial(validateLogin_update_packages_function, username, password)
+    validateLogin_Hornet_install_function = partial(validateLogin_Hornet_install_function, username, password)
+    validateLogin_Bee_install_function = partial(validateLogin_Bee_install_function, username, password)
+    validateLogin_SSL_reverse_proxy_install_function = partial(validateLogin_SSL_reverse_proxy_install_function, username, password)
+
+    app.mainloop()
 
 ###############################################################################
-# Start main programm - App-Anfang grid = Spalten und Zeilen
-app=App(title='Raspihive',bg=(53, 60, 81), width=500, height=500, layout="grid")
-root = app.tk #MainWindow = root
-
-#creates menubar
-menubar = Menu(root,relief=FLAT,bd=0)
-
-# Sets menubar background color and active select but does not remove 3d  effect/padding
-menubar.config(bg = "GREEN",fg='white',activebackground='red',activeforeground='pink',relief=FLAT)
-
-# First item on menubar and creates sub options
-filemenu = Menu(menubar, tearoff=0,relief=FLAT, font=("Verdana", 12),activebackground='red')
-filemenu.config(bg = "GREEN") 
-filemenu.add_command(label="Update Raspberry Pi", command=update_os_function)
-filemenu.add_command(label="Update packages", command=update_packages_function)
-filemenu.add_command(label="Update Hornet Node", command=update_hornet_node)
-filemenu.add_separator()
-filemenu.add_command(label="Exit", command=root.quit)
-menubar.add_cascade(label="Update-menu", menu=filemenu)
-
-# Adds to menubar and creates sub options
-editmenu = Menu(menubar, tearoff=0, relief=FLAT, font=("Verdana", 12),activebackground='red')
-editmenu.config(bg = "GREEN") 
-editmenu.add_command(label="Install Hornet Node", command=Hornet_install_function)
-editmenu.add_command(label="Install Bee Node", command=Bee_install_function)
-editmenu.add_command(label="Install ssl for trinity and secured dashboard access", command=SSL_reverse_proxy_install_function)
-menubar.add_cascade(label="Node installer", menu=editmenu)
-
-pingmenu = Menu(menubar, tearoff=0,bg='green',fg='blue')
-pingmenu.add_command(label="Ping", command=Ping_function)
-pingmenu.add_command(label="Show system time", command=Time_function)
-menubar.add_cascade(label="Tools", menu=pingmenu)
-pingmenu.activebackground='red'
-
-
-helpmenu = Menu(menubar, tearoff=0,bg='green',fg='blue')
-helpmenu.add_command(label="Report bug", command=report)
-helpmenu.add_command(label="About", command=about)
-menubar.add_cascade(label="Help", menu=helpmenu)
-helpmenu.activebackground='red'
-
-root.config(menu=menubar)
-#end of menu
-
-# Necessary, as the root object needs to draw the progressbar widget
-# Otherwise, it will not be visible on the screen
-root.update()
-
-# Label for Status
-label_1 = tk.Label(root, text="Status")
-# Use the grid manager
-label_1.grid(row=0, column=0, padx='0', pady='0')
-
-# Label for Clock
-label1=Label(root)
-label1.grid(row=0, column=1, padx='250', pady='0')
-clock()
-
-#Start PW check
-username = StringVar()
-password = StringVar()
-validateLogin_update_os_function = partial(validateLogin_update_os_function, username, password)
-validateLogin_update_packages_function = partial(validateLogin_update_packages_function, username, password)
-validateLogin_Hornet_install_function = partial(validateLogin_Hornet_install_function, username, password)
-validateLogin_Bee_install_function = partial(validateLogin_Bee_install_function, username, password)
-validateLogin_SSL_reverse_proxy_install_function = partial(validateLogin_SSL_reverse_proxy_install_function, username, password)
-#End PW check
-
-
-app.display()
+# End main programm
