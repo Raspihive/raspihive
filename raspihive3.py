@@ -518,12 +518,14 @@ def about():
 if __name__ == "__main__":
     app = mainWindow()
     app.title("Raspihive")
-    app.geometry("600x180")
-    #app.config(bg="black")
+    app.geometry("320x480")
+    #app.configure(bg='white')
+    app['bg'] = '#49A'
+    
 
     
     app.columnconfigure(0, weight=1)
-    app.columnconfigure(1, weight=2)
+
 
     
 
