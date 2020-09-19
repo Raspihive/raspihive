@@ -47,11 +47,12 @@ class mainWindow(tk.Tk):
             self._frame.destroy()
         self._frame = new_frame
         self._frame.grid()
+        
 
 class StartPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master,  background="lightgreen")
-
+        self.master.geometry("600x200")
 
         tk.Label(self, text="This is the start page", bg="lightgreen", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         # For page one
@@ -68,6 +69,7 @@ class StartPage(tk.Frame):
 class PageOne(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="lightblue")
+        self.master.geometry("650x200")
 
         tk.Label(self, text="Update menu Page One", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
@@ -88,6 +90,7 @@ class PageOne(tk.Frame):
 class PageTwo(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="lightblue")
+        self.master.geometry("650x200")
 
         tk.Label(self, text="This is page two", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
@@ -104,6 +107,7 @@ class PageTwo(tk.Frame):
 class PageThree(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="lightblue")
+        self.master.geometry("650x200")
 
         tk.Label(self, text="This is page three", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
@@ -114,6 +118,7 @@ class PageThree(tk.Frame):
 class PageFour(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="lightblue")
+        self.master.geometry("650x200")
 
         tk.Label(self, text="This is page four", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
@@ -148,7 +153,6 @@ def check_pass(username, user_password):
         print('eeee:', e)
 # End of PW module      
 
-
 def update_os_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
@@ -156,29 +160,39 @@ def update_os_function():
         sys.exit
     
     if os.geteuid()==0:
+        #print("Test")
+        
         #PW function in new window
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+        
+        passwordLabel = Label(app,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
+        loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function)
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #print("Button", loginButton)
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function).grid(row=3, column=2, padx='0', pady='0')
 
 
 def validateLogin_update_os_function(username, password):
+    
     # print("username entered :", username.get())
     # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
     #print("PW2", pw2)
-
+    
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
         #Starting progress bar
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
-        progress_bar.grid(row=1, column=0, padx='0', pady='0')
+        progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 0
         app.update()
     
@@ -207,13 +221,18 @@ def update_packages_function():
         sys.exit
 
     if os.geteuid()==0:
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_update_packages_function).grid(row=3, column=1, padx='0', pady='0') 
+        loginButton = Button(app, text="Authentication", command=validateLogin_update_packages_function)
+        loginButton.grid(row=3, column=1, padx='0', pady='0') 
 
       
 
@@ -229,7 +248,7 @@ def validateLogin_update_packages_function(username, password):
         #Starting progress bar
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0)
-        progress_bar.grid(row=0, column=1)
+        progress_bar.grid(row=4, column=1)
         progress_bar['value'] = 0
         app.update()
  
@@ -258,13 +277,18 @@ def update_hornet_node():
     
     if os.geteuid()==0:
         #PW function in new window
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function).grid(row=3, column=1, padx='0', pady='0')
+        loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function)
+        loginButton.grid(row=3, column=1, padx='0', pady='0')
 
 
 def validateLogin_update_hornet_node(username, password):
@@ -279,7 +303,7 @@ def validateLogin_update_hornet_node(username, password):
         #Starting progress bar
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
-        progress_bar.grid(row=1, column=0, padx='0', pady='0')
+        progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 0
         app.update()
     
@@ -308,13 +332,18 @@ def Hornet_install_function():
 
     if os.geteuid()==0:
         #PW function in new window
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_Hornet_install_function).grid(row=3, column=1, padx='0', pady='0') 
+        loginButton = Button(app, text="Authentication", command=validateLogin_Hornet_install_function)
+        loginButton.grid(row=3, column=1, padx='0', pady='0') 
 
 def validateLogin_Hornet_install_function(username, password):
     # print("username entered :", username.get())
@@ -344,13 +373,18 @@ def Bee_install_function():
 
     if os.geteuid()==0:
         #PW function in new window
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_Bee_install_function).grid(row=3, column=1, padx='0', pady='0') 
+        loginButton = Button(app, text="Authentication", command=validateLogin_Bee_install_function)
+        loginButton.grid(row=3, column=1, padx='0', pady='0') 
 
       
 def validateLogin_Bee_install_function(username, password):
@@ -376,13 +410,18 @@ def SSL_reverse_proxy_install_function():
 
     if os.geteuid()==0:
         #PW function in new window
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_SSL_reverse_proxy_install_function).grid(row=3, column=1, padx='0', pady='0') 
+        loginButton = Button(app, text="Authentication", command=validateLogin_SSL_reverse_proxy_install_function)
+        loginButton.grid(row=3, column=1, padx='0', pady='0') 
 
 
 def validateLogin_SSL_reverse_proxy_install_function(username, password):
@@ -521,9 +560,10 @@ def about():
 if __name__ == "__main__":
     app = mainWindow()
     app.title("Raspihive")
-    #app.geometry("680x480")
+    app.geometry("600x200")
     #app.configure(bg='white')
     #app['bg'] = '#49A'
+    
    
 
     
