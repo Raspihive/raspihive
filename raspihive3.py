@@ -52,7 +52,7 @@ class mainWindow(tk.Tk):
 class StartPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master,  background="lightgreen")
-        self.master.geometry("600x200")
+        #self.master.geometry("600x200")
 
         tk.Label(self, text="This is the start page", bg="lightgreen", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         # For page one
@@ -69,7 +69,7 @@ class StartPage(tk.Frame):
 class PageOne(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="lightblue")
-        self.master.geometry("650x200")
+        #self.master.geometry("650x200")
 
         tk.Label(self, text="Update menu Page One", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
@@ -90,7 +90,7 @@ class PageOne(tk.Frame):
 class PageTwo(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="lightblue")
-        self.master.geometry("650x200")
+        #self.master.geometry("650x200")
 
         tk.Label(self, text="This is page two", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
@@ -107,7 +107,7 @@ class PageTwo(tk.Frame):
 class PageThree(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="lightblue")
-        self.master.geometry("650x200")
+        #self.master.geometry("650x200")
 
         tk.Label(self, text="This is page three", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
@@ -118,7 +118,7 @@ class PageThree(tk.Frame):
 class PageFour(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="lightblue")
-        self.master.geometry("650x200")
+        #self.master.geometry("650x200")
 
         tk.Label(self, text="This is page four", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
@@ -417,7 +417,7 @@ def SSL_reverse_proxy_install_function():
     if os.geteuid()==0:
         #PW function in new window
         window = tk.Toplevel(app)
-        
+
         usernameLabel = Label(app, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
         usernameEntry = Entry(app, textvariable=username)
