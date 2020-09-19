@@ -153,6 +153,7 @@ def check_pass(username, user_password):
         print('eeee:', e)
 # End of PW module      
 
+ 
 def update_os_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
@@ -160,23 +161,23 @@ def update_os_function():
         sys.exit
     
     if os.geteuid()==0:
-        #print("Test")
-        
         #PW function in new window
-        usernameLabel = Label(app, text="User Name")
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry = Entry(window, textvariable=username)
         usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
-        
-        passwordLabel = Label(app,text="Password")
+      
+
+        passwordLabel = Label(window,text="Password")
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function)
+        loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
         loginButton.grid(row=3, column=2, padx='0', pady='0')
-        #print("Button", loginButton)
-
 
 
 def validateLogin_update_os_function(username, password):
@@ -214,13 +215,15 @@ def validateLogin_update_os_function(username, password):
 
 
 def update_packages_function():
-    #PW function in new window
     if os.geteuid() != 0:
         print("You need to have root privileges")  
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
         sys.exit
-
+    
     if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
         usernameLabel = Label(app, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
         usernameEntry = Entry(app, textvariable=username)
@@ -268,7 +271,6 @@ def validateLogin_update_packages_function(username, password):
     #return (set later if needed)
 
 def update_hornet_node():
-    #PW function in new window
     if os.geteuid() != 0:
         print("You need to have root privileges")  
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
@@ -277,6 +279,8 @@ def update_hornet_node():
     
     if os.geteuid()==0:
         #PW function in new window
+        window = tk.Toplevel(app)
+
         usernameLabel = Label(app, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
         usernameEntry = Entry(app, textvariable=username)
@@ -324,7 +328,6 @@ def validateLogin_update_hornet_node(username, password):
     #return (set later if needed)
 
 def Hornet_install_function():
-    #PW function in new window
     if os.geteuid() != 0:
         print("You need to have root privileges")  
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
@@ -332,6 +335,8 @@ def Hornet_install_function():
 
     if os.geteuid()==0:
         #PW function in new window
+        window = tk.Toplevel(app)
+
         usernameLabel = Label(app, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
         usernameEntry = Entry(app, textvariable=username)
@@ -373,6 +378,8 @@ def Bee_install_function():
 
     if os.geteuid()==0:
         #PW function in new window
+        window = tk.Toplevel(app)
+
         usernameLabel = Label(app, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
         usernameEntry = Entry(app, textvariable=username)
@@ -402,7 +409,6 @@ def validateLogin_Bee_install_function(username, password):
         messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong") 
 
 def SSL_reverse_proxy_install_function():
-    #PW function in new window
     if os.geteuid() != 0:
         print("You need to have root privileges") 
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
@@ -410,6 +416,8 @@ def SSL_reverse_proxy_install_function():
 
     if os.geteuid()==0:
         #PW function in new window
+        window = tk.Toplevel(app)
+        
         usernameLabel = Label(app, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
         usernameEntry = Entry(app, textvariable=username)
