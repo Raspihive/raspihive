@@ -157,13 +157,13 @@ def update_os_function():
     
     if os.geteuid()==0:
         #PW function in new window
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function).grid(row=3, column=1, padx='0', pady='0')
+        loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function).grid(row=3, column=2, padx='0', pady='0')
 
 
 def validateLogin_update_os_function(username, password):
@@ -207,11 +207,11 @@ def update_packages_function():
         sys.exit
 
     if os.geteuid()==0:
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
 
         loginButton = Button(app, text="Authentication", command=validateLogin_update_packages_function).grid(row=3, column=1, padx='0', pady='0') 
 
@@ -258,11 +258,11 @@ def update_hornet_node():
     
     if os.geteuid()==0:
         #PW function in new window
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
 
         loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function).grid(row=3, column=1, padx='0', pady='0')
 
@@ -308,11 +308,11 @@ def Hornet_install_function():
 
     if os.geteuid()==0:
         #PW function in new window
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
 
         loginButton = Button(app, text="Authentication", command=validateLogin_Hornet_install_function).grid(row=3, column=1, padx='0', pady='0') 
 
@@ -344,11 +344,11 @@ def Bee_install_function():
 
     if os.geteuid()==0:
         #PW function in new window
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
 
         loginButton = Button(app, text="Authentication", command=validateLogin_Bee_install_function).grid(row=3, column=1, padx='0', pady='0') 
 
@@ -376,11 +376,11 @@ def SSL_reverse_proxy_install_function():
 
     if os.geteuid()==0:
         #PW function in new window
-        usernameLabel = Label(app, text="User Name").grid(row=1, column=0, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=1, padx='0', pady='0')  
+        usernameLabel = Label(app, text="User Name").grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(app, textvariable=username).grid(row=1, column=2, padx='0', pady='0')  
 
-        passwordLabel = Label(app,text="Password").grid(row=2, column=0, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=1, padx='0', pady='0')
+        passwordLabel = Label(app,text="Password").grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(app, textvariable=password, show='*').grid(row=2, column=2, padx='0', pady='0')
 
         loginButton = Button(app, text="Authentication", command=validateLogin_SSL_reverse_proxy_install_function).grid(row=3, column=1, padx='0', pady='0') 
 
