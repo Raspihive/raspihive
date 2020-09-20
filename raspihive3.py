@@ -175,9 +175,22 @@ def update_os_function():
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
       
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
-        loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=validateLogin_update_os_function()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
+
 
 
 def validateLogin_update_os_function(username, password):
@@ -234,8 +247,21 @@ def update_packages_function():
         passwordEntry = Entry(app, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_update_packages_function)
-        loginButton.grid(row=3, column=1, padx='0', pady='0') 
+        #loginButton = Button(app, text="Authentication", command=validateLogin_update_packages_function)
+        #loginButton.grid(row=3, column=1, padx='0', pady='0') 
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=validateLogin_update_packages_function()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
       
 
@@ -291,8 +317,21 @@ def update_hornet_node():
         passwordEntry = Entry(app, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function)
-        loginButton.grid(row=3, column=1, padx='0', pady='0')
+        #loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=1, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=validateLogin_update_os_function()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 
 def validateLogin_update_hornet_node(username, password):
@@ -347,8 +386,24 @@ def Hornet_install_function():
         passwordEntry = Entry(app, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_Hornet_install_function)
-        loginButton.grid(row=3, column=1, padx='0', pady='0') 
+        #loginButton = Button(app, text="Authentication", command=validateLogin_Hornet_install_function)
+        #loginButton.grid(row=3, column=1, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=validateLogin_Hornet_install_function()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used") 
+
+
+
 
 def validateLogin_Hornet_install_function(username, password):
     # print("username entered :", username.get())
@@ -390,8 +445,22 @@ def Bee_install_function():
         passwordEntry = Entry(app, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_Bee_install_function)
-        loginButton.grid(row=3, column=1, padx='0', pady='0') 
+        #loginButton = Button(app, text="Authentication", command=validateLogin_Bee_install_function)
+        #loginButton.grid(row=3, column=1, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=validateLogin_Bee_install_function()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")  
+         
 
       
 def validateLogin_Bee_install_function(username, password):
