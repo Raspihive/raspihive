@@ -51,18 +51,18 @@ class mainWindow(tk.Tk):
 
 class StartPage(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master,  background="lightgreen")
+        tk.Frame.__init__(self, master,  background="lightyellow")
         #self.master.geometry("600x200")
 
-        tk.Label(self, text="This is the start page", bg="lightgreen", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
+        tk.Label(self, text="This is the start page", bg="lightyellow", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         # For page one
-        tk.Button(self, text="Update menu", bg="lightgreen",  height = 1,  width = 20,  command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='10', pady='0')
+        tk.Button(self, text="Update menu", bg="lightyellow",  height = 1,  width = 20,  command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='10', pady='0')
         # For page two
-        tk.Button(self, text="Node menu", bg="lightgreen", height = 1,  width = 20,  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='10', pady='0')
+        tk.Button(self, text="Node menu", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='10', pady='0')
         # For page three
-        tk.Button(self, text="Tools", bg="lightgreen", height = 1,  width = 20,  command=lambda: master.switch_frame(PageThree)).grid(row=2, column=0, padx='10', pady='0')
+        tk.Button(self, text="Tools", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageThree)).grid(row=2, column=0, padx='10', pady='0')
         # For page four
-        tk.Button(self, text="Help", bg="lightgreen", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=2, column=1, padx='10', pady='0')
+        tk.Button(self, text="Help", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=2, column=1, padx='10', pady='0')
 
         
 
@@ -637,9 +637,9 @@ def about():
 if __name__ == "__main__":
     app = mainWindow()
     app.title("Raspihive")
-    app.geometry("600x200")
+    app.geometry("600x130")
     #app.configure(bg='white')
-    #app['bg'] = '#49A'
+    app['bg'] = 'black'
     
    
 
