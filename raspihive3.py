@@ -230,25 +230,26 @@ def validateLogin_update_os_function(username, password):
 def update_packages_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
-        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     
     if os.geteuid()==0:
         #PW function in new window
         window = tk.Toplevel(app)
 
-        usernameLabel = Label(app, text="User Name")
+        usernameLabel = Label(window, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry = Entry(window, textvariable=username)
         usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
 
-        passwordLabel = Label(app,text="Password")
+        passwordLabel = Label(window,text="Password")
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-
-        #loginButton = Button(app, text="Authentication", command=validateLogin_update_packages_function)
-        #loginButton.grid(row=3, column=1, padx='0', pady='0') 
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -258,7 +259,7 @@ def update_packages_function():
         def fun(arg):
             if arg == 1:
                 #tkinter.messagebox.showinfo("button 1", "button 1 used")
-                command=validateLogin_update_packages_function()
+                command=validateLogin_update_os_function()
                 window.destroy()
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
@@ -299,26 +300,26 @@ def validateLogin_update_packages_function(username, password):
 def update_hornet_node():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
-        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
-
     
     if os.geteuid()==0:
         #PW function in new window
         window = tk.Toplevel(app)
 
-        usernameLabel = Label(app, text="User Name")
+        usernameLabel = Label(window, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry = Entry(window, textvariable=username)
         usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
 
-        passwordLabel = Label(app,text="Password")
+        passwordLabel = Label(window,text="Password")
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-
-        #loginButton = Button(app, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=1, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -369,25 +370,26 @@ def validateLogin_update_hornet_node(username, password):
 def Hornet_install_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
-        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
-
+    
     if os.geteuid()==0:
         #PW function in new window
         window = tk.Toplevel(app)
 
-        usernameLabel = Label(app, text="User Name")
+        usernameLabel = Label(window, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry = Entry(window, textvariable=username)
         usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
 
-        passwordLabel = Label(app,text="Password")
+        passwordLabel = Label(window,text="Password")
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-
-        #loginButton = Button(app, text="Authentication", command=validateLogin_Hornet_install_function)
-        #loginButton.grid(row=3, column=1, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -397,10 +399,10 @@ def Hornet_install_function():
         def fun(arg):
             if arg == 1:
                 #tkinter.messagebox.showinfo("button 1", "button 1 used")
-                command=validateLogin_Hornet_install_function()
+                command=validateLogin_update_os_function()
                 window.destroy()
             #elif arg == 2:
-                #tkinter.messagebox.showinfo("button 2", "button 2 used") 
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 
 
@@ -416,7 +418,7 @@ def validateLogin_Hornet_install_function(username, password):
         print("You are in!")
         dirname = os.environ['HOME'] + "/test"
         os.makedirs(dirname)
-        cmd='sudo wget -v https://github.com/gohornet/hornet/releases/download/v0.4.2/HORNET-0.4.2_Linux_x86_64.tar.gz -P /home/pi/hornet && sudo chown pi:pi /home/pi/hornet/HORNET-0.4.2_Linux_x86_64.tar.gz && sudo tar -xzf /home/pi/hornet/HORNET-0.4.2_Linux_x86_64.tar.gz -C /home/pi/hornet/ && sudo chown pi:pi -R /home/pi/hornet/HORNET-0.4.2_Linux_x86_64  '
+        cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  &&  sudo sh -c echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet '
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         print("Hornet Node successfully installed")
         messagebox.showinfo("Hornet installer", "Hornet node succesfully installed") 
@@ -430,23 +432,24 @@ def Bee_install_function():
         print("You need to have root privileges")  
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
-
+    
     if os.geteuid()==0:
         #PW function in new window
         window = tk.Toplevel(app)
 
-        usernameLabel = Label(app, text="User Name")
+        usernameLabel = Label(window, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry = Entry(window, textvariable=username)
         usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
 
-        passwordLabel = Label(app,text="Password")
+        passwordLabel = Label(window,text="Password")
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-
-        #loginButton = Button(app, text="Authentication", command=validateLogin_Bee_install_function)
-        #loginButton.grid(row=3, column=1, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -456,10 +459,10 @@ def Bee_install_function():
         def fun(arg):
             if arg == 1:
                 #tkinter.messagebox.showinfo("button 1", "button 1 used")
-                command=validateLogin_Bee_install_function()
+                command=validateLogin_update_os_function()
                 window.destroy()
             #elif arg == 2:
-                #tkinter.messagebox.showinfo("button 2", "button 2 used")  
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
          
 
       
@@ -479,26 +482,40 @@ def validateLogin_Bee_install_function(username, password):
 
 def SSL_reverse_proxy_install_function():
     if os.geteuid() != 0:
-        print("You need to have root privileges") 
-        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges") 
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
-
+    
     if os.geteuid()==0:
         #PW function in new window
         window = tk.Toplevel(app)
 
-        usernameLabel = Label(app, text="User Name")
+        usernameLabel = Label(window, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
-        usernameEntry = Entry(app, textvariable=username)
+        usernameEntry = Entry(window, textvariable=username)
         usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
 
-        passwordLabel = Label(app,text="Password")
+        passwordLabel = Label(window,text="Password")
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
-        passwordEntry = Entry(app, textvariable=password, show='*')
+        passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
-        loginButton = Button(app, text="Authentication", command=validateLogin_SSL_reverse_proxy_install_function)
-        loginButton.grid(row=3, column=1, padx='0', pady='0') 
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=validateLogin_update_os_function()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used") 
 
 
 def validateLogin_SSL_reverse_proxy_install_function(username, password):
