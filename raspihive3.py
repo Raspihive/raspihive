@@ -259,7 +259,7 @@ def update_packages_function():
         def fun(arg):
             if arg == 1:
                 #tkinter.messagebox.showinfo("button 1", "button 1 used")
-                command=validateLogin_update_os_function()
+                command=validateLogin_update_packages_function()
                 window.destroy()
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
@@ -329,7 +329,7 @@ def update_hornet_node():
         def fun(arg):
             if arg == 1:
                 #tkinter.messagebox.showinfo("button 1", "button 1 used")
-                command=validateLogin_update_os_function()
+                command=validateLogin_update_hornet_node()
                 window.destroy()
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
@@ -399,7 +399,7 @@ def Hornet_install_function():
         def fun(arg):
             if arg == 1:
                 #tkinter.messagebox.showinfo("button 1", "button 1 used")
-                command=validateLogin_update_os_function()
+                command=validateLogin_Hornet_install_function()
                 window.destroy()
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
@@ -459,7 +459,7 @@ def Bee_install_function():
         def fun(arg):
             if arg == 1:
                 #tkinter.messagebox.showinfo("button 1", "button 1 used")
-                command=validateLogin_update_os_function()
+                command=validateLogin_Bee_install_function()
                 window.destroy()
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
@@ -512,7 +512,7 @@ def SSL_reverse_proxy_install_function():
         def fun(arg):
             if arg == 1:
                 #tkinter.messagebox.showinfo("button 1", "button 1 used")
-                command=validateLogin_update_os_function()
+                command=validateLogin_SSL_reverse_proxy_install_function()
                 window.destroy()
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used") 
