@@ -416,9 +416,9 @@ def validateLogin_Hornet_install_function(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        dirname = os.environ['HOME'] + "/test"
-        os.makedirs(dirname)
-        cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  &&  sudo sh -c echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet '
+        #dirname = os.environ['HOME'] + "/test"
+        #os.makedirs(dirname)
+        cmd='sudo apt update && sudo apt upgrade && wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  &&  sudo sh -c echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         print("Hornet Node successfully installed")
         messagebox.showinfo("Hornet installer", "Hornet node succesfully installed") 
