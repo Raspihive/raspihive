@@ -654,7 +654,8 @@ def about():
 if __name__ == "__main__":
     app = mainWindow()
     app.title("Raspihive")
-    app.geometry("600x130")
+    app.geometry("")
+    #app.geometry("600x130")
     #app.configure(bg='white')
     app['bg'] = 'black'
     
