@@ -283,7 +283,7 @@ def validateLogin_update_packages_function(username, password):
         progress_bar['value'] = 0
         app.update()
  
-        while progress_bar['value'] < 100:
+        if progress_bar['value'] < 100:
             progress_bar['value'] += 50
             #Keep updating the master object to redraw the progress bar
             app.update()
@@ -350,10 +350,10 @@ def validateLogin_update_hornet_node(username, password):
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 0
+        progress_bar['value'] = 50
         app.update()
     
-        while progress_bar['value'] < 100:
+        if progress_bar['value'] < 100:
             progress_bar['value'] += 50
             #Keep updating the master object to redraw the progress bar
             app.update()
