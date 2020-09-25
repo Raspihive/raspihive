@@ -210,7 +210,7 @@ def validateLogin_update_os_function(username, password):
         progress_bar['value'] = 0
         app.update()
     
-        while progress_bar['value'] < 100:
+        if progress_bar['value'] < 100:
             progress_bar['value'] += 50
             #Keep updating the master object to redraw the progress bar
             app.update()
@@ -220,6 +220,7 @@ def validateLogin_update_os_function(username, password):
             #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
             #exit("Raspberry Pi updated - OK \n  Exiting.")
             time.sleep(0.5)
+            progress_bar.destroy()
         #End progress bar loop
         messagebox.showinfo("Raspberry Pi update", "Raspberry Pi succesfully updated ") 
     else:
@@ -290,6 +291,7 @@ def validateLogin_update_packages_function(username, password):
             call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
             print("Packages updated - OK")
             time.sleep(0.5)
+            progress_bar.destroy()
         #End progress bar loop
         messagebox.showinfo("Packages update", "The packages are succesfully updated") 
     else:
@@ -361,6 +363,7 @@ def validateLogin_update_hornet_node(username, password):
             #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
             #exit("Raspberry Pi updated - OK \n  Exiting.")
             time.sleep(0.5)
+            progress_bar.destroy()
         #End progress bar loop
         messagebox.showinfo("Raspberry Pi update", "Raspberry Pi succesfully updated ") 
     else:
