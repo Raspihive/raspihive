@@ -206,7 +206,7 @@ def validateLogin_update_os_function(username, password):
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 0
+        progress_bar['value'] = 20
         app.update()
         cmd='sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
@@ -278,7 +278,7 @@ def validateLogin_update_packages_function(username, password):
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 0
+        progress_bar['value'] = 20
         app.update()
         cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install -y go --classic'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
@@ -349,7 +349,7 @@ def validateLogin_update_hornet_node(username, password):
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 0
+        progress_bar['value'] = 20
         app.update()
         cmd='sudo apt-get update && sudo apt-get -y upgrade hornet'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
@@ -426,7 +426,7 @@ def validateLogin_Hornet_install_function(username, password):
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 0
+        progress_bar['value'] = 20
         app.update()    
         cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
