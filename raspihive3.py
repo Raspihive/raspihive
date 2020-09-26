@@ -194,7 +194,6 @@ def update_os_function():
 
 
 def validateLogin_update_os_function(username, password):
-    
     # print("username entered :", username.get())
     # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
@@ -209,22 +208,22 @@ def validateLogin_update_os_function(username, password):
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 0
         app.update()
-    
-        if progress_bar['value'] < 100:
-            progress_bar['value'] += 50
+        cmd='sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        while progress_bar['value'] < 100:
+            progress_bar['value'] += 10
             #Keep updating the master object to redraw the progress bar
             app.update()
-            cmd='sudo apt update && sudo apt -y full-upgrade'
-            call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-            print("Raspberry Pi updated - OK")
             #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
             #exit("Raspberry Pi updated - OK \n  Exiting.")
-            time.sleep(0.5)
-            progress_bar.destroy()
+            time.sleep(0.5) 
         #End progress bar loop
+        print("Raspberry Pi updated - OK")
         messagebox.showinfo("Raspberry Pi update", "Raspberry Pi succesfully updated ") 
+        progress_bar.destroy()
     else:
         print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
     #return (set later if needed)
 
 
@@ -272,31 +271,29 @@ def validateLogin_update_packages_function(username, password):
     # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
         #Starting progress bar
         # Create a progressbar widget
-        progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0)
-        progress_bar.grid(row=4, column=1)
+        progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
+        progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 0
         app.update()
- 
-        if progress_bar['value'] < 100:
-            progress_bar['value'] += 50
+        cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install -y go --classic'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        while progress_bar['value'] < 100:
+            progress_bar['value'] += 10
             #Keep updating the master object to redraw the progress bar
             app.update()
-            cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install -y go --classic'
-            call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-            print("Packages updated - OK")
             time.sleep(0.5)
-            progress_bar.destroy()
         #End progress bar loop
+        print("Packages updated - OK")
         messagebox.showinfo("Packages update", "The packages are succesfully updated") 
+        progress_bar.destroy()
     else:
         print("The password you entered is wrong.")
-        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong") 
+        messagebox.showinfo("Authentication", "The password you entered is wrong") 
     #return (set later if needed)
 
 def update_hornet_node():
@@ -335,6 +332,8 @@ def update_hornet_node():
                 window.destroy()
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
+  
+    
 
 
 def validateLogin_update_hornet_node(username, password):
@@ -343,32 +342,36 @@ def validateLogin_update_hornet_node(username, password):
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
     #print("PW2", pw2)
-
+    
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
         #Starting progress bar
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 50
+        progress_bar['value'] = 0
         app.update()
-    
-        if progress_bar['value'] < 100:
-            progress_bar['value'] += 50
+        cmd='sudo apt-get update && sudo apt-get -y upgrade hornet'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        while progress_bar['value'] < 100:
+            progress_bar['value'] += 10
             #Keep updating the master object to redraw the progress bar
             app.update()
-            cmd='sudo apt-get update && sudo apt-get upgrade hornet'
-            call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-            print("Raspberry Pi updated - OK")
             #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
             #exit("Raspberry Pi updated - OK \n  Exiting.")
-            time.sleep(0.5)
-            progress_bar.destroy()
+            time.sleep(0.5) 
         #End progress bar loop
-        messagebox.showinfo("Raspberry Pi update", "Raspberry Pi succesfully updated ") 
+        print("Hornet updated - OK")
+        messagebox.showinfo("Hornet update", "Hornet Node succesfully updated ") 
+        progress_bar.destroy()
     else:
         print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
     #return (set later if needed)
+
+
+
+    
 
 def Hornet_install_function():
     if os.geteuid() != 0:
@@ -419,15 +422,29 @@ def validateLogin_Hornet_install_function(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        #dirname = os.environ['HOME'] + "/test"
-        #os.makedirs(dirname)
+        #Starting progress bar
+        # Create a progressbar widget
+        progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
+        progress_bar.grid(row=4, column=0, padx='0', pady='0')
+        progress_bar['value'] = 0
+        app.update()    
         cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        print("Hornet Node successfully installed")
-        messagebox.showinfo("Hornet installer", "Hornet node succesfully installed") 
+        while progress_bar['value'] < 100:
+            progress_bar['value'] += 10
+            #Keep updating the master object to redraw the progress bar
+            app.update()
+            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
+            #exit("Raspberry Pi updated - OK \n  Exiting.")
+            time.sleep(0.5)
+        #End progress bar loop
+        print("Hornet Node installed - OK")
+        messagebox.showinfo("Hornet installer", "Hornet Node succesfully installed ") 
+        progress_bar.destroy()
     else:
-        print("The password you entered is wrong.")
-        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong") 
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
+    #return (set later if needed) 
 
 
 def Bee_install_function():
@@ -680,6 +697,7 @@ if __name__ == "__main__":
     password = StringVar()
     validateLogin_update_os_function = partial(validateLogin_update_os_function, username, password)
     validateLogin_update_packages_function = partial(validateLogin_update_packages_function, username, password)
+    validateLogin_update_hornet_node = partial(validateLogin_update_hornet_node, username, password)
     validateLogin_Hornet_install_function = partial(validateLogin_Hornet_install_function, username, password)
     validateLogin_Bee_install_function = partial(validateLogin_Bee_install_function, username, password)
     validateLogin_SSL_reverse_proxy_install_function = partial(validateLogin_SSL_reverse_proxy_install_function, username, password)
