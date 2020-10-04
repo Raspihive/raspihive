@@ -364,7 +364,7 @@ def validateLogin_update_packages_function(username, password):
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install -y go --classic'
+        cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         while progress_bar['value'] < 100:
             progress_bar['value'] += 10
