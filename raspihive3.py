@@ -735,8 +735,18 @@ def start_h_function():
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 
-def starthornet():
-    os.system('sudo service hornet start')
+def starthornet(username, password):
+    # print("username entered :", username.get())
+    # print("password entered :", password.get())
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+    cmd='sudo service hornet start'
+    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #os.system('sudo service hornet start')
     #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
     #info for user display message
     messagebox.showinfo("Hornet", "Hornet node started ")
@@ -779,8 +789,18 @@ def stop_h_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
-def stophornet():
-    os.system('sudo service hornet stop')
+def stophornet(username, password):
+    # print("username entered :", username.get())
+    # print("password entered :", password.get())
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+    cmd='sudo service hornet stop'
+    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #os.system('sudo service hornet stop')
     #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
     #info for user display message
     messagebox.showinfo("Hornet", "Hornet node stopped ")
@@ -823,8 +843,18 @@ def restart_h_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
-def restarthornet():
-    os.system('sudo service hornet restart')
+def restarthornet(username, password):
+    # print("username entered :", username.get())
+    # print("password entered :", password.get())
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+    cmd='sudo service hornet restart'
+    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #os.system('sudo service hornet restart')
     #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
     #info for user display message
     messagebox.showinfo("Hornet", "Hornet node restarted ")
@@ -867,8 +897,18 @@ def status_h_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
-def statushornet():
-    os.system('sudo service hornet status')
+def statushornet(username, password):
+    # print("username entered :", username.get())
+    # print("password entered :", password.get())
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+    cmd='sudo service hornet status'
+    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #os.system('sudo service hornet status')
     #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
     #info for user display message
     messagebox.showinfo("Hornet", "Hornet node status ")
@@ -911,8 +951,18 @@ def logs_h_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
-def logshornet():
-    os.system('sudo journalctl -u hornet -f')
+def logshornet(username, password):
+    # print("username entered :", username.get())
+    # print("password entered :", password.get())
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+    cmd='sudo journalctl -u hornet -f'
+    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #os.system('sudo journalctl -u hornet -f')
     #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
     #info for user display message
     messagebox.showinfo("Hornet", "Hornet logs ")
@@ -955,8 +1005,18 @@ def mainnetdb_h_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
-def mainnetdbhornet():
-    os.system('sudo rm -r /var/lib/hornet/mainnetdb')
+def mainnetdbhornet(username, password):
+    # print("username entered :", username.get())
+    # print("password entered :", password.get())
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+    cmd='sudo rm -r /var/lib/hornet/mainnetdb'
+    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #os.system('sudo rm -r /var/lib/hornet/mainnetdb')
     #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
     #info for user display message
     messagebox.showinfo("Hornet", "Hornet mainnetdb removed ")
@@ -999,6 +1059,13 @@ if __name__ == "__main__":
     validateLogin_Hornet_install_function = partial(validateLogin_Hornet_install_function, username, password)
     validateLogin_Bee_install_function = partial(validateLogin_Bee_install_function, username, password)
     validateLogin_SSL_reverse_proxy_install_function = partial(validateLogin_SSL_reverse_proxy_install_function, username, password)
+    #Hornet Operations
+    starthornet = partial(starthornet, username, password)
+    stophornet = partial(stophornet, username, password)
+    restarthornet = partial(restarthornet, username, password)
+    statushornet = partial(statushornet, username, password)
+    logshornet = partial(logshornet, username, password)
+    mainnetdbhornet = partial(mainnetdbhornet, username, password)
 
     app.mainloop()
 
