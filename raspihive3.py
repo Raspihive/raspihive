@@ -87,6 +87,9 @@ class PageOne(tk.Frame):
         label3 = tk.Label(self, text = "Update hornet node", bg="lightblue", height = 1,  width = 20).grid(row=4, column=0, padx='0', pady='0')
         button3 = tk.Button(self, text = "h-update", bg="lightblue", height = 1,  width = 20, command=update_hornet_node).grid(row=4, column=1, padx='0', pady='0')
 
+        label4 = tk.Label(self, text = "Update Raspihive", bg="lightblue", height = 1,  width = 20).grid(row=5, column=0, padx='0', pady='0')
+        button4 = tk.Button(self, text = "r-update", bg="lightblue", height = 1,  width = 20, command=update_raspihive).grid(row=5, column=1, padx='0', pady='0')        
+
 
 class PageTwo(tk.Frame):
     def __init__(self, master):
@@ -180,7 +183,61 @@ def check_pass(username, user_password):
         print('eeee:', e)
 # End of PW module      
 
+def update_raspihive():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=validateLogin_update_raspihive()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
  
+def validateLogin_update_raspihive(username, password):
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+    
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+        """
+        cmd='sudo git pull && sudo git reset --hard origin/develop'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        """
+        print("Raspihive updated - ok")
+        messagebox.showinfo("Raspihive updated", "Raspihive succesfully updated ") 
+    else:
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
+    #return (set later if needed)
+
 def update_os_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
@@ -397,9 +454,6 @@ def validateLogin_update_hornet_node(username, password):
     #return (set later if needed)
 
 
-
-    
-
 def Hornet_install_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
@@ -436,8 +490,6 @@ def Hornet_install_function():
                 window.destroy()
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
-
-
 
 
 def validateLogin_Hornet_install_function(username, password):
@@ -741,16 +793,20 @@ def starthornet(username, password):
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
     #print("PW2", pw2)
-
+    
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-    cmd='sudo service hornet start'
-    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #os.system('sudo service hornet start')
-    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #info for user display message
-    messagebox.showinfo("Hornet", "Hornet node started ")
-    #time.sleep(2)
+        cmd='sudo service hornet start'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #os.system('sudo service hornet start')
+        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #info for user display message
+        messagebox.showinfo("Hornet", "Hornet node started ")
+        #time.sleep(2)
+    else:
+        print("The password you entered is wrong.")
+        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong") 
+    
 
 def stop_h_function():
     if os.geteuid() != 0:
@@ -798,13 +854,17 @@ def stophornet(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-    cmd='sudo service hornet stop'
-    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #os.system('sudo service hornet stop')
-    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #info for user display message
-    messagebox.showinfo("Hornet", "Hornet node stopped ")
-    #time.sleep(2)
+        cmd='sudo service hornet stop'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #os.system('sudo service hornet stop')
+        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #info for user display message
+        messagebox.showinfo("Hornet", "Hornet node stopped ")
+        #time.sleep(2)
+    else:
+        print("The password you entered is wrong.")
+        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
+    
 
 def restart_h_function():
     if os.geteuid() != 0:
@@ -852,13 +912,17 @@ def restarthornet(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-    cmd='sudo service hornet restart'
-    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #os.system('sudo service hornet restart')
-    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #info for user display message
-    messagebox.showinfo("Hornet", "Hornet node restarted ")
-    #time.sleep(2)
+        cmd='sudo service hornet restart'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #os.system('sudo service hornet restart')
+        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #info for user display message
+        messagebox.showinfo("Hornet", "Hornet node restarted ")
+        #time.sleep(2)
+    else:
+        print("The password you entered is wrong.")
+        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
+    
 
 def status_h_function():
     if os.geteuid() != 0:
@@ -906,13 +970,16 @@ def statushornet(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-    cmd='sudo service hornet status'
-    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #os.system('sudo service hornet status')
-    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #info for user display message
-    messagebox.showinfo("Hornet", "Hornet node status ")
-    #time.sleep(2)
+        cmd='sudo service hornet status'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #os.system('sudo service hornet status')
+        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #info for user display message
+        messagebox.showinfo("Hornet", "Hornet node status ")
+        #time.sleep(2)
+    else:
+        print("The password you entered is wrong.")
+        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
 
 def logs_h_function():
     if os.geteuid() != 0:
@@ -960,13 +1027,17 @@ def logshornet(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-    cmd='sudo journalctl -u hornet -f'
-    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #os.system('sudo journalctl -u hornet -f')
-    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #info for user display message
-    messagebox.showinfo("Hornet", "Hornet logs ")
-    #time.sleep(2)
+        cmd='sudo journalctl -u hornet -f'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #os.system('sudo journalctl -u hornet -f')
+        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #info for user display message
+        messagebox.showinfo("Hornet", "Hornet logs ")
+        #time.sleep(2)
+    else:
+        print("The password you entered is wrong.")
+        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
+  
 
 def mainnetdb_h_function():
     if os.geteuid() != 0:
@@ -1014,13 +1085,17 @@ def mainnetdbhornet(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-    cmd='sudo rm -r /var/lib/hornet/mainnetdb'
-    call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #os.system('sudo rm -r /var/lib/hornet/mainnetdb')
-    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-    #info for user display message
-    messagebox.showinfo("Hornet", "Hornet mainnetdb removed ")
-    #time.sleep(2)
+        cmd='sudo rm -r /var/lib/hornet/mainnetdb'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #os.system('sudo rm -r /var/lib/hornet/mainnetdb')
+        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #info for user display message
+        messagebox.showinfo("Hornet", "Hornet mainnetdb removed ")
+        #time.sleep(2)
+    else:
+        print("The password you entered is wrong.")
+        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
+
 
 ###############################################################################
 # end functions
@@ -1059,6 +1134,7 @@ if __name__ == "__main__":
     validateLogin_Hornet_install_function = partial(validateLogin_Hornet_install_function, username, password)
     validateLogin_Bee_install_function = partial(validateLogin_Bee_install_function, username, password)
     validateLogin_SSL_reverse_proxy_install_function = partial(validateLogin_SSL_reverse_proxy_install_function, username, password)
+    validateLogin_update_raspihive = partial(validateLogin_update_raspihive, username, password)
     #Hornet Operations
     starthornet = partial(starthornet, username, password)
     stophornet = partial(stophornet, username, password)
