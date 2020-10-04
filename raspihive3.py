@@ -143,22 +143,22 @@ class PageFive(tk.Frame):
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
 
         label1 = tk.Label(self, text = " Start hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Start hornet node", bg="lightblue", height = 1,  width = 20,  command=starthornet).grid(row=2, column=1, padx='0', pady='0')
+        button1 = tk.Button(self, text = "Start hornet node", bg="lightblue", height = 1,  width = 20,  command=start_h_function).grid(row=2, column=1, padx='0', pady='0')
 
         label2 = tk.Label(self, text = " Stop hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=3, column=0, padx='0', pady='0')
-        button2 = tk.Button(self, text = "Stop hornet node", bg="lightblue", height = 1,  width = 20,  command=stophornet).grid(row=3, column=1, padx='0', pady='0')
+        button2 = tk.Button(self, text = "Stop hornet node", bg="lightblue", height = 1,  width = 20,  command=stop_h_function).grid(row=3, column=1, padx='0', pady='0')
 
         label3 = tk.Label(self, text = " Restart hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=4, column=0, padx='0', pady='0')
-        button3 = tk.Button(self, text = "Restart hornet node", bg="lightblue", height = 1,  width = 20,  command=restarthornet).grid(row=4, column=1, padx='0', pady='0')
+        button3 = tk.Button(self, text = "Restart hornet node", bg="lightblue", height = 1,  width = 20,  command=restart_h_function).grid(row=4, column=1, padx='0', pady='0')
 
         label4 = tk.Label(self, text = " Check hornet status ", bg="lightblue", height = 1,  width = 20).grid(row=5, column=0, padx='0', pady='0')
-        button4 = tk.Button(self, text = "Check hornet status", bg="lightblue", height = 1,  width = 20,  command=statushornet).grid(row=5, column=1, padx='0', pady='0')
+        button4 = tk.Button(self, text = "Check hornet status", bg="lightblue", height = 1,  width = 20,  command=status_h_function).grid(row=5, column=1, padx='0', pady='0')
 
         label5 = tk.Label(self, text = " Watch the logs ", bg="lightblue", height = 1,  width = 20).grid(row=6, column=0, padx='0', pady='0')
-        button5 = tk.Button(self, text = "Watch the logs", bg="lightblue", height = 1,  width = 20,  command=logshornet).grid(row=6, column=1, padx='0', pady='0')
+        button5 = tk.Button(self, text = "Watch the logs", bg="lightblue", height = 1,  width = 20,  command=logs_h_function).grid(row=6, column=1, padx='0', pady='0')
 
         label6 = tk.Label(self, text = " Remove the mainnetdb ", bg="lightblue", height = 1,  width = 20).grid(row=7, column=0, padx='0', pady='0')
-        button6 = tk.Button(self, text = "Remove the mainnnetdb", bg="lightblue", height = 1,  width = 20,  command=mainnetdbhornet).grid(row=7, column=1, padx='0', pady='0')
+        button6 = tk.Button(self, text = "Remove the mainnnetdb", bg="lightblue", height = 1,  width = 20,  command=mainnetdb_h_function).grid(row=7, column=1, padx='0', pady='0')
 
 #####################################End of Window frames############################################
 #Start of PW module
@@ -697,12 +697,87 @@ def infopreparations():
 
 
 #Hornet operations
+def start_h_function():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=starthornet()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
+
+
 def starthornet():
     os.system('sudo service hornet start')
     #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
     #info for user display message
     messagebox.showinfo("Hornet", "Hornet node started ")
     #time.sleep(2)
+
+def stop_h_function():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=stophornet()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 def stophornet():
     os.system('sudo service hornet stop')
@@ -711,12 +786,86 @@ def stophornet():
     messagebox.showinfo("Hornet", "Hornet node stopped ")
     #time.sleep(2)
 
+def restart_h_function():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=restarthornet()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
+
 def restarthornet():
     os.system('sudo service hornet restart')
     #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
     #info for user display message
     messagebox.showinfo("Hornet", "Hornet node restarted ")
     #time.sleep(2)
+
+def status_h_function():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=statushornet()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 def statushornet():
     os.system('sudo service hornet status')
@@ -725,12 +874,86 @@ def statushornet():
     messagebox.showinfo("Hornet", "Hornet node status ")
     #time.sleep(2)
 
+def logs_h_function():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=logshornet()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
+
 def logshornet():
     os.system('sudo journalctl -u hornet -f')
     #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
     #info for user display message
     messagebox.showinfo("Hornet", "Hornet logs ")
     #time.sleep(2)
+
+def mainnetdb_h_function():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=mainnetdbhornet()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 def mainnetdbhornet():
     os.system('sudo rm -r /var/lib/hornet/mainnetdb')
