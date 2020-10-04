@@ -143,8 +143,22 @@ class PageFive(tk.Frame):
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
 
         label1 = tk.Label(self, text = " Start hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        #button1 = tk.Button(self, text = "Start hornet node", bg="lightblue", height = 1,  width = 20,  command=starthornet).grid(row=2, column=1, padx='0', pady='0')
+        button1 = tk.Button(self, text = "Start hornet node", bg="lightblue", height = 1,  width = 20,  command=starthornet).grid(row=2, column=1, padx='0', pady='0')
 
+        label2 = tk.Label(self, text = " Stop hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=3, column=0, padx='0', pady='0')
+        button2 = tk.Button(self, text = "Stop hornet node", bg="lightblue", height = 1,  width = 20,  command=stophornet).grid(row=3, column=1, padx='0', pady='0')
+
+        label3 = tk.Label(self, text = " Restart hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=4, column=0, padx='0', pady='0')
+        button3 = tk.Button(self, text = "Restart hornet node", bg="lightblue", height = 1,  width = 20,  command=restarthornet).grid(row=4, column=1, padx='0', pady='0')
+
+        label4 = tk.Label(self, text = " Check hornet status ", bg="lightblue", height = 1,  width = 20).grid(row=5, column=0, padx='0', pady='0')
+        button4 = tk.Button(self, text = "Check hornet status", bg="lightblue", height = 1,  width = 20,  command=statushornet).grid(row=5, column=1, padx='0', pady='0')
+
+        label5 = tk.Label(self, text = " Watch the logs ", bg="lightblue", height = 1,  width = 20).grid(row=6, column=0, padx='0', pady='0')
+        button5 = tk.Button(self, text = "Watch the logs", bg="lightblue", height = 1,  width = 20,  command=logshornet).grid(row=6, column=1, padx='0', pady='0')
+
+        label6 = tk.Label(self, text = " Remove the mainnetdb ", bg="lightblue", height = 1,  width = 20).grid(row=7, column=0, padx='0', pady='0')
+        button6 = tk.Button(self, text = "Remove the mainnnetdb", bg="lightblue", height = 1,  width = 20,  command=mainnetdbhornet).grid(row=7, column=1, padx='0', pady='0')
 
 #####################################End of Window frames############################################
 #Start of PW module
@@ -680,6 +694,50 @@ def about():
 def infopreparations():
     #info for user display message
     messagebox.showinfo("Preparations", "Allow basic ports in your firewall settings (and your router if you run HORNET behind one). The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 14265 TCP - API port (optional if you don't want to access your node's API from external)  ")
+
+
+#Hornet operations
+def starthornet():
+    os.system('sudo service hornet start')
+    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #info for user display message
+    messagebox.showinfo("Hornet", "Hornet node started ")
+    #time.sleep(2)
+
+def stophornet():
+    os.system('sudo service hornet stop')
+    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #info for user display message
+    messagebox.showinfo("Hornet", "Hornet node stopped ")
+    #time.sleep(2)
+
+def restarthornet():
+    os.system('sudo service hornet restart')
+    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #info for user display message
+    messagebox.showinfo("Hornet", "Hornet node restarted ")
+    #time.sleep(2)
+
+def statushornet():
+    os.system('sudo service hornet status')
+    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #info for user display message
+    messagebox.showinfo("Hornet", "Hornet node status ")
+    #time.sleep(2)
+
+def logshornet():
+    os.system('sudo journalctl -u hornet -f')
+    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #info for user display message
+    messagebox.showinfo("Hornet", "Hornet logs ")
+    #time.sleep(2)
+
+def mainnetdbhornet():
+    os.system('sudo rm -r /var/lib/hornet/mainnetdb')
+    #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+    #info for user display message
+    messagebox.showinfo("Hornet", "Hornet mainnetdb removed ")
+    #time.sleep(2)
 
 ###############################################################################
 # end functions
