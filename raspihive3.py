@@ -744,7 +744,7 @@ def about():
 
 def infopreparations():
     #info for user display message
-    messagebox.showinfo("Preparations", "Allow basic ports in your firewall settings (and your router if you run HORNET behind one). The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 14265 TCP - API port (optional if you don't want to access your node's API from external)  ")
+    messagebox.showinfo("Preparations", "Allow basic ports in your router settings. The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
 
 
 #Hornet operations
