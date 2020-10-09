@@ -575,8 +575,8 @@ def validateLogin_Bee_install_function(username, password):
         print("You are in!")
         messagebox.showinfo("Bee node installer", "Bee node succesfully installed")
     else:
-        print("The password you entered is wrong.")
-        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong") 
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
 
 def SSL_reverse_proxy_install_function():
     if os.geteuid() != 0:
@@ -628,8 +628,8 @@ def validateLogin_SSL_reverse_proxy_install_function(username, password):
         print("SSL installed - OK")
         messagebox.showinfo("SSL installer", "SSL successfully installed and configured") 
     else:
-        print("The password you entered is wrong.")
-        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
 
 
 # Start of Ping function
@@ -803,8 +803,8 @@ def starthornet(username, password):
         messagebox.showinfo("Hornet", "Hornet node started ")
         #time.sleep(2)
     else:
-        print("The password you entered is wrong.")
-        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong") 
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
     
 
 def stop_h_function():
@@ -861,8 +861,8 @@ def stophornet(username, password):
         messagebox.showinfo("Hornet", "Hornet node stopped ")
         #time.sleep(2)
     else:
-        print("The password you entered is wrong.")
-        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
     
 
 def restart_h_function():
@@ -919,8 +919,8 @@ def restarthornet(username, password):
         messagebox.showinfo("Hornet", "Hornet node restarted ")
         #time.sleep(2)
     else:
-        print("The password you entered is wrong.")
-        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
     
 
 def status_h_function():
@@ -1002,8 +1002,8 @@ def statushornet(username, password):
         sys.stdout = old_stdout
         #End of Hornet Log Gui
     else:
-        print("The password you entered is wrong.")
-        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
 
 def logs_h_function():
     if os.geteuid() != 0:
@@ -1085,8 +1085,8 @@ def logshornet(username, password):
         sys.stdout = old_stdout
         #End of Hornet Log Gui
     else:
-        print("The password you entered is wrong.")
-        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
   
 
 def mainnetdb_h_function():
@@ -1143,8 +1143,8 @@ def mainnetdbhornet(username, password):
         messagebox.showinfo("Hornet", "Hornet mainnetdb removed ")
         #time.sleep(2)
     else:
-        print("The password you entered is wrong.")
-        messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
 
 
 ###############################################################################
