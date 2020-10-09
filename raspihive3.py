@@ -21,7 +21,6 @@ from tkinter import (Tk, Button, Text, StringVar, END, Toplevel, BOTH)
 # Test
 from tkinter import Frame
 
-
 # from tkinter.messagebox import showinfo
 # we need to make our own showinfo widget
 ###############################################################################
@@ -1018,6 +1017,26 @@ def logs_h_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
+#Test Logui
+def log():
+    #print("Hello World")
+    p = subprocess.run("sudo journalctl -u hornet -f", shell=True, stdout=subprocess.PIPE)
+    print(p.stdout.decode())
+
+# --- classes ---
+
+class Redirect():
+
+    def __init__(self, widget):
+        self.widget = widget
+
+    def write(self, text):
+        self.widget.insert('end', text)
+
+    #def flush(self):
+    #    pass
+
+
 def logshornet(username, password):
     # print("username entered :", username.get())
     # print("password entered :", password.get())
@@ -1027,13 +1046,18 @@ def logshornet(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        cmd='sudo journalctl -u hornet -f'
-        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #os.system('sudo journalctl -u hornet -f')
-        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #info for user display message
-        messagebox.showinfo("Hornet", "Hornet logs ")
-        #time.sleep(2)
+        root = tk.Tk()
+
+        text = tk.Text(root)
+        text.grid()
+        button = tk.Button(root, text='Show Hornet Logs', command=log)
+        button.grid()
+        old_stdout = sys.stdout    
+        sys.stdout = Redirect(text)
+
+        root.mainloop()
+        #Anzeige innerhalb des Windows - wenn innerhalb root dann erfolgt die Ausgabe im Terminal
+        sys.stdout = old_stdout
     else:
         print("The password you entered is wrong.")
         messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
