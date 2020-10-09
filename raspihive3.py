@@ -506,7 +506,7 @@ def validateLogin_Hornet_install_function(username, password):
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()    
-        cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service'
+        cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && '
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         while progress_bar['value'] < 100:
             progress_bar['value'] += 10
@@ -960,6 +960,26 @@ def status_h_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
+#Logui for hornet logs
+def logstat():
+    #print("Hello World")
+    p = subprocess.run("sudo service hornet status", shell=True, stdout=subprocess.PIPE)
+    print(p.stdout.decode())
+
+# --- classes ---
+
+class Redirect():
+
+    def __init__(self, widget):
+        self.widget = widget
+
+    def write(self, text):
+        self.widget.insert('end', text)
+
+    #def flush(self):
+    #    pass
+
+
 def statushornet(username, password):
     # print("username entered :", username.get())
     # print("password entered :", password.get())
@@ -969,13 +989,18 @@ def statushornet(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        cmd='sudo service hornet status'
-        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #os.system('sudo service hornet status')
-        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #info for user display message
-        messagebox.showinfo("Hornet", "Hornet node status ")
-        #time.sleep(2)
+        #Hornet Log Gui
+        root = tk.Tk()
+        root.title("Hornet Node Status")
+        text = tk.Text(root)
+        text.grid()
+        button = tk.Button(root, text='Show Hornet Status', command=logstat)
+        button.grid()
+        old_stdout = sys.stdout    
+        sys.stdout = Redirect(text)
+        root.mainloop()
+        sys.stdout = old_stdout
+        #End of Hornet Log Gui
     else:
         print("The password you entered is wrong.")
         messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
@@ -1017,7 +1042,7 @@ def logs_h_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
-#Test Logui
+#Logui for hornet logs
 def log():
     #print("Hello World")
     p = subprocess.run("sudo journalctl -u hornet -f", shell=True, stdout=subprocess.PIPE)
@@ -1046,6 +1071,7 @@ def logshornet(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
+        #Hornet Log Gui
         root = tk.Tk()
         root.title("Hornet Logs")
         text = tk.Text(root)
@@ -1056,8 +1082,8 @@ def logshornet(username, password):
         sys.stdout = Redirect(text)
 
         root.mainloop()
-        #Anzeige innerhalb des Windows - wenn innerhalb root dann erfolgt die Ausgabe im Terminal
         sys.stdout = old_stdout
+        #End of Hornet Log Gui
     else:
         print("The password you entered is wrong.")
         messagebox.showinfo("Raspberry Pi update", "The password you entered is wrong")
