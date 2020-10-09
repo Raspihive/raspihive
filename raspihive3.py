@@ -1047,7 +1047,7 @@ def logshornet(username, password):
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
         root = tk.Tk()
-
+        root.title("Hornet Logs")
         text = tk.Text(root)
         text.grid()
         button = tk.Button(root, text='Show Hornet Logs', command=log)
