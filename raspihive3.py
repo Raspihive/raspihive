@@ -226,10 +226,10 @@ def validateLogin_update_raspihive(username, password):
     
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        """
+        
         cmd='sudo git pull && sudo git reset --hard origin/develop'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        """
+        
         print("Raspihive updated - ok")
         messagebox.showinfo("Raspihive updated", "Raspihive succesfully updated ") 
     else:
