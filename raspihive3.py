@@ -1044,8 +1044,7 @@ def logs_h_function():
 
 #Logui for hornet logs
 def log():
-    #print("Hello World")
-    p = subprocess.run("sudo journalctl -u hornet -f", shell=True, stdout=subprocess.PIPE)
+    p = subprocess.run("sudo journalctl -u hornet -n 600 --no-pager", shell=True, stdout=subprocess.PIPE)
     print(p.stdout.decode())
 
 # --- classes ---
