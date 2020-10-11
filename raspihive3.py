@@ -18,19 +18,15 @@ from threading import Thread
 from subprocess import check_output
 from tkinter.ttk import (Label, Entry)
 from tkinter import (Tk, Button, Text, StringVar, END, Toplevel, BOTH)
-# Test
-from tkinter import Frame
 
-# from tkinter.messagebox import showinfo
-# we need to make our own showinfo widget
 ###############################################################################
 # Globale Variablen
 localtime = time.asctime( time.localtime(time.time()) )
+
 ##############################################################################
 ##############################################################################
 # start functions
 #####################################Start of Window frames############################################
-
 
 class mainWindow(tk.Tk):
     def __init__(self):
@@ -956,51 +952,29 @@ def status_h_function():
             if arg == 1:
                 #tkinter.messagebox.showinfo("button 1", "button 1 used")
                 command=statushornet()
-                window.destroy()
+                #window.destroy()
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
-
-#Logui for hornet logs
-def logstat():
-    #print("Hello World")
-    p = subprocess.run("sudo service hornet status", shell=True, stdout=subprocess.PIPE)
-    print(p.stdout.decode())
-
-# --- classes ---
-
-class Redirect():
-
-    def __init__(self, widget):
-        self.widget = widget
-
-    def write(self, text):
-        self.widget.insert('end', text)
-
-    #def flush(self):
-    #    pass
-
 
 def statushornet(username, password):
     # print("username entered :", username.get())
     # print("password entered :", password.get())
-    print('password check:', check_pass(username.get(), password.get()))
+    #print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
     #print("PW2", pw2)
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        #Hornet Log Gui
+        # For hornet node status
+        Outputfileobject=os.popen("sudo service hornet status")    
+        Output=Outputfileobject.read()
+        Outputfileobject.close()
+        #Gui log for hornet node status
         root = tk.Tk()
         root.title("Hornet Node Status")
-        text = tk.Text(root)
-        text.grid()
-        button = tk.Button(root, text='Show Hornet Status', command=logstat)
-        button.grid()
-        old_stdout = sys.stdout    
-        sys.stdout = Redirect(text)
+        Text=Label(root,text=Output).grid()
         root.mainloop()
-        sys.stdout = old_stdout
-        #End of Hornet Log Gui
+        #End of Gui log for hornet node status
     else:
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
@@ -1038,7 +1012,7 @@ def logs_h_function():
             if arg == 1:
                 #tkinter.messagebox.showinfo("button 1", "button 1 used")
                 command=logshornet()
-                window.destroy()
+                #window.destroy()
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
@@ -1046,20 +1020,6 @@ def logs_h_function():
 def log():
     p = subprocess.run("sudo journalctl -u hornet -n 20 ", shell=True, stdout=subprocess.PIPE)
     print(p.stdout.decode())
-
-# --- classes ---
-
-class Redirect():
-
-    def __init__(self, widget):
-        self.widget = widget
-
-    def write(self, text):
-        self.widget.insert('end', text)
-
-    #def flush(self):
-    #    pass
-
 
 def logshornet(username, password):
     # print("username entered :", username.get())
@@ -1070,19 +1030,16 @@ def logshornet(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        #Hornet Log Gui
+        # For hornet node logs
+        Outputfileobject=os.popen("sudo journalctl -u hornet -n 10")     
+        Output=Outputfileobject.read()
+        Outputfileobject.close()
+        #Gui log for hornet node status
         root = tk.Tk()
-        root.title("Hornet Logs")
-        text = tk.Text(root)
-        text.grid()
-        button = tk.Button(root, text='Show Hornet Logs', command=log)
-        button.grid()
-        old_stdout = sys.stdout    
-        sys.stdout = Redirect(text)
-
+        root.title("Hornet Node Logs")
+        Text=Label(root,text=Output).grid()
         root.mainloop()
-        sys.stdout = old_stdout
-        #End of Hornet Log Gui
+        #End of Gui log for hornet node status
     else:
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
@@ -1102,7 +1059,6 @@ def mainnetdb_h_function():
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
         usernameEntry = Entry(window, textvariable=username)
         usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
-      
 
         passwordLabel = Label(window,text="Password")
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
@@ -1145,7 +1101,6 @@ def mainnetdbhornet(username, password):
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
 
-
 ###############################################################################
 # end functions
 ###############################################################################
@@ -1161,12 +1116,8 @@ if __name__ == "__main__":
     #app.configure(bg='white')
     app['bg'] = 'black'
     
-   
 
-    
     #app.columnconfigure(0, weight=1)
-
-    
 
     # Label for Clock
     label1=Label(app)
@@ -1192,7 +1143,7 @@ if __name__ == "__main__":
     logshornet = partial(logshornet, username, password)
     mainnetdbhornet = partial(mainnetdbhornet, username, password)
 
-    app.mainloop()
 
+    app.mainloop()
 ###############################################################################
 # End main programm
