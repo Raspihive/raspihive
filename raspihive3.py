@@ -137,27 +137,36 @@ class PageFive(tk.Frame):
         tk.Frame.__init__(self, master, background="lightblue")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="This is page five", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
+        tk.Label(self, text="This is page four", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
+        
+        # For page six
+        tk.Button(self, text="Hornet Node Control", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=9, column=0, padx='10', pady='0')
+        class PageSix(tk.Frame):
+            def __init__(self, master):
+                tk.Frame.__init__(self, master, background="lightblue")
+                #self.master.geometry("650x200")
 
-        label1 = tk.Label(self, text = " Start hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Start hornet node", bg="lightblue", height = 1,  width = 20,  command=start_h_function).grid(row=2, column=1, padx='0', pady='0')
+                tk.Label(self, text="This is page five", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
+                tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
 
-        label2 = tk.Label(self, text = " Stop hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=3, column=0, padx='0', pady='0')
-        button2 = tk.Button(self, text = "Stop hornet node", bg="lightblue", height = 1,  width = 20,  command=stop_h_function).grid(row=3, column=1, padx='0', pady='0')
+                label1 = tk.Label(self, text = " Start hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
+                button1 = tk.Button(self, text = "Start hornet node", bg="lightblue", height = 1,  width = 20,  command=start_h_function).grid(row=2, column=1, padx='0', pady='0')
 
-        label3 = tk.Label(self, text = " Restart hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=4, column=0, padx='0', pady='0')
-        button3 = tk.Button(self, text = "Restart hornet node", bg="lightblue", height = 1,  width = 20,  command=restart_h_function).grid(row=4, column=1, padx='0', pady='0')
+                label2 = tk.Label(self, text = " Stop hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=3, column=0, padx='0', pady='0')
+                button2 = tk.Button(self, text = "Stop hornet node", bg="lightblue", height = 1,  width = 20,  command=stop_h_function).grid(row=3, column=1, padx='0', pady='0')
 
-        label4 = tk.Label(self, text = " Check hornet status ", bg="lightblue", height = 1,  width = 20).grid(row=5, column=0, padx='0', pady='0')
-        button4 = tk.Button(self, text = "Check hornet status", bg="lightblue", height = 1,  width = 20,  command=status_h_function).grid(row=5, column=1, padx='0', pady='0')
+                label3 = tk.Label(self, text = " Restart hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=4, column=0, padx='0', pady='0')
+                button3 = tk.Button(self, text = "Restart hornet node", bg="lightblue", height = 1,  width = 20,  command=restart_h_function).grid(row=4, column=1, padx='0', pady='0')
 
-        label5 = tk.Label(self, text = " Watch the logs ", bg="lightblue", height = 1,  width = 20).grid(row=6, column=0, padx='0', pady='0')
-        button5 = tk.Button(self, text = "Watch the logs", bg="lightblue", height = 1,  width = 20,  command=logs_h_function).grid(row=6, column=1, padx='0', pady='0')
+                label4 = tk.Label(self, text = " Check hornet status ", bg="lightblue", height = 1,  width = 20).grid(row=5, column=0, padx='0', pady='0')
+                button4 = tk.Button(self, text = "Check hornet status", bg="lightblue", height = 1,  width = 20,  command=status_h_function).grid(row=5, column=1, padx='0', pady='0')
 
-        label6 = tk.Label(self, text = " Remove the mainnetdb ", bg="lightblue", height = 1,  width = 20).grid(row=7, column=0, padx='0', pady='0')
-        button6 = tk.Button(self, text = "Remove the mainnnetdb", bg="lightblue", height = 1,  width = 20,  command=mainnetdb_h_function).grid(row=7, column=1, padx='0', pady='0')
+                label5 = tk.Label(self, text = " Watch the logs ", bg="lightblue", height = 1,  width = 20).grid(row=6, column=0, padx='0', pady='0')
+                button5 = tk.Button(self, text = "Watch the logs", bg="lightblue", height = 1,  width = 20,  command=logs_h_function).grid(row=6, column=1, padx='0', pady='0')
 
+                label6 = tk.Label(self, text = " Remove the mainnetdb ", bg="lightblue", height = 1,  width = 20).grid(row=7, column=0, padx='0', pady='0')
+                button6 = tk.Button(self, text = "Remove the mainnnetdb", bg="lightblue", height = 1,  width = 20,  command=mainnetdb_h_function).grid(row=7, column=1, padx='0', pady='0')
 #####################################End of Window frames############################################
 #Start of PW module
 def check_pass(username, user_password):
