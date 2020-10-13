@@ -18,6 +18,7 @@ from threading import Thread
 from subprocess import check_output
 from tkinter.ttk import (Label, Entry)
 from tkinter import (Tk, Button, Text, StringVar, END, Toplevel, BOTH)
+import webbrowser
 
 ###############################################################################
 # Globale Variablen
@@ -61,6 +62,8 @@ class StartPage(tk.Frame):
         # For page five
         tk.Button(self, text="Node control", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=3, column=0, padx='10', pady='0')
         
+        # For page Dashboard Access
+        tk.Button(self, text="Dashboard Access", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=3, column=1, padx='10', pady='0')
 
 class PageOne(tk.Frame):
     def __init__(self, master):
@@ -167,6 +170,20 @@ class PageFive(tk.Frame):
 
                 label6 = tk.Label(self, text = " Remove the mainnetdb ", bg="lightblue", height = 1,  width = 20).grid(row=7, column=0, padx='0', pady='0')
                 button6 = tk.Button(self, text = "Remove the mainnnetdb", bg="lightblue", height = 1,  width = 20,  command=mainnetdb_h_function).grid(row=7, column=1, padx='0', pady='0')
+
+class PageSix(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master, background="lightblue")
+        #self.master.geometry("650x200")
+
+        tk.Label(self, text="Node-Dashboard", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
+
+        label1 = tk.Label(self, text = " Hornet Dashboard ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
+        button1 = tk.Button(self, text = "Open", bg="lightblue", height = 1,  width = 20,  command=hornet_dashboard).grid(row=2, column=1, padx='0', pady='0')
+
+
+
 #####################################End of Window frames############################################
 #Start of PW module
 def check_pass(username, user_password):
@@ -1109,6 +1126,12 @@ def mainnetdbhornet(username, password):
     else:
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
+
+def hornet_dashboard():
+    url = 'https://www.iota.org/'
+    webbrowser.open(url)
+
+
 
 ###############################################################################
 # end functions
