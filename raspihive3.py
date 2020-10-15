@@ -144,11 +144,11 @@ class PageFive(tk.Frame):
         tk.Frame.__init__(self, master, background="lightblue")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="This is page four", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
+        tk.Label(self, text="Node control", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
         
         # For page six
-        tk.Button(self, text="Hornet Node Control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=0, column=0, padx='10', pady='0')
+        tk.Button(self, text="Hornet Node Control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=1, column=0, padx='10', pady='0')
         class PageSix(tk.Frame):
             def __init__(self, master):
                 tk.Frame.__init__(self, master, background="lightblue")
