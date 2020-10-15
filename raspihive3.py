@@ -100,11 +100,15 @@ class PageTwo(tk.Frame):
         label1 = tk.Label(self, text = "Install Hornet-Node", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
         button1 = tk.Button(self, text = "Install Hornet", bg="lightblue", height = 1,  width = 20, command=Hornet_install_function).grid(row=2, column=1, padx='0', pady='0')
 
+        label1u = tk.Label(self, text = "Uninstall Hornet-Node", bg="lightblue", height = 1,  width = 20).grid(row=2, column=2, padx='0', pady='0')
+        button1u = tk.Button(self, text = "Uninstall Hornet", bg="lightblue", height = 1,  width = 20, command=Hornet_uninstall_function).grid(row=2, column=2, padx='0', pady='0')
+
         label2 = tk.Label(self, text = "Install Bee-Node", bg="lightblue", height = 1,  width = 20).grid(row=3, column=0, padx='0', pady='0')
         button2 = tk.Button(self, text = "Install Bee", bg="lightblue", height = 1,  width = 20, command=Bee_install_function).grid(row=3, column=1, padx='0', pady='0')
 
         label3 = tk.Label(self, text = "Install rev. proxy + ssl", bg="lightblue", height = 1,  width = 20).grid(row=4, column=0, padx='0', pady='0')
         button3 = tk.Button(self, text = "install RP + SSL", bg="lightblue", height = 1,  width = 20,  command=SSL_reverse_proxy_install_function).grid(row=4, column=1, padx='0', pady='0')
+
 
 class PageThree(tk.Frame):
     def __init__(self, master):
@@ -439,8 +443,6 @@ def update_hornet_node():
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
   
     
-
-
 def validateLogin_update_hornet_node(username, password):
     # print("username entered :", username.get())
     # print("password entered :", password.get())
@@ -528,7 +530,7 @@ def validateLogin_Hornet_install_function(username, password):
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()    
-        cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600 && sudo ufw allow 14626/udp && sudo ufw allow 80 && sudo ufw allow 443 && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard'
+        cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw allow 80 && sudo ufw allow 443 && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         while progress_bar['value'] < 100:
             progress_bar['value'] += 10
@@ -540,6 +542,77 @@ def validateLogin_Hornet_install_function(username, password):
         #End progress bar loop
         print("Hornet Node installed - OK")
         messagebox.showinfo("Hornet installer", "Hornet Node succesfully installed ") 
+        progress_bar.destroy()
+    else:
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
+    #return (set later if needed)
+
+
+def Hornet_uninstall_function():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+      
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=validateLogin_Hornet_uninstall_function()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
+
+def validateLogin_Hornet_uninstall_function(username, password):
+    # print("username entered :", username.get())
+    # print("password entered :", password.get())
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+        #Starting progress bar
+        # Create a progressbar widget
+        progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
+        progress_bar.grid(row=4, column=0, padx='0', pady='0')
+        progress_bar['value'] = 20
+        app.update()    
+        cmd='sudo systemctl stop hornet && sudo apt -qq purge hornet -y'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        while progress_bar['value'] < 100:
+            progress_bar['value'] += 10
+            #Keep updating the master object to redraw the progress bar
+            app.update()
+            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
+            #exit("Raspberry Pi updated - OK \n  Exiting.")
+            time.sleep(0.5)
+        #End progress bar loop
+        print("Hornet Node installed - OK")
+        messagebox.showinfo("Hornet installer", "Hornet Node succesfully uninstalled ") 
         progress_bar.destroy()
     else:
         print("You entered a wrong username or password")
@@ -1163,10 +1236,14 @@ if __name__ == "__main__":
     validateLogin_update_os_function = partial(validateLogin_update_os_function, username, password)
     validateLogin_update_packages_function = partial(validateLogin_update_packages_function, username, password)
     validateLogin_update_hornet_node = partial(validateLogin_update_hornet_node, username, password)
+
     validateLogin_Hornet_install_function = partial(validateLogin_Hornet_install_function, username, password)
+    validateLogin_Hornet_uninstall_function = partial(validateLogin_Hornet_uninstall_function, username, password)
+
     validateLogin_Bee_install_function = partial(validateLogin_Bee_install_function, username, password)
     validateLogin_SSL_reverse_proxy_install_function = partial(validateLogin_SSL_reverse_proxy_install_function, username, password)
     validateLogin_update_raspihive = partial(validateLogin_update_raspihive, username, password)
+    
     #Hornet Operations
     starthornet = partial(starthornet, username, password)
     stophornet = partial(stophornet, username, password)
