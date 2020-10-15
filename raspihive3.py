@@ -728,10 +728,10 @@ def validateLogin_SSL_reverse_proxy_install_function(username, password):
         progress_bar['value'] = 20
         app.update()    
         # Install nginx webserver
-        cmd='ls -la'  #sudo apt install -y nginx && sudo ufw allow "Nginx Full"
+        cmd='sudo apt install -y nginx && sudo ufw allow "Nginx Full"'  #sudo apt install -y nginx && sudo ufw allow "Nginx Full"
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         # Nginx configuration
-        f = open("/home/paul/Dokumente/demofile.txt", "w")
+        f = open("/etc/nginx/sites-available/default", "w")
         f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws { \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400 \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n } \n } \n")
         f.close()
         #open and read the file after the appending:
