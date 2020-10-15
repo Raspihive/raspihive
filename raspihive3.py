@@ -1230,7 +1230,7 @@ def mainnetdbhornet(username, password):
         messagebox.showinfo("Authentication", "The password you entered is wrong")
 
 def hornet_dashboard():
-    url = 'https://www.iota.org/'
+    url = '127.0.0.1:8081'
     webbrowser.open(url)
 
 
