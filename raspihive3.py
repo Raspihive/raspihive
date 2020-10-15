@@ -732,13 +732,15 @@ def validateLogin_SSL_reverse_proxy_install_function(username, password):
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         # Nginx configuration
         f = open("/etc/nginx/sites-available/default", "w")
-        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws { \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400 \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n } \n } \n")
+        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws { \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n } \n } \n")
         f.close()
         #open and read the file after the appending:
         #f = open("/home/paul/Dokumente/demofile.txt", "r")
         #print(f.read())
         cmd='sudo service nginx reload'
-        cmd='sudo apt install software-properties-common && sudo add-apt-repository universe && sudo apt update && apt install certbot python3-certbot-nginx'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        cmd='sudo apt install software-properties-common -y   && sudo apt update && sudo apt install certbot python3-certbot-nginx -y' #sudo add-apt-repository universe
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         while progress_bar['value'] < 100:
             progress_bar['value'] += 10
             #Keep updating the master object to redraw the progress bar
