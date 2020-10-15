@@ -530,7 +530,7 @@ def validateLogin_Hornet_install_function(username, password):
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()    
-        cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw allow 80 && sudo ufw allow 443 && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard'
+        cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         while progress_bar['value'] < 100:
             progress_bar['value'] += 10
@@ -657,7 +657,6 @@ def Bee_install_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
          
-
       
 def validateLogin_Bee_install_function(username, password):
     # print("username entered :", username.get())
@@ -720,8 +719,36 @@ def validateLogin_SSL_reverse_proxy_install_function(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        print("SSL installed - OK")
+        #Enter domain name for ssl registration...
+
+        #Starting progress bar
+        # Create a progressbar widget
+        progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
+        progress_bar.grid(row=4, column=0, padx='0', pady='0')
+        progress_bar['value'] = 20
+        app.update()    
+        # Install nginx webserver
+        cmd='ls -la'  #sudo apt install -y nginx && sudo ufw allow "Nginx Full"
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        # Nginx configuration
+        f = open("/home/paul/Dokumente/demofile.txt", "w")
+        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws { \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400 \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n } \n } \n")
+        f.close()
+        #open and read the file after the appending:
+        #f = open("/home/paul/Dokumente/demofile.txt", "r")
+        #print(f.read())
+        cmd='sudo service nginx reload'
+        cmd='sudo apt install software-properties-common && sudo add-apt-repository universe && sudo apt update && apt install certbot python3-certbot-nginx'
+        while progress_bar['value'] < 100:
+            progress_bar['value'] += 10
+            #Keep updating the master object to redraw the progress bar
+            app.update()
+            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
+            #exit("Raspberry Pi updated - OK \n  Exiting.")
+            time.sleep(0.5)
+        #End progress bar loop
         messagebox.showinfo("SSL installer", "SSL successfully installed and configured") 
+        progress_bar.destroy()
     else:
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
