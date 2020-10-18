@@ -1,5 +1,5 @@
 #This Programm is made with love from the IOTA-Community for the IOTA-Community. 
-
+#
 ###############################################################################
 # libraries
 from tkinter import Tk as tk, Menu, FLAT, Label, Entry, Button, W, StringVar, ttk
@@ -709,14 +709,14 @@ def SSL_reverse_proxy_install_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used") 
 
-
+#
 def validateLogin_SSL_reverse_proxy_install_function(username, password):
     # print("username entered :", username.get())
     # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
     #print("PW2", pw2)
-
+#
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
         #Enter domain name for ssl registration...
@@ -732,7 +732,7 @@ def validateLogin_SSL_reverse_proxy_install_function(username, password):
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         # Nginx configuration
         f = open("/etc/nginx/sites-available/default", "w")
-        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws { \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'";  \n proxy_set_header Host $host; \n proxy_set_header X-Real-IP $remote_addr; \n proxy_set_header X-Forwarded-Proto $scheme; \n  proxy_set_header X-Real-SslId $ssl_session_id; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n } \n } \n")
+        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws { \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n } \n } \n")
         f.close()
         #open and read the file after the appending:
         #f = open("/home/paul/Dokumente/demofile.txt", "r")
