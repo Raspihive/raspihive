@@ -1232,7 +1232,7 @@ def mainnetdbhornet(username, password):
 def hornet_dashboard():
     url = '127.0.0.1:8081'
     webbrowser.open(url)
-#Test
+
 
 
 ###############################################################################
