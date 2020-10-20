@@ -458,7 +458,7 @@ def validateLogin_update_hornet_node(username, password):
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        cmd='sudo apt-get update && sudo apt-get -y upgrade hornet'
+        cmd='sudo service hornet stop && sudo apt-get update && sudo apt-get -y upgrade hornet && sudo service hornet start'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         while progress_bar['value'] < 100:
             progress_bar['value'] += 10
@@ -667,7 +667,7 @@ def validateLogin_Bee_install_function(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        messagebox.showinfo("Bee node installer", "Bee node succesfully installed")
+        messagebox.showinfo("Bee node installer", "Bee node - coming soon")
     else:
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
