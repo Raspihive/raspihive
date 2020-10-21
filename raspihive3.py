@@ -121,6 +121,9 @@ class PageThree(tk.Frame):
         label1 = tk.Label(self, text = " Ping test ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
         button1 = tk.Button(self, text = "Ping", bg="lightblue", height = 1,  width = 20,  command=Ping_function).grid(row=2, column=1, padx='0', pady='0')
 
+        label2 = tk.Label(self, text = " Mount Hornet DB to SSD", bg="lightblue", height = 1,  width = 20).grid(row=3, column=0, padx='0', pady='0')
+        button2 = tk.Button(self, text = "mount", bg="lightblue", height = 1,  width = 20,  command=mounthornetDBtoextDrive).grid(row=3, column=1, padx='0', pady='0')
+
 class PageFour(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="lightblue")
@@ -870,7 +873,6 @@ def infopreparations():
     #info for user display message
     messagebox.showinfo("Preparations", "Allow basic ports in your router settings. The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
 
-
 #Hornet operations
 def start_h_function():
     if os.geteuid() != 0:
@@ -1232,7 +1234,65 @@ def mainnetdbhornet(username, password):
 def hornet_dashboard():
     url = '127.0.0.1:8081'
     webbrowser.open(url)
-#Test
+
+#Test mount hornet DB to external SSD 
+def mounthornetDBtoextDrive():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+      
+        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
+        #loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
+        #b2.grid()
+
+        def fun(arg):
+            if arg == 1:
+                #tkinter.messagebox.showinfo("button 1", "button 1 used")
+                command=mounthornetDB()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
+
+
+def mounthornetDB():
+    # print("username entered :", username.get())
+    # print("password entered :", password.get())
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+    #print("PW2", pw2)
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+        cmd='sudo blkid && sudo mkdir /mnt/Drive_Name && sudo mount /dev/sda1 /mnt/Drive_Name && sudo chmod 775 /mnt/Drive_Name'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #os.system('sudo rm -r /var/lib/hornet/mainnetdb')
+        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        #info for user display message
+        messagebox.showinfo("Mount-DB", "Hornet mainnetdb successfully mounted ")
+        #time.sleep(2)
+    else:
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
+
 
 
 ###############################################################################
