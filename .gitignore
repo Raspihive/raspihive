@@ -2,3 +2,4 @@ build/
 dist/
 raspihive.egg-info/
 raspihive/__pycache__/
+venv
