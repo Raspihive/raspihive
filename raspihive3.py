@@ -119,7 +119,7 @@ class PageThree(tk.Frame):
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
 
         label1 = tk.Label(self, text = " Ping test ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Ping", bg="lightblue", height = 1,  width = 20,  command=Ping_function).grid(row=2, column=1, padx='0', pady='0')
+        button1 = tk.Button(self, text = "ping", bg="lightblue", height = 1,  width = 20,  command=Ping_function).grid(row=2, column=1, padx='0', pady='0')
 
         label2 = tk.Label(self, text = " Mount Hornet DB to SSD", bg="lightblue", height = 1,  width = 20).grid(row=3, column=0, padx='0', pady='0')
         button2 = tk.Button(self, text = "mount", bg="lightblue", height = 1,  width = 20,  command=mounthornetDBtoextDrive).grid(row=3, column=1, padx='0', pady='0')
@@ -1282,7 +1282,7 @@ def mounthornetDB():
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        cmd='sudo blkid && sudo mkdir /mnt/Drive_Name && sudo mount /dev/sda1 /mnt/Drive_Name && sudo chmod 775 /mnt/Drive_Name'
+        cmd='sudo mkdir /media/hornetdb && sudo mount /dev/sdb1 /media/hornetdb && sudo chmod 775 /media/hornetdb && sudo echo "/dev/sdb1 /media/hornetdb ext4 defaults  1 1" >> /etc/fstab && sudo cp -fr --preserve /var/lib/hornet/mainnetdb /media/hornetdb/ && sudo mv var/lib/hornet/mainnetdb /var/lib/hornet/mainnetdb.old && sudo ln -sf /media/hornetdb /var/lib/hornet/mainnetdb'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         #os.system('sudo rm -r /var/lib/hornet/mainnetdb')
         #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
