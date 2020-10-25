@@ -4,3 +4,4 @@ raspihive.egg-info/
 __pycache__/
 venv
 *.pyc
+.vscode
