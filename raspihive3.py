@@ -1,5 +1,9 @@
+#!/usr/bin/python3
+#!-*- coding: utf-8 -*-
 #This Programm is made with love from the IOTA-Community for the IOTA-Community. 
 #
+
+
 ###############################################################################
 # libraries
 from tkinter import Tk as tk, Menu, FLAT, Label, Entry, Button, W, StringVar, ttk
@@ -503,7 +507,7 @@ def validateLogin_Hornet_install_function(username, password):
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()    
-        cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard -y'
+        cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard -y'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         while progress_bar['value'] < 100:
             progress_bar['value'] += 10
@@ -681,7 +685,7 @@ def validateLogin_SSL_reverse_proxy_install_function(username, password):
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         # Nginx configuration
         f = open("/etc/nginx/sites-available/default", "w")
-        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws { \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n } \n } \n")
+        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off; \n ssl_session_cache shared:SSL:32m;   \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws { \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n } \n } \n")
         f.close()
         cmd='sudo service nginx reload'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
@@ -1097,7 +1101,7 @@ def mainnetdbhornet(username, password):
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        cmd='sudo rm -r /var/lib/hornet/mainnetdb'
+        cmd='sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         messagebox.showinfo("Hornet", "Hornet mainnetdb removed ")
     else:

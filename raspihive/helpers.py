@@ -159,7 +159,7 @@ def update_os_function():
 
     if os.geteuid() == 0:
         # PW function in new window
-        window = tk.Toplevel(app)
+        window = tk.Toplevel()
 
         usernameLabel = Label(window, text="User Name")
         usernameLabel.grid(row=1, column=1, padx='0', pady='0')
