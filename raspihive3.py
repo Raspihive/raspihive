@@ -1,5 +1,9 @@
+#!/usr/bin/python3
+#!-*- coding: utf-8 -*-
 #This Programm is made with love from the IOTA-Community for the IOTA-Community. 
 #
+
+
 ###############################################################################
 # libraries
 from tkinter import Tk as tk, Menu, FLAT, Label, Entry, Button, W, StringVar, ttk
@@ -62,7 +66,7 @@ class StartPage(tk.Frame):
         # For page five
         tk.Button(self, text="Node control", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='10', pady='0')
         
-        # For page Dashboard Access
+        # For page six Dashboard Access
         tk.Button(self, text="Dashboard Access", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=2, column=1, padx='10', pady='0')
 
 class PageOne(tk.Frame):
@@ -119,7 +123,13 @@ class PageThree(tk.Frame):
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=3, column=2, padx='0', pady='0')
 
         label1 = tk.Label(self, text = " Ping test ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Ping", bg="lightblue", height = 1,  width = 20,  command=Ping_function).grid(row=2, column=1, padx='0', pady='0')
+        button1 = tk.Button(self, text = "ping", bg="lightblue", height = 1,  width = 20,  command=Ping_function).grid(row=2, column=1, padx='0', pady='0')
+
+        label2 = tk.Label(self, text = " Mount Hornet DB to SSD", bg="lightblue", height = 1,  width = 20).grid(row=3, column=0, padx='0', pady='0')
+        button2 = tk.Button(self, text = "mount", bg="lightblue", height = 1,  width = 20,  command=mounthornetDBtoextDrive).grid(row=3, column=1, padx='0', pady='0')
+
+        label3 = tk.Label(self, text = " SSD USB 3.0 fix - beta", bg="lightblue", height = 1,  width = 20).grid(row=4, column=0, padx='0', pady='0')
+        button3 = tk.Button(self, text = "fix", bg="lightblue", height = 1,  width = 20,  command=fixforolderssdsuasprob).grid(row=4, column=1, padx='0', pady='0')
 
 class PageFour(tk.Frame):
     def __init__(self, master):
@@ -228,9 +238,6 @@ def update_raspihive():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -248,7 +255,6 @@ def update_raspihive():
 def validateLogin_update_raspihive(username, password):
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
     
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
@@ -283,9 +289,6 @@ def update_os_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -303,11 +306,8 @@ def update_os_function():
 
 
 def validateLogin_update_os_function(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
     
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
@@ -323,8 +323,6 @@ def validateLogin_update_os_function(username, password):
             progress_bar['value'] += 10
             #Keep updating the master object to redraw the progress bar
             app.update()
-            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
-            #exit("Raspberry Pi updated - OK \n  Exiting.")
             time.sleep(0.5) 
         #End progress bar loop
         print("Raspberry Pi updated - OK")
@@ -356,9 +354,6 @@ def update_packages_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -376,8 +371,6 @@ def update_packages_function():
       
 
 def validateLogin_update_packages_function(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
 
@@ -425,14 +418,9 @@ def update_hornet_node():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
-        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
-        #b2.grid()
 
         def fun(arg):
             if arg == 1:
@@ -444,11 +432,8 @@ def update_hornet_node():
   
     
 def validateLogin_update_hornet_node(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
     
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
@@ -464,8 +449,6 @@ def validateLogin_update_hornet_node(username, password):
             progress_bar['value'] += 10
             #Keep updating the master object to redraw the progress bar
             app.update()
-            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
-            #exit("Raspberry Pi updated - OK \n  Exiting.")
             time.sleep(0.5) 
         #End progress bar loop
         print("Hornet updated - OK")
@@ -497,9 +480,6 @@ def Hornet_install_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -516,11 +496,8 @@ def Hornet_install_function():
 
 
 def validateLogin_Hornet_install_function(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
@@ -530,14 +507,12 @@ def validateLogin_Hornet_install_function(username, password):
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()    
-        cmd='sudo apt update && sudo apt upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard -y && sudo service hornet start'
+        cmd='sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard -y'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         while progress_bar['value'] < 100:
             progress_bar['value'] += 10
             #Keep updating the master object to redraw the progress bar
             app.update()
-            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
-            #exit("Raspberry Pi updated - OK \n  Exiting.")
             time.sleep(0.5)
         #End progress bar loop
         print("Hornet Node installed - OK")
@@ -569,9 +544,6 @@ def Hornet_uninstall_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -587,11 +559,8 @@ def Hornet_uninstall_function():
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 def validateLogin_Hornet_uninstall_function(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
@@ -607,8 +576,6 @@ def validateLogin_Hornet_uninstall_function(username, password):
             progress_bar['value'] += 10
             #Keep updating the master object to redraw the progress bar
             app.update()
-            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
-            #exit("Raspberry Pi updated - OK \n  Exiting.")
             time.sleep(0.5)
         #End progress bar loop
         print("Hornet Node installed - OK")
@@ -640,9 +607,6 @@ def Bee_install_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -659,15 +623,12 @@ def Bee_install_function():
          
       
 def validateLogin_Bee_install_function(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        messagebox.showinfo("Bee node installer", "Bee node - coming soon ;)")
+        messagebox.showinfo("Bee node installer", "Bee node - coming soon")
     else:
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
@@ -692,9 +653,6 @@ def SSL_reverse_proxy_install_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -709,14 +667,9 @@ def SSL_reverse_proxy_install_function():
             #elif arg == 2:
                 #tkinter.messagebox.showinfo("button 2", "button 2 used") 
 
-#
 def validateLogin_SSL_reverse_proxy_install_function(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
-#
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
         #Enter domain name for ssl registration...
@@ -732,11 +685,8 @@ def validateLogin_SSL_reverse_proxy_install_function(username, password):
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         # Nginx configuration
         f = open("/etc/nginx/sites-available/default", "w")
-        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws { \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n } \n } \n")
+        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off; \n ssl_session_cache shared:SSL:32m;   \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws { \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n } \n } \n")
         f.close()
-        #open and read the file after the appending:
-        #f = open("/home/paul/Dokumente/demofile.txt", "r")
-        #print(f.read())
         cmd='sudo service nginx reload'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
         cmd='sudo apt install software-properties-common -y   && sudo apt update && sudo apt install certbot python3-certbot-nginx -y' #sudo add-apt-repository universe
@@ -745,8 +695,6 @@ def validateLogin_SSL_reverse_proxy_install_function(username, password):
             progress_bar['value'] += 10
             #Keep updating the master object to redraw the progress bar
             app.update()
-            #sys.exit("Raspberry Pi updated - OK \n  Exiting.")
-            #exit("Raspberry Pi updated - OK \n  Exiting.")
             time.sleep(0.5)
         #End progress bar loop
         messagebox.showinfo("SSL installer", "SSL successfully installed and configured") 
@@ -870,7 +818,6 @@ def infopreparations():
     #info for user display message
     messagebox.showinfo("Preparations", "Allow basic ports in your router settings. The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
 
-
 #Hornet operations
 def start_h_function():
     if os.geteuid() != 0:
@@ -892,9 +839,6 @@ def start_h_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -911,21 +855,14 @@ def start_h_function():
 
 
 def starthornet(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
     
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
         cmd='sudo service hornet start'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #os.system('sudo service hornet start')
-        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #info for user display message
         messagebox.showinfo("Hornet", "Hornet node started ")
-        #time.sleep(2)
     else:
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
@@ -951,9 +888,6 @@ def stop_h_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
@@ -969,21 +903,14 @@ def stop_h_function():
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 def stophornet(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
         cmd='sudo service hornet stop'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #os.system('sudo service hornet stop')
-        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #info for user display message
         messagebox.showinfo("Hornet", "Hornet node stopped ")
-        #time.sleep(2)
     else:
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
@@ -1009,14 +936,9 @@ def restart_h_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
-        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
-        #b2.grid()
 
         def fun(arg):
             if arg == 1:
@@ -1027,21 +949,14 @@ def restart_h_function():
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 def restarthornet(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
         cmd='sudo service hornet restart'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #os.system('sudo service hornet restart')
-        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #info for user display message
         messagebox.showinfo("Hornet", "Hornet node restarted ")
-        #time.sleep(2)
     else:
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
@@ -1067,14 +982,9 @@ def status_h_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
-        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
-        #b2.grid()
 
         def fun(arg):
             if arg == 1:
@@ -1085,11 +995,7 @@ def status_h_function():
                 #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 def statushornet(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
-    #print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
@@ -1127,22 +1033,13 @@ def logs_h_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
-        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
-        #b2.grid()
 
         def fun(arg):
             if arg == 1:
-                #tkinter.messagebox.showinfo("button 1", "button 1 used")
                 command=logshornet()
-                #window.destroy()
-            #elif arg == 2:
-                #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 #Logui for hornet logs
 def log():
@@ -1150,11 +1047,8 @@ def log():
     print(p.stdout.decode())
 
 def logshornet(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
@@ -1192,39 +1086,24 @@ def mainnetdb_h_function():
         passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
         passwordEntry = Entry(window, textvariable=password, show='*')
         passwordEntry.grid(row=2, column=2, padx='0', pady='0')
-      
-        #loginButton = Button(window, text="Authentication", command=validateLogin_update_os_function)
-        #loginButton.grid(row=3, column=2, padx='0', pady='0')
 
         loginButton = Button(window, text="Authentication", command=lambda: fun(1))
         loginButton.grid(row=3, column=2, padx='0', pady='0')
-        #b2 = Button(window, text="Quit2", command=lambda: fun(2))
-        #b2.grid()
 
         def fun(arg):
             if arg == 1:
-                #tkinter.messagebox.showinfo("button 1", "button 1 used")
                 command=mainnetdbhornet()
                 window.destroy()
-            #elif arg == 2:
-                #tkinter.messagebox.showinfo("button 2", "button 2 used")
 
 def mainnetdbhornet(username, password):
-    # print("username entered :", username.get())
-    # print("password entered :", password.get())
     print('password check:', check_pass(username.get(), password.get()))
     pwd = check_pass(username.get(), password.get())
-    #print("PW2", pw2)
 
     if pwd == True: # Needs to match with user password on the system 
         print("You are in!")
-        cmd='sudo rm -r /var/lib/hornet/mainnetdb'
+        cmd='sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start'
         call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #os.system('sudo rm -r /var/lib/hornet/mainnetdb')
-        #call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
-        #info for user display message
         messagebox.showinfo("Hornet", "Hornet mainnetdb removed ")
-        #time.sleep(2)
     else:
         print("You entered a wrong username or password")
         messagebox.showinfo("Authentication", "The password you entered is wrong")
@@ -1232,6 +1111,96 @@ def mainnetdbhornet(username, password):
 def hornet_dashboard():
     url = '127.0.0.1:8081'
     webbrowser.open(url)
+
+#Test mount hornet DB to external SSD 
+def mounthornetDBtoextDrive():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+        def fun(arg):
+            if arg == 1:
+                command=mounthornetDB()
+                window.destroy()
+
+def mounthornetDB():
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+
+
+    if pwd == True: # Needs to match with user password on the system 
+        print("You are in!")
+        cmd='sudo mkdir /media/hornetdb && sudo mount /dev/sdb1 /media/hornetdb && sudo chmod 775 /media/hornetdb && sudo echo "/dev/sdb1 /media/hornetdb ext4 defaults  1 1" >> /etc/fstab && sudo cp -fr --preserve /var/lib/hornet/mainnetdb /media/hornetdb/ && sudo mv var/lib/hornet/mainnetdb /var/lib/hornet/mainnetdb.old && sudo ln -sf /media/hornetdb /var/lib/hornet/mainnetdb'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        messagebox.showinfo("Mount-DB", "Hornet mainnetdb successfully mounted ")
+    else:
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
+
+
+#Test mount hornet DB to external SSD 
+def fixforolderssdsuasprob():
+    if os.geteuid() != 0:
+        print("You need to have root privileges")  
+        messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
+        sys.exit
+    
+    if os.geteuid()==0:
+        #PW function in new window
+        window = tk.Toplevel(app)
+
+        usernameLabel = Label(window, text="User Name")
+        usernameLabel.grid(row=1, column=1, padx='0', pady='0')
+        usernameEntry = Entry(window, textvariable=username)
+        usernameEntry.grid(row=1, column=2, padx='0', pady='0')  
+
+        passwordLabel = Label(window,text="Password")
+        passwordLabel.grid(row=2, column=1, padx='0', pady='0')  
+        passwordEntry = Entry(window, textvariable=password, show='*')
+        passwordEntry.grid(row=2, column=2, padx='0', pady='0')
+
+        loginButton = Button(window, text="Authentication", command=lambda: fun(1))
+        loginButton.grid(row=3, column=2, padx='0', pady='0')
+
+
+        def fun(arg):
+            if arg == 1:
+                command=ssdfixuasprob()
+                window.destroy()
+            #elif arg == 2:
+                #tkinter.messagebox.showinfo("button 2", "button 2 used")
+
+def ssdfixuasprob():
+    print('password check:', check_pass(username.get(), password.get()))
+    pwd = check_pass(username.get(), password.get())
+
+    if pwd == True: # Needs to match with user password on the system 
+        cmd='sudo echo -e "blacklist uas\nblacklist sg" > /etc/modprobe.d/disable_uas.conf'
+        call('echo {} | sudo -S {}'.format(pwd, cmd), shell=True)
+        messagebox.showinfo("Mount-DB", "Hornet mainnetdb successfully mounted ")
+    else:
+        print("You entered a wrong username or password")
+        messagebox.showinfo("Authentication", "The password you entered is wrong")
+
+
 
 
 
