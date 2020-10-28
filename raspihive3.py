@@ -128,7 +128,7 @@ class PageThree(tk.Frame):
         label2 = tk.Label(self, text = " Mount Hornet DB to SSD", bg="lightblue", height = 1,  width = 20).grid(row=3, column=0, padx='0', pady='0')
         button2 = tk.Button(self, text = "mount", bg="lightblue", height = 1,  width = 20,  command=mounthornetDBtoextDrive).grid(row=3, column=1, padx='0', pady='0')
 
-        label3 = tk.Label(self, text = " SSD USB 3.0 fix", bg="lightblue", height = 1,  width = 20).grid(row=4, column=0, padx='0', pady='0')
+        label3 = tk.Label(self, text = " SSD USB 3.0 fix - beta", bg="lightblue", height = 1,  width = 20).grid(row=4, column=0, padx='0', pady='0')
         button3 = tk.Button(self, text = "fix", bg="lightblue", height = 1,  width = 20,  command=fixforolderssdsuasprob).grid(row=4, column=1, padx='0', pady='0')
 
 class PageFour(tk.Frame):
