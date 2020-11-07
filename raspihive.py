@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 #!-*- coding: utf-8 -*-
 #This Programm is made with love from the IOTA-Community for the IOTA-Community. 
 #
@@ -26,8 +26,8 @@ import webbrowser
 
 # Check for root
 #if not os.geteuid() == 0:
+#    messagebox.showinfo("Raspberry Pi Authentication", "You need sudo privileges to start raspihive")
 #    sys.exit("\n Only root can run this script \n")
-#    messagebox.showinfo("Raspberry Pi Authentication", "Only root can run this script")
 ###############################################################################
 # Globale Variablen
 localtime = time.asctime( time.localtime(time.time()) )
@@ -185,7 +185,7 @@ class PageSix(tk.Frame):
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='0', pady='0')
 
         #label1 = tk.Label(self, text = " Hornet Dashboard ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Open", bg="lightblue", height = 1,  width = 20,  command=hornet_dashboard).grid(row=2, column=1, padx='0', pady='0')
+        button1 = tk.Button(self, text = "Open Dashboard", bg="lightblue", height = 1,  width = 20,  command=hornet_dashboard).grid(row=2, column=1, padx='0', pady='0')
 
 
 #####################################End of Window frames############################################
@@ -574,11 +574,13 @@ def mainnetdb_h_function():
         sys.exit
     if os.geteuid()==0:
         os.system('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start')
-        messagebox.showinfo(" Hornet", "Hornet node stopped  ")
+        messagebox.showinfo(" Hornet", " Hornet DB removed  ")
 
 def hornet_dashboard():
     url = '127.0.0.1:8081'
     webbrowser.open(url)
+
+  
 
 
 
