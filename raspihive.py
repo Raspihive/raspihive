@@ -566,7 +566,7 @@ def logs_h_function():
         root.mainloop()
         #End of Gui log for hornet node status
         #Testende
-
+#fixed
 def mainnetdb_h_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
