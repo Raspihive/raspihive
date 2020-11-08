@@ -491,7 +491,7 @@ def fixforolderssdsuasprob():
 def report():
     #info for user display message
     messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
-#
+
 def about():
     #info for user display message
     messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Version 1.0 beta ")
