@@ -575,7 +575,7 @@ def mainnetdb_h_function():
     if os.geteuid()==0:
         os.system('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start')
         messagebox.showinfo(" Hornet", " Hornet DB removed  ")
-
+#fix
 def hornet_dashboard():
     os.system('sudo -upi chromium http://localhost')
     
