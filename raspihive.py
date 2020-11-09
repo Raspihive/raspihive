@@ -212,6 +212,7 @@ def update_os_function():
         progress_bar['value'] = 20
         app.update()
         os.system('sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove')
+        #subprocess.run(['sudo', 'apt', 'update'])
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
             #Keep updating the master object to redraw the progress bar
@@ -278,7 +279,7 @@ def update_raspihive():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        os.system('sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master')
+        os.system('sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master')    #   sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
             #Keep updating the master object to redraw the progress bar
@@ -491,7 +492,7 @@ def fixforolderssdsuasprob():
 def report():
     #info for user display message
     messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
-#
+
 def about():
     #info for user display message
     messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Version 1.0 beta ")
