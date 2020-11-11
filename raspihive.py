@@ -55,23 +55,23 @@ class mainWindow(tk.Tk):
 
 class StartPage(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master,  background="lightyellow")
+        tk.Frame.__init__(self, master,  background="#0B3861")
         #self.master.geometry("600x200")
 
-        tk.Label(self, text="Main Page", bg="lightyellow", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
+        tk.Label(self, text="", bg="#0B3861", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         # For page one
-        tk.Button(self, text="Update menu", bg="lightyellow",  height = 1,  width = 20,  command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='10', pady='0')
+        tk.Button(self, text="Update menu", bg="lightblue",  height = 1,  width = 20,  command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='10', pady='0')
          # For page two
-        tk.Button(self, text="Install menu", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='10', pady='0')
+        tk.Button(self, text="Install menu", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='10', pady='0')
         # For page three
-        tk.Button(self, text="Tools", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageThree)).grid(row=3, column=0, padx='10', pady='0')
+        tk.Button(self, text="Tools", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageThree)).grid(row=3, column=0, padx='10', pady='0')
         # For page four
-        tk.Button(self, text="Help", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='10', pady='0')
+        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='10', pady='0')
         # For page five
-        tk.Button(self, text="Node control", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='10', pady='0')
+        tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='10', pady='0')
         
         # For page six Dashboard Access
-        tk.Button(self, text="Dashboard Access", bg="lightyellow", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=2, column=1, padx='10', pady='0')
+        tk.Button(self, text="Dashboard Access", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=2, column=1, padx='10', pady='0')
 
 
 class PageOne(tk.Frame):
@@ -598,7 +598,7 @@ if __name__ == "__main__":
     app.geometry("")
     #app.geometry("600x130")
     #app.configure(bg='white')
-    app['bg'] = 'black'
+    app['bg'] = '#0B3861'
     
 
     #app.columnconfigure(0, weight=1)
