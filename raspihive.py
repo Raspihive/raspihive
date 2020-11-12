@@ -68,7 +68,7 @@ class StartPage(tk.Frame):
         # For page four
         tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='10', pady='0')
         # For page five
-        tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='10', pady='0')
+        tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='10', pady='10')
         
         # For page six Dashboard Access
         tk.Button(self, text="Dashboard Access", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=2, column=1, padx='10', pady='0')
