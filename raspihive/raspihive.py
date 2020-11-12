@@ -279,7 +279,7 @@ def update_raspihive():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        os.system('sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git ')   # #      sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master
+        os.system('sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master')   # #   sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
             #Keep updating the master object to redraw the progress bar
