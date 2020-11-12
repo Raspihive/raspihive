@@ -76,7 +76,7 @@ class StartPage(tk.Frame):
 
 class PageOne(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, background="lightblue")
+        tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
         tk.Label(self, text="Update menu", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
@@ -97,7 +97,7 @@ class PageOne(tk.Frame):
 
 class PageTwo(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, background="lightblue")
+        tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
         #tk.Label(self, text="Install menu", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
@@ -115,7 +115,7 @@ class PageTwo(tk.Frame):
 
 class PageThree(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, background="lightblue")
+        tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
         #tk.Label(self, text="Useful tools", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
@@ -130,7 +130,7 @@ class PageThree(tk.Frame):
 
 class PageFour(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, background="lightblue")
+        tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
         #tk.Label(self, text="Informations", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
@@ -146,7 +146,7 @@ class PageFour(tk.Frame):
         
 class PageFive(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, background="lightblue")
+        tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
         tk.Label(self, text="Node control", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
@@ -178,7 +178,7 @@ class PageFive(tk.Frame):
 
 class PageSix(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master, background="lightblue")
+        tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
         #tk.Label(self, text="Node-Dashboard", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
