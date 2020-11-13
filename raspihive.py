@@ -66,7 +66,7 @@ class StartPage(tk.Frame):
         # For page three
         tk.Button(self, text="Tools", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageThree)).grid(row=3, column=0, padx='0', pady='0')
         # For page four
-        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='0', pady='0')
+        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='0', pady='0', )
         # For page five
         tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='0', pady='10')
         
@@ -185,7 +185,7 @@ class PageSix(tk.Frame):
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='0', pady='0')
 
         #label1 = tk.Label(self, text = " Hornet Dashboard ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Open Dashboard", bg="lightblue", height = 1,  width = 20,  command=hornet_dashboard).grid(row=2, column=0, padx='10', pady='10')
+        button1 = tk.Button(self, text = "Open dashboard", bg="lightblue", height = 1,  width = 20,  command=hornet_dashboard).grid(row=2, column=0, padx='10', pady='10')
 
 
 #####################################End of Window frames############################################
@@ -595,8 +595,8 @@ def hornet_dashboard():
 if __name__ == "__main__":
     app = mainWindow()
     app.title("Raspihive")
-    #app.geometry("")
-    app.geometry("590x170+360+200")
+    app.geometry("")
+    #app.geometry("590x170+360+200")
     #app.configure(bg='white')
     app['bg'] = '#0B3861'
     
