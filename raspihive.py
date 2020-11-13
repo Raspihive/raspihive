@@ -495,7 +495,7 @@ def report():
 
 def about():
     #info for user display message
-    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Version 2.0 beta ")
+    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Version 3.0 beta ")
 
 def infopreparations():
     #info for user display message
