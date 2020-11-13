@@ -58,20 +58,20 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, master,  background="#0B3861")
         #self.master.geometry("600x200")
 
-        tk.Label(self, text="", bg="#0B3861", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
+        tk.Label(self, text="Raspihive menu", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='10')
         # For page one
         tk.Button(self, text="Update menu", bg="lightblue",  height = 1,  width = 20,  command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='10', pady='0')
          # For page two
-        tk.Button(self, text="Install menu", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='10', pady='0')
+        tk.Button(self, text="Install menu", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='0', pady='0')
         # For page three
-        tk.Button(self, text="Tools", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageThree)).grid(row=3, column=0, padx='10', pady='0')
+        tk.Button(self, text="Tools", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageThree)).grid(row=3, column=0, padx='0', pady='0')
         # For page four
-        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='10', pady='0')
+        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='0', pady='0')
         # For page five
-        tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='10', pady='10')
+        tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='0', pady='10')
         
         # For page six Dashboard Access
-        tk.Button(self, text="Dashboard Access", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=2, column=1, padx='10', pady='0')
+        tk.Button(self, text="Dashboard access", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=2, column=1, padx='0', pady='0')
 
 
 class PageOne(tk.Frame):
@@ -122,18 +122,18 @@ class PageThree(tk.Frame):
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=1, padx='10', pady='0')
 
         #label1 = tk.Label(self, text = " Ping test ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "ping", bg="lightblue", height = 1,  width = 20,  command=Ping_function).grid(row=1, column=0, padx='10', pady='10')
+        button1 = tk.Button(self, text = "ping", bg="lightblue", height = 1,  width = 20,  command=Ping_function).grid(row=1, column=0, padx='0', pady='10')
 
         button2 = tk.Button(self, text = "mount DB - beta", bg="lightblue", height = 1,  width = 20,  command=mounthornetDBtoextDrive).grid(row=1, column=1, padx='0', pady='0')
 
-        button3 = tk.Button(self, text = "SSD-fix - beta", bg="lightblue", height = 1,  width = 20,  command=fixforolderssdsuasprob).grid(row=2, column=0, padx='10', pady='0')
+        button3 = tk.Button(self, text = "SSD-fix - beta", bg="lightblue", height = 1,  width = 20,  command=fixforolderssdsuasprob).grid(row=2, column=0, padx='0', pady='0')
 
 class PageFour(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Informations", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
+        tk.Label(self, text="Help", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
         tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=4, column=1, padx='0', pady='0')
 
         #label1 = tk.Label(self, text = " About Raspihive ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
