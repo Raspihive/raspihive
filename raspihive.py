@@ -62,11 +62,11 @@ class StartPage(tk.Frame):
         # For page one
         tk.Button(self, text="Update menu", bg="lightblue",  height = 1,  width = 20,  command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='10', pady='0')
          # For page two
-        tk.Button(self, text="Install menu", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='0', pady='0')
+        tk.Button(self, text="Install menu", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='0', pady='10')
         # For page three
         tk.Button(self, text="Tools", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageThree)).grid(row=3, column=0, padx='0', pady='0')
         # For page four
-        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='0', pady='0' )
+        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='0', pady='10' )
         # For page five
         tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='0', pady='10')
         
@@ -80,7 +80,7 @@ class PageOne(tk.Frame):
         #self.master.geometry("650x200")
 
         tk.Label(self, text="Update menu", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='10', pady='0')
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='10', pady='10')
         """
         tk.Label(self, text="Update OS").grid(row=1, column=0, padx='0', pady='0')
         tk.Button(self, text="update", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=1, padx='0', pady='0')
@@ -88,7 +88,7 @@ class PageOne(tk.Frame):
         #label1 = tk.Label(self, text = "Update OS", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
         button1 = tk.Button(self, text = "System-update", bg="lightblue", height = 1,  width = 20,  command=update_os_function).grid(row=1, column=0, padx='10', pady='10')
 
-        button2 = tk.Button(self, text = "Packages-update", bg="lightblue", height = 1,  width = 20,  command=update_packages_function).grid(row=1, column=1, padx='0', pady='0')
+        button2 = tk.Button(self, text = "Packages-update", bg="lightblue", height = 1,  width = 20,  command=update_packages_function).grid(row=1, column=1, padx='0', pady='10')
 
         button3 = tk.Button(self, text = "Hornet-update", bg="lightblue", height = 1,  width = 20,  command=update_hornet_node).grid(row=2, column=0, padx='0', pady='0')
 
@@ -101,12 +101,12 @@ class PageTwo(tk.Frame):
         #self.master.geometry("650x200")
 
         tk.Label(self, text="Install menu", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='10', pady='0')
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='10', pady='10')
 
         #label1 = tk.Label(self, text = "Install Hornet-Node", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
         button1 = tk.Button(self, text = "Install Hornet", bg="lightblue", height = 1,  width = 20, command=Hornet_install_function).grid(row=1, column=0, padx='10', pady='10')
 
-        button1u = tk.Button(self, text = "Uninstall Hornet", bg="lightblue", height = 1,  width = 20, command=Hornet_uninstall_function).grid(row=1, column=1, padx='0', pady='0')
+        button1u = tk.Button(self, text = "Uninstall Hornet", bg="lightblue", height = 1,  width = 20, command=Hornet_uninstall_function).grid(row=1, column=1, padx='0', pady='10')
 
         button2 = tk.Button(self, text = "Install Bee", bg="lightblue", height = 1,  width = 20, command=Bee_install_function).grid(row=2, column=0, padx='0', pady='0')
 
@@ -119,7 +119,7 @@ class PageThree(tk.Frame):
         #self.master.geometry("650x200")
 
         tk.Label(self, text="Useful tools", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=1, padx='10', pady='0')
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=1, padx='10', pady='10')
 
         #label1 = tk.Label(self, text = " Ping test ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
         button1 = tk.Button(self, text = "ping", bg="lightblue", height = 1,  width = 20,  command=Ping_function).grid(row=1, column=0, padx='0', pady='10')
@@ -134,7 +134,7 @@ class PageFour(tk.Frame):
         #self.master.geometry("650x200")
 
         tk.Label(self, text="Help", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=4, column=1, padx='0', pady='0')
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=4, column=1, padx='0', pady='10')
 
         #label1 = tk.Label(self, text = " About Raspihive ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
         button1 = tk.Button(self, text = "About", bg="lightblue", height = 1,  width = 20, command=about).grid(row=2, column=0, padx='10', pady='10')
