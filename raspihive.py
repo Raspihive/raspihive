@@ -595,8 +595,8 @@ def hornet_dashboard():
 if __name__ == "__main__":
     app = mainWindow()
     app.title("Raspihive")
-    app.geometry("")
-    #app.geometry("600x130")
+    #app.geometry("")
+    app.geometry("590x170+360+200")
     #app.configure(bg='white')
     app['bg'] = '#0B3861'
     
