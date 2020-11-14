@@ -1,4 +1,7 @@
-/.git
-/HORNET-0.4.1_Linux_x86_64
-/HORNET-0.4.1_Linux_x86_64.tar.gz
-/README.md
+build/
+dist/
+raspihive.egg-info/
+__pycache__/
+venv
+*.pyc
+.vscode
