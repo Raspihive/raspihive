@@ -513,7 +513,7 @@ def fixforolderssdsuasprob():
     if os.geteuid()==0:
         os.system('sudo echo -e "blacklist uas \n blacklist sg" > /etc/modprobe.d/disable_uas.conf')
         messagebox.showinfo("SSD fix", "SSD fix executed ")
-
+#
 #Functions in page four
 def report():
     #info for user display message
