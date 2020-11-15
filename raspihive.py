@@ -110,9 +110,9 @@ class PageTwo(tk.Frame):
 
         #button2 = tk.Button(self, text = "Install Bee", bg="lightblue", height = 1,  width = 20, command=Bee_install_function).grid(row=3, column=1, padx='0', pady='0')
 
-        button3 = tk.Button(self, text = "Install RP + SSL", bg="lightblue", height = 1,  width = 20,  command=SSL_reverse_proxy_install_function).grid(row=2, column=0, padx='0', pady='0')
+        button3 = tk.Button(self, text = "Install Nginx + Certbot", bg="lightblue", height = 1,  width = 20,  command=SSL_reverse_proxy_install_function).grid(row=2, column=0, padx='0', pady='0')
 
-        button4 = tk.Button(self, text = "Remove RP + SSL", bg="lightblue", height = 1,  width = 20,  command=uninstall_function).grid(row=2, column=1, padx='0', pady='0')
+        button4 = tk.Button(self, text = "Remove Nginx + Certbot", bg="lightblue", height = 1,  width = 20,  command=uninstall_function).grid(row=2, column=1, padx='0', pady='0')
 
 
 class PageThree(tk.Frame):
@@ -521,7 +521,7 @@ def report():
 
 def about():
     #info for user display message
-    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Version 3.0 beta ")
+    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Version 1.0 ")
 
 def infopreparations():
     #info for user display message
@@ -610,7 +610,7 @@ def hornet_dashboard():
   
 
 
-#
+
 ###############################################################################
 # end functions
 ###############################################################################
