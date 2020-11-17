@@ -1,5 +1,16 @@
    ![](/assets/Logo/TheHive.png)
 
+# Setup
+
+if you want to run RaspiHive on Raspberry Pi OS, you need the 64 Bit version (wich is Beta at the moment).
+
+download the Image from:
+[Raspberry Pi 64 Bit Beta OS](https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2020-05-28/2020-05-27-raspios-buster-arm64.zip)
+
+and use the Raspberry Pi imager to write it on a SD Card: 
+
+[Raspberry Pi Downloads](https://www.raspberrypi.org/downloads/)
+
 # Install
 
 Tested on Ubuntu 18.04.
@@ -31,7 +42,7 @@ Currently, we need to sudo access to access system password. So, you'll have to 
 #### Dependencies `sudo pip install guizero tk`
 
 ### Run
-`sudo python3 raspihive/raspihive.py`
+`sudo python3 raspihive.py`
 
 ---
 __Works on__:
