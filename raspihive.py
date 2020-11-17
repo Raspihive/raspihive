@@ -611,7 +611,7 @@ def hornet_dashboard():
     #os.system('firefox-esr --no-sandbox --disable-infobars --start-maximized --noerrdialogs --kiosk --incognito http://google.at')
     #os.system('chromium --no-sandbox http://google.at')
     #subprocess.Popen(" chromium --no-sandbox /new-tab www.google.com",shell = True)
-    subprocess.Popen("sudo -upi chromium http://google.com",shell = True)
+    subprocess.Popen("sudo -upi chromium http://localhost",shell = True)
     
 
   
