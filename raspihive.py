@@ -521,7 +521,7 @@ def report():
 
 def about():
     #info for user display message
-    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Version 1.0 ")
+    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Beta Version 2.0 ")
 
 def infopreparations():
     #info for user display message
@@ -604,7 +604,14 @@ def mainnetdb_h_function():
         messagebox.showinfo(" Hornet", " Hornet DB removed  ")
 
 def hornet_dashboard():
-    os.system('sudo -upi chromium http://localhost')
+    #os.system('sudo -upi chromium http://localhost')
+    #os.system('firefox-esr https://google.at')
+    #webbrowser.get('chromium').open('https://www.google.com')
+    #webbrowser.open('sudo -upi chromium https://google.at')
+    #os.system('firefox-esr --no-sandbox --disable-infobars --start-maximized --noerrdialogs --kiosk --incognito http://google.at')
+    #os.system('chromium --no-sandbox http://google.at')
+    #subprocess.Popen(" chromium --no-sandbox /new-tab www.google.com",shell = True)
+    subprocess.Popen("sudo -upi chromium http://google.com",shell = True)
     
 
   
