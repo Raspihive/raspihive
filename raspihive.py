@@ -213,8 +213,8 @@ def update_os_function():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        os.system('sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove')
-        #subprocess.run(['sudo', 'apt', 'update'])
+        subprocess.Popen("sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove",shell = True)
+        #os.system('sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove')
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
             #Keep updating the master object to redraw the progress bar
@@ -236,7 +236,8 @@ def update_packages_function():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        os.system('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic')
+        subprocess.Popen("sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic",shell = True)
+        #os.system('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic')
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
             #Keep updating the master object to redraw the progress bar
@@ -258,6 +259,7 @@ def update_hornet_node():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
+        #subprocess.Popen("sudo service hornet stop && sudo apt-get update && sudo apt-get -y upgrade hornet && sudo systemctl restart hornet",shell = True)
         os.system('sudo service hornet stop && sudo apt-get update && sudo apt-get -y upgrade hornet && sudo systemctl restart hornet')
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
@@ -281,7 +283,8 @@ def update_raspihive():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        os.system('sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git')   # #      sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master
+        subprocess.Popen("sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git",shell = True)
+        #os.system('sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git')   # #      sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
             #Keep updating the master object to redraw the progress bar
@@ -501,7 +504,8 @@ def mounthornetDBtoextDrive():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo mkdir /media/hornetdb && sudo mount /dev/sdb1 /media/hornetdb && sudo chmod 775 /media/hornetdb && sudo echo "/dev/sdb1 /media/hornetdb ext4 defaults  1 1" >> /etc/fstab && sudo cp -fr --preserve /var/lib/hornet/mainnetdb /media/hornetdb/ && sudo mv var/lib/hornet/mainnetdb /var/lib/hornet/mainnetdb.old && sudo ln -sf /media/hornetdb /var/lib/hornet/mainnetdb')
+        subprocess.Popen('sudo mkdir /media/hornetdb && sudo mount /dev/sdb1 /media/hornetdb && sudo chmod 775 /media/hornetdb && sudo echo "/dev/sdb1 /media/hornetdb ext4 defaults  1 1" >> /etc/fstab && sudo cp -fr --preserve /var/lib/hornet/mainnetdb /media/hornetdb/ && sudo mv var/lib/hornet/mainnetdb /var/lib/hornet/mainnetdb.old && sudo ln -sf /media/hornetdb /var/lib/hornet/mainnetdb',shell = True)
+        #os.system('sudo mkdir /media/hornetdb && sudo mount /dev/sdb1 /media/hornetdb && sudo chmod 775 /media/hornetdb && sudo echo "/dev/sdb1 /media/hornetdb ext4 defaults  1 1" >> /etc/fstab && sudo cp -fr --preserve /var/lib/hornet/mainnetdb /media/hornetdb/ && sudo mv var/lib/hornet/mainnetdb /var/lib/hornet/mainnetdb.old && sudo ln -sf /media/hornetdb /var/lib/hornet/mainnetdb')
         messagebox.showinfo("Mount-DB", "Hornet mainnetdb successfully mounted ")
 
 
@@ -511,7 +515,8 @@ def fixforolderssdsuasprob():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo echo -e "blacklist uas \n blacklist sg" > /etc/modprobe.d/disable_uas.conf')
+        subprocess.Popen('sudo echo -e "blacklist uas \n blacklist sg" > /etc/modprobe.d/disable_uas.conf',shell = True)
+        #os.system('sudo echo -e "blacklist uas \n blacklist sg" > /etc/modprobe.d/disable_uas.conf')
         messagebox.showinfo("SSD fix", "SSD fix executed ")
 
 #Functions in page four
@@ -521,7 +526,7 @@ def report():
 
 def about():
     #info for user display message
-    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Beta Version 2.0 ")
+    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Beta Version 3.0 ")
 
 def infopreparations():
     #info for user display message
@@ -535,7 +540,8 @@ def start_h_function():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo service hornet start')
+        subprocess.Popen('sudo service hornet start',shell = True)
+        #os.system('sudo service hornet start')
         messagebox.showinfo("Hornet", "Hornet node started ")
 
 def stop_h_function():
@@ -544,7 +550,8 @@ def stop_h_function():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo service hornet stop')
+        subprocess.Popen('sudo service hornet stop',shell = True)
+        #os.system('sudo service hornet stop')
         messagebox.showinfo(" Hornet", "Hornet node stopped  ")
 
 def restart_h_function():
@@ -553,7 +560,8 @@ def restart_h_function():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo service hornet restart')
+        subprocess.Popen('sudo service hornet restart',shell = True)
+        #os.system('sudo service hornet restart')
         messagebox.showinfo(" Hornet", "Hornet node restarted ")
 
 def status_h_function():
@@ -600,7 +608,8 @@ def mainnetdb_h_function():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start')
+        subprocess.Popen('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start',shell = True)
+        #os.system('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start')
         messagebox.showinfo(" Hornet", " Hornet DB removed  ")
 #
 def hornet_dashboard():
