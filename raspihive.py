@@ -533,7 +533,7 @@ def infopreparations():
     messagebox.showinfo("Preparations", "Allow basic ports in your router settings. The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
 
 #Functions in page five
-
+#
 def start_h_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
