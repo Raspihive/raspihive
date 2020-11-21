@@ -228,7 +228,7 @@ def update_os_function():
         subprocess.Popen("sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove",shell = True)
         #os.system('sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove')
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -251,7 +251,7 @@ def update_packages_function():
         subprocess.Popen("sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic",shell = True)
         #os.system('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic')
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -269,12 +269,12 @@ def update_hornet_node():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 20
+        progress_bar['value'] = 2
         app.update()
         #subprocess.Popen("sudo service hornet stop && sudo apt-get update && sudo apt-get -y upgrade hornet && sudo systemctl restart hornet",shell = True)
         os.system('sudo service hornet stop && sudo apt-get update && sudo apt-get -y upgrade hornet && sudo systemctl restart hornet')
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -293,12 +293,12 @@ def update_raspihive():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 20
+        progress_bar['value'] = 2
         app.update()
         subprocess.Popen("sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git",shell = True)
         #os.system('sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git')   # #      sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -318,11 +318,11 @@ def Hornet_install_function():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 20
+        progress_bar['value'] = 2
         app.update()
         os.system('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && sudo echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard -y && sudo service hornet start')
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -340,11 +340,11 @@ def Hornet_uninstall_function():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 20
+        progress_bar['value'] = 2
         app.update()
         os.system('sudo systemctl stop hornet && sudo apt -qq purge hornet -y && sudo rm -rf /etc/apt/sources.list.d/hornet.list')
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
