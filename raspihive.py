@@ -13,7 +13,7 @@ import subprocess, sys, socket, pwd, os, crypt, getpass, spwd
 import tkinter as tk, time, os, sys, getpass, os.path
 import tkinter.simpledialog
 import tkinter.ttk as ttk
-from tkinter import messagebox, font
+from tkinter import messagebox, font, Message
 from functools import partial
 # Needed for ping function
 from queue import Queue
@@ -83,7 +83,7 @@ class PageOne(tk.Frame):
         #self.master.geometry("650x200")
 
         tk.Label(self, text="Update menu", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='10', pady='0', ipadx=2,  ipady=2)
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='10', pady='10', ipadx=2,  ipady=2)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=1, padx='10', pady='10', ipadx=2,  ipady=2)
         """
         tk.Label(self, text="Update OS").grid(row=1, column=0, padx='0', pady='0')
         tk.Button(self, text="update", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=1, padx='0', pady='0')
@@ -104,7 +104,7 @@ class PageTwo(tk.Frame):
         #self.master.geometry("650x200")
 
         tk.Label(self, text="Install menu", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='10', pady='10', ipadx=2,  ipady=2)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=1, padx='10', pady='10', ipadx=2,  ipady=2)
 
         #label1 = tk.Label(self, text = "Install Hornet-Node", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
         button1 = tk.Button(self, text = "Install Hornet", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=Hornet_install_function).grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
@@ -128,10 +128,14 @@ class PageThree(tk.Frame):
 
         #label1 = tk.Label(self, text = " Ping test ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
         button1 = tk.Button(self, text = "ping", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=Ping_function).grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
-
+        
         button2 = tk.Button(self, text = "mount DB - beta", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=mounthornetDBtoextDrive).grid(row=1, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
 
         button3 = tk.Button(self, text = "SSD-fix - beta", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=fixforolderssdsuasprob).grid(row=2, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+
+        #b.grid(column=1,row=1,sticky=E+W)
+        #root.grid_columnconfigure(1,weight=1)
+
 
 class PageFour(tk.Frame):
     def __init__(self, master):
@@ -534,7 +538,10 @@ def fixforolderssdsuasprob():
 #Functions in page four
 def report():
     #info for user display message
-    messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
+    root = Tk() 
+    print("Test")
+    root.mainloop() 
+    #messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
 
 def about():
     #info for user display message
@@ -646,29 +653,26 @@ def Close_Raspihive():
 
 if __name__ == "__main__":
     app = mainWindow()
+    #Test Screen Resolution
+    screen_width = app.winfo_screenwidth()
+    #print("width: ",screen_width)
+    screen_height = app.winfo_screenheight()
+    #print("height: ", screen_height)
+    if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
+        app.geometry("%dx%d+0+0" % (screen_width, screen_height))
+    if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
+        print("")
+
     #app.option_add('*Font', 'Arial 16')
     app.title("Raspihive")
-    #For auto fullscreen
-    screen_width = app.winfo_screenwidth()
-    print("Breite: ",screen_width)
-    screen_height = app.winfo_screenheight()
-    print("Höhe: ", screen_height)
+    
     # use the next line if you also want to get rid of the titlebar
-    #app.overrideredirect(1)
-    # width x height + x_offset + y_offset:
-    if (screen_width*screen_height<614400):
-        app.geometry("%dx%d+0+0" % (screen_width, screen_height))
-    else:
-        print("Test")            
-    #For fullscreen windws
-    #app.attributes('-fullscreen', True)
-    #app.bind("<F11>", lambda event: app.attributes("-fullscreen", not app.attributes("-fullscreen")))
-    #app.bind("<Escape>", lambda event: app.attributes("-fullscreen", False))
-    # tkinter window with dimensions 150x200 
+    #app.overrideredirect(1)   
+        
     #app.configure(bg='white')
     app['bg'] = '#0B3861'
     
-    #app.columnconfigure(0, weight=1)
+    app.columnconfigure(0, weight=1)
 
     # Label for Clock
     label1=Label(app)
