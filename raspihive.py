@@ -225,8 +225,8 @@ def update_os_function():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        subprocess.Popen("sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove",shell = True)
-        #os.system('sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove')
+        #subprocess.Popen("sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove",shell = True)
+        os.system('sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove')
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
             #Keep updating the master object to redraw the progress bar
@@ -248,8 +248,8 @@ def update_packages_function():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        subprocess.Popen("sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic",shell = True)
-        #os.system('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic')
+        #subprocess.Popen("sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic",shell = True)
+        os.system('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic')
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
             #Keep updating the master object to redraw the progress bar
