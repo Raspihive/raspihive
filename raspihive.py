@@ -648,16 +648,23 @@ if __name__ == "__main__":
     app = mainWindow()
     #app.option_add('*Font', 'Arial 16')
     app.title("Raspihive")
-  
-    w, h = app.winfo_screenwidth(), app.winfo_screenheight()
+    #For auto fullscreen
+    screen_width = app.winfo_screenwidth()
+    print("Breite: ",screen_width)
+    screen_height = app.winfo_screenheight()
+    print("Höhe: ", screen_height)
     # use the next line if you also want to get rid of the titlebar
     #app.overrideredirect(1)
     # width x height + x_offset + y_offset:
-    app.geometry("%dx%d+0+0" % (w, h))
+    if (screen_width*screen_height<614400):
+        app.geometry("%dx%d+0+0" % (screen_width, screen_height))
+    else:
+        print("Test")            
     #For fullscreen windws
     #app.attributes('-fullscreen', True)
     #app.bind("<F11>", lambda event: app.attributes("-fullscreen", not app.attributes("-fullscreen")))
     #app.bind("<Escape>", lambda event: app.attributes("-fullscreen", False))
+    # tkinter window with dimensions 150x200 
     #app.configure(bg='white')
     app['bg'] = '#0B3861'
     
