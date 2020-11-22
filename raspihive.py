@@ -213,9 +213,9 @@ def Time_function():
     print("Time: ", localtime)
 
 def clock():
-    t=time.strftime('%I:%M:%S',time.localtime())
+    t=time.strftime('%H:%M:%S',time.localtime())
     if t!='':
-        label1.config(text=t,font='times 12')
+        label1.config(text=t,font='Verdanda 12')
     app.after(100,clock)         
 
 #Functions in page one
