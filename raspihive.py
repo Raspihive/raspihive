@@ -569,7 +569,7 @@ def report():
         
     #messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
 
-#
+
 def about():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
@@ -592,7 +592,7 @@ def about():
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
-        Label(messageWindow, text="Raspihive: Beta Version 4.0", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Raspihive: RC 1.0", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
