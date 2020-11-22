@@ -13,7 +13,7 @@ import subprocess, sys, socket, pwd, os, crypt, getpass, spwd
 import tkinter as tk, time, os, sys, getpass, os.path
 import tkinter.simpledialog
 import tkinter.ttk as ttk
-from tkinter import messagebox
+from tkinter import messagebox, font, Message, Scrollbar
 from functools import partial
 # Needed for ping function
 from queue import Queue
@@ -23,7 +23,8 @@ from subprocess import check_output
 from tkinter.ttk import (Label, Entry)
 from tkinter import (Tk, Button, Text, StringVar, END, Toplevel, BOTH)
 import webbrowser
-
+import tkinter as tk
+from tkinter import Label 
 # Check for root
 #if not os.geteuid() == 0:
 #    messagebox.showinfo("Raspberry Pi Authentication", "You need sudo privileges to start raspihive")
@@ -58,20 +59,23 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, master,  background="#0B3861")
         #self.master.geometry("600x200")
 
-        tk.Label(self, text="Raspihive menu", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='10')
+        tk.Label(self, text="Raspihive menu", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='20', pady='10', ipadx=2,  ipady=2)
         # For page one
-        tk.Button(self, text="Update menu", bg="lightblue",  height = 1,  width = 20,  command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='10', pady='0')
+        tk.Button(self, text="Update menu", bg="lightblue",  height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='10', pady='0', ipadx=2,  ipady=2)
          # For page two
-        tk.Button(self, text="Install menu", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='0', pady='10')
+        tk.Button(self, text="Install menu", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
         # For page three
-        tk.Button(self, text="Tools", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageThree)).grid(row=3, column=0, padx='0', pady='0')
+        tk.Button(self, text="Tools", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageThree)).grid(row=3, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
         # For page four
-        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='0', pady='10' )
+        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
         # For page five
-        tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='0', pady='10')
+        tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='0', pady='10', ipadx=2,  ipady=2)
         
         # For page six Dashboard Access
-        tk.Button(self, text="Dashboard access", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=2, column=1, padx='0', pady='0')
+        tk.Button(self, text="Dashboard access", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageSix)).grid(row=2, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
+
+        # For page seven Quit-Raspihive
+        tk.Button(self, text="Quit-Raspihive", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageSeven)).grid(row=4, column=0, padx='0', pady='10', ipadx=2,  ipady=2)
 
 
 class PageOne(tk.Frame):
@@ -79,40 +83,41 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Update menu", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='10', pady='10')
+        tk.Label(self, text="Update menu", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='10', pady='0', ipadx=2,  ipady=2, sticky='NSEW')
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=1, padx='10', pady='10', ipadx=2,  ipady=2, sticky='NSEW')
         """
         tk.Label(self, text="Update OS").grid(row=1, column=0, padx='0', pady='0')
         tk.Button(self, text="update", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=1, padx='0', pady='0')
         """
         #label1 = tk.Label(self, text = "Update OS", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "System-update", bg="lightblue", height = 1,  width = 20,  command=update_os_function).grid(row=1, column=0, padx='10', pady='10')
+        button1 = tk.Button(self, text = "System-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=update_os_function)
+        button1.grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
 
-        button2 = tk.Button(self, text = "Packages-update", bg="lightblue", height = 1,  width = 20,  command=update_packages_function).grid(row=1, column=1, padx='0', pady='10')
+        button2 = tk.Button(self, text = "Packages-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=update_packages_function).grid(row=1, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
 
-        button3 = tk.Button(self, text = "Hornet-update", bg="lightblue", height = 1,  width = 20,  command=update_hornet_node).grid(row=2, column=0, padx='0', pady='0')
+        button3 = tk.Button(self, text = "Hornet-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=update_hornet_node).grid(row=2, column=0, padx='10', pady='0', ipadx=2,  ipady=2)
 
-        button4 = tk.Button(self, text = "Raspihive-update", bg="lightblue", height = 1,  width = 20,  command=update_raspihive).grid(row=2, column=1, padx='0', pady='0')
+        button4 = tk.Button(self, text = "Raspihive-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=update_raspihive).grid(row=2, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
 
-
+        
 class PageTwo(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Install menu", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='10', pady='10')
+        tk.Label(self, text="Install menu", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=1, padx='10', pady='10', ipadx=2,  ipady=2)
 
         #label1 = tk.Label(self, text = "Install Hornet-Node", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Install Hornet", bg="lightblue", height = 1,  width = 20, command=Hornet_install_function).grid(row=1, column=0, padx='10', pady='10')
+        button1 = tk.Button(self, text = "Install Hornet", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=Hornet_install_function).grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
 
-        button1u = tk.Button(self, text = "Uninstall Hornet", bg="lightblue", height = 1,  width = 20, command=Hornet_uninstall_function).grid(row=1, column=1, padx='0', pady='10')
+        button1u = tk.Button(self, text = "Uninstall Hornet", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=Hornet_uninstall_function).grid(row=1, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
 
         #button2 = tk.Button(self, text = "Install Bee", bg="lightblue", height = 1,  width = 20, command=Bee_install_function).grid(row=3, column=1, padx='0', pady='0')
 
-        button3 = tk.Button(self, text = "Install Nginx + Certbot", bg="lightblue", height = 1,  width = 20,  command=SSL_reverse_proxy_install_function).grid(row=2, column=0, padx='0', pady='0')
+        button3 = tk.Button(self, text = "Install Nginx + Certbot", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=SSL_reverse_proxy_install_function).grid(row=2, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
 
-        button4 = tk.Button(self, text = "Remove Nginx + Certbot", bg="lightblue", height = 1,  width = 20,  command=uninstall_function).grid(row=2, column=1, padx='0', pady='0')
+        button4 = tk.Button(self, text = "Remove Nginx + Certbot", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=uninstall_function).grid(row=2, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
 
 
 class PageThree(tk.Frame):
@@ -120,75 +125,88 @@ class PageThree(tk.Frame):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Tools", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=1, padx='10', pady='10')
+        tk.Label(self, text="Tools", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=2, column=1, padx='10', pady='10', ipadx=2,  ipady=2)
 
         #label1 = tk.Label(self, text = " Ping test ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "ping", bg="lightblue", height = 1,  width = 20,  command=Ping_function).grid(row=1, column=0, padx='10', pady='10')
+        button1 = tk.Button(self, text = "ping", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=Ping_function).grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
+        
+        button2 = tk.Button(self, text = "mount DB - beta", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=mounthornetDBtoextDrive).grid(row=1, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
 
-        button2 = tk.Button(self, text = "mount DB - beta", bg="lightblue", height = 1,  width = 20,  command=mounthornetDBtoextDrive).grid(row=1, column=1, padx='0', pady='0')
+        button3 = tk.Button(self, text = "SSD-fix - beta", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=fixforolderssdsuasprob).grid(row=2, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
 
-        button3 = tk.Button(self, text = "SSD-fix - beta", bg="lightblue", height = 1,  width = 20,  command=fixforolderssdsuasprob).grid(row=2, column=0, padx='0', pady='0')
+        #b.grid(column=1,row=1,sticky=E+W)
+        #root.grid_columnconfigure(1,weight=1)
+
 
 class PageFour(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Help", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=4, column=1, padx='0', pady='10')
+        tk.Label(self, text="Help", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=4, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
 
         #label1 = tk.Label(self, text = " About Raspihive ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "About", bg="lightblue", height = 1,  width = 20, command=about).grid(row=2, column=0, padx='10', pady='10')
+        button1 = tk.Button(self, text = "About", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=about).grid(row=2, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
 
-        button2 = tk.Button(self, text = "Report", bg="lightblue", height = 1,  width = 20, command=report).grid(row=2, column=1, padx='0', pady='0')
+        button2 = tk.Button(self, text = "Report", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=report).grid(row=2, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
 
-        button3 = tk.Button(self, text = "Ports and FW settings", bg="lightblue", height = 1,  width = 20, command=infopreparations).grid(row=4, column=0, padx='0', pady='0')
- 
+        button3 = tk.Button(self, text = "Ports and FW settings", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=infopreparations).grid(row=4, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
         
 class PageFive(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Node control", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=1, column=2, padx='0', pady='0')
+        tk.Label(self, text="Node control", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=2, padx='0', pady='0', ipadx=2,  ipady=2)
         
         # For page six
-        tk.Button(self, text="Hornet Node Control", bg="lightblue", height = 1,  width = 20,  command=lambda: master.switch_frame(PageSix)).grid(row=1, column=0, padx='10', pady='10')
+        tk.Button(self, text="Hornet Node Control", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(PageSix)).grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
         class PageSix(tk.Frame):
             def __init__(self, master):
                 tk.Frame.__init__(self, master, background="#0B3861")
                 #self.master.geometry("650x200")
 
-                tk.Label(self, text="Hornet Node Control Center", bg="lightblue", height = 1,  width = 28).grid(row=0, column=0, padx='0', pady='0')
-                tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=5, column=1, padx='0', pady='0')
+                tk.Label(self, text="Hornet Node Control Center", bg="lightblue", height = 1,  width = 28, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+                tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=5, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
 
                 #label1 = tk.Label(self, text = " Start hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-                button1 = tk.Button(self, text = "Start HORNET ", bg="lightblue", height = 1,  width = 20,  command=start_h_function).grid(row=2, column=0, padx='0', pady='10')
+                button1 = tk.Button(self, text = "Start HORNET ", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=start_h_function).grid(row=2, column=0, padx='0', pady='10', ipadx=2,  ipady=2)
 
-                button2 = tk.Button(self, text = "Stop HORNET", bg="lightblue", height = 1,  width = 20,  command=stop_h_function).grid(row=3, column=0, padx='0', pady='0')
+                button2 = tk.Button(self, text = "Stop HORNET", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=stop_h_function).grid(row=3, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
 
-                button3 = tk.Button(self, text = "Restart HORNET", bg="lightblue", height = 1,  width = 20,  command=restart_h_function).grid(row=4, column=0, padx='0', pady='10')
+                button3 = tk.Button(self, text = "Restart HORNET", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=restart_h_function).grid(row=4, column=0, padx='0', pady='10', ipadx=2,  ipady=2)
 
-                button4 = tk.Button(self, text = "Check HORNET status ", bg="lightblue", height = 1,  width = 20,  command=status_h_function).grid(row=2, column=1, padx='0', pady='10')
+                button4 = tk.Button(self, text = "Check HORNET status ", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=status_h_function).grid(row=2, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
 
-                button5 = tk.Button(self, text = "Watch the logs", bg="lightblue", height = 1,  width = 20,  command=logs_h_function).grid(row=3, column=1, padx='0', pady='0')
+                button5 = tk.Button(self, text = "Watch the logs", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=logs_h_function).grid(row=3, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
                 
-                label6 = tk.Label(self, text = " Remove the mainnetdb (e.g. in case of a failure): ", bg="lightblue", height = 1,  width = 40).grid(row=5, column=0, padx='10', pady='0')
-                button6 = tk.Button(self, text = "Remove the mainnnetdb", bg="lightblue", height = 1,  width = 20,  command=mainnetdb_h_function).grid(row=6, column=0, padx='0', pady='10')
+                label6 = tk.Label(self, text = " Remove the mainnetdb (e.g. in case of a failure): ", bg="lightblue", height = 1,  width = 40, fg="black", font="Verdana 12").grid(row=5, column=0, padx='10', pady='0')
+                button6 = tk.Button(self, text = "Remove the mainnnetdb", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=mainnetdb_h_function).grid(row=6, column=0, padx='0', pady='10', ipadx=2,  ipady=2)
 
 class PageSix(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Dashboard-access", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='0', pady='0')
+        tk.Label(self, text="Dashboard-access", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='0', pady='0', ipadx=2,  ipady=2)
 
         #label1 = tk.Label(self, text = " Hornet Dashboard ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Open dashboard", bg="lightblue", height = 1,  width = 20,  command=hornet_dashboard).grid(row=2, column=0, padx='10', pady='10')
+        button1 = tk.Button(self, text = "Open dashboard", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=hornet_dashboard).grid(row=2, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
 
+class PageSeven(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master, background="#0B3861")
+        #self.master.geometry("650x200")
+
+        tk.Label(self, text="Quit-Raspihive", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
+
+        #label1 = tk.Label(self, text = " About Raspihive ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
+        button1 = tk.Button(self, text = "Quit-Raspihive", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=Close_Raspihive).grid(row=1, column=0, padx='10', pady='0', ipadx=2,  ipady=2)
 
 #####################################End of Window frames############################################
 def Time_function():
@@ -213,10 +231,10 @@ def update_os_function():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        os.system('sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove')
-        #subprocess.run(['sudo', 'apt', 'update'])
+        subprocess.Popen("sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove",shell = True)
+        #os.system('sudo apt update && sudo apt -y full-upgrade && sudo apt -y autoremove')
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -236,9 +254,10 @@ def update_packages_function():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 20
         app.update()
-        os.system('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic')
+        subprocess.Popen("sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic",shell = True)
+        #os.system('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic')
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -256,11 +275,12 @@ def update_hornet_node():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 20
+        progress_bar['value'] = 2
         app.update()
+        #subprocess.Popen("sudo service hornet stop && sudo apt-get update && sudo apt-get -y upgrade hornet && sudo systemctl restart hornet",shell = True)
         os.system('sudo service hornet stop && sudo apt-get update && sudo apt-get -y upgrade hornet && sudo systemctl restart hornet')
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -279,11 +299,12 @@ def update_raspihive():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 20
+        progress_bar['value'] = 2
         app.update()
-        os.system('sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git')   # #      sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master
+        subprocess.Popen("sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git",shell = True)
+        #os.system('sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git')   # #      sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -303,11 +324,11 @@ def Hornet_install_function():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 20
+        progress_bar['value'] = 2
         app.update()
         os.system('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && sudo echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard -y && sudo service hornet start')
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -325,11 +346,11 @@ def Hornet_uninstall_function():
         # Create a progressbar widget
         progress_bar = ttk.Progressbar(app, orient="horizontal", mode="determinate", maximum=100, value=0) #fix
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
-        progress_bar['value'] = 20
+        progress_bar['value'] = 2
         app.update()
         os.system('sudo systemctl stop hornet && sudo apt -qq purge hornet -y && sudo rm -rf /etc/apt/sources.list.d/hornet.list')
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 20
+            progress_bar['value'] += 2
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
@@ -501,7 +522,8 @@ def mounthornetDBtoextDrive():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo mkdir /media/hornetdb && sudo mount /dev/sdb1 /media/hornetdb && sudo chmod 775 /media/hornetdb && sudo echo "/dev/sdb1 /media/hornetdb ext4 defaults  1 1" >> /etc/fstab && sudo cp -fr --preserve /var/lib/hornet/mainnetdb /media/hornetdb/ && sudo mv var/lib/hornet/mainnetdb /var/lib/hornet/mainnetdb.old && sudo ln -sf /media/hornetdb /var/lib/hornet/mainnetdb')
+        subprocess.Popen('sudo mkdir /media/hornetdb && sudo mount /dev/sdb1 /media/hornetdb && sudo chmod 775 /media/hornetdb && sudo echo "/dev/sdb1 /media/hornetdb ext4 defaults  1 1" >> /etc/fstab && sudo cp -fr --preserve /var/lib/hornet/mainnetdb /media/hornetdb/ && sudo mv var/lib/hornet/mainnetdb /var/lib/hornet/mainnetdb.old && sudo ln -sf /media/hornetdb /var/lib/hornet/mainnetdb',shell = True)
+        #os.system('sudo mkdir /media/hornetdb && sudo mount /dev/sdb1 /media/hornetdb && sudo chmod 775 /media/hornetdb && sudo echo "/dev/sdb1 /media/hornetdb ext4 defaults  1 1" >> /etc/fstab && sudo cp -fr --preserve /var/lib/hornet/mainnetdb /media/hornetdb/ && sudo mv var/lib/hornet/mainnetdb /var/lib/hornet/mainnetdb.old && sudo ln -sf /media/hornetdb /var/lib/hornet/mainnetdb')
         messagebox.showinfo("Mount-DB", "Hornet mainnetdb successfully mounted ")
 
 
@@ -511,31 +533,116 @@ def fixforolderssdsuasprob():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo echo -e "blacklist uas \n blacklist sg" > /etc/modprobe.d/disable_uas.conf')
+        subprocess.Popen('sudo echo -e "blacklist uas \n blacklist sg" > /etc/modprobe.d/disable_uas.conf',shell = True)
+        #os.system('sudo echo -e "blacklist uas \n blacklist sg" > /etc/modprobe.d/disable_uas.conf')
         messagebox.showinfo("SSD fix", "SSD fix executed ")
-#
+
 #Functions in page four
 def report():
-    #info for user display message
-    messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
+    if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("About") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
+        
+    if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("About") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
+        
+    #messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
+
 
 def about():
+    if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("About") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Raspihive: Beta Version 4.0", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
+        
+    if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("About") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Raspihive: Beta Version 4.0", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
     #info for user display message
-    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Version 1.0 ")
+    #messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Beta Version 3.0 ")
+
 
 def infopreparations():
+    if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("Preparations") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Allow basic ports in your router settings:", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        #Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
+        
+    if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("Preparations") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Allow basic ports in your router settings:", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        #Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
     #info for user display message
-    messagebox.showinfo("Preparations", "Allow basic ports in your router settings. The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
+    #messagebox.showinfo("Preparations", "Allow basic ports in your router settings. The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
 
 #Functions in page five
-
+#
 def start_h_function():
     if os.geteuid() != 0:
         print("You need to have root privileges")  
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo service hornet start')
+        subprocess.Popen('sudo service hornet start',shell = True)
+        #os.system('sudo service hornet start')
         messagebox.showinfo("Hornet", "Hornet node started ")
 
 def stop_h_function():
@@ -544,7 +651,8 @@ def stop_h_function():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo service hornet stop')
+        subprocess.Popen('sudo service hornet stop',shell = True)
+        #os.system('sudo service hornet stop')
         messagebox.showinfo(" Hornet", "Hornet node stopped  ")
 
 def restart_h_function():
@@ -553,7 +661,8 @@ def restart_h_function():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo service hornet restart')
+        subprocess.Popen('sudo service hornet restart',shell = True)
+        #os.system('sudo service hornet restart')
         messagebox.showinfo(" Hornet", "Hornet node restarted ")
 
 def status_h_function():
@@ -600,15 +709,22 @@ def mainnetdb_h_function():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        os.system('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start')
+        subprocess.Popen('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start',shell = True)
+        #os.system('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start')
         messagebox.showinfo(" Hornet", " Hornet DB removed  ")
-
+#
 def hornet_dashboard():
-    os.system('sudo -upi chromium http://localhost')
+    #os.system('sudo -upi chromium http://localhost')
+    #os.system('firefox-esr https://google.at')
+    #webbrowser.get('chromium').open('https://www.google.com')
+    #webbrowser.open('sudo -upi chromium https://google.at')
+    #os.system('firefox-esr --no-sandbox --disable-infobars --start-maximized --noerrdialogs --kiosk --incognito http://google.at')
+    #os.system('chromium --no-sandbox http://google.at')
+    #subprocess.Popen(" chromium --no-sandbox /new-tab www.google.com",shell = True)
+    subprocess.Popen("sudo -upi chromium http://localhost",shell = True)
     
-
-  
-
+def Close_Raspihive():
+    sys.exit(0)
 
 
 ###############################################################################
@@ -620,14 +736,34 @@ def hornet_dashboard():
 
 if __name__ == "__main__":
     app = mainWindow()
+    #Test Screen Resolution
+    screen_width = app.winfo_screenwidth()
+    #print("width: ",screen_width)
+    screen_height = app.winfo_screenheight()
+    #print("height: ", screen_height)
+    if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
+        app.geometry("%dx%d+0+0" % (screen_width, screen_height))
+    if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
+        print("")
+
+    #app.option_add('*Font', 'Arial 16')
     app.title("Raspihive")
-    app.geometry("")
-    #app.geometry("590x170+360+200")
-    #app.configure(bg='white')
+    
+    # use the next line if you also want to get rid of the titlebar
+    #app.overrideredirect(1)   
+        
+    #app.configure(bg='white')  
     app['bg'] = '#0B3861'
     
 
-    #app.columnconfigure(0, weight=1)
+    #app.grid(row=0, column=0, sticky="nsew")
+    #app.grid(row=0, column=1, sticky="nsew")
+
+    #app.grid_columnconfigure(0, weight=1)
+    #app.grid_rowconfigure(0, weight=1)
+    #app.grid_columnconfigure(1, weight=1)
+    #"-sticky": must be -minsize, -pad, -uniform, or -weight
+    
 
     # Label for Clock
     label1=Label(app)
