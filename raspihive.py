@@ -578,7 +578,7 @@ def about():
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
-        Label(messageWindow, text="Raspihive: Beta Version 4.0", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Raspihive: RC 1.0", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
@@ -678,7 +678,7 @@ def status_h_function():
         #Gui log for hornet node status
         root = tk.Tk()
         root.title("Hornet Node Status")
-        Text=Label(root,text=Output).grid()
+        Text=Label(root,text=Output, bg="#0B3861", fg="white").grid()
         root.mainloop()
         #End of Gui log for hornet node status
 
@@ -698,7 +698,7 @@ def logs_h_function():
         #Gui log for hornet node status
         root = tk.Tk()
         root.title("Hornet Node Logs")
-        Text=Label(root,text=Output).grid()
+        Text=Label(root,text=Output, bg="#0B3861", fg="white").grid()
         root.mainloop()
         #End of Gui log for hornet node status
         #Testende
