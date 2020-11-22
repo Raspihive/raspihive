@@ -13,7 +13,7 @@ import subprocess, sys, socket, pwd, os, crypt, getpass, spwd
 import tkinter as tk, time, os, sys, getpass, os.path
 import tkinter.simpledialog
 import tkinter.ttk as ttk
-from tkinter import messagebox, font, Message
+from tkinter import messagebox, font, Message, Scrollbar
 from functools import partial
 # Needed for ping function
 from queue import Queue
@@ -23,7 +23,8 @@ from subprocess import check_output
 from tkinter.ttk import (Label, Entry)
 from tkinter import (Tk, Button, Text, StringVar, END, Toplevel, BOTH)
 import webbrowser
-
+import tkinter as tk
+from tkinter import Label 
 # Check for root
 #if not os.geteuid() == 0:
 #    messagebox.showinfo("Raspberry Pi Authentication", "You need sudo privileges to start raspihive")
@@ -82,22 +83,23 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Update menu", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='10', pady='0', ipadx=2,  ipady=2)
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=1, padx='10', pady='10', ipadx=2,  ipady=2)
+        tk.Label(self, text="Update menu", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='10', pady='0', ipadx=2,  ipady=2, sticky='NSEW')
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=1, padx='10', pady='10', ipadx=2,  ipady=2, sticky='NSEW')
         """
         tk.Label(self, text="Update OS").grid(row=1, column=0, padx='0', pady='0')
         tk.Button(self, text="update", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=1, padx='0', pady='0')
         """
         #label1 = tk.Label(self, text = "Update OS", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "System-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=update_os_function).grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
+        button1 = tk.Button(self, text = "System-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=update_os_function)
+        button1.grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
 
         button2 = tk.Button(self, text = "Packages-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=update_packages_function).grid(row=1, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
 
-        button3 = tk.Button(self, text = "Hornet-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=update_hornet_node).grid(row=2, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        button3 = tk.Button(self, text = "Hornet-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=update_hornet_node).grid(row=2, column=0, padx='10', pady='0', ipadx=2,  ipady=2)
 
         button4 = tk.Button(self, text = "Raspihive-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=update_raspihive).grid(row=2, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
 
-
+        
 class PageTwo(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="#0B3861")
@@ -537,19 +539,99 @@ def fixforolderssdsuasprob():
 
 #Functions in page four
 def report():
-    #info for user display message
-    root = Tk() 
-    print("Test")
-    root.mainloop() 
+    if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("About") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
+        
+    if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("About") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
+        
     #messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
 
+
 def about():
+    if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("About") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Raspihive: Beta Version 4.0", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
+        
+    if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("About") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Raspihive: Beta Version 4.0", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
     #info for user display message
-    messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Beta Version 3.0 ")
+    #messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Beta Version 3.0 ")
+
 
 def infopreparations():
+    if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("Preparations") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Allow basic ports in your router settings:", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        #Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
+        
+    if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
+        messageWindow = tk.Tk()
+        messageWindow.geometry("600x200+350+350")
+        messageWindow.title("Preparations") 
+        messageWindow['bg'] = '#0B3861'
+        Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Allow basic ports in your router settings:", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        #Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+        
+        #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+
+        messageWindow.mainloop()
     #info for user display message
-    messagebox.showinfo("Preparations", "Allow basic ports in your router settings. The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
+    #messagebox.showinfo("Preparations", "Allow basic ports in your router settings. The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
 
 #Functions in page five
 #
@@ -644,6 +726,7 @@ def hornet_dashboard():
 def Close_Raspihive():
     sys.exit(0)
 
+
 ###############################################################################
 # end functions
 ###############################################################################
@@ -669,10 +752,18 @@ if __name__ == "__main__":
     # use the next line if you also want to get rid of the titlebar
     #app.overrideredirect(1)   
         
-    #app.configure(bg='white')
+    #app.configure(bg='white')  
     app['bg'] = '#0B3861'
     
-    app.columnconfigure(0, weight=1)
+
+    #app.grid(row=0, column=0, sticky="nsew")
+    #app.grid(row=0, column=1, sticky="nsew")
+
+    #app.grid_columnconfigure(0, weight=1)
+    #app.grid_rowconfigure(0, weight=1)
+    #app.grid_columnconfigure(1, weight=1)
+    #"-sticky": must be -minsize, -pad, -uniform, or -weight
+    
 
     # Label for Clock
     label1=Label(app)
