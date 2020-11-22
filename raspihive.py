@@ -569,7 +569,7 @@ def report():
         
     #messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
 
-#
+
 def about():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
