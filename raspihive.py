@@ -551,6 +551,7 @@ def report():
         
         Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=4, column=0, padx='0', pady='0')
 
+
         messageWindow.mainloop()
         
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
@@ -597,6 +598,7 @@ def about():
         
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
 
+ 
         messageWindow.mainloop()
     #info for user display message
     #messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Beta Version 3.0 ")
@@ -629,6 +631,7 @@ def infopreparations():
         
         #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
 
+    
         messageWindow.mainloop()
     #info for user display message
     #messagebox.showinfo("Preparations", "Allow basic ports in your router settings. The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
@@ -747,7 +750,7 @@ def Close_Raspihive():
 ###############################################################################
 # Start main programm
 ###############################################################################
-
+#
 if __name__ == "__main__":
     app = mainWindow()
     #Test Screen Resolution
@@ -758,8 +761,8 @@ if __name__ == "__main__":
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         app.geometry("%dx%d+0+0" % (screen_width, screen_height))
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
-        app.geometry("820x520+500+100") #BxH+B+H
         print("")
+
 
     #app.option_add('*Font', 'Arial 16')
     app.title("Raspihive")
