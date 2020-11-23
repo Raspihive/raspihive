@@ -685,11 +685,10 @@ def status_h_function():
         screen_width = app.winfo_screenwidth()
         #print("width: ",screen_width)
         screen_height = app.winfo_screenheight()
-        root.title("Hornet Node Logs")
         #Label(root, text="Ausschalten Test", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
        
-        B = Button(root, text = "Quit-status window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = root.destroy).grid()
-        Text=Label(root,text=Output, bg="#0B3861", fg="white").grid(sticky='NEWS')
+        B = Button(root, text = "Quit-status window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = root.destroy).grid(sticky="W")
+        Text=Label(root,text=Output, bg="#0B3861", fg="white").grid()
         root.mainloop()
         #End of Gui log for hornet node status
 
@@ -699,26 +698,25 @@ def logs_h_function():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        p = subprocess.run("sudo journalctl -u hornet -n 50 ", shell=True, stdout=subprocess.PIPE)
-        print(p.stdout.decode())
-        #Test
-        # For hornet node logs
-        Outputfileobject=os.popen("sudo journalctl -u hornet -n 50")     
+        # For hornet node status
+        Outputfileobject=os.popen("sudo journalctl -u hornet -n 50 ")    
         Output=Outputfileobject.read()
         Outputfileobject.close()
         #Gui log for hornet node status
         root = tk.Tk()
+        root.title("Hornet Node Logs")
         #Test Screen Resolution
         screen_width = app.winfo_screenwidth()
         #print("width: ",screen_width)
         screen_height = app.winfo_screenheight()
-        root.title("Hornet Node Logs")
-        root.geometry("%dx%d+0+0" % (screen_width, screen_height))
-        B = Button(root, text = "Quit-status window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = root.destroy).grid()
+        #Label(root, text="Ausschalten Test", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+       
+        B = Button(root, text = "Quit-Log window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13",  command = root.destroy).grid(sticky="W")
         Text=Label(root,text=Output, bg="#0B3861", fg="white").grid()
         root.mainloop()
         #End of Gui log for hornet node status
-        #Testende
+
+        
 
 def mainnetdb_h_function():
     if os.geteuid() != 0:
