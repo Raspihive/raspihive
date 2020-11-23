@@ -59,23 +59,23 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, master,  background="#0B3861")
         #self.master.geometry("600x200")
 
-        tk.Label(self, text="Raspihive menu", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='20', pady='10', ipadx=2,  ipady=2)
+        tk.Label(self, text="Raspihive menu", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 16").grid(row=0, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
         # For page one
-        tk.Button(self, text="Update menu", bg="lightblue",  height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='10', pady='0', ipadx=2,  ipady=2)
+        tk.Button(self, text="Update menu", bg="lightblue",  height = 1,  width = 20, fg="black", font="Verdana 13", command=lambda: master.switch_frame(PageOne)).grid(row=1, column=0, padx='30', pady='0', ipadx=3,  ipady=3)
          # For page two
-        tk.Button(self, text="Install menu", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
+        tk.Button(self, text="Install menu", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=lambda: master.switch_frame(PageTwo)).grid(row=1, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
         # For page three
-        tk.Button(self, text="Tools", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageThree)).grid(row=3, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        tk.Button(self, text="Tools", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=lambda: master.switch_frame(PageThree)).grid(row=3, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
         # For page four
-        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
+        tk.Button(self, text="Help", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=lambda: master.switch_frame(PageFour)).grid(row=3, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
         # For page five
-        tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='0', pady='10', ipadx=2,  ipady=2)
+        tk.Button(self, text="Node control", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=lambda: master.switch_frame(PageFive)).grid(row=2, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
         
         # For page six Dashboard Access
-        tk.Button(self, text="Dashboard access", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageSix)).grid(row=2, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
+        tk.Button(self, text="Dashboard access", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=lambda: master.switch_frame(PageSix)).grid(row=2, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
         # For page seven Quit-Raspihive
-        tk.Button(self, text="Quit-Raspihive", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=lambda: master.switch_frame(PageSeven)).grid(row=4, column=0, padx='0', pady='10', ipadx=2,  ipady=2)
+        tk.Button(self, text="Quit-Raspihive", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=lambda: master.switch_frame(PageSeven)).grid(row=4, column=0, padx='30', pady='30', ipadx=3,  ipady=3)
 
 
 class PageOne(tk.Frame):
@@ -83,21 +83,21 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Update menu", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='10', pady='0', ipadx=2,  ipady=2, sticky='NSEW')
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=1, padx='10', pady='10', ipadx=2,  ipady=2, sticky='NSEW')
+        tk.Label(self, text="Update menu", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 16").grid(row=0, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
         """
         tk.Label(self, text="Update OS").grid(row=1, column=0, padx='0', pady='0')
         tk.Button(self, text="update", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=1, padx='0', pady='0')
         """
         #label1 = tk.Label(self, text = "Update OS", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "System-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=update_os_function)
-        button1.grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
+        button1 = tk.Button(self, text = "System-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=update_os_function)
+        button1.grid(row=1, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
-        button2 = tk.Button(self, text = "Packages-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=update_packages_function).grid(row=1, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
+        button2 = tk.Button(self, text = "Packages-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=update_packages_function).grid(row=1, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
-        button3 = tk.Button(self, text = "Hornet-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=update_hornet_node).grid(row=2, column=0, padx='10', pady='0', ipadx=2,  ipady=2)
+        button3 = tk.Button(self, text = "Hornet-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=update_hornet_node).grid(row=2, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
-        button4 = tk.Button(self, text = "Raspihive-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=update_raspihive).grid(row=2, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
+        button4 = tk.Button(self, text = "Raspihive-update", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=update_raspihive).grid(row=2, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
         
 class PageTwo(tk.Frame):
@@ -105,19 +105,19 @@ class PageTwo(tk.Frame):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Install menu", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=1, padx='10', pady='10', ipadx=2,  ipady=2)
+        tk.Label(self, text="Install menu", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 16").grid(row=0, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=lambda: master.switch_frame(StartPage)).grid(row=3, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
         #label1 = tk.Label(self, text = "Install Hornet-Node", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Install Hornet", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=Hornet_install_function).grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
+        button1 = tk.Button(self, text = "Install Hornet", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=Hornet_install_function).grid(row=1, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
-        button1u = tk.Button(self, text = "Uninstall Hornet", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=Hornet_uninstall_function).grid(row=1, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
+        button1u = tk.Button(self, text = "Uninstall Hornet", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=Hornet_uninstall_function).grid(row=1, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
         #button2 = tk.Button(self, text = "Install Bee", bg="lightblue", height = 1,  width = 20, command=Bee_install_function).grid(row=3, column=1, padx='0', pady='0')
 
-        button3 = tk.Button(self, text = "Install Nginx + Certbot", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=SSL_reverse_proxy_install_function).grid(row=2, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        button3 = tk.Button(self, text = "Install Nginx + Certbot", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=SSL_reverse_proxy_install_function).grid(row=2, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
-        button4 = tk.Button(self, text = "Remove Nginx + Certbot", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=uninstall_function).grid(row=2, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
+        button4 = tk.Button(self, text = "Remove Nginx + Certbot", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=uninstall_function).grid(row=2, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
 
 class PageThree(tk.Frame):
@@ -125,15 +125,15 @@ class PageThree(tk.Frame):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Tools", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=2, column=1, padx='10', pady='10', ipadx=2,  ipady=2)
+        tk.Label(self, text="Tools", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 16").grid(row=0, column=0, padx='0', pady='0', ipadx=3,  ipady=3)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=lambda: master.switch_frame(StartPage)).grid(row=2, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
         #label1 = tk.Label(self, text = " Ping test ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "ping", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=Ping_function).grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
+        button1 = tk.Button(self, text = "ping", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=Ping_function).grid(row=1, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
         
-        button2 = tk.Button(self, text = "mount DB - beta", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=mounthornetDBtoextDrive).grid(row=1, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
+        button2 = tk.Button(self, text = "mount DB - beta", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=mounthornetDBtoextDrive).grid(row=1, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
-        button3 = tk.Button(self, text = "SSD-fix - beta", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=fixforolderssdsuasprob).grid(row=2, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        button3 = tk.Button(self, text = "SSD-fix - beta", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=fixforolderssdsuasprob).grid(row=2, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
         #b.grid(column=1,row=1,sticky=E+W)
         #root.grid_columnconfigure(1,weight=1)
@@ -144,69 +144,69 @@ class PageFour(tk.Frame):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Help", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=4, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
+        tk.Label(self, text="Help", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 16").grid(row=0, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=lambda: master.switch_frame(StartPage)).grid(row=4, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
         #label1 = tk.Label(self, text = " About Raspihive ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "About", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=about).grid(row=2, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
+        button1 = tk.Button(self, text = "About", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=about).grid(row=2, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
-        button2 = tk.Button(self, text = "Report", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=report).grid(row=2, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
+        button2 = tk.Button(self, text = "Report", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=report).grid(row=2, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
-        button3 = tk.Button(self, text = "Ports and FW settings", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=infopreparations).grid(row=4, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+        button3 = tk.Button(self, text = "Ports and FW settings", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=infopreparations).grid(row=4, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
         
 class PageFive(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Node control", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=2, padx='0', pady='0', ipadx=2,  ipady=2)
+        tk.Label(self, text="Node control", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 16").grid(row=0, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=2, padx='30', pady='20', ipadx=3,  ipady=3)
         
         # For page six
-        tk.Button(self, text="Hornet Node Control", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(PageSix)).grid(row=1, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
+        tk.Button(self, text="Hornet Node Control", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=lambda: master.switch_frame(PageSix)).grid(row=1, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
         class PageSix(tk.Frame):
             def __init__(self, master):
                 tk.Frame.__init__(self, master, background="#0B3861")
                 #self.master.geometry("650x200")
 
-                tk.Label(self, text="Hornet Node Control Center", bg="lightblue", height = 1,  width = 28, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
-                tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=5, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
+                tk.Label(self, text="Hornet Node Control Center", bg="lightblue", height = 1,  width = 28, fg="black", font="Verdana 16").grid(row=0, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
+                tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=lambda: master.switch_frame(StartPage)).grid(row=5, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
                 #label1 = tk.Label(self, text = " Start hornet node ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-                button1 = tk.Button(self, text = "Start HORNET ", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=start_h_function).grid(row=2, column=0, padx='0', pady='10', ipadx=2,  ipady=2)
+                button1 = tk.Button(self, text = "Start HORNET ", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=start_h_function).grid(row=2, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
-                button2 = tk.Button(self, text = "Stop HORNET", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=stop_h_function).grid(row=3, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
+                button2 = tk.Button(self, text = "Stop HORNET", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=stop_h_function).grid(row=3, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
-                button3 = tk.Button(self, text = "Restart HORNET", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=restart_h_function).grid(row=4, column=0, padx='0', pady='10', ipadx=2,  ipady=2)
+                button3 = tk.Button(self, text = "Restart HORNET", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=restart_h_function).grid(row=4, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
-                button4 = tk.Button(self, text = "Check HORNET status ", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12",  command=status_h_function).grid(row=2, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
+                button4 = tk.Button(self, text = "Check HORNET status ", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13",  command=status_h_function).grid(row=2, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
-                button5 = tk.Button(self, text = "Watch the logs", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=logs_h_function).grid(row=3, column=1, padx='0', pady='0', ipadx=2,  ipady=2)
+                button5 = tk.Button(self, text = "Watch the logs", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=logs_h_function).grid(row=3, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
                 
-                label6 = tk.Label(self, text = " Remove the mainnetdb (e.g. in case of a failure): ", bg="lightblue", height = 1,  width = 40, fg="black", font="Verdana 12").grid(row=5, column=0, padx='10', pady='0')
-                button6 = tk.Button(self, text = "Remove the mainnnetdb", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=mainnetdb_h_function).grid(row=6, column=0, padx='0', pady='10', ipadx=2,  ipady=2)
+                label6 = tk.Label(self, text = " Remove the mainnetdb (e.g. in case of a failure): ", bg="lightblue", height = 1,  width = 40, fg="black", font="Verdana 13").grid(row=5, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
+                button6 = tk.Button(self, text = "Remove the mainnnetdb", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=mainnetdb_h_function).grid(row=6, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
 class PageSix(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Dashboard-access", bg="lightblue", height = 1,  width = 18, fg="black", font="Verdana 15").grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='0', pady='0', ipadx=2,  ipady=2)
+        tk.Label(self, text="Dashboard-access", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 16").grid(row=0, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=lambda: master.switch_frame(StartPage)).grid(row=2, column=2, padx='30', pady='20', ipadx=3,  ipady=3)
 
         #label1 = tk.Label(self, text = " Hornet Dashboard ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Open dashboard", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=hornet_dashboard).grid(row=2, column=0, padx='10', pady='10', ipadx=2,  ipady=2)
+        button1 = tk.Button(self, text = "Open dashboard", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=hornet_dashboard).grid(row=2, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
 class PageSeven(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master, background="#0B3861")
         #self.master.geometry("650x200")
 
-        tk.Label(self, text="Quit-Raspihive", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='0', pady='0', ipadx=2,  ipady=2)
-        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=1, padx='0', pady='10', ipadx=2,  ipady=2)
+        tk.Label(self, text="Quit-Raspihive", bg="lightblue", height = 1,  width = 20).grid(row=0, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
+        tk.Button(self, text="Return to start page", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=lambda: master.switch_frame(StartPage)).grid(row=1, column=1, padx='30', pady='20', ipadx=3,  ipady=3)
 
         #label1 = tk.Label(self, text = " About Raspihive ", bg="lightblue", height = 1,  width = 20).grid(row=2, column=0, padx='0', pady='0')
-        button1 = tk.Button(self, text = "Quit-Raspihive", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 12", command=Close_Raspihive).grid(row=1, column=0, padx='10', pady='0', ipadx=2,  ipady=2)
+        button1 = tk.Button(self, text = "Quit-Raspihive", bg="lightblue", height = 1,  width = 20, fg="black", font="Verdana 13", command=Close_Raspihive).grid(row=1, column=0, padx='30', pady='20', ipadx=3,  ipady=3)
 
 #####################################End of Window frames############################################
 def Time_function():
@@ -215,7 +215,7 @@ def Time_function():
 def clock():
     t=time.strftime('%H:%M:%S',time.localtime())
     if t!='':
-        label1.config(text=t,font='Verdanda 12')
+        label1.config(text=t,font='Verdanda 13')
     app.after(100,clock)         
 
 #Functions in page one
@@ -542,28 +542,28 @@ def report():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
         messageWindow.geometry("600x200+350+350")
-        messageWindow.title("About") 
+        messageWindow.title("Report") 
         messageWindow['bg'] = '#0B3861'
-        Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
-        Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
-        Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=4, column=0, padx='0', pady='0')
 
         messageWindow.mainloop()
         
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
         messageWindow = tk.Tk()
         messageWindow.geometry("600x200+350+350")
-        messageWindow.title("About") 
+        messageWindow.title("Report") 
         messageWindow['bg'] = '#0B3861'
-        Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
-        Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
-        Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=4, column=0, padx='0', pady='0')
 
         messageWindow.mainloop()
         
@@ -576,9 +576,9 @@ def about():
         messageWindow.geometry("600x200+350+350")
         messageWindow.title("About") 
         messageWindow['bg'] = '#0B3861'
-        Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
-        Label(messageWindow, text="Raspihive: RC 1.0", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Raspihive: Version 1.0", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
@@ -590,9 +590,9 @@ def about():
         messageWindow.geometry("600x200+350+350")
         messageWindow.title("About") 
         messageWindow['bg'] = '#0B3861'
-        Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
-        Label(messageWindow, text="Raspihive: RC 1.0", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Raspihive: Version 1.0", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
@@ -605,12 +605,12 @@ def about():
 def infopreparations():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x200+350+350")
+        messageWindow.geometry("600x240+350+350")
         messageWindow.title("Preparations") 
         messageWindow['bg'] = '#0B3861'
-        Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
-        Label(messageWindow, text="Allow basic ports in your router settings:", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
-        Label(messageWindow, text="14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Allow basic ports in your router settings: \n", bg="#0B3861", fg="white", font="Verdana 13").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         #Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
         #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
@@ -619,12 +619,12 @@ def infopreparations():
         
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x200+350+350")
+        messageWindow.geometry("600x240+350+350")
         messageWindow.title("Preparations") 
         messageWindow['bg'] = '#0B3861'
-        Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white").grid(row=0, column=0, padx='0', pady='0')
-        Label(messageWindow, text="Allow basic ports in your router settings:", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
-        Label(messageWindow, text="14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot", bg="#0B3861", fg="white").grid(row=2, column=0, padx='0', pady='0')
+        Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
+        Label(messageWindow, text="Allow basic ports in your router settings: \n", bg="#0B3861", fg="white", font="Verdana 13").grid(row=1, column=0, padx='0', pady='0')
+        Label(messageWindow, text="14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         #Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
         #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
@@ -678,7 +678,15 @@ def status_h_function():
         #Gui log for hornet node status
         root = tk.Tk()
         root.title("Hornet Node Status")
-        Text=Label(root,text=Output, bg="#0B3861", fg="white").grid()
+        #Test Screen Resolution
+        screen_width = app.winfo_screenwidth()
+        #print("width: ",screen_width)
+        screen_height = app.winfo_screenheight()
+        root.title("Hornet Node Logs")
+        #Label(root, text="Ausschalten Test", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
+       
+        B = Button(root, text = "Quit-status window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = root.destroy).grid()
+        Text=Label(root,text=Output, bg="#0B3861", fg="white").grid(sticky='NEWS')
         root.mainloop()
         #End of Gui log for hornet node status
 
@@ -688,16 +696,22 @@ def logs_h_function():
         messagebox.showinfo("Raspberry Pi Authentication", "You need to have root privileges")
         sys.exit
     if os.geteuid()==0:
-        p = subprocess.run("sudo journalctl -u hornet -n 20 ", shell=True, stdout=subprocess.PIPE)
+        p = subprocess.run("sudo journalctl -u hornet -n 50 ", shell=True, stdout=subprocess.PIPE)
         print(p.stdout.decode())
         #Test
         # For hornet node logs
-        Outputfileobject=os.popen("sudo journalctl -u hornet -n 10")     
+        Outputfileobject=os.popen("sudo journalctl -u hornet -n 50")     
         Output=Outputfileobject.read()
         Outputfileobject.close()
         #Gui log for hornet node status
         root = tk.Tk()
+        #Test Screen Resolution
+        screen_width = app.winfo_screenwidth()
+        #print("width: ",screen_width)
+        screen_height = app.winfo_screenheight()
         root.title("Hornet Node Logs")
+        root.geometry("%dx%d+0+0" % (screen_width, screen_height))
+        B = Button(root, text = "Quit-status window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = root.destroy).grid()
         Text=Label(root,text=Output, bg="#0B3861", fg="white").grid()
         root.mainloop()
         #End of Gui log for hornet node status
@@ -744,6 +758,7 @@ if __name__ == "__main__":
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         app.geometry("%dx%d+0+0" % (screen_width, screen_height))
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
+        app.geometry("820x520+500+100") #BxH+B+H
         print("")
 
     #app.option_add('*Font', 'Arial 16')
