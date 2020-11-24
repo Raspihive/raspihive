@@ -541,7 +541,7 @@ def fixforolderssdsuasprob():
 def report():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x210+350+350")
+        messageWindow.geometry("600x210+350+250")
         messageWindow.title("Report") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -561,7 +561,7 @@ def report():
         
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x210+350+350")
+        messageWindow.geometry("600x210+350+250")
         messageWindow.title("Report") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -585,7 +585,7 @@ def report():
 def about():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x210+350+350")
+        messageWindow.geometry("600x210+350+250")
         messageWindow.title("About") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -600,7 +600,7 @@ def about():
         
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x210+350+350")
+        messageWindow.geometry("600x210+350+250")
         messageWindow.title("About") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -619,7 +619,7 @@ def about():
 def infopreparations():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x280+350+350")
+        messageWindow.geometry("600x280+350+250")
         messageWindow.title("Preparations") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -633,7 +633,7 @@ def infopreparations():
         
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x280+350+350")
+        messageWindow.geometry("600x280+350+250")
         messageWindow.title("Preparations") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -773,8 +773,9 @@ if __name__ == "__main__":
     #print("height: ", screen_height)
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         app.geometry("%dx%d+0+0" % (screen_width, screen_height))
-    if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
-        app.geometry("820x520+350+350") #BxH+B+H
+    else: 
+        (screen_width*screen_height<=2073600) # > 7 inch Display no Fullscreen
+        app.geometry("820x520+350+150") #BxH+B+H
         print("")
 
 
