@@ -541,7 +541,7 @@ def fixforolderssdsuasprob():
 def report():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x200+350+350")
+        messageWindow.geometry("600x210+350+350")
         messageWindow.title("Report") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -551,12 +551,12 @@ def report():
         
         Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=4, column=0, padx='0', pady='0')
 
-
+        B = Button(messageWindow, text = "Quit-window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = messageWindow.destroy).grid(sticky="W")
         messageWindow.mainloop()
         
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x200+350+350")
+        messageWindow.geometry("600x210+350+350")
         messageWindow.title("Report") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -566,6 +566,7 @@ def report():
         
         Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=4, column=0, padx='0', pady='0')
 
+        B = Button(messageWindow, text = "Quit-window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = messageWindow.destroy).grid(sticky="W")
         messageWindow.mainloop()
         
     #messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
@@ -574,7 +575,7 @@ def report():
 def about():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x200+350+350")
+        messageWindow.geometry("600x210+350+350")
         messageWindow.title("About") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -584,11 +585,12 @@ def about():
         
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
 
+        B = Button(messageWindow, text = "Quit-window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = messageWindow.destroy).grid(sticky="W")
         messageWindow.mainloop()
         
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x200+350+350")
+        messageWindow.geometry("600x210+350+350")
         messageWindow.title("About") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="The Plug and Play solution for a Raspberry Pi IOTA Fullnode!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -598,7 +600,7 @@ def about():
         
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
 
- 
+        B = Button(messageWindow, text = "Quit-window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = messageWindow.destroy).grid(sticky="W")
         messageWindow.mainloop()
     #info for user display message
     #messagebox.showinfo("Report a bug", " The Plug and Play solution for a Raspberry Pi IOTA Fullnode with userfriendly UI and extensions \n Raspihive: Beta Version 3.0 ")
@@ -607,7 +609,7 @@ def about():
 def infopreparations():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x240+350+350")
+        messageWindow.geometry("600x280+350+350")
         messageWindow.title("Preparations") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -616,12 +618,12 @@ def infopreparations():
         #Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
         #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
-
+        B = Button(messageWindow, text = "Quit-window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = messageWindow.destroy).grid(sticky="W")
         messageWindow.mainloop()
         
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
         messageWindow = tk.Tk()
-        messageWindow.geometry("600x240+350+350")
+        messageWindow.geometry("600x280+350+350")
         messageWindow.title("Preparations") 
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="The following ports are important for a flawless node operation.  ", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
@@ -631,7 +633,7 @@ def infopreparations():
         
         #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
 
-    
+        B = Button(messageWindow, text = "Quit-window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = messageWindow.destroy).grid(sticky="W")
         messageWindow.mainloop()
     #info for user display message
     #messagebox.showinfo("Preparations", "Allow basic ports in your router settings. The following ports are important for a flawless node operation. \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
