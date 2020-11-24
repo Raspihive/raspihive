@@ -546,7 +546,12 @@ def report():
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
-        Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
+
+        link1 = Label(messageWindow, text="https://raspihive.org/", fg="blue", cursor="hand2", font="Verdana 13")
+        link1.grid(row=1, column=0, padx='0', pady='0')
+        link1.bind("<Button-1>", lambda e: callback("https://raspihive.org/"))
+
+        #Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
         Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=4, column=0, padx='0', pady='0')
@@ -561,7 +566,12 @@ def report():
         messageWindow['bg'] = '#0B3861'
         Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
-        Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
+
+        link1 = Label(messageWindow, text="https://raspihive.org/", fg="blue", cursor="hand2", font="Verdana 13")
+        link1.grid(row=1, column=0, padx='0', pady='0')
+        link1.bind("<Button-1>", lambda e: callback("https://raspihive.org/"))
+
+        #Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
         Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white", font="Verdana 13").grid(row=4, column=0, padx='0', pady='0')
@@ -739,7 +749,10 @@ def hornet_dashboard():
     #os.system('chromium --no-sandbox http://google.at')
     #subprocess.Popen(" chromium --no-sandbox /new-tab www.google.com",shell = True)
     subprocess.Popen("sudo -upi chromium http://localhost",shell = True)
-    
+
+def callback(url):
+    webbrowser.open_new(url)
+
 def Close_Raspihive():
     sys.exit(0)
 
@@ -761,6 +774,7 @@ if __name__ == "__main__":
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         app.geometry("%dx%d+0+0" % (screen_width, screen_height))
     if (screen_width*screen_height<=2073600): # > 7 inch Display no Fullscreen
+        app.geometry("820x520+350+350") #BxH+B+H
         print("")
 
 
