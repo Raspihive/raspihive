@@ -393,7 +393,7 @@ def SSL_reverse_proxy_install_function():
             app.update()
             time.sleep(0.5)
             #End progress bar loop
-        messagebox.showinfo("SSL installer", "SSL successfully installed and configured")
+        messagebox.showinfo("Installer", "Nginx RP and Certbot successfully installed")
         progress_bar.destroy()
 
 #Test-Remove-Function
@@ -416,7 +416,7 @@ def uninstall_function():
             app.update()
             time.sleep(0.5)
             #End progress bar loop
-        messagebox.showinfo("Hornet installer", "Successfully removed Certbot & Nginx")
+        messagebox.showinfo("Hornet installer", "Successfully removed Nginx & Certbot")
         progress_bar.destroy()
 
 
