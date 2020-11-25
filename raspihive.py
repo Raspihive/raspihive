@@ -304,7 +304,7 @@ def update_raspihive():
         subprocess.Popen("sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git",shell = True)
         #os.system('sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git')   # #      sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master
         while progress_bar['value'] < 100:
-            progress_bar['value'] += 2
+            progress_bar['value'] += 20
             #Keep updating the master object to redraw the progress bar
             app.update()
             time.sleep(0.5)
