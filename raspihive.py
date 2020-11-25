@@ -301,7 +301,7 @@ def update_raspihive():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 2
         app.update()
-        subprocess.Popen("cd /home/pi/ && sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git /home/pi/raspihive ",shell = True) #
+        subprocess.Popen("cd /home/pi/ && sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git /home/pi/raspihive ",shell = True) 
         #os.system('sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git')   # #      sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
@@ -311,7 +311,7 @@ def update_raspihive():
             #End progress bar loop
         messagebox.showinfo("Raspihive updated", "Raspihive succesfully updated")
         progress_bar.destroy()
-
+#
 
 #Functions in page two
 def Hornet_install_function():
