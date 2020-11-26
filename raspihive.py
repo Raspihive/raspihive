@@ -384,7 +384,7 @@ def SSL_reverse_proxy_install_function():
         f = open("/etc/nginx/sites-available/default", "w")
         f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off;  \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
         f.close()
-        os.system('sudo service nginx reload && sudo systemctl enable nginx')
+        os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
         os.system('sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y')
         
         while progress_bar['value'] < 100:
