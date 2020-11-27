@@ -547,9 +547,10 @@ def report():
         Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
 
-        link1 = Label(messageWindow, text="https://raspihive.org/", fg="blue", cursor="hand2", font="Verdana 13")
-        link1.grid(row=1, column=0, padx='0', pady='0')
-        link1.bind("<Button-1>", lambda e: callback("https://raspihive.org/"))
+        Link = Button(messageWindow, text = "https://raspihive.org/", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = report_raspihive).grid(sticky="W")
+        #link1 = Label(messageWindow, text="https://raspihive.org/", fg="blue", cursor="hand2", font="Verdana 13")
+        #link1.grid(row=1, column=0, padx='0', pady='0')
+        #link1.bind("<Button-1>", lambda e: callback("https://raspihive.org/"))
 
         #Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
@@ -567,9 +568,11 @@ def report():
         Label(messageWindow, text="If you found a bug or experience any issues, please write as at:", bg="#0B3861", fg="white", font="Verdana 13").grid(row=0, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=1, column=0, padx='0', pady='0')
 
-        link1 = Label(messageWindow, text="https://raspihive.org/", fg="blue", cursor="hand2", font="Verdana 13")
-        link1.grid(row=1, column=0, padx='0', pady='0')
-        link1.bind("<Button-1>", lambda e: callback("https://raspihive.org/"))
+        Link = Button(messageWindow, text = "https://raspihive.org/", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = report_raspihive).grid(sticky="W")
+
+        #link1 = Label(messageWindow, text="https://raspihive.org/", fg="blue", cursor="hand2", font="Verdana 13")
+        #link1.grid(row=1, column=0, padx='0', pady='0')
+        #link1.bind("<Button-1>", lambda e: callback("https://raspihive.org/"))
 
         #Label(messageWindow, text="https://raspihive.org/", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
@@ -750,8 +753,11 @@ def hornet_dashboard():
     #subprocess.Popen(" chromium --no-sandbox /new-tab www.google.com",shell = True)
     subprocess.Popen("sudo -upi chromium http://localhost",shell = True)
 
-def callback(url):
-    webbrowser.open_new(url)
+def report_raspihive():
+    #webbrowser.open_new(url)
+    subprocess.Popen("sudo -upi chromium https://raspihive.org/",shell = True)
+    subprocess.Popen("sudo -uubuntu firefox https://raspihive.org/",shell = True)
+   
 
 def Close_Raspihive():
     sys.exit(0)
