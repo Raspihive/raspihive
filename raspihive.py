@@ -301,7 +301,7 @@ def update_raspihive():
         progress_bar.grid(row=4, column=0, padx='0', pady='0')
         progress_bar['value'] = 2
         app.update()
-        subprocess.Popen("cd /home/pi/ && sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git /home/pi/raspihive ",shell = True) 
+        subprocess.Popen("cd /var/lib/ && sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git /var/lib/raspihive ",shell = True) 
         #os.system('sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git')   # #      sudo git pull https://github.com/Raspihive/raspihive.git && sudo git reset --hard origin/master
         while progress_bar['value'] < 100:
             progress_bar['value'] += 20
@@ -742,7 +742,7 @@ def mainnetdb_h_function():
         subprocess.Popen('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start',shell = True)
         #os.system('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start')
         messagebox.showinfo(" Hornet", " Hornet DB removed  ")
-#
+
 def hornet_dashboard():
     #os.system('sudo -upi chromium http://localhost')
     #os.system('firefox-esr https://google.at')
@@ -752,11 +752,14 @@ def hornet_dashboard():
     #os.system('chromium --no-sandbox http://google.at')
     #subprocess.Popen(" chromium --no-sandbox /new-tab www.google.com",shell = True)
     subprocess.Popen("sudo -upi chromium http://localhost",shell = True)
+    subprocess.Popen("sudo -uubuntu firefox http://localhost",shell = True)
+    subprocess.Popen("sudo -ubeekeeper firefox http://localhost",shell = True)
 
 def report_raspihive():
     #webbrowser.open_new(url)
     subprocess.Popen("sudo -upi chromium https://raspihive.org/",shell = True)
     subprocess.Popen("sudo -uubuntu firefox https://raspihive.org/",shell = True)
+    subprocess.Popen("sudo -ubeekeeper firefox https://raspihive.org/",shell = True)
    
 
 def Close_Raspihive():
