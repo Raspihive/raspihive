@@ -817,7 +817,7 @@ if __name__ == "__main__":
     label1=Label(app)
     label1.grid(row=0, column=1, padx='5', pady='5')
     clock()
-#
+
     #Scrolled Text for Raspihive Version
     deli = 250           # milliseconds of delay per character
     svar = tk.StringVar()
