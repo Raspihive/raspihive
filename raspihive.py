@@ -35,7 +35,7 @@ localtime = time.asctime( time.localtime(time.time()) )
 
 ##############################################################################
 ##############################################################################
-# start functions
+
 #####################################Start of Window frames############################################
 
 class mainWindow(tk.Tk):
@@ -586,6 +586,7 @@ def report():
     #messagebox.showinfo("About", " If you found a bug or experience any issues, please write as at: https://raspihive.org/")
 
 
+
 def about():
     if (screen_width*screen_height<=614400): # 7 inch Display = Fullscreen
         messageWindow = tk.Tk()
@@ -612,7 +613,7 @@ def about():
         Label(messageWindow, text="Raspihive: Version 1.0", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
         
-        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
+        Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')      
 
         B = Button(messageWindow, text = "Quit-window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = messageWindow.destroy).grid(sticky="W")
         messageWindow.mainloop()
@@ -644,9 +645,8 @@ def infopreparations():
         Label(messageWindow, text="Allow basic ports in your router settings: \n", bg="#0B3861", fg="white", font="Verdana 13").grid(row=1, column=0, padx='0', pady='0')
         Label(messageWindow, text="14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot", bg="#0B3861", fg="white", font="Verdana 13").grid(row=2, column=0, padx='0', pady='0')
         #Label(messageWindow, text="", bg="#0B3861", fg="white").grid(row=3, column=0, padx='0', pady='0')
-        
-        #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
 
+        #Label(messageWindow, text="Thanks for your feedback!", bg="#0B3861", fg="white").grid(row=4, column=0, padx='0', pady='0')
         B = Button(messageWindow, text = "Quit-window", bg="#0B3861", height = 1,  width = 20, fg="white", font="Verdana 13", command = messageWindow.destroy).grid(sticky="W")
         messageWindow.mainloop()
     #info for user display message
@@ -767,11 +767,6 @@ def Close_Raspihive():
     sys.exit(0)
 
 
-def shift():
-    shift.msg = shift.msg[1:] + shift.msg[0]
-    svar.set(shift.msg)
-    app.after(deli, shift)
-
 ###############################################################################
 # end functions
 ###############################################################################
@@ -818,14 +813,7 @@ if __name__ == "__main__":
     label1.grid(row=0, column=1, padx='5', pady='5')
     clock()
 
-    #Scrolled Text for Raspihive Version
-    deli = 250           # milliseconds of delay per character
-    svar = tk.StringVar()
-    labl = tk.Label(app, textvariable=svar, bg="#0B3861", fg="white")
-    labl.place(x=350,y=30)
-    #labl.grid(row=4, column=0, padx='5', pady='5', ipadx=0,  ipady=0)
-    shift.msg = ' Raspihive Version 1.0 '    
-    shift()
+    
     
    
 
