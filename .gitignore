@@ -1,5 +1,5 @@
 build/
-dist/
+dist/*
 raspihive.egg-info/
 __pycache__/
 venv
