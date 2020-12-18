@@ -35,7 +35,7 @@ $ sudo python3 setup.py install
 `pip install -r requirements/dev.txt`
 
 ### Run
-`python raspihive`
+`python -m raspihive`
 
 
 ---
