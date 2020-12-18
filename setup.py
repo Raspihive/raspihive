@@ -1,10 +1,22 @@
 import setuptools
+
+__project_name__ = "raspihive"
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+
+def get_version(package):
+    """
+    Return package version as listed in `__version__` in `init.py`.
+    """
+    init_py = open(os.path.join(package, '__init__.py')).read()
+    return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
+
+
 setuptools.setup(
-    name="raspihive",
-    version="0.0.1",
+    name=__project_name__,
+    version=get_version(__project_name__),
     author="RaspiHive Team",
     author_email="contact@raspihive.org",
     description="RaspiHive toolkit for IOTA Network Entry Points",
