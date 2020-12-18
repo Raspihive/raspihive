@@ -6,13 +6,14 @@ setuptools.setup(
     name="raspihive",
     version="0.0.1",
     author="RaspiHive Team",
-    author_email="",
+    author_email="contact@raspihive.org",
     description="RaspiHive toolkit for IOTA Network Entry Points",
     long_description=long_description,
     long_description_contenxt_type="text/markdown",
     url="https://github.com/raspihive/raspihive",
     packages=["raspihive"],
-    install_requires=["","guizero","tk"], # ToDo: add hornetctl here
+    install_requires=["PyQt5"],  # TODO: add hornetctl here
+    license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
