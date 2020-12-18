@@ -1,18 +1,33 @@
 import setuptools
+import os
+import re
+
+__project_name__ = "raspihive"
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+
+def get_version(package):
+    """
+    Return package version as listed in `__version__` in `init.py`.
+    """
+    init_py = open(os.path.join(package, '__init__.py')).read()
+    return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
+
+
 setuptools.setup(
-    name="raspihive",
-    version="0.0.1",
+    name=__project_name__,
+    version=get_version(__project_name__),
     author="RaspiHive Team",
-    author_email="",
+    author_email="contact@raspihive.org",
     description="RaspiHive toolkit for IOTA Network Entry Points",
     long_description=long_description,
-    long_description_contenxt_type="text/markdown",
+    long_description_content_type="text/markdown",
     url="https://github.com/raspihive/raspihive",
     packages=["raspihive"],
-    install_requires=["","guizero","tk"], # ToDo: add hornetctl here
+    install_requires=["PyQt5"],  # TODO: add hornetctl here
+    license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

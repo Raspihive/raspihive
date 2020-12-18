@@ -21,6 +21,7 @@ localtime = time.asctime( time.localtime(time.time()) )
 
 ##############################################################################
 
+
 #####################################Start of Window frames############################################
 class MainWindow1(Qt.QMainWindow):
     def __init__(self):
@@ -240,6 +241,7 @@ class MainWindow2(Qt.QMainWindow):
         self.cams.show()
         self.close()     
 
+
 class MainWindow3(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -332,6 +334,7 @@ class MainWindow3(Qt.QMainWindow):
         self.cams.show()
         self.close()        
 
+
 class MainWindow4(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -379,6 +382,7 @@ class MainWindow4(Qt.QMainWindow):
         self.cams = MainWindow1()
         self.cams.show()
         self.close()  
+
 
 class MainWindow5(Qt.QMainWindow):
     def __init__(self):
@@ -545,6 +549,7 @@ class MainWindow5(Qt.QMainWindow):
         self.cams.show()
         self.close() 
 
+
 class MainWindow6(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -600,6 +605,7 @@ class MainWindow6(Qt.QMainWindow):
         self.cams = MainWindow1()
         self.cams.show()
         self.close() 
+
 
 class MainWindow7(Qt.QMainWindow):
     def __init__(self):
@@ -770,9 +776,7 @@ class MainWindow9(Qt.QMainWindow):
 """
 
 
-# Start main programm
-###############################################################################
-if __name__ == '__main__':
+def main():
     # create pyqt5 app 
     app = Qt.QApplication(sys.argv)
     # create the instance of our Window 
@@ -781,5 +785,11 @@ if __name__ == '__main__':
     w.show()
     # start the app 
     sys.exit(app.exec_())
+
+
+# Start main programm
+###############################################################################
+if __name__ == '__main__':
+    main()
 ###############################################################################
 #End main programm
