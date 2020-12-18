@@ -1,4 +1,6 @@
 import setuptools
+import os
+import re
 
 __project_name__ = "raspihive"
 
