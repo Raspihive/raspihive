@@ -2,6 +2,13 @@
 
 # Install
 
+
+### Install from pypi:
+`pip install raspihive`
+
+
+### Install from source:
+
 Tested on Ubuntu 18.04.
 
 1. Install SetupTools:
