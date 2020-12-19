@@ -1,5 +1,20 @@
    ![](/assets/Logo/TheHive.png)
 
+
+![PyPI](https://img.shields.io/pypi/v/raspihive?style=for-the-badge) ![PyPI - Status](https://img.shields.io/pypi/status/raspihive?style=for-the-badge) ![PyPI - Downloads](https://img.shields.io/pypi/dw/raspihive?style=for-the-badge) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/raspihive?style=for-the-badge)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/raspihive/raspihive?style=for-the-badge) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/raspihive/raspihive?style=for-the-badge) ![GitHub issues](https://img.shields.io/github/issues-raw/raspihive/raspihive?style=for-the-badge) ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/raspihive/raspihive?style=for-the-badge) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/raspihive/raspihive?style=for-the-badge) 
+
+![GitHub](https://img.shields.io/github/license/raspihive/raspihive?style=for-the-badge) ![GitHub contributors](https://img.shields.io/github/contributors/raspihive/raspihive?style=for-the-badge) 
+
+# Install
+
+
+### Install from pypi:
+`pip install raspihive`
+
+
+### Install from source:
+
 # Setup
 
 if you want to run RaspiHive on Raspberry Pi OS, you need the 64 Bit version (wich is Beta at the moment).
@@ -10,8 +25,6 @@ download the Image from:
 and use the Raspberry Pi imager to write it on a SD Card: 
 
 [Raspberry Pi Downloads](https://www.raspberrypi.org/downloads/)
-
-# Install
 
 Tested on Ubuntu 18.04.
 
@@ -36,17 +49,24 @@ $ sudo python3 setup.py install
 ---
 # Development
 
-### Setup
-Currently, we need to sudo access to access system password. So, you'll have to install the packages system wide.
+If you are interested in contributing, please go through our [CONTRIBUTING](CONTRIBUTING.md) guidelines first.
 
-#### Dependencies `sudo pip install guizero tk`
+### Setup
+
+#### Environment
+- Setup virtualenv: `python3 -m venv venv`
+- Activate venv: `source venv/bin/activate`
+
+#### Dependencies
+`pip install -r requirements/dev.txt`
 
 ### Run
-`sudo python3 raspihive.py`
+`python -m raspihive`
+
 
 ---
 __Works on__:
 
 - [x] Ubuntu 18.04
 - [x] Ubuntu 20.04
-- [ ] Fedora 22
+- [x] Fedora 33
