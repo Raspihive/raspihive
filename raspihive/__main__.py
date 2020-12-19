@@ -34,6 +34,7 @@ class MainWindow1(Qt.QMainWindow):
 
     def mainWindow1(self):
         #Window size
+    
         self.setFixedSize(500, 500)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Raspihive')
@@ -850,13 +851,33 @@ class MainWindow9(Qt.QMainWindow):
 def main():
     # create pyqt5 app 
     app = Qt.QApplication(sys.argv)
+    
+ 
 
+    screen = app.primaryScreen()
+    #print('Screen: %s' % screen.name())
+    size = screen.size()
+    #print('Size: %d x %d' % (size.width(), size.height()))
+    rect = screen.availableGeometry()
+    #print('Available: %d x %d' % (rect.width(), rect.height()))
+    #print()
+    #print("Width", rect.width())
+    #print("Height", rect.height())
     
 
     # create the instance of our Window 
     w   = MainWindow1()
     # show the window is disabled by default 
-    w.show()
+    if (rect.width()*rect.height()<=614400): # 7 inch Display = Fullscreen
+        w.showMaximized() 
+        print("Fullscreen mode")
+    else: 
+        (rect.width()*rect.height()<=2073600) # > 7 inch Display no Fullscreen
+        print("7 inch mode", rect.width())
+        w.show()
+        
+    
+    
     # start the app 
     sys.exit(app.exec_())
 
