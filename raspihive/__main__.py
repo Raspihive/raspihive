@@ -701,14 +701,33 @@ class MainWindow8(Qt.QMainWindow):
 
 
     def report(self):
-        QMessageBox.about(self, "Report", "If you found a bug or experience any issues, please write as at: www.raspihive.org Thanks for your feedback!")
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle("Report")
+        msg.setText("If you found a bug or experience any issues, please write as at: www.raspihive.org Thanks for your feedback!")
+        #msg.setInformativeText("informative text, ya!")
+        x = msg.exec_()  # this will show our messagebox
+       
        
 
     def about(self):
-        QMessageBox.about(self, "About", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode! Raspihive: Version beta 1.0")
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle("About")
+        msg.setText("The Plug and Play solution for a Raspberry Pi IOTA Fullnode! Raspihive: Version beta 1.0")
+        #msg.setInformativeText("informative text, ya!")
+        x = msg.exec_()  # this will show our messagebox
         
     def preparations(self):
-        QMessageBox.about(self,  "Preparations", "The following ports are important for a flawless node operation. Allow basic ports in your router settings: 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle("Preparations")
+        msg.setText("The following ports are important for a flawless node operation. Allow basic ports in your router settings: 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot")
+        #msg.setInformativeText("informative text, ya!")
+        x = msg.exec_()  # this will show our messagebox
      
 
     def return_to_start_page(self):
