@@ -1,5 +1,11 @@
    ![](/assets/Logo/TheHive.png)
 
+
+![PyPI](https://img.shields.io/pypi/v/raspihive?style=for-the-badge) ![PyPI - Status](https://img.shields.io/pypi/status/raspihive?style=for-the-badge) ![PyPI - Downloads](https://img.shields.io/pypi/dw/raspihive?style=for-the-badge) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/raspihive?style=for-the-badge)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/raspihive/raspihive?style=for-the-badge) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/raspihive/raspihive?style=for-the-badge) ![GitHub issues](https://img.shields.io/github/issues-raw/raspihive/raspihive?style=for-the-badge) ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/raspihive/raspihive?style=for-the-badge) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/raspihive/raspihive?style=for-the-badge) 
+
+![GitHub](https://img.shields.io/github/license/raspihive/raspihive?style=for-the-badge) ![GitHub contributors](https://img.shields.io/github/contributors/raspihive/raspihive?style=for-the-badge) 
+
 # Install
 
 
@@ -31,6 +37,8 @@ $ sudo python3 setup.py install
 ---
 ---
 # Development
+
+If you are interested in contributing, please go through our [CONTRIBUTING](CONTRIBUTING.md) guidelines first.
 
 ### Setup
 
