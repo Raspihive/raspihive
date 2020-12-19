@@ -827,7 +827,7 @@ class MainWindow9(Qt.QMainWindow):
         self.cams.show()
         self.close()
 """
-
+#
 def main():
     # create pyqt5 app 
     app = Qt.QApplication(sys.argv)
