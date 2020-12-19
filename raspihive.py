@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5 import Qt, QtWidgets, QtGui
 from subprocess import Popen, PIPE
 import subprocess
+#from .helpers import os_parse
 ###############################################################################
 # Check for root
 #if not os.geteuid() == 0:
@@ -827,9 +828,7 @@ class MainWindow9(Qt.QMainWindow):
         self.close()
 """
 
-# Start main programm
-###############################################################################
-if __name__ == '__main__':
+def main():
     # create pyqt5 app 
     app = Qt.QApplication(sys.argv)
     # create the instance of our Window 
@@ -840,7 +839,9 @@ if __name__ == '__main__':
     sys.exit(app.exec_())
 
 
-
-
+# Start main programm
+###############################################################################
+if __name__ == '__main__':
+    main()
 ###############################################################################
 #End main programm
