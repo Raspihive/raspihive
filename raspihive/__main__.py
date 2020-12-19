@@ -850,6 +850,9 @@ class MainWindow9(Qt.QMainWindow):
 def main():
     # create pyqt5 app 
     app = Qt.QApplication(sys.argv)
+
+    
+
     # create the instance of our Window 
     w   = MainWindow1()
     # show the window is disabled by default 
