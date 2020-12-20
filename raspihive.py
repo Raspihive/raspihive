@@ -960,9 +960,9 @@ class hornet_status_win(Qt.QMainWindow):
         #Set window position and size
         super().__init__()
         self.left = 300
-        self.top = 300
-        self.width = 1000
-        self.height = 1000
+        self.top = 100
+        self.width = 1100
+        self.height = 500
         #End of set window position and size
         #Window size
         self.setGeometry(self.left, self.top, self.width, self.height)
@@ -982,14 +982,14 @@ class hornet_status_win(Qt.QMainWindow):
         #Set label text      
         Text=labelT.setText(Output) 
         #Set label font
-        labelT.setFont(QtGui.QFont("Arial", 11, QtGui.QFont.Black))
+        labelT.setFont(QtGui.QFont("Arial", 10, QtGui.QFont.Black))
         # setting up background and text color 
         labelT.setStyleSheet("background-color: #0B3861; color: white; border: 0px solid black") 
         #Setting position x y
-        labelT.move(20, 20)
+        labelT.move(20, 10)
         #Setting label width
-        labelT.setFixedWidth(900)
-        labelT.setFixedHeight(900)
+        labelT.setFixedWidth(1100)
+        labelT.setFixedHeight(500)
         #End label
 
 
@@ -1012,9 +1012,9 @@ class hornet_log_win(Qt.QMainWindow):
         #Set window position and size
         super().__init__()
         self.left = 300
-        self.top = 300
-        self.width = 900
-        self.height = 900
+        self.top = 100
+        self.width = 1450
+        self.height = 810
         #End of set window position and size
         #Window size
         self.setGeometry(self.left, self.top, self.width, self.height)
@@ -1033,14 +1033,15 @@ class hornet_log_win(Qt.QMainWindow):
         #Set label text      
         Text=labelT.setText(Output) 
         #Set label font
-        labelT.setFont(QtGui.QFont("Arial", 11, QtGui.QFont.Black))
+        labelT.setFont(QtGui.QFont("Arial", 10, QtGui.QFont.Black))
         # setting up background and text color 
         labelT.setStyleSheet("background-color: #0B3861 ; color: white; border: 0px solid black") 
         #Setting position x y
-        labelT.move(20, 20)
+        labelT.move(20, 30)
         #Setting label width
-        labelT.setFixedWidth(900)
-        labelT.setFixedHeight(900)
+        labelT.setFixedWidth(1450)
+        #Setting label height
+        labelT.setFixedHeight(810)
         #End label
 
         # Button return to MainWindow 5 
