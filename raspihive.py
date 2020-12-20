@@ -6,11 +6,12 @@
 ###############################################################################
 # libraries
 import sys, time, os
-from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QProgressBar
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5 import Qt, QtWidgets, QtGui
 from subprocess import Popen, PIPE
 import subprocess
+
 #from .helpers import os_parse
 ###############################################################################
 # Check for root
@@ -30,10 +31,10 @@ class MainWindow1(Qt.QMainWindow):
         Qt.QMainWindow.__init__(self)
 
         self.mainWindow1()
-    
 
     def mainWindow1(self):
         #Window size
+    
         self.setFixedSize(500, 500)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Raspihive')
@@ -125,6 +126,18 @@ class MainWindow1(Qt.QMainWindow):
         self.pushButton.clicked.connect(self.Window8)
         # End of creating a push button help
 
+        # creating a quit button
+        self.pushButton = Qt.QPushButton(self)
+        # setting geometry of button x, y, width, height
+        self.pushButton.setGeometry(220, 240, 150, 40) 
+        #Setting background color or transparency
+        self.pushButton.setStyleSheet('background-color: #353535; color: white')
+        #Setting button text
+        self.pushButton.setText('Quit Raspihive')
+        # adding action to a button 
+        self.pushButton.clicked.connect(self.close)
+        # End of creating a quit button
+
         
 
         
@@ -215,8 +228,6 @@ class MainWindow2(Qt.QMainWindow):
         self.pushButton.clicked.connect(self.raspihive_update)
         #End of button Raspihive-update
 
-
-
         # Button return to start page
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(220, 200, 150, 40) 
@@ -225,23 +236,91 @@ class MainWindow2(Qt.QMainWindow):
         self.pushButton.clicked.connect(self.return_to_start_page)
         # End og button return to start page
 
+        #Start progress bar
+
+        """
+        self.progressBar = QtWidgets.QProgressBar(self)
+        self.progressBar.setAlignment(QtCore.Qt.AlignHCenter)
+        self.progressBar.setRange(0, 0)
+        self.progressBar.setFixedSize(300, 30)
+        self.progressBar.setTextVisible(True)
+        """
+
+        """
+        self.MainWindow2 = Qt.QProgressBar()
+        self.MainWindow2.setRange(0, 100)
+        self.MainWindow2.setValue(50) #SETTINGS THIS TO 50 FOR EXAMPLE
+        self.MainWindow2.show()
+        """
+        #End progress bar
+
     #Functions
     def os_update(self):
-        os.system("sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y")
-        QMessageBox.about(self, "OS Update", "OS successfully updated")
+        if os.geteuid() != 0:
+            print("You need to have root privileges")  
+            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+        if os.geteuid()==0:
+            #os.system('sudo service hornet start ') 
+            #p=subprocess for progress bar needed...- Getting progress message from a subprocess
+            p=subprocess.Popen("sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y", stdout=subprocess.PIPE, shell = True)
+            #Getting progress message from a subprocess
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
+                #End of Getting progress message from a subprocess
+            QMessageBox.about(self, "OS Update", "OS successfully updated")
 
     def packages_update(self):
-        os.system("sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic")
-        QMessageBox.about(self, "Packages Update", "Packages successfully updated")
+        if os.geteuid() != 0:
+            print("You need to have root privileges")  
+            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+        if os.geteuid()==0:
+            #os.system('sudo service hornet start ') 
+            p=subprocess.Popen("sudo apt update -y && sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic", stdout=subprocess.PIPE, shell = True)
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
+            QMessageBox.about(self,  "Packages Update", "Packages successfully updated")
 
     def hornet_update(self):
-        os.system("sudo service hornet stop && sudo apt-get update && sudo apt-get -y upgrade hornet && sudo systemctl restart hornet")
-        QMessageBox.about(self, "Hornet Update", "Hornet Node successfully updated")
+        if os.geteuid() != 0:
+            print("You need to have root privileges")  
+            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+        if os.geteuid()==0:
+            #os.system('sudo service hornet start ') 
+            p=subprocess.Popen("sudo service hornet stop && sudo apt-get update && sudo apt-get -y upgrade hornet && sudo systemctl restart hornet", stdout=subprocess.PIPE, shell = True)
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
+            QMessageBox.about(self,  "Hornet Update", "Hornet Node successfully updated")
 
     def raspihive_update(self):
-        os.system("cd /var/lib/ && sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git /var/lib/raspihive")
-        QMessageBox.about(self, "Raspihive Update", "Raspihive successfully updated")
-            
+        if os.geteuid() != 0:
+            print("You need to have root privileges")  
+            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+        if os.geteuid()==0:
+            #os.system('sudo service hornet start ') 
+            p=subprocess.Popen("cd /var/lib/ && sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git /var/lib/raspihive", stdout=subprocess.PIPE, shell = True)
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
+            QMessageBox.about(self,  "Raspihive Update", "Raspihive successfully updated")        
 
     def return_to_start_page(self):
         self.cams = MainWindow1()
@@ -303,7 +382,6 @@ class MainWindow3(Qt.QMainWindow):
         #End of button Remove Nginx + Certbot
 
 
-
         # Button return to start page
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(220, 200, 150, 40) 
@@ -314,13 +392,37 @@ class MainWindow3(Qt.QMainWindow):
 
 
     def hornet_install(self):
-        os.system('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && sudo echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard -y && sudo service hornet start')
-        QMessageBox.about(self, "Hornet install", "Hornet node successfully installed")
+        if os.geteuid() != 0:
+            print("You need to have root privileges")  
+            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+        if os.geteuid()==0:
+            #os.system('sudo service hornet start ') 
+            p=subprocess.Popen('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && sudo echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt-get install sshguard -y && sudo service hornet start', stdout=subprocess.PIPE, shell = True)
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
+            QMessageBox.about(self,  "Hornet install", "Hornet node successfully installed")  
 
     def hornet_uninstall(self):
-        os.system('sudo systemctl stop hornet && sudo apt -qq purge hornet -y && sudo rm -rf /etc/apt/sources.list.d/hornet.list') 
-        QMessageBox.about(self, "Hornet install", "Hornet node successfully uninstalled")
-    
+        if os.geteuid() != 0:
+            print("You need to have root privileges")  
+            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+        if os.geteuid()==0:
+            #os.system('sudo service hornet start ') 
+            p=subprocess.Popen("sudo systemctl stop hornet && sudo apt -qq purge hornet -y && sudo rm -rf /etc/apt/sources.list.d/hornet.list", stdout=subprocess.PIPE, shell = True)
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
+            QMessageBox.about(self, "Hornet install", "Hornet node successfully uninstalled")
+          
     def install_nginx_certbot(self):
         os.system('sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get install -y nginx && sudo ufw allow "Nginx Full" && sudo apt-get install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive')
         # Nginx configuration
@@ -328,12 +430,31 @@ class MainWindow3(Qt.QMainWindow):
         f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off;  \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
         f.close()
         os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-        os.system('sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y')
+        p=subprocess.Popen("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y", stdout=subprocess.PIPE, shell = True)
+        while True:
+            #print ("Looping")
+            line = p.stdout.readline()
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
         QMessageBox.about(self, "Nginx + Certbot install", "Nginx + Certbot successfully installed")
 
     def uninstall_nginx_certbot(self):
-        os.system('sudo systemctl stop nginx && sudo systemctl disable nginx && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y && sudo apt-get purge -y nginx ') 
-        QMessageBox.about(self, "Nginx + Certbot install", "Nginx + Certbot successfully uninstalled")
+        if os.geteuid() != 0:
+            print("You need to have root privileges")  
+            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+        if os.geteuid()==0:
+            #os.system('sudo service hornet start ') 
+            p=subprocess.Popen("sudo systemctl stop nginx && sudo systemctl disable nginx && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y && sudo apt-get purge -y nginx", stdout=subprocess.PIPE, shell = True)
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
+            QMessageBox.about(self, "Nginx + Certbot install", "Nginx + Certbot successfully uninstalled")
 
     def return_to_start_page(self):
         self.cams = MainWindow1()
@@ -469,29 +590,50 @@ class MainWindow5(Qt.QMainWindow):
     def start_hornet(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-        QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
-        sys.exit
+            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            os.system('sudo service hornet start ') 
+            #os.system('sudo service hornet start ') 
+            p=subprocess.Popen("sudo service hornet start", stdout=subprocess.PIPE, shell = True)
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
             QMessageBox.about(self, "Hornet", "Hornet node started")
 
     def stop_hornet(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-        QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
-        sys.exit
+            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            os.system('sudo service hornet stop ') 
-            QMessageBox.about(self, "Hornet", "Hornet node stopped")
+            #os.system('sudo service hornet stop ') 
+            p=subprocess.Popen("sudo service hornet stop", stdout=subprocess.PIPE, shell = True)
+        while True:
+            #print ("Looping")
+            line = p.stdout.readline()
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
+        QMessageBox.about(self, "Hornet", "Hornet node stopped")
 
     def restart_hornet(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-        QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
-        sys.exit
+            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            os.system('sudo service hornet restart ') 
-            QMessageBox.about(self, "Hornet", "Hornet node restarted")
+            #os.system('sudo service hornet restart ') 
+            p=subprocess.Popen("sudo service hornet restart", stdout=subprocess.PIPE, shell = True)
+        while True:
+            #print ("Looping")
+            line = p.stdout.readline()
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
+        QMessageBox.about(self, "Hornet", "Hornet node restarted")
     
     def status_hornet(self):
         self.cams = hornet_status_win()
@@ -508,10 +650,17 @@ class MainWindow5(Qt.QMainWindow):
         if os.geteuid() != 0:
             print("You need to have root privileges") 
             QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges") 
-            sys.exit
         if os.geteuid()==0:
-            os.system('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start ') 
-            QMessageBox.about(self, "Hornet", "Hornet node restarted")
+            #os.system('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start ') 
+            p=subprocess.Popen("sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start", stdout=subprocess.PIPE, shell = True)
+        while True:
+            #print ("Looping")
+            line = p.stdout.readline()
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
+        QMessageBox.about(self, "Hornet", "Hornet node restarted")
 
     def return_to_start_page(self):
         self.cams = MainWindow1()
@@ -557,9 +706,14 @@ class MainWindow6(Qt.QMainWindow):
         # End og button return to start page
 
     def hornet_dashboard_access(self):
-        os.system('sudo -upi chromium http://localhost') 
-        os.system('sudo -uubuntu firefox http://localhost') 
-        os.system('sudo -ubeekeeper firefox http://localhost') 
+        subprocess.Popen("sudo -upi chromium http://localhost",shell = True)
+        subprocess.Popen("sudo -upi firefox http://localhost",shell = True)
+        #os.system('sudo -upi chromium http://localhost') 
+        subprocess.Popen("sudo -uubuntu firefox http://localhost",shell = True)
+        #os.system('sudo -uubuntu firefox http://localhost') 
+        subprocess.Popen("sudo -ubeekeeper firefox http://localhost",shell = True)
+        #os.system('sudo -ubeekeeper firefox http://localhost') 
+        
 
         # Button return to start page
         self.pushButton = Qt.QPushButton(self)
@@ -624,7 +778,6 @@ class MainWindow7(Qt.QMainWindow):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
             QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges") 
-            sys.exit
         if os.geteuid()==0:
             os.system('sudo mkdir /media/hornetdb && sudo mount /dev/sdb1 /media/hornetdb && sudo chmod 775 /media/hornetdb && sudo echo "/dev/sdb1 /media/hornetdb ext4 defaults  1 1" >> /etc/fstab && sudo cp -fr --preserve /var/lib/hornet/mainnetdb /media/hornetdb/ && sudo mv var/lib/hornet/mainnetdb /var/lib/hornet/mainnetdb.old && sudo ln -sf /media/hornetdb /var/lib/hornet/mainnetdb')
             QMessageBox.about(self, "Hornet DB", "Hornet DB mounted")
@@ -633,7 +786,6 @@ class MainWindow7(Qt.QMainWindow):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
             QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges") 
-            sys.exit
         if os.geteuid()==0:
             os.system('sudo echo -e "blacklist uas \n blacklist sg" > /etc/modprobe.d/disable_uas.conf')
             QMessageBox.about(self, "SSD fix", "SSD fix executed")
@@ -699,18 +851,33 @@ class MainWindow8(Qt.QMainWindow):
         # End og button return to start page
 
 
-
     def report(self):
-        QMessageBox.about(self, "Report", "If you found a bug or experience any issues, please write as at: www.raspihive.org Thanks for your feedback!")
-       
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle("Report")
+        msg.setText("If you found a bug or experience any issues, please write as at: www.raspihive.org Thanks for your feedback!")
+        #msg.setInformativeText("informative text, ya!")
+        x = msg.exec_()  # this will show our messagebox
 
     def about(self):
-        QMessageBox.about(self, "About", "The Plug and Play solution for a Raspberry Pi IOTA Fullnode! Raspihive: Version beta 1.0")
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle("About")
+        msg.setText("The Plug and Play solution for a Raspberry Pi IOTA Fullnode! Raspihive: Version beta 1.0")
+        #msg.setInformativeText("informative text, ya!")
+        x = msg.exec_()  # this will show our messagebox
         
     def preparations(self):
-        QMessageBox.about(self,  "Preparations", "The following ports are important for a flawless node operation. Allow basic ports in your router settings: 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot ")
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle("Preparations")
+        msg.setText("The following ports are important for a flawless node operation. Allow basic ports in your router settings: \n \n 14626 UDP - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP - for Certbot \n \n 443 TCP for Certbot")
+        #msg.setInformativeText("informative text, ya!")
+        x = msg.exec_()  # this will show our messagebox
      
-
     def return_to_start_page(self):
         self.cams = MainWindow1()
         self.cams.show()
@@ -744,7 +911,6 @@ class hornet_status_win(Qt.QMainWindow):
         labelT.setFixedWidth(350)
         labelT.setFixedHeight(250)
         #End label
-        
 
 
         # Button return to MainWindow 5 
@@ -768,7 +934,6 @@ class hornet_log_win(Qt.QMainWindow):
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Hornet-Logs')
 
-        
         # For hornet node logs
         Outputfileobject=os.popen("sudo journalctl -u hornet -n 50")     #sudo journalctl -u hornet -n 50
         Output=Outputfileobject.read()
@@ -813,7 +978,6 @@ class MainWindow9(Qt.QMainWindow):
         self.setWindowTitle('Help')
 
 
-
         # Button return to start page
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(250, 300, 130, 40) 
@@ -831,13 +995,31 @@ class MainWindow9(Qt.QMainWindow):
 def main():
     # create pyqt5 app 
     app = Qt.QApplication(sys.argv)
+    
+ 
+    screen = app.primaryScreen()
+    #print('Screen: %s' % screen.name())
+    size = screen.size()
+    #print('Size: %d x %d' % (size.width(), size.height()))
+    rect = screen.availableGeometry()
+    #print('Available: %d x %d' % (rect.width(), rect.height()))
+    #print()
+    #print("Width", rect.width())
+    #print("Height", rect.height())
+
     # create the instance of our Window 
     w   = MainWindow1()
     # show the window is disabled by default 
-    w.show()
+    if (rect.width()*rect.height()<=614400): # 7 inch Display = Fullscreen
+        w.showMaximized() 
+        print("Fullscreen mode")
+    else: 
+        (rect.width()*rect.height()<=2073600) # > 7 inch Display no Fullscreen
+        print("No Fullscreen mode", rect.width())
+        w.show()
+    
     # start the app 
     sys.exit(app.exec_())
-
 
 # Start main programm
 ###############################################################################
