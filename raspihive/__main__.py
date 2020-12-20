@@ -29,13 +29,21 @@ localtime = time.asctime( time.localtime(time.time()) )
 class MainWindow1(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
-
+        
         self.mainWindow1()
 
     def mainWindow1(self):
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 300
+        self.width = 600
+        self.height = 350
+        #End of set window position and size
         #Window size
-    
-        self.setFixedSize(500, 500)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        #self.setFixedSize(500, 500)
+        self.setWindowOpacity(1.0)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Raspihive')
         
@@ -54,15 +62,16 @@ class MainWindow1(Qt.QMainWindow):
         #End label
       
         # creating a push button Update menu
-        self.pushButton = Qt.QPushButton(self)
+        self.QPushButton = Qt.QPushButton(self)
         # setting geometry of button x, y, width, height
-        self.pushButton.setGeometry(20, 60, 150, 40) 
+        self.QPushButton.setGeometry(20, 60, 150, 40) 
         #Setting background color or transparency
-        self.pushButton.setStyleSheet('background-color: #353535; color : white;') #rgb(150,150,150)
+        self.QPushButton.setStyleSheet('background-color: #353535; color : white;') #rgb(150,150,150)
+        
         #Setting button text
-        self.pushButton.setText('Update menu')
+        self.QPushButton.setText('Update menu')
         # adding action to a button 
-        self.pushButton.clicked.connect(self.Window2)
+        self.QPushButton.clicked.connect(self.Window2)
         # End of creating a push button Update menu
 
 
@@ -97,7 +106,7 @@ class MainWindow1(Qt.QMainWindow):
         #Setting background color or transparency
         self.pushButton.setStyleSheet('background-color: #353535; color: white')
         #Setting button text
-        self.pushButton.setText('dashboard access')
+        self.pushButton.setText('Dashboard access')
         # adding action to a button 
         self.pushButton.clicked.connect(self.Window6)
         # End of creating a push button dashboard access
@@ -139,8 +148,6 @@ class MainWindow1(Qt.QMainWindow):
         # End of creating a quit button
 
         
-
-        
     def Window2(self): # Update menu
         self.cams = MainWindow2()
         self.cams.show()
@@ -177,8 +184,17 @@ class MainWindow1(Qt.QMainWindow):
 class MainWindow2(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
-
-        self.setFixedSize(500, 500)
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 300
+        self.width = 600
+        self.height = 350
+        #End of set window position and size
+        #Window size
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        
+        #self.setFixedSize(500, 500)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Update menu')
 
@@ -330,8 +346,18 @@ class MainWindow2(Qt.QMainWindow):
 class MainWindow3(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 300
+        self.width = 600
+        self.height = 350
+        #End of set window position and size
+        #Window size
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self.setFixedSize(500, 500)
+
+        #self.setFixedSize(500, 500)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Install Menu')
 
@@ -464,8 +490,17 @@ class MainWindow3(Qt.QMainWindow):
 class MainWindow4(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 300
+        self.width = 600
+        self.height = 350
+        #End of set window position and size
+        #Window size
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self.setFixedSize(500, 500)
+        #self.setFixedSize(500, 500)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Node control')
 
@@ -512,8 +547,17 @@ class MainWindow4(Qt.QMainWindow):
 class MainWindow5(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 300
+        self.width = 600
+        self.height = 350
+        #End of set window position and size
+        #Window size
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self.setFixedSize(500, 500)
+        #self.setFixedSize(500, 500)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Hornet Node Control Center')
 
@@ -670,8 +714,17 @@ class MainWindow5(Qt.QMainWindow):
 class MainWindow6(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 300
+        self.width = 600
+        self.height = 350
+        #End of set window position and size
+        #Window size
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self.setFixedSize(500, 500)
+        #self.setFixedSize(500, 500)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Dashboard access')
 
@@ -731,8 +784,17 @@ class MainWindow6(Qt.QMainWindow):
 class MainWindow7(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 300
+        self.width = 600
+        self.height = 350
+        #End of set window position and size
+        #Window size
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self.setFixedSize(500, 500)
+        #self.setFixedSize(500, 500)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Tools')
 
@@ -799,8 +861,17 @@ class MainWindow7(Qt.QMainWindow):
 class MainWindow8(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 300
+        self.width = 600
+        self.height = 350
+        #End of set window position and size
+        #Window size
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self.setFixedSize(500, 500)
+        #self.setFixedSize(500, 500)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Help')
 
@@ -886,8 +957,17 @@ class MainWindow8(Qt.QMainWindow):
 class hornet_status_win(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 300
+        self.width = 1000
+        self.height = 1000
+        #End of set window position and size
+        #Window size
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self.setFixedSize(500, 500)
+        #self.setFixedSize(1000, 1000)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Hornet-Status')
 
@@ -902,20 +982,20 @@ class hornet_status_win(Qt.QMainWindow):
         #Set label text      
         Text=labelT.setText(Output) 
         #Set label font
-        labelT.setFont(QtGui.QFont("Arial", 12, QtGui.QFont.Black))
+        labelT.setFont(QtGui.QFont("Arial", 11, QtGui.QFont.Black))
         # setting up background and text color 
-        labelT.setStyleSheet("background-color: #353535; color: white; border: 0px solid black") 
+        labelT.setStyleSheet("background-color: #0B3861; color: white; border: 0px solid black") 
         #Setting position x y
         labelT.move(20, 20)
         #Setting label width
-        labelT.setFixedWidth(350)
-        labelT.setFixedHeight(250)
+        labelT.setFixedWidth(900)
+        labelT.setFixedHeight(900)
         #End label
 
 
         # Button return to MainWindow 5 
         self.pushButton = Qt.QPushButton(self)
-        self.pushButton.setGeometry(250, 300, 250, 40) 
+        self.pushButton.setGeometry(0, 0, 250, 40) 
         self.pushButton.setStyleSheet('background-color: #353535 ; color: white') #rgb(0,0,255)
         self.pushButton.setText('Return to Hornet Node Control Center')
         self.pushButton.clicked.connect(self.MainWindow5)
@@ -929,8 +1009,17 @@ class hornet_status_win(Qt.QMainWindow):
 class hornet_log_win(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 300
+        self.width = 900
+        self.height = 900
+        #End of set window position and size
+        #Window size
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self.setFixedSize(500, 500)
+        #self.setFixedSize(1000, 1000)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
         self.setWindowTitle('Hornet-Logs')
 
@@ -944,19 +1033,19 @@ class hornet_log_win(Qt.QMainWindow):
         #Set label text      
         Text=labelT.setText(Output) 
         #Set label font
-        labelT.setFont(QtGui.QFont("Arial", 12, QtGui.QFont.Black))
+        labelT.setFont(QtGui.QFont("Arial", 11, QtGui.QFont.Black))
         # setting up background and text color 
-        labelT.setStyleSheet("background-color: #353535 ; color: white; border: 0px solid black") 
+        labelT.setStyleSheet("background-color: #0B3861 ; color: white; border: 0px solid black") 
         #Setting position x y
         labelT.move(20, 20)
         #Setting label width
-        labelT.setFixedWidth(350)
-        labelT.setFixedHeight(250)
+        labelT.setFixedWidth(900)
+        labelT.setFixedHeight(900)
         #End label
 
         # Button return to MainWindow 5 
         self.pushButton = Qt.QPushButton(self)
-        self.pushButton.setGeometry(250, 300, 250, 40) 
+        self.pushButton.setGeometry(0, 0, 250, 40) 
         self.pushButton.setStyleSheet('background-color: #353535; color: white')
         self.pushButton.setText('Return to Hornet Node Control Center')
         self.pushButton.clicked.connect(self.MainWindow5)
