@@ -178,8 +178,6 @@ class MainWindow1(Qt.QMainWindow):
         self.cams.show()
         self.close()
 
-    
-    
 
 class MainWindow2(Qt.QMainWindow):
     def __init__(self):
@@ -544,6 +542,7 @@ class MainWindow4(Qt.QMainWindow):
         self.cams.show()
         self.close()  
 
+
 class MainWindow5(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -711,6 +710,7 @@ class MainWindow5(Qt.QMainWindow):
         self.cams.show()
         self.close() 
 
+
 class MainWindow6(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -780,6 +780,7 @@ class MainWindow6(Qt.QMainWindow):
         self.cams = MainWindow1()
         self.cams.show()
         self.close() 
+
 
 class MainWindow7(Qt.QMainWindow):
     def __init__(self):
@@ -856,7 +857,7 @@ class MainWindow7(Qt.QMainWindow):
         self.cams = MainWindow1()
         self.cams.show()
         self.close() 
-    
+
 
 class MainWindow8(Qt.QMainWindow):
     def __init__(self):
@@ -954,6 +955,7 @@ class MainWindow8(Qt.QMainWindow):
         self.cams.show()
         self.close() 
 
+
 class hornet_status_win(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -1005,6 +1007,7 @@ class hornet_status_win(Qt.QMainWindow):
         self.cams = MainWindow5()
         self.cams.show()
         self.close()
+
 
 class hornet_log_win(Qt.QMainWindow):
     def __init__(self):
@@ -1081,6 +1084,8 @@ class MainWindow9(Qt.QMainWindow):
         self.cams.show()
         self.close()
 """
+
+
 #
 def main():
     # create pyqt5 app 
@@ -1110,6 +1115,7 @@ def main():
     
     # start the app 
     sys.exit(app.exec_())
+
 
 # Start main programm
 ###############################################################################
