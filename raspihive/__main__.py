@@ -214,6 +214,10 @@ class MainWindow2(Qt.QMainWindow):
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(20, 60, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535; color: white')  #rgb(255,0,0)
+        self.pushButton.setText('System-update')
+        self.pushButton.clicked.connect(self.os_update)
+        #End of button System-update
+
         #Button Packages-update
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(220, 60, 150, 40) 
@@ -228,11 +232,12 @@ class MainWindow2(Qt.QMainWindow):
         self.pushButton.setStyleSheet('background-color: #353535; color: white')
         self.pushButton.setText('Hornet-update')
         self.pushButton.clicked.connect(self.hornet_update)
+        #End of button Hornet-update
 
         #Button Raspihive-update
-        self.pushButton.setGeometry(150, 130, 110, 40) 
-        self.pushButton.setStyleSheet('background-color: rgb(255,0,0); color: #0B3861')
-
+        self.pushButton = Qt.QPushButton(self)
+        self.pushButton.setGeometry(220, 130, 150, 40) 
+        self.pushButton.setStyleSheet('background-color: #353535; color: white')
         self.pushButton.setText('Raspihive-update')
         self.pushButton.clicked.connect(self.raspihive_update)
         #End of button Raspihive-update
@@ -267,7 +272,14 @@ class MainWindow2(Qt.QMainWindow):
     def os_update(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
             #p=subprocess for progress bar needed...- Getting progress message from a subprocess
@@ -286,7 +298,14 @@ class MainWindow2(Qt.QMainWindow):
     def packages_update(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
             p=subprocess.Popen(os_parse("sudo apt update -y && sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic"), stdout=subprocess.PIPE, shell = True)
@@ -302,7 +321,14 @@ class MainWindow2(Qt.QMainWindow):
     def hornet_update(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
             p=subprocess.Popen(os_parse("sudo service hornet stop && sudo apt update && sudo apt -y upgrade hornet && sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
@@ -318,7 +344,14 @@ class MainWindow2(Qt.QMainWindow):
     def raspihive_update(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
             p=subprocess.Popen("cd /var/lib/ && sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git /var/lib/raspihive", stdout=subprocess.PIPE, shell = True)
@@ -372,6 +405,11 @@ class MainWindow3(Qt.QMainWindow):
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(20, 60, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535; color: white') #rgb(255,0,0)
+        self.pushButton.setText('Install Hornet')
+        self.pushButton.clicked.connect(self.hornet_install)
+        #End of button Install-hornet
+
+        #Button Uninstall-hornet
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(220, 60, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535; color: white')
@@ -383,6 +421,11 @@ class MainWindow3(Qt.QMainWindow):
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(20, 130, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535; color: white')
+        self.pushButton.setText('Install Nginx + Certbot')
+        self.pushButton.clicked.connect(self.install_nginx_certbot)
+        #End of button Nginx + Certbot
+
+        #Button Remove Nginx + Certbot
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(220, 130, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535; color: white')
@@ -403,7 +446,14 @@ class MainWindow3(Qt.QMainWindow):
     def hornet_install(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
             p=subprocess.Popen(os_parse('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && sudo echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt install sshguard -y && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
@@ -419,7 +469,14 @@ class MainWindow3(Qt.QMainWindow):
     def hornet_uninstall(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
             p=subprocess.Popen(os_parse("sudo systemctl stop hornet && sudo apt -qq purge hornet -y && sudo rm -rf /etc/apt/sources.list.d/hornet.list"), stdout=subprocess.PIPE, shell = True)
@@ -452,7 +509,14 @@ class MainWindow3(Qt.QMainWindow):
     def uninstall_nginx_certbot(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
             p=subprocess.Popen(os_parse("sudo systemctl stop nginx && sudo systemctl disable nginx && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
@@ -505,10 +569,18 @@ class MainWindow4(Qt.QMainWindow):
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(20, 60, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535 ; color: white')  #rgb(255,0,0)
+        self.pushButton.setText('Hornet Node Control')
+        self.pushButton.clicked.connect(self.Hornet_Node_Control)
+        #End of button Hornet Node Control
+
         # Button return to start page
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(220, 60, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535 ; color: white')
+        self.pushButton.setText('Return to start page')
+        self.pushButton.clicked.connect(self.return_to_start_page)
+        # End og button return to start page
+
     def Hornet_Node_Control(self):
         self.cams = MainWindow5()
         self.cams.show()
@@ -564,12 +636,16 @@ class MainWindow5(Qt.QMainWindow):
         self.pushButton.setGeometry(220, 60, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535; color: white')
         self.pushButton.setText('Stop Hornet')
+        self.pushButton.clicked.connect(self.stop_hornet)
+        #End of button Stop Hornet
+
+        #Button restart Hornet
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(20, 130, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535; color: white')
         self.pushButton.setText('Restart hornet')
         self.pushButton.clicked.connect(self.restart_hornet)
-        #End of button Restart Hornet
+        #End of button restart Hornet
 
         #Button Check Hornet Status
         self.pushButton = Qt.QPushButton(self)
@@ -605,8 +681,15 @@ class MainWindow5(Qt.QMainWindow):
 
     def start_hornet(self):
         if os.geteuid() != 0:
-            print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+            print("You need to have root privileges") 
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox 
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
             p=subprocess.Popen("sudo service hornet start", stdout=subprocess.PIPE, shell = True)
@@ -621,35 +704,51 @@ class MainWindow5(Qt.QMainWindow):
 
     def stop_hornet(self):
         if os.geteuid() != 0:
-            print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+            print("You need to have root privileges") 
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox 
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            #os.system('sudo service hornet stop ') 
+            #os.system('sudo service hornet start ') 
             p=subprocess.Popen("sudo service hornet stop", stdout=subprocess.PIPE, shell = True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-        QMessageBox.about(self, "Hornet", "Hornet node stopped")
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
+            QMessageBox.about(self, "Hornet", "Hornet node stopped")
+
+
 
     def restart_hornet(self):
         if os.geteuid() != 0:
-            print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+            print("You need to have root privileges") 
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox 
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            #os.system('sudo service hornet restart ') 
+            #os.system('sudo service hornet start ') 
             p=subprocess.Popen("sudo service hornet restart", stdout=subprocess.PIPE, shell = True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-        QMessageBox.about(self, "Hornet", "Hornet node restarted")
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
+            QMessageBox.about(self, "Hornet", "Hornet node restarted")
     
     def status_hornet(self):
         self.cams = hornet_status_win()
@@ -665,18 +764,26 @@ class MainWindow5(Qt.QMainWindow):
     def mainnetDB_hornet(self):
         if os.geteuid() != 0:
             print("You need to have root privileges") 
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges") 
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox 
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            #os.system('sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start ') 
+            #os.system('sudo service hornet start ') 
             p=subprocess.Popen("sudo service hornet stop && sudo rm -r /var/lib/hornet/mainnetdb && sudo service hornet start", stdout=subprocess.PIPE, shell = True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-        QMessageBox.about(self, "Hornet", "Hornet node restarted")
+            while True:
+                #print ("Looping")
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print (line.strip())
+                sys.stdout.flush()
+            QMessageBox.about(self, "Hornet", "Hornet node restarted")
+
 
     def return_to_start_page(self):
         self.cams = MainWindow1()
@@ -790,18 +897,37 @@ class MainWindow7(Qt.QMainWindow):
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(20, 60, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535 ; color: white') #rgb(255,0,0)
+        self.pushButton.setText('Mount hornet DB')
+        self.pushButton.clicked.connect(self.mountDB)
+        #End of button mount DB beta
+
         #Button Restart SSD fix
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(20, 120, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535; color: white')
+        self.pushButton.setText('SSD-fix')
+        self.pushButton.clicked.connect(self.ssd_fix)
+        #End of button SSD fix
+    
         # Button return to start page
         self.pushButton = Qt.QPushButton(self)
         self.pushButton.setGeometry(220, 120, 150, 40) 
         self.pushButton.setStyleSheet('background-color: #353535; color: white')
+        self.pushButton.setText('Return to start page')
+        self.pushButton.clicked.connect(self.return_to_start_page)
+        # End og button return to start page
+
     def mountDB(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges") 
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             os.system('sudo mkdir /media/hornetdb && sudo mount /dev/sdb1 /media/hornetdb && sudo chmod 775 /media/hornetdb && sudo echo "/dev/sdb1 /media/hornetdb ext4 defaults  1 1" >> /etc/fstab && sudo cp -fr --preserve /var/lib/hornet/mainnetdb /media/hornetdb/ && sudo mv var/lib/hornet/mainnetdb /var/lib/hornet/mainnetdb.old && sudo ln -sf /media/hornetdb /var/lib/hornet/mainnetdb')
             QMessageBox.about(self, "Hornet DB", "Hornet DB mounted")
@@ -809,7 +935,14 @@ class MainWindow7(Qt.QMainWindow):
     def ssd_fix(self):
         if os.geteuid() != 0:
             print("You need to have root privileges")  
-            QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges") 
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             os.system('sudo echo -e "blacklist uas \n blacklist sg" > /etc/modprobe.d/disable_uas.conf')
             QMessageBox.about(self, "SSD fix", "SSD fix executed")
@@ -826,6 +959,7 @@ class MainWindow8(Qt.QMainWindow):
         super().__init__()
         self.left = 300
         self.top = 300
+        self.width = 600
         self.height = 350
         #End of set window position and size
         #Window size
@@ -833,6 +967,10 @@ class MainWindow8(Qt.QMainWindow):
 
         #self.setFixedSize(500, 500)
         self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
+        self.setWindowTitle('Help')
+
+        #Create label
+        self.labelA = QtWidgets.QLabel(self) 
         #Set label text      
         self.labelA.setText('Help menu') 
         #Set label font
@@ -876,7 +1014,6 @@ class MainWindow8(Qt.QMainWindow):
         self.pushButton.setText('Return to start page')
         self.pushButton.clicked.connect(self.return_to_start_page)
         # End og button return to start page
-
 
     def report(self):
         msg = QMessageBox()
