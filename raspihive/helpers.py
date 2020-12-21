@@ -10,7 +10,8 @@ import distro
 __OS_CMD__ = {
     'ubuntu': 'apt',
     'raspbian': 'apt',
-    'fedora': 'dnf'
+    'fedora': 'dnf',
+    'linuxmint': 'apt'
 }
 __OS_BASE__ = __OS_CMD__[distro.id()]
 __default_message__ = f'Your Platform is not supported. Please get in touch with us at '
