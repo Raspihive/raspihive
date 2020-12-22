@@ -58,10 +58,10 @@ If you are interested in contributing, please go through our [CONTRIBUTING](CONT
 - Activate venv: `source venv/bin/activate`
 
 #### Dependencies
-`pip install -r requirements/dev.txt`
+`pip3 install -r requirements/dev.txt`
 
 ### Run
-`python -m raspihive`
+`python3 -m raspihive`
 
 
 ---
@@ -70,3 +70,4 @@ __Works on__:
 - [x] Ubuntu 18.04
 - [x] Ubuntu 20.04
 - [x] Fedora 33
+- [x] LinuxMint 20
