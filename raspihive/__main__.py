@@ -12,12 +12,11 @@ import subprocess
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QPushButton, 
                              QToolTip, QMessageBox, QLabel)
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSlot, QSize
 from PyQt5.QtGui import QIcon, QFont
-from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QImage
 
-from .helpers import os_parse
+#from .helpers import os_parse
 ###############################################################################
 
 
@@ -28,7 +27,7 @@ class Window1(QMainWindow):
         super().__init__()
         self.left = 300
         self.top = 300
-        self.width = 730
+        self.width = 750
         self.height = 330
         #Window size
         self.setGeometry(self.left, self.top, self.width, self.height)
@@ -149,7 +148,7 @@ class Window1(QMainWindow):
 
         #Toolbar Icon 1
         Act = QAction(QIcon('/var/lib/raspihive/toolbar_raspihive_icons/raspihive.jpg'), 'Raspihive', self)
-        #Act.setShortcut('Ctrl+Q')
+        #Act.setShortcut('Ctrl+Q') 
         Act.triggered.connect(self.button1) #qApp.quit
         self.toolbar = self.addToolBar('Raspihive')
         self.toolbar.addAction(Act)
@@ -221,7 +220,7 @@ class Window1(QMainWindow):
         #main.setStyleSheet('background-color: #2B3440   ') #rgb(255,255,255);
         #Background Image + button image
         main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
-
+        
        
         #Start button 1 
         button = QPushButton('Update OS', main)
@@ -229,11 +228,11 @@ class Window1(QMainWindow):
         button.setToolTip('Update operating system')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 150, 50) 
+        button.setGeometry(40, 50, 160, 50) 
         #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background: transparent')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.system_update)
         #End button 1
@@ -244,11 +243,11 @@ class Window1(QMainWindow):
         button.setToolTip('Update necessary packages')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 150, 50) 
+        button.setGeometry(220, 50, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.packages_update)
         #End button 2
@@ -259,11 +258,11 @@ class Window1(QMainWindow):
         button.setToolTip('Update Raspihive')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 50, 150, 50) 
+        button.setGeometry(400, 50, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.raspihive_update)
         #End button 3
@@ -274,11 +273,11 @@ class Window1(QMainWindow):
         button.setToolTip('Update Hornet')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 130, 150, 50) 
+        button.setGeometry(220, 130, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.hornet_update)
         #End button 4
@@ -317,11 +316,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Install IOTA Hornet Fullnode ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 150, 50) 
+        button.setGeometry(40, 50, 160, 50) 
         #Setting background color or transparency
         #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.hornet_install)
         #End button 1
@@ -332,11 +331,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Uninstall IOTA Hornet Fullnode ')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 150, 50) 
+        button.setGeometry(220, 50, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.hornet_uninstall)
         #End button 2
@@ -347,11 +346,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Install Nginx-Server as a reverse Proxy + Certbot for SSL Certificates ')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 150, 150, 50) 
+        button.setGeometry(40, 150, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.install_nginx_certbot)
         #End button 3
@@ -362,11 +361,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Uninstall Nginx-Server as a reverse Proxy + Certbot for SSL Certificates ')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 150, 150, 50) 
+        button.setGeometry(220, 150, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.uninstall_nginx_certbot)
         #End button 4
@@ -405,11 +404,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Hornet Control Center (settings) ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 150, 50) 
+        button.setGeometry(40, 50, 160, 50) 
         #Setting background color or transparency
         #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.button4)
         #End button 1
@@ -464,11 +463,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Start Hornet Node ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 150, 50) 
+        button.setGeometry(40, 50, 160, 50) 
         #Setting background color or transparency
         #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.start_hornet)
         #End button 1
@@ -479,11 +478,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Stop Hornet Node ')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 150, 50) 
+        button.setGeometry(220, 50, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.stop_hornet)
         #End button 2
@@ -494,11 +493,11 @@ class Window1(QMainWindow):
         button.setToolTip('Restart Hornet Node')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 50, 150, 50) 
+        button.setGeometry(400, 50, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.restart_hornet)
         #End button 3
@@ -509,11 +508,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Status Hornet Node ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 150, 150, 50) 
+        button.setGeometry(40, 150, 160, 50) 
         #Setting background color or transparency
         #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.status_hornet)
         #End button 4
@@ -524,11 +523,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Show Hornet Logs ')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 150, 150, 50) 
+        button.setGeometry(220, 150, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.hornet_log_window)
         #End button 5
@@ -539,11 +538,11 @@ class Window1(QMainWindow):
         button.setToolTip('Remove the mainnetdb (e.g. in case of a failure): ')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 150, 150, 50) 
+        button.setGeometry(400, 150, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.restart_hornet)
         #End button 6
@@ -583,11 +582,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Open Hornet Dashboard ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 150, 50) 
+        button.setGeometry(40, 50, 160, 50) 
         #Setting background color or transparency
         #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.hornet_dashboard_access)
         #End button 1
@@ -644,11 +643,11 @@ class Window1(QMainWindow):
         button.setToolTip(' About Raspihive ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 150, 50) 
+        button.setGeometry(40, 50, 160, 50) 
         #Setting background color or transparency
         #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.about)
         #End button 1
@@ -659,11 +658,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Preparations - Port forwarding etc. ')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 150, 50) 
+        button.setGeometry(220, 50, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.preparations)
         #End button 2
@@ -674,11 +673,11 @@ class Window1(QMainWindow):
         button.setToolTip(' Report or Feedback ')
         #button.move(150 ,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 50, 150, 50) 
+        button.setGeometry(400, 50, 160, 50) 
         #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
+        #button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white')
+        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
         #add action 
         button.clicked.connect(self.report)
         #End button 3
@@ -1069,7 +1068,7 @@ class hornet_status_win(Qt.QMainWindow):
         self.setGeometry(self.left, self.top, self.width, self.height)
 
         #self.setFixedSize(1000, 1000)
-        self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
+        self.setStyleSheet('background-color: #2B3440') #rgb(255,255,255);
         self.setWindowTitle('Hornet-Status')
 
         #Test
@@ -1085,7 +1084,7 @@ class hornet_status_win(Qt.QMainWindow):
         #Set label font
         labelT.setFont(QtGui.QFont("Arial", 10, QtGui.QFont.Black))
         # setting up background and text color 
-        labelT.setStyleSheet("background-color: #0B3861; color: white; border: 0px solid black") 
+        labelT.setStyleSheet("background-color: #2B3440; color: white; border: 0px solid black") 
         #Setting position x y
         labelT.move(20, 10)
         #Setting label width
@@ -1098,9 +1097,9 @@ class hornet_status_win(Qt.QMainWindow):
         # setting geometry of button x, y, width, height
         self.pushButton.setGeometry(0, 0, 150, 40) 
         #Setting background color or transparency
-        self.pushButton.setStyleSheet('background-color: #353535; color: white')
+        self.pushButton.setStyleSheet('background-color: #2B3440; color: white')
         #Setting button text
-        self.pushButton.setText('Quit Raspihive')
+        self.pushButton.setText('Quit status window')
         # adding action to a button 
         self.pushButton.clicked.connect(self.close)
         # End of creating a quit button
@@ -1121,7 +1120,7 @@ class hornet_log_win(Qt.QMainWindow):
         self.setGeometry(self.left, self.top, self.width, self.height)
 
         #self.setFixedSize(1000, 1000)
-        self.setStyleSheet('background-color: #0B3861') #rgb(255,255,255);
+        self.setStyleSheet('background-color: #2B3440') #rgb(255,255,255);  #2B3440
         self.setWindowTitle('Hornet-Logs')
 
         # For hornet node logs
@@ -1136,9 +1135,9 @@ class hornet_log_win(Qt.QMainWindow):
         #Set label font
         labelT.setFont(QtGui.QFont("Arial", 10, QtGui.QFont.Black))
         # setting up background and text color 
-        labelT.setStyleSheet("background-color: #0B3861 ; color: white; border: 0px solid black") 
+        labelT.setStyleSheet("background-color: #2B3440 ; color: white; border: 0px solid black") 
         #Setting position x y
-        labelT.move(20, 30)
+        labelT.move(10, 30)
         #Setting label width
         labelT.setFixedWidth(1450)
         #Setting label height
@@ -1150,9 +1149,9 @@ class hornet_log_win(Qt.QMainWindow):
         # setting geometry of button x, y, width, height
         self.pushButton.setGeometry(0, 0, 150, 40) 
         #Setting background color or transparency
-        self.pushButton.setStyleSheet('background-color: #353535; color: white')
+        self.pushButton.setStyleSheet('background-color: #353535; color: white') 
         #Setting button text
-        self.pushButton.setText('Quit Raspihive')
+        self.pushButton.setText('Close log window')
         # adding action to a button 
         self.pushButton.clicked.connect(self.close)
         # End of creating a quit button
