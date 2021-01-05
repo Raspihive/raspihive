@@ -744,7 +744,7 @@ class Window1(QMainWindow):
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
             #p=subprocess for progress bar needed...- Getting progress message from a subprocess
-            p=subprocess.Popen(os_parse("sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y"), stdout=subprocess.PIPE, shell = True)
+            p=subprocess.Popen(("sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y"), stdout=subprocess.PIPE, shell = True)
             #Getting progress message from a subprocess
             while True:
                 #print ("Looping")
@@ -769,7 +769,7 @@ class Window1(QMainWindow):
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
-            p=subprocess.Popen(os_parse("sudo apt update -y && sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic"), stdout=subprocess.PIPE, shell = True)
+            p=subprocess.Popen(("sudo apt update -y && sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic"), stdout=subprocess.PIPE, shell = True)
             while True:
                 #print ("Looping")
                 line = p.stdout.readline()
@@ -815,7 +815,7 @@ class Window1(QMainWindow):
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
-            p=subprocess.Popen(os_parse("sudo service hornet stop && sudo apt update && sudo apt -y upgrade hornet && sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
+            p=subprocess.Popen(("sudo service hornet stop && sudo apt update && sudo apt -y upgrade hornet && sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
             while True:
                 #print ("Looping")
                 line = p.stdout.readline()
@@ -838,7 +838,7 @@ class Window1(QMainWindow):
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
-            p=subprocess.Popen(os_parse('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && sudo echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt install sshguard -y && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
+            p=subprocess.Popen(('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && sudo echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt install sshguard -y && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
             while True:
                 #print ("Looping")
                 line = p.stdout.readline()
@@ -861,7 +861,7 @@ class Window1(QMainWindow):
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
-            p=subprocess.Popen(os_parse("sudo systemctl stop hornet && sudo apt -qq purge hornet -y && sudo rm -rf /etc/apt/sources.list.d/hornet.list"), stdout=subprocess.PIPE, shell = True)
+            p=subprocess.Popen(("sudo systemctl stop hornet && sudo apt -qq purge hornet -y && sudo rm -rf /etc/apt/sources.list.d/hornet.list"), stdout=subprocess.PIPE, shell = True)
             while True:
                 #print ("Looping")
                 line = p.stdout.readline()
@@ -872,13 +872,13 @@ class Window1(QMainWindow):
             QMessageBox.about(self, "Hornet install", "Hornet node successfully uninstalled")
 
     def install_nginx_certbot(self):
-        os.system(os_parse('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
+        os.system(('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
         # Nginx configuration
         f = open("/etc/nginx/sites-available/default", "w")
         f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off;  \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
         f.close()
         os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-        p=subprocess.Popen(os_parse("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
+        p=subprocess.Popen(("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
         while True:
             #print ("Looping")
             line = p.stdout.readline()
@@ -901,7 +901,7 @@ class Window1(QMainWindow):
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
-            p=subprocess.Popen(os_parse("sudo systemctl stop nginx && sudo systemctl disable nginx && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
+            p=subprocess.Popen(("sudo systemctl stop nginx && sudo systemctl disable nginx && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
             while True:
                 #print ("Looping")
                 line = p.stdout.readline()
