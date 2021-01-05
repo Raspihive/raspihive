@@ -16,7 +16,7 @@ from PyQt5.QtCore import pyqtSlot, QSize
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtGui import QImage
 
-#from .helpers import os_parse
+from .helpers import os_parse
 ###############################################################################
 
 
