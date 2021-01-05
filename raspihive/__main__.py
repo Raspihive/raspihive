@@ -13,10 +13,10 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QPushButton,
                              QToolTip, QMessageBox, QLabel)
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import pyqtSlot, QSize
-from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtGui import QIcon, QFont, QCursor
 from PyQt5.QtGui import QImage
 
-from .helpers import os_parse
+#from .helpers import os_parse
 ###############################################################################
 
 
@@ -44,35 +44,35 @@ class Window1(QMainWindow):
         # set the title of main window
         self.setWindowTitle(' Raspihive ')
 
-		# add button 1 widget
+        # add button 1 widget
         self.btn_1 = QPushButton('Update menu', self)
         #Setting background color or transparency
-        self.btn_1.setStyleSheet(' color: white') #background-color: #353535;
+        self.btn_1.setStyleSheet('background-color: #2B3440; color: white') #background-color: #353535;
         #add action 
         self.btn_1.clicked.connect(self.button1)
         # add tab
         self.tab1 = self.ui1()
-        #End button 1 widget
+        #End of button 1 widget
 
         # add button 2 widget
         self.btn_2 = QPushButton(' Install menu ', self)
         #Setting background color or transparency
-        self.btn_2.setStyleSheet(' color: white') #background-color: #353535;
+        self.btn_2.setStyleSheet('background-color: #2B3440; color: white') #background-color: #353535;
         #add action 
         self.btn_2.clicked.connect(self.button2)
         # add tab
         self.tab2 = self.ui2()
-        #End button 2 widget
+        #End of button 2 widget
 
         # add button 3 widget
         self.btn_3 = QPushButton(' Node Control ', self)
         #Setting background color or transparency
-        self.btn_3.setStyleSheet(' color: white') #background-color: #353535;
+        self.btn_3.setStyleSheet('background-color: #2B3440; color: white') #background-color: #353535;
         #add action 
         self.btn_3.clicked.connect(self.button3)
         # add tab
         self.tab3 = self.ui3()
-        #End button 3 widget
+        #End of button 3 widget
 
         
         #Invisible add button 4 widget
@@ -140,8 +140,8 @@ class Window1(QMainWindow):
         
         #Transparency
         self.setWindowOpacity(0.9875)
-        #Background color
-        self.setStyleSheet('background-color: #2B3440') #rgb(255,255,255);  
+        #Background color Sidebar, Toolbar, widget windows
+        self.setStyleSheet('background-color: #2B3440; color: white;') #rgb(255,255,255);  
         
 
         #Start Toolbar
@@ -217,11 +217,11 @@ class Window1(QMainWindow):
     def ui1(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
-        #main.setStyleSheet('background-color: #2B3440   ') #rgb(255,255,255);
+        main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); #137394 this
         #Background Image + button image
-        main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
+        #main.setStyleSheet('background-color: #147695  ; color: white; ') #background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0%
         
-       
+        
         #Start button 1 
         button = QPushButton('Update OS', main)
         #Hover text
@@ -229,56 +229,61 @@ class Window1(QMainWindow):
         #button.move(10,50)
         # setting geometry of button x, y, width, height
         button.setGeometry(40, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background: transparent')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.system_update)
         #End button 1
-       
-        #Start button 2
+        
+        #Start button 1 
+        button = QPushButton('Update OS', main)
+        #Hover text
+        button.setToolTip('Update operating system')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(40, 50, 160, 50) 
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.system_update)
+        #End button 1
+
+        #Start button 2 
         button = QPushButton('Update packages', main)
         #Hover text
         button.setToolTip('Update necessary packages')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(220, 50, 160, 50)  
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.packages_update)
         #End button 2
 
-        #Start button 3
+        #Start button 3 
         button = QPushButton('Update Raspihive', main)
         #Hover text
         button.setToolTip('Update Raspihive')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(400, 50, 160, 50)  
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.raspihive_update)
         #End button 3
 
-        #Start button 4
+        #Start button 4 
         button = QPushButton('Update Hornet', main)
         #Hover text
         button.setToolTip('Update Hornet')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 130, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(220, 130, 160, 50)  
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.hornet_update)
         #End button 4
 
@@ -297,7 +302,7 @@ class Window1(QMainWindow):
         #Setting label width
         main.labelA.setFixedWidth(180)
         #End label
-
+        
         return main
 #End of update menu tab
 
@@ -305,11 +310,10 @@ class Window1(QMainWindow):
     def ui2(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
-        #main.setStyleSheet('background-color: #2B3440   ') #rgb(255,255,255);
+        main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394
         #Background Image + button image
-        main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
+        #main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
 
-       
         #Start button 1 
         button = QPushButton(' Install Hornet ', main)
         #Hover text
@@ -317,26 +321,22 @@ class Window1(QMainWindow):
         #button.move(10,50)
         # setting geometry of button x, y, width, height
         button.setGeometry(40, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.hornet_install)
         #End button 1
        
-        #Start button 2
+        #Start button 2 
         button = QPushButton(' Uninstall Hornet ', main)
         #Hover text
         button.setToolTip(' Uninstall IOTA Hornet Fullnode ')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
         button.setGeometry(220, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.hornet_uninstall)
         #End button 2
 
@@ -344,14 +344,12 @@ class Window1(QMainWindow):
         button = QPushButton(' Install Nginx + Certbot ', main)
         #Hover text
         button.setToolTip(' Install Nginx-Server as a reverse Proxy + Certbot for SSL Certificates ')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 150, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(40, 150, 160, 50)  
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.install_nginx_certbot)
         #End button 3
 
@@ -359,14 +357,12 @@ class Window1(QMainWindow):
         button = QPushButton(' Uninstall Nginx + Certbot ', main)
         #Hover text
         button.setToolTip(' Uninstall Nginx-Server as a reverse Proxy + Certbot for SSL Certificates ')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 150, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(220, 150, 160, 50)   
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.uninstall_nginx_certbot)
         #End button 4
 
@@ -393,25 +389,23 @@ class Window1(QMainWindow):
     def ui3(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
-        #main.setStyleSheet('background-color: #2B3440   ') #rgb(255,255,255);
+        main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394
         #Background Image + button image
-        main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
+        #main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
 
-       
-        #Start button 1 
+        #Start button 1
         button = QPushButton(' Hornet Control Center ', main)
         #Hover text
         button.setToolTip(' Hornet Control Center (settings) ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(40, 50, 160, 50)   
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.button4)
         #End button 1
+       
         """
         #Start button 2
         button = QPushButton('Update packages', main)
@@ -452,38 +446,33 @@ class Window1(QMainWindow):
     def ui4(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
-        #main.setStyleSheet('background-color: #2B3440   ') #rgb(255,255,255);
+        main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394
         #Background Image + button image
-        main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
+        #main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
 
-       
-        #Start button 1 
+        #Start button 1
         button = QPushButton(' Start Hornet ', main)
         #Hover text
         button.setToolTip(' Start Hornet Node ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(40, 50, 160, 50)    
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.start_hornet)
-        #End button 1
+        #End button 1       
 
         #Start button 2
         button = QPushButton(' Stop Hornet ', main)
         #Hover text
         button.setToolTip(' Stop Hornet Node ')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(220, 50, 160, 50)    
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.stop_hornet)
         #End button 2
 
@@ -491,29 +480,25 @@ class Window1(QMainWindow):
         button = QPushButton(' Restart Hornet ', main)
         #Hover text
         button.setToolTip('Restart Hornet Node')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(400, 50, 160, 50)    
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.restart_hornet)
         #End button 3
 
-        #Start button 4 
+        #Start button 4
         button = QPushButton(' Status Hornet ', main)
         #Hover text
         button.setToolTip(' Status Hornet Node ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 150, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(40, 150, 160, 50)    
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.status_hornet)
         #End button 4
 
@@ -521,32 +506,27 @@ class Window1(QMainWindow):
         button = QPushButton(' Show Hornet Logs ', main)
         #Hover text
         button.setToolTip(' Show Hornet Logs ')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 150, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(220, 150, 160, 50)    
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.hornet_log_window)
         #End button 5
 
         #Start button 6
         button = QPushButton(' Remove the mainnetdb ', main)
         #Hover text
-        button.setToolTip('Remove the mainnetdb (e.g. in case of a failure): ')
-        #button.move(150 ,50)
+        button.setToolTip('Remove the mainnetdb (e.g. in case of a failure) ')
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 150, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(400, 150, 160, 50)   
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.restart_hornet)
         #End button 6
-        
 
         #Create label
         main.labelA = QtWidgets.QLabel(main) 
@@ -571,23 +551,20 @@ class Window1(QMainWindow):
     def ui5(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
-        #main.setStyleSheet('background-color: #2B3440   ') #rgb(255,255,255);
+        main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394
         #Background Image + button image
-        main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
+        #main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
 
-       
-        #Start button 1 
+        #Start button 1
         button = QPushButton(' Hornet Dashboard ', main)
         #Hover text
         button.setToolTip(' Open Hornet Dashboard ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(40, 50, 160, 50)    
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.hornet_dashboard_access)
         #End button 1
 
@@ -632,23 +609,20 @@ class Window1(QMainWindow):
     def ui6(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
-        #main.setStyleSheet('background-color: #2B3440   ') #rgb(255,255,255);
+        main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394
         #Background Image + button image
-        main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
+        #main.setStyleSheet('background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0% ')
 
-       
-        #Start button 1 
+        #Start button 1
         button = QPushButton(' About ', main)
         #Hover text
         button.setToolTip(' About Raspihive ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(40, 50, 160, 50)     
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.about)
         #End button 1
 
@@ -656,14 +630,12 @@ class Window1(QMainWindow):
         button = QPushButton(' Prepartions ', main)
         #Hover text
         button.setToolTip(' Preparations - Port forwarding etc. ')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(220, 50, 160, 50)     
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.preparations)
         #End button 2
 
@@ -671,14 +643,12 @@ class Window1(QMainWindow):
         button = QPushButton(' Report ', main)
         #Hover text
         button.setToolTip(' Report or Feedback ')
-        #button.move(150 ,50)
+        #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 50, 160, 50) 
-        #Setting background color or transparency
-        #button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        button.setStyleSheet('background-image: url("/var/lib/raspihive/background_button/buttonbackground.png"); background-repeat: no-repeat; background-position: center; color: white; border: none;')
-        #add action 
+        button.setGeometry(400, 50, 160, 50)     
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
         button.clicked.connect(self.report)
         #End button 3
 
@@ -827,7 +797,7 @@ class Window1(QMainWindow):
 
     def hornet_install(self):
         if os.geteuid() != 0:
-            print("You need to have root privileges")  
+            print("Install-Hornet - You need to have root privileges")  
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
