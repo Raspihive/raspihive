@@ -206,9 +206,9 @@ class Window1(QMainWindow):
 
 	# ----------------- 
   
-################################################################################ Start pages ##############################################################################
+    ################################################################################ Start pages ##############################################################################
 
-#Update menu tab
+    # Update menu tab
     def ui1(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -299,9 +299,9 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of update menu tab
+    # End of update menu tab
 
-#Install menu
+    # Install menu
     def ui2(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -378,9 +378,9 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of install menu
+    # End of install menu
 
-#Node Control Center
+    # Node Control Center
     def ui3(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -435,9 +435,9 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of Node Control Center
+    # End of Node Control Center
 
-#Invisible Hornet Node Control Center
+    # Invisible Hornet Node Control Center
     def ui4(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -540,9 +540,9 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of invisible Hornet Node Control Center
+    # End of invisible Hornet Node Control Center
 
-#Dashboard access
+    # Dashboard access
     def ui5(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -598,9 +598,9 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of Dashboard access
+    # End of Dashboard access
 
-#Help menu
+    # Help menu
     def ui6(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -682,19 +682,19 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of Help menu
+    # End of Help menu
 
 
-    #End pages
-###############################################################################   
+    # End pages
+    ###############################################################################   
         
     """
     @pyqtSlot()
     def system_update(self):
         print('Update startet')
     """ 
-##############################################################################
-# Start Functions
+    ##############################################################################
+    # Start Functions
     def system_update(self):
         if os.geteuid() != 0:
             print("System-Update - You need to have root privileges")  
@@ -1015,10 +1015,10 @@ class Window1(QMainWindow):
         x = msg.exec_()  # this will show our messagebox
 
 
-#End Functions
-###############################################################################   
+    # End Functions
+    ###############################################################################   
 
-# Hornet Status test
+    # Hornet Status test
 class hornet_status_win(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -1068,9 +1068,9 @@ class hornet_status_win(Qt.QMainWindow):
         # adding action to a button 
         self.pushButton.clicked.connect(self.close)
         # End of creating a quit button
-#End of Hornet Status test
+# End of Hornet Status test
 
-#Hornet Log test
+# Hornet Log test
 class hornet_log_win(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -1121,9 +1121,9 @@ class hornet_log_win(Qt.QMainWindow):
         self.pushButton.clicked.connect(self.close)
         # End of creating a quit button
 
-#End of Hornet Log test
+# End of Hornet Log test
 
-#Mainwindow
+# Mainwindow
 def main():
     # create pyqt5 app 
     app = Qt.QApplication(sys.argv)
@@ -1151,11 +1151,11 @@ def main():
     
     # start the app 
     sys.exit(app.exec_())
-#End of MainWindow
+# End of MainWindow
 
 # Start main programm
 ###############################################################################
 if __name__ == '__main__':
     main()
 ###############################################################################
-#End main programm
+# End main programm
