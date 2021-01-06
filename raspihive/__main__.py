@@ -520,7 +520,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.restart_hornet)
+        button.clicked.connect(self.mainnetDB_hornet)
         #End button 6
 
         #Create label
