@@ -3,20 +3,15 @@
 
 ###############################################################################
 # libraries
-import sys, time, os
+import sys, time, os, subprocess
 from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QProgressBar, QPushButton, QAction, qApp
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5 import Qt, QtWidgets, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets, Qt, QtGui
 from subprocess import Popen, PIPE
-import subprocess
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QPushButton, 
-                             QToolTip, QMessageBox, QLabel)
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import (QMainWindow, QToolTip, QLabel, QVBoxLayout, QTabWidget, QHBoxLayout)
 from PyQt5.QtCore import pyqtSlot, QSize
-from PyQt5.QtGui import QIcon, QFont, QCursor
-from PyQt5.QtGui import QImage
+from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
 
-#from .helpers import os_parse
+from .helpers import os_parse
 ###############################################################################
 
 
