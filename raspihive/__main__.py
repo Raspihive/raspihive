@@ -699,7 +699,7 @@ class Window1(QMainWindow):
         if os.geteuid() != 0:
             print("System-Update - You need to have root privileges")  
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -725,7 +725,7 @@ class Window1(QMainWindow):
         if os.geteuid() != 0:
             print("Packages-Update - You need to have root privileges")  
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -748,7 +748,7 @@ class Window1(QMainWindow):
         if os.geteuid() != 0:
             print("Raspihive-Update - You need to have root privileges")  
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -771,7 +771,7 @@ class Window1(QMainWindow):
         if os.geteuid() != 0:
             print("Update-Hornet - You need to have root privileges")  
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -794,7 +794,7 @@ class Window1(QMainWindow):
         if os.geteuid() != 0:
             print("Install-Hornet - You need to have root privileges")  
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -815,9 +815,9 @@ class Window1(QMainWindow):
 
     def hornet_uninstall(self):
         if os.geteuid() != 0:
-            print("You need to have root privileges")  
+            print("Hornet uninstall - You need to have root privileges")  
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -855,9 +855,9 @@ class Window1(QMainWindow):
 
     def uninstall_nginx_certbot(self):
         if os.geteuid() != 0:
-            print("You need to have root privileges")  
+            print("Uninstall nginx + certbot - You need to have root privileges")  
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -878,9 +878,9 @@ class Window1(QMainWindow):
 
     def start_hornet(self):
         if os.geteuid() != 0:
-            print("You need to have root privileges") 
+            print("Start Hornet - You need to have root privileges") 
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -901,9 +901,9 @@ class Window1(QMainWindow):
 
     def stop_hornet(self):
         if os.geteuid() != 0:
-            print("You need to have root privileges") 
+            print("Stop Hornet - You need to have root privileges") 
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -924,9 +924,9 @@ class Window1(QMainWindow):
 
     def restart_hornet(self):
         if os.geteuid() != 0:
-            print("You need to have root privileges") 
+            print("Restart Hornet - You need to have root privileges") 
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -957,9 +957,9 @@ class Window1(QMainWindow):
         
     def mainnetDB_hornet(self):
         if os.geteuid() != 0:
-            print("You need to have root privileges") 
+            print("Delete mainnetdb - You need to have root privileges") 
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #0B3861 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
