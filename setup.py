@@ -26,7 +26,10 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/raspihive/raspihive",
     packages=["raspihive"],
-    install_requires=["PyQt5"],  # TODO: add hornetctl here
+    install_requires=[
+        "PyQt5",
+        "distro==1.5.0"
+    ],
     license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
