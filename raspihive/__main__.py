@@ -4,16 +4,372 @@
 ###############################################################################
 # libraries
 import sys, time, os, subprocess
-from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QProgressBar, QPushButton, QAction, qApp
+from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QProgressBar, QPushButton, QAction, qApp, QDialog
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt, QtGui
 from subprocess import Popen, PIPE
 from PyQt5.QtWidgets import (QMainWindow, QToolTip, QLabel, QVBoxLayout, QTabWidget, QHBoxLayout)
-from PyQt5.QtCore import pyqtSlot, QSize
+from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
+ 
 
 from .helpers import os_parse
 ###############################################################################
+#Progress bar for OS Update
+class MyThread_os_update(QThread):
+    # Create a counter thread
+    change_value = pyqtSignal(int)
+    def run(self):
+        p=subprocess.Popen(os_parse("sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y"), stdout=subprocess.PIPE, shell = True)
+        cnt = 0
+        while cnt <= 100:
+            cnt+=4
+            time.sleep(0.1)
+            line = p.stdout.readline()
+            self.change_value.emit(cnt)
+            if not line:
+                break
+            print (line.strip())
+            
+class Window_os_update(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
+        self.title = "OS Update"
+        self.top = 200
+        self.left = 500
+        self.width = 300
+        self.height = 100
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        vbox = QVBoxLayout()
+        self.progressbar = QProgressBar()
+        #self.progressbar.setOrientation(Qt.Vertical)
+        self.progressbar.setMaximum(100)
+        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
+        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
+        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
+        #self.progressbar.setTextVisible(False)
+        vbox.addWidget(self.progressbar)
+        #self.startProgressBar(self)
+        self.setLayout(vbox)
+        self.show()
 
+    #def startProgressBar():
+        self.thread = MyThread_os_update()
+        self.thread.change_value.connect(self.setProgressVal)
+        self.thread.start()
+ 
+    def setProgressVal(self, val):
+        self.progressbar.setValue(val)
+#End of Progress bar for OS Update
+
+#Progress bar for packages update
+class MyThread_packages(QThread):
+    # Create a counter thread
+    change_value = pyqtSignal(int)
+    def run(self):
+        #print("Test packages")
+        p=subprocess.Popen(os_parse("sudo apt update -y && sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic"), stdout=subprocess.PIPE, shell = True)
+        cnt = 0
+        while cnt <= 100:
+            cnt+=4
+            time.sleep(0.1)
+            line = p.stdout.readline()
+            self.change_value.emit(cnt)
+            if not line:
+                break
+            print (line.strip())
+         
+class Window_packages(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
+        self.title = "Packages Update"
+        self.top = 200
+        self.left = 500
+        self.width = 300
+        self.height = 100
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        vbox = QVBoxLayout()
+        self.progressbar = QProgressBar()
+        #self.progressbar.setOrientation(Qt.Vertical)
+        self.progressbar.setMaximum(100)
+        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
+        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
+        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
+        #self.progressbar.setTextVisible(False)
+        vbox.addWidget(self.progressbar)
+        #self.startProgressBar(self)
+        self.setLayout(vbox)
+        self.show()
+
+    #def startProgressBar():
+        self.thread = MyThread_packages()
+        self.thread.change_value.connect(self.setProgressVal)
+        self.thread.start()
+ 
+    def setProgressVal(self, val):
+        self.progressbar.setValue(val)
+#End of Progress bar for packages update
+
+#Progress bar for hornet update
+class MyThread_hornet_update(QThread):
+    # Create a counter thread
+    change_value = pyqtSignal(int)
+    def run(self):
+        #print("Test packages")
+        p=subprocess.Popen(os_parse("sudo service hornet stop && sudo apt update && sudo apt -y upgrade hornet && sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
+        cnt = 0
+        while cnt <= 100:
+            cnt+=4
+            time.sleep(0.1)
+            line = p.stdout.readline()
+            self.change_value.emit(cnt)
+            if not line:
+                break
+            print (line.strip())
+         
+class Window_hornet_update(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
+        self.title = "Hornet Update"
+        self.top = 200
+        self.left = 500
+        self.width = 300
+        self.height = 100
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        vbox = QVBoxLayout()
+        self.progressbar = QProgressBar()
+        #self.progressbar.setOrientation(Qt.Vertical)
+        self.progressbar.setMaximum(100)
+        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
+        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
+        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
+        #self.progressbar.setTextVisible(False)
+        vbox.addWidget(self.progressbar)
+        #self.startProgressBar(self)
+        self.setLayout(vbox)
+        self.show()
+
+    #def startProgressBar():
+        self.thread = MyThread_hornet_update()
+        self.thread.change_value.connect(self.setProgressVal)
+        self.thread.start()
+ 
+    def setProgressVal(self, val):
+        self.progressbar.setValue(val)
+#End of Progress bar for hornet update
+
+#Progress bar for hornet install
+class MyThread_hornet_install(QThread):
+    # Create a counter thread
+    change_value = pyqtSignal(int)
+    def run(self):
+        #print("Test packages")
+        p=subprocess.Popen(os_parse('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && sudo echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt install sshguard -y && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
+        cnt = 0
+        while cnt <= 100:
+            cnt+=4
+            time.sleep(0.1)
+            line = p.stdout.readline()
+            self.change_value.emit(cnt)
+            if not line:
+                break
+            print (line.strip())
+         
+class Window_hornet_install(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
+        self.title = "Hornet install"
+        self.top = 200
+        self.left = 500
+        self.width = 300
+        self.height = 100
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        vbox = QVBoxLayout()
+        self.progressbar = QProgressBar()
+        #self.progressbar.setOrientation(Qt.Vertical)
+        self.progressbar.setMaximum(100)
+        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
+        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
+        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
+        #self.progressbar.setTextVisible(False)
+        vbox.addWidget(self.progressbar)
+        #self.startProgressBar(self)
+        self.setLayout(vbox)
+        self.show()
+
+    #def startProgressBar():
+        self.thread = MyThread_hornet_install()
+        self.thread.change_value.connect(self.setProgressVal)
+        self.thread.start()
+ 
+    def setProgressVal(self, val):
+        self.progressbar.setValue(val)
+#End of Progress bar for hornet install
+
+#Progress bar for hornet uninstall
+class MyThread_hornet_uninstall(QThread):
+    # Create a counter thread
+    change_value = pyqtSignal(int)
+    def run(self):
+        #print("Test packages")
+        p=subprocess.Popen(os_parse("sudo systemctl stop hornet && sudo apt -qq purge hornet -y && sudo rm -rf /etc/apt/sources.list.d/hornet.list"), stdout=subprocess.PIPE, shell = True)
+        cnt = 0
+        while cnt <= 100:
+            cnt+=10
+            time.sleep(0.1)
+            line = p.stdout.readline()
+            self.change_value.emit(cnt)
+            if not line:
+                break
+            print (line.strip())
+         
+class Window_hornet_uninstall(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
+        self.title = "Hornet uninstall"
+        self.top = 200
+        self.left = 500
+        self.width = 300
+        self.height = 100
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        vbox = QVBoxLayout()
+        self.progressbar = QProgressBar()
+        #self.progressbar.setOrientation(Qt.Vertical)
+        self.progressbar.setMaximum(100)
+        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
+        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
+        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
+        #self.progressbar.setTextVisible(False)
+        vbox.addWidget(self.progressbar)
+        #self.startProgressBar(self)
+        self.setLayout(vbox)
+        self.show()
+
+    #def startProgressBar():
+        self.thread = MyThread_hornet_uninstall()
+        self.thread.change_value.connect(self.setProgressVal)
+        self.thread.start()
+ 
+    def setProgressVal(self, val):
+        self.progressbar.setValue(val)
+#End of Progress bar for hornet uninstall
+
+"""
+#Progress bar for nginx+certbot install
+class MyThread_nginx_certbot_install(QThread):
+    # Create a counter thread
+    change_value = pyqtSignal(int)
+    def run(self):
+        #print("Test packages")
+        os.system(('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
+        # Nginx configuration
+        f = open("/etc/nginx/sites-available/default", "w")
+        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off;  \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
+        f.close()
+        os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
+        p=subprocess.Popen(("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
+        os.system((' sudo certbot --nginx '))
+        cnt = 0
+        while cnt <= 100:
+            cnt+=1
+            time.sleep(0.1)
+            line = p.stdout.readline()
+            self.change_value.emit(cnt)
+            if not line:
+                break
+            print (line.strip())
+         
+class Window_nginx_certbot_install(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
+        self.title = "Nginx + Certbot install"
+        self.top = 200
+        self.left = 500
+        self.width = 300
+        self.height = 100
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        vbox = QVBoxLayout()
+        self.progressbar = QProgressBar()
+        #self.progressbar.setOrientation(Qt.Vertical)
+        self.progressbar.setMaximum(100)
+        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
+        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
+        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
+        #self.progressbar.setTextVisible(False)
+        vbox.addWidget(self.progressbar)
+        #self.startProgressBar(self)
+        self.setLayout(vbox)
+        self.show()
+
+    #def startProgressBar():
+        self.thread = MyThread_nginx_certbot_install()
+        self.thread.change_value.connect(self.setProgressVal)
+        self.thread.start()
+ 
+    def setProgressVal(self, val):
+        self.progressbar.setValue(val)
+#End of Progress bar for nginx+certbot install
+"""
+#Progress bar for nginx+certbot uninstall
+class MyThread_nginx_certbot_uninstall(QThread):
+    # Create a counter thread
+    change_value = pyqtSignal(int)
+    def run(self):
+        #print("Test packages")
+        p=subprocess.Popen(os_parse("sudo systemctl stop nginx && sudo systemctl disable nginx && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
+        cnt = 0
+        while cnt <= 100:
+            cnt+=4
+            time.sleep(0.1)
+            line = p.stdout.readline()
+            self.change_value.emit(cnt)
+            if not line:
+                break
+            print (line.strip())
+         
+class Window_nginx_certbot_uninstall(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
+        self.title = "Nginx + Certbot uninstall"
+        self.top = 200
+        self.left = 500
+        self.width = 300
+        self.height = 100
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        vbox = QVBoxLayout()
+        self.progressbar = QProgressBar()
+        #self.progressbar.setOrientation(Qt.Vertical)
+        self.progressbar.setMaximum(100)
+        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
+        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
+        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
+        #self.progressbar.setTextVisible(False)
+        vbox.addWidget(self.progressbar)
+        #self.startProgressBar(self)
+        self.setLayout(vbox)
+        self.show()
+
+    #def startProgressBar():
+        self.thread = MyThread_nginx_certbot_uninstall()
+        self.thread.change_value.connect(self.setProgressVal)
+        self.thread.start()
+ 
+    def setProgressVal(self, val):
+        self.progressbar.setValue(val)
+#End of Progress bar for nginx+certbot uninstall
 
 #####################################Start of Window frames############################################
 class Window1(QMainWindow):
@@ -349,17 +705,30 @@ class Window1(QMainWindow):
         #End button 3
 
         #Start button 4
-        button = QPushButton(' Uninstall Nginx + Certbot ', main)
+        button = QPushButton(' Start certbot process ', main)
         #Hover text
-        button.setToolTip(' Uninstall Nginx-Server as a reverse Proxy + Certbot for SSL Certificates ')
+        button.setToolTip(' Enter the following command after the installation of nginx+certbot into the terminal: \n "sudo certbot --nginx" (Domain needed) ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
         button.setGeometry(220, 150, 160, 50)   
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.uninstall_nginx_certbot)
+        button.clicked.connect(self.certbot)
         #End button 4
+
+        #Start button 5
+        button = QPushButton(' Uninstall Nginx + Certbot ', main)
+        #Hover text
+        button.setToolTip(' Uninstall Nginx-Server as a reverse Proxy + Certbot for SSL Certificates ')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(400, 150, 160, 50)   
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.uninstall_nginx_certbot)
+        #End button 5
 
         #Create label
         main.labelA = QtWidgets.QLabel(main) 
@@ -699,7 +1068,7 @@ class Window1(QMainWindow):
         if os.geteuid() != 0:
             print("System-Update - You need to have root privileges")  
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
@@ -707,19 +1076,9 @@ class Window1(QMainWindow):
             x = msg.exec_()  # this will show our messagebox
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            #os.system('sudo service hornet start ') 
-            #p=subprocess for progress bar needed...- Getting progress message from a subprocess
-            p=subprocess.Popen(os_parse("sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y"), stdout=subprocess.PIPE, shell = True)
-            #Getting progress message from a subprocess
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
-                #End of Getting progress message from a subprocess
-            QMessageBox.about(self, "OS Update", "OS successfully updated")
+            app = Window_os_update()
+            QMessageBox.about(self, "OS Update", "OS update is running...")
+
     
     def packages_update(self):
         if os.geteuid() != 0:
@@ -729,20 +1088,15 @@ class Window1(QMainWindow):
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
+            App = QApplication(sys.argv)
+            window = Window()
+            sys.exit(App.exec())
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            #os.system('sudo service hornet start ') 
-            p=subprocess.Popen(os_parse("sudo apt update -y && sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic"), stdout=subprocess.PIPE, shell = True)
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
-            QMessageBox.about(self,  "Packages Update", "Packages successfully updated")
+            app = Window_packages()
+            QMessageBox.about(self,  "Packages Update", "Packages update is running...")
 
     def raspihive_update(self):
         if os.geteuid() != 0:
@@ -779,16 +1133,8 @@ class Window1(QMainWindow):
             x = msg.exec_()  # this will show our messagebox
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            #os.system('sudo service hornet start ') 
-            p=subprocess.Popen(os_parse("sudo service hornet stop && sudo apt update && sudo apt -y upgrade hornet && sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
-            QMessageBox.about(self,  "Hornet Update", "Hornet Node successfully updated")
+            app = Window_hornet_update()
+            QMessageBox.about(self,  "Hornet Update", "Hornet update is running...")
 
     def hornet_install(self):
         if os.geteuid() != 0:
@@ -803,19 +1149,12 @@ class Window1(QMainWindow):
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
             #os.system('sudo service hornet start ') 
-            p=subprocess.Popen(os_parse('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && sudo echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt install sshguard -y && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
-            QMessageBox.about(self,  "Hornet install", "Hornet node successfully installed")
+            app = Window_hornet_install()
+            QMessageBox.about(self,  "Hornet install", "Hornet node installation is running...")
 
     def hornet_uninstall(self):
         if os.geteuid() != 0:
-            print("Hornet uninstall - You need to have root privileges")  
+            print("Hornet Uninstall - You need to have root privileges")  
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
@@ -825,25 +1164,18 @@ class Window1(QMainWindow):
             x = msg.exec_()  # this will show our messagebox
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            #os.system('sudo service hornet start ') 
-            p=subprocess.Popen(os_parse("sudo systemctl stop hornet && sudo apt -qq purge hornet -y && sudo rm -rf /etc/apt/sources.list.d/hornet.list"), stdout=subprocess.PIPE, shell = True)
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
-            QMessageBox.about(self, "Hornet install", "Hornet node successfully uninstalled")
+            app = Window_hornet_uninstall()
+            QMessageBox.about(self, "Hornet uninstall", "Hornet node uninstall is running...")
 
     def install_nginx_certbot(self):
-        os.system(os_parse('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
+        os.system(('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
         # Nginx configuration
         f = open("/etc/nginx/sites-available/default", "w")
         f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off;  \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
         f.close()
         os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-        p=subprocess.Popen(os_parse("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
+        p=subprocess.Popen(("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
+        #os.system('sudo certbot --nginx')
         while True:
             #print ("Looping")
             line = p.stdout.readline()
@@ -853,9 +1185,25 @@ class Window1(QMainWindow):
             sys.stdout.flush()
         QMessageBox.about(self, "Nginx + Certbot install", "Nginx + Certbot successfully installed")
 
+    def certbot(self):
+        #os.system("lxterminal") #just opens the terminal
+        #Open LX Terminal (Raspberry Pi OS)
+        cmd = "lxterminal "
+        subprocess.check_output(cmd, shell=True)
+       
+        #Open Gnome-Terminal (Ubuntu)
+        cmd = "gnome-terminal "
+        subprocess.check_output(cmd, shell=True)
+        #print("I'm done!")
+        print(cmd)
+        
+        
+        #os.system(('sudo certbot --nginx'))
+        #QMessageBox.about(self, "Certbot", "Certbot")
+
     def uninstall_nginx_certbot(self):
         if os.geteuid() != 0:
-            print("Uninstall nginx + certbot - You need to have root privileges")  
+            print("Uninstall Nginx + Certbot - You need to have root privileges")  
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
@@ -865,16 +1213,8 @@ class Window1(QMainWindow):
             x = msg.exec_()  # this will show our messagebox
             #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
         if os.geteuid()==0:
-            #os.system('sudo service hornet start ') 
-            p=subprocess.Popen(os_parse("sudo systemctl stop nginx && sudo systemctl disable nginx && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
-            QMessageBox.about(self, "Nginx + Certbot install", "Nginx + Certbot successfully uninstalled")
+            app = Window_nginx_certbot_uninstall()
+            QMessageBox.about(self, "Nginx + Certbot uninstall", "Nginx + Certbot uninstall is running...")
 
     def start_hornet(self):
         if os.geteuid() != 0:
@@ -957,7 +1297,7 @@ class Window1(QMainWindow):
         
     def mainnetDB_hornet(self):
         if os.geteuid() != 0:
-            print("Delete mainnetdb - You need to have root privileges") 
+            print("Delete Mainnetdb - You need to have root privileges") 
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
             msg.setIcon(QMessageBox.Information)
@@ -1159,3 +1499,4 @@ if __name__ == '__main__':
     main()
 ###############################################################################
 #End main programm
+
