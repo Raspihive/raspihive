@@ -12,7 +12,7 @@ from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
  
 ##
-#from .helpers import os_parse
+from .helpers import os_parse
 ###############################################################################
 #Progress bar for OS Update
 class MyThread_os_update(QThread):
@@ -1186,7 +1186,9 @@ class Window1(QMainWindow):
         QMessageBox.about(self, "Nginx + Certbot install", "Nginx + Certbot successfully installed")
 
     def certbot(self):
-        #os.system("lxterminal") #just opens the terminal
+        os.system("lxterminal") #just opens the terminal
+        os.system("gnome-terminal") #just opens the terminal
+        """
         #Open LX Terminal (Raspberry Pi OS)
         cmd = "lxterminal "
         subprocess.check_output(cmd, shell=True)
@@ -1196,6 +1198,7 @@ class Window1(QMainWindow):
         subprocess.check_output(cmd, shell=True)
         #print("I'm done!")
         print(cmd)
+        """
         
         
         #os.system(('sudo certbot --nginx'))
