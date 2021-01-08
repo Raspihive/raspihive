@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import (QMainWindow, QToolTip, QLabel, QVBoxLayout, QTabWid
 from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
  
-#
+##
 from .helpers import os_parse
 ###############################################################################
 #Progress bar for OS Update
