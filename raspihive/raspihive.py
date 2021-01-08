@@ -1186,7 +1186,9 @@ class Window1(QMainWindow):
         QMessageBox.about(self, "Nginx + Certbot install", "Nginx + Certbot successfully installed")
 
     def certbot(self):
-        #os.system("lxterminal") #just opens the terminal
+        os.system("lxterminal") #just opens the terminal
+        os.system("gnome-terminal") #just opens the terminal
+        """
         #Open LX Terminal (Raspberry Pi OS)
         cmd = "lxterminal "
         subprocess.check_output(cmd, shell=True)
@@ -1196,7 +1198,7 @@ class Window1(QMainWindow):
         subprocess.check_output(cmd, shell=True)
         #print("I'm done!")
         print(cmd)
-        
+        """
         
         #os.system(('sudo certbot --nginx'))
         #QMessageBox.about(self, "Certbot", "Certbot")
