@@ -12,7 +12,7 @@ from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
  
 ##
-from .helpers import os_parse
+#from .helpers import os_parse
 ###############################################################################
 #Progress bar for OS Update
 class MyThread_os_update(QThread):
@@ -1168,13 +1168,13 @@ class Window1(QMainWindow):
             QMessageBox.about(self, "Hornet uninstall", "Hornet node uninstall is running...")
 
     def install_nginx_certbot(self):
-        os.system(('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
+        os.system(os_parse('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
         # Nginx configuration
         f = open("/etc/nginx/sites-available/default", "w")
         f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off;  \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
         f.close()
-        os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-        p=subprocess.Popen(("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
+        os.system(('sudo systemctl start nginx && sudo systemctl enable nginx')
+        p=subprocess.Popen(os_parse("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
         #os.system('sudo certbot --nginx')
         while True:
             #print ("Looping")
