@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import (QMainWindow, QToolTip, QLabel, QVBoxLayout, QTabWid
 from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
  
-##
+#
 from .helpers import os_parse
 ###############################################################################
 #Progress bar for OS Update
@@ -29,6 +29,7 @@ class MyThread_os_update(QThread):
             if not line:
                 break
             print (line.strip())
+            sys.stdout.flush()
             
 class Window_os_update(QDialog):
     def __init__(self):
@@ -79,6 +80,7 @@ class MyThread_packages(QThread):
             if not line:
                 break
             print (line.strip())
+            sys.stdout.flush()
          
 class Window_packages(QDialog):
     def __init__(self):
@@ -129,6 +131,7 @@ class MyThread_hornet_update(QThread):
             if not line:
                 break
             print (line.strip())
+            sys.stdout.flush()
          
 class Window_hornet_update(QDialog):
     def __init__(self):
@@ -179,6 +182,7 @@ class MyThread_hornet_install(QThread):
             if not line:
                 break
             print (line.strip())
+            sys.stdout.flush()
          
 class Window_hornet_install(QDialog):
     def __init__(self):
@@ -229,6 +233,7 @@ class MyThread_hornet_uninstall(QThread):
             if not line:
                 break
             print (line.strip())
+            sys.stdout.flush()
          
 class Window_hornet_uninstall(QDialog):
     def __init__(self):
@@ -287,6 +292,7 @@ class MyThread_nginx_certbot_install(QThread):
             if not line:
                 break
             print (line.strip())
+            sys.stdout.flush()
          
 class Window_nginx_certbot_install(QDialog):
     def __init__(self):
@@ -337,6 +343,7 @@ class MyThread_nginx_certbot_uninstall(QThread):
             if not line:
                 break
             print (line.strip())
+            sys.stdout.flush()
          
 class Window_nginx_certbot_uninstall(QDialog):
     def __init__(self):
