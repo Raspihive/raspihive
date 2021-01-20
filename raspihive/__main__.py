@@ -11,26 +11,10 @@ from PyQt5.QtWidgets import (QMainWindow, QToolTip, QLabel, QVBoxLayout, QTabWid
 from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
  
-#
-from .helpers import os_parse
+from threads import *
+#from .helpers import os_parse
 ###############################################################################
 #Progress bar for OS Update
-class MyThread_os_update(QThread):
-    # Create a counter thread
-    change_value = pyqtSignal(int)
-    def run(self):
-        p=subprocess.Popen(os_parse("sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y"), stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt+=4
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-            
 class Window_os_update(QDialog):
     def __init__(self):
         super().__init__()
@@ -63,25 +47,8 @@ class Window_os_update(QDialog):
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
 #End of Progress bar for OS Update
-
+###############################################################################
 #Progress bar for packages update
-class MyThread_packages(QThread):
-    # Create a counter thread
-    change_value = pyqtSignal(int)
-    def run(self):
-        #print("Test packages")
-        p=subprocess.Popen(os_parse("sudo apt update -y && sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic"), stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt+=4
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-         
 class Window_packages(QDialog):
     def __init__(self):
         super().__init__()
@@ -114,25 +81,9 @@ class Window_packages(QDialog):
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
 #End of Progress bar for packages update
+###############################################################################
 
 #Progress bar for hornet update
-class MyThread_hornet_update(QThread):
-    # Create a counter thread
-    change_value = pyqtSignal(int)
-    def run(self):
-        #print("Test packages")
-        p=subprocess.Popen(os_parse("sudo service hornet stop && sudo apt update && sudo apt -y upgrade hornet && sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt+=4
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-         
 class Window_hornet_update(QDialog):
     def __init__(self):
         super().__init__()
@@ -165,25 +116,9 @@ class Window_hornet_update(QDialog):
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
 #End of Progress bar for hornet update
+###############################################################################
 
 #Progress bar for hornet install
-class MyThread_hornet_install(QThread):
-    # Create a counter thread
-    change_value = pyqtSignal(int)
-    def run(self):
-        #print("Test packages")
-        p=subprocess.Popen(os_parse('sudo apt install -y build-essential && sudo apt install -y git && sudo apt install -y snapd && sudo snap install go --classic && sudo apt update && sudo apt -y upgrade && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add -  && sudo echo "deb http://ppa.hornet.zone stable main" >> /etc/apt/sources.list.d/hornet.list && sudo apt update && sudo apt install hornet && sudo systemctl enable hornet.service && sudo apt install -y ufw && sudo ufw allow 15600/tcp && sudo ufw allow 14626/udp && sudo ufw limit openssh && sudo ufw enable && sudo apt install sshguard -y && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt+=4
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-         
 class Window_hornet_install(QDialog):
     def __init__(self):
         super().__init__()
@@ -216,25 +151,9 @@ class Window_hornet_install(QDialog):
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
 #End of Progress bar for hornet install
+###############################################################################
 
 #Progress bar for hornet uninstall
-class MyThread_hornet_uninstall(QThread):
-    # Create a counter thread
-    change_value = pyqtSignal(int)
-    def run(self):
-        #print("Test packages")
-        p=subprocess.Popen(os_parse("sudo systemctl stop hornet && sudo apt -qq purge hornet -y && sudo rm -rf /etc/apt/sources.list.d/hornet.list"), stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt+=10
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-         
 class Window_hornet_uninstall(QDialog):
     def __init__(self):
         super().__init__()
@@ -317,7 +236,6 @@ class Window_nginx_certbot_install(QDialog):
         #self.startProgressBar(self)
         self.setLayout(vbox)
         self.show()
-
     #def startProgressBar():
         self.thread = MyThread_nginx_certbot_install()
         self.thread.change_value.connect(self.setProgressVal)
@@ -327,24 +245,8 @@ class Window_nginx_certbot_install(QDialog):
         self.progressbar.setValue(val)
 #End of Progress bar for nginx+certbot install
 """
+###############################################################################
 #Progress bar for nginx+certbot uninstall
-class MyThread_nginx_certbot_uninstall(QThread):
-    # Create a counter thread
-    change_value = pyqtSignal(int)
-    def run(self):
-        #print("Test packages")
-        p=subprocess.Popen(os_parse("sudo systemctl stop nginx && sudo systemctl disable nginx && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt+=4
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-         
 class Window_nginx_certbot_uninstall(QDialog):
     def __init__(self):
         super().__init__()
@@ -462,19 +364,29 @@ class Window1(QMainWindow):
         # add tab
         self.tab6 = self.ui6()
         #End of button 6 widget (Help)
-        
 
+        # add button 7 - Quit
+        self.btn_7 = QPushButton(' Quit-Raspihive ', self)
+        #Setting background color or transparency
+        self.btn_7.setStyleSheet('background-color: #2B3440; color: white') #background-color: #353535;
+        #add action 
+        self.btn_7.clicked.connect(qApp.quit)
+        # add tab
+        self.tab7 = self.ui7()
+        #End of button 7 - Quit
 
         self.initUI()
 
     def initUI(self):
         left_layout = QVBoxLayout()
-        left_layout.addWidget(self.btn_1)
-        left_layout.addWidget(self.btn_2)
-        left_layout.addWidget(self.btn_3)
+        left_layout.addWidget(self.btn_1) #Update menu
+        left_layout.addWidget(self.btn_2) # Install menu
+        left_layout.addWidget(self.btn_3) # Node control
         #left_layout.addWidget(self.btn_4) Invisible window 4
         left_layout.addWidget(self.btn_5) #(Dashboard access)
         left_layout.addWidget(self.btn_6) #(Help)
+        left_layout.addWidget(self.btn_7) #(Quit)
+      
 
         left_layout.addStretch(5)
         left_layout.setSpacing(25)
@@ -490,7 +402,8 @@ class Window1(QMainWindow):
         self.right_widget.addTab(self.tab3, '')
         self.right_widget.addTab(self.tab4, '') 
         self.right_widget.addTab(self.tab5, '') 
-        self.right_widget.addTab(self.tab6, '') 
+        self.right_widget.addTab(self.tab6, '')
+        self.right_widget.addTab(self.tab7, '')  
 
         self.right_widget.setCurrentIndex(0)
         self.right_widget.setStyleSheet('''QTabBar::tab{width: 0; \
@@ -513,7 +426,7 @@ class Window1(QMainWindow):
         #End Toolbar Icon 1
 
         #Toolbar Icon 2
-        Act = QAction(QIcon('/var/lib/raspihive/toolbar_raspihive_icons/exit24.png'), 'Close Raspihive', self)
+        Act = QAction(QIcon('https://github.com/Raspihive/raspihive/blob/main/assets/Logo/TheHive.png'), 'Close Raspihive', self)   #/var/lib/raspihive/toolbar_raspihive_icons/exit24.png
         Act.setShortcut('Ctrl+Q')
         Act.triggered.connect(qApp.quit) #qApp.quit
         self.toolbar = self.addToolBar('Exit')
@@ -564,6 +477,9 @@ class Window1(QMainWindow):
 
     def button6(self):
         self.right_widget.setCurrentIndex(5)
+
+    def button7(self):
+        self.right_widget.setCurrentIndex(6)
     
     # End buttons
 
@@ -714,7 +630,7 @@ class Window1(QMainWindow):
         #Start button 4
         button = QPushButton(' Start certbot process ', main)
         #Hover text
-        button.setToolTip(' Enter the following command after the installation of nginx+certbot into the terminal: \n "certbot --nginx" (Domain needed) ')
+        button.setToolTip(' Enter the following command after the installation of nginx+certbot into the terminal: \n "sudo certbot --nginx" (Domain needed) ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
         button.setGeometry(220, 150, 160, 50)   
@@ -1060,6 +976,12 @@ class Window1(QMainWindow):
         return main
 #End of Help menu
 
+# Quit button
+    def ui7(self):
+        main = QWidget()
+        
+        return main
+#End of Quit-button
 
     #End pages
 ###############################################################################   
@@ -1175,13 +1097,13 @@ class Window1(QMainWindow):
             QMessageBox.about(self, "Hornet uninstall", "Hornet node uninstall is running...")
 
     def install_nginx_certbot(self):
-        os.system(os_parse('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
+        os.system(('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
         # Nginx configuration
         f = open("/etc/nginx/sites-available/default", "w")
         f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off;  \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
         f.close()
-        os.system(('sudo systemctl start nginx && sudo systemctl enable nginx')
-        p=subprocess.Popen(os_parse("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
+        os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
+        p=subprocess.Popen(("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
         #os.system('sudo certbot --nginx')
         while True:
             #print ("Looping")
@@ -1206,7 +1128,6 @@ class Window1(QMainWindow):
         #print("I'm done!")
         print(cmd)
         """
-        
         
         #os.system(('sudo certbot --nginx'))
         #QMessageBox.about(self, "Certbot", "Certbot")
@@ -1509,4 +1430,3 @@ if __name__ == '__main__':
     main()
 ###############################################################################
 #End main programm
-
