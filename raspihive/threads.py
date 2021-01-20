@@ -99,6 +99,30 @@ class MyThread_hornet_uninstall(QThread):
             sys.stdout.flush()
 
 ##############################################################################
+#Thread for nginx+certbot install
+class MyThread_nginx_certbot_install(QThread):
+    # Create a counter thread
+    change_value = pyqtSignal(int)
+    def run(self):
+        #print("Test packages")
+        p=subprocess.Popen(("sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow 'Nginx Full' && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive && sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y && sudo certbot --nginx"), stdout=subprocess.PIPE, shell = True)
+        # Nginx configuration
+        f = open("/etc/nginx/sites-available/default", "w")
+        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off;  \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
+        f.close()
+        os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
+        cnt = 0
+        while cnt <= 100:
+            cnt+=1
+            time.sleep(0.1)
+            line = p.stdout.readline()
+            self.change_value.emit(cnt)
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
+
+##############################################################################
 #Thread for nginx+certbot uninstall
 class MyThread_nginx_certbot_uninstall(QThread):
     # Create a counter thread
