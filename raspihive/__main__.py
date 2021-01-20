@@ -187,32 +187,8 @@ class Window_hornet_uninstall(QDialog):
         self.progressbar.setValue(val)
 #End of Progress bar for hornet uninstall
 
-"""
+
 #Progress bar for nginx+certbot install
-class MyThread_nginx_certbot_install(QThread):
-    # Create a counter thread
-    change_value = pyqtSignal(int)
-    def run(self):
-        #print("Test packages")
-        os.system(('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
-        # Nginx configuration
-        f = open("/etc/nginx/sites-available/default", "w")
-        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off;  \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
-        f.close()
-        os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-        p=subprocess.Popen(("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
-        os.system((' sudo certbot --nginx '))
-        cnt = 0
-        while cnt <= 100:
-            cnt+=1
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-         
 class Window_nginx_certbot_install(QDialog):
     def __init__(self):
         super().__init__()
@@ -244,7 +220,7 @@ class Window_nginx_certbot_install(QDialog):
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
 #End of Progress bar for nginx+certbot install
-"""
+
 ###############################################################################
 #Progress bar for nginx+certbot uninstall
 class Window_nginx_certbot_uninstall(QDialog):
@@ -1097,22 +1073,19 @@ class Window1(QMainWindow):
             QMessageBox.about(self, "Hornet uninstall", "Hornet node uninstall is running...")
 
     def install_nginx_certbot(self):
-        os.system(('sudo apt update && sudo apt -y upgrade && sudo apt install -y nginx && sudo ufw allow "Nginx Full" && sudo apt install -y apache2-utils && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive'))
-        # Nginx configuration
-        f = open("/etc/nginx/sites-available/default", "w")
-        f.write("server { \n listen 80 default_server; \n listen [::]:80 default_server; \n server_tokens off;  \n server_name _; \n location /node { \n proxy_pass http://127.0.0.1:14265/; \n } \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \n proxy_set_header Connection "'"upgrade"'"; \n proxy_read_timeout 86400; \n } \n \n location / { \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
-        f.close()
-        os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-        p=subprocess.Popen(("sudo apt install software-properties-common -y && sudo apt update && sudo apt install certbot python3-certbot-nginx -y"), stdout=subprocess.PIPE, shell = True)
-        #os.system('sudo certbot --nginx')
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-        QMessageBox.about(self, "Nginx + Certbot install", "Nginx + Certbot successfully installed")
+        if os.geteuid() != 0:
+            print("Install Nginx + Certbot - You need to have root privileges")  
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Raspberry Pi Authentication")
+            msg.setText("You need to have root privileges")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            #QMessageBox.about(self, "Raspberry Pi Authentication", "You need to have root privileges")
+        if os.geteuid()==0:
+            app = Window_nginx_certbot_install()
+        QMessageBox.about(self, "Nginx + Certbot install", "Nginx + Certbot install is running...")
 
     def certbot(self):
         os.system("lxterminal") #just opens the terminal
