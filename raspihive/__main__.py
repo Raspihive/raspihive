@@ -12,7 +12,7 @@ from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
  
 from threads import *
-#from .helpers import os_parse
+from .helpers import os_parse
 ###############################################################################
 #Progress bar for OS Update
 class Window_os_update(QDialog):
