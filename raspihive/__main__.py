@@ -11,250 +11,10 @@ from PyQt5.QtWidgets import (QMainWindow, QToolTip, QLabel, QVBoxLayout, QTabWid
 from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
  
-from threads import *
+from progress_bars import *
+
 from .helpers import os_parse
 ###############################################################################
-#Progress bar for OS Update
-class Window_os_update(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
-        self.title = "OS Update"
-        self.top = 200
-        self.left = 500
-        self.width = 300
-        self.height = 100
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-        vbox = QVBoxLayout()
-        self.progressbar = QProgressBar()
-        #self.progressbar.setOrientation(Qt.Vertical)
-        self.progressbar.setMaximum(100)
-        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
-        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
-        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
-        #self.progressbar.setTextVisible(False)
-        vbox.addWidget(self.progressbar)
-        #self.startProgressBar(self)
-        self.setLayout(vbox)
-        self.show()
-
-    #def startProgressBar():
-        self.thread = MyThread_os_update()
-        self.thread.change_value.connect(self.setProgressVal)
-        self.thread.start()
- 
-    def setProgressVal(self, val):
-        self.progressbar.setValue(val)
-#End of Progress bar for OS Update
-###############################################################################
-#Progress bar for packages update
-class Window_packages(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
-        self.title = "Packages Update"
-        self.top = 200
-        self.left = 500
-        self.width = 300
-        self.height = 100
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-        vbox = QVBoxLayout()
-        self.progressbar = QProgressBar()
-        #self.progressbar.setOrientation(Qt.Vertical)
-        self.progressbar.setMaximum(100)
-        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
-        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
-        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
-        #self.progressbar.setTextVisible(False)
-        vbox.addWidget(self.progressbar)
-        #self.startProgressBar(self)
-        self.setLayout(vbox)
-        self.show()
-
-    #def startProgressBar():
-        self.thread = MyThread_packages()
-        self.thread.change_value.connect(self.setProgressVal)
-        self.thread.start()
- 
-    def setProgressVal(self, val):
-        self.progressbar.setValue(val)
-#End of Progress bar for packages update
-###############################################################################
-
-#Progress bar for hornet update
-class Window_hornet_update(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
-        self.title = "Hornet Update"
-        self.top = 200
-        self.left = 500
-        self.width = 300
-        self.height = 100
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-        vbox = QVBoxLayout()
-        self.progressbar = QProgressBar()
-        #self.progressbar.setOrientation(Qt.Vertical)
-        self.progressbar.setMaximum(100)
-        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
-        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
-        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
-        #self.progressbar.setTextVisible(False)
-        vbox.addWidget(self.progressbar)
-        #self.startProgressBar(self)
-        self.setLayout(vbox)
-        self.show()
-
-    #def startProgressBar():
-        self.thread = MyThread_hornet_update()
-        self.thread.change_value.connect(self.setProgressVal)
-        self.thread.start()
- 
-    def setProgressVal(self, val):
-        self.progressbar.setValue(val)
-#End of Progress bar for hornet update
-###############################################################################
-
-#Progress bar for hornet install
-class Window_hornet_install(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
-        self.title = "Hornet install"
-        self.top = 200
-        self.left = 500
-        self.width = 300
-        self.height = 100
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-        vbox = QVBoxLayout()
-        self.progressbar = QProgressBar()
-        #self.progressbar.setOrientation(Qt.Vertical)
-        self.progressbar.setMaximum(100)
-        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
-        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
-        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
-        #self.progressbar.setTextVisible(False)
-        vbox.addWidget(self.progressbar)
-        #self.startProgressBar(self)
-        self.setLayout(vbox)
-        self.show()
-
-    #def startProgressBar():
-        self.thread = MyThread_hornet_install()
-        self.thread.change_value.connect(self.setProgressVal)
-        self.thread.start()
- 
-    def setProgressVal(self, val):
-        self.progressbar.setValue(val)
-#End of Progress bar for hornet install
-###############################################################################
-
-#Progress bar for hornet uninstall
-class Window_hornet_uninstall(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
-        self.title = "Hornet uninstall"
-        self.top = 200
-        self.left = 500
-        self.width = 300
-        self.height = 100
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-        vbox = QVBoxLayout()
-        self.progressbar = QProgressBar()
-        #self.progressbar.setOrientation(Qt.Vertical)
-        self.progressbar.setMaximum(100)
-        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
-        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
-        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
-        #self.progressbar.setTextVisible(False)
-        vbox.addWidget(self.progressbar)
-        #self.startProgressBar(self)
-        self.setLayout(vbox)
-        self.show()
-
-    #def startProgressBar():
-        self.thread = MyThread_hornet_uninstall()
-        self.thread.change_value.connect(self.setProgressVal)
-        self.thread.start()
- 
-    def setProgressVal(self, val):
-        self.progressbar.setValue(val)
-#End of Progress bar for hornet uninstall
-
-
-#Progress bar for nginx+certbot install
-class Window_nginx_certbot_install(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
-        self.title = "Nginx + Certbot install"
-        self.top = 200
-        self.left = 500
-        self.width = 300
-        self.height = 100
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-        vbox = QVBoxLayout()
-        self.progressbar = QProgressBar()
-        #self.progressbar.setOrientation(Qt.Vertical)
-        self.progressbar.setMaximum(100)
-        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
-        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
-        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
-        #self.progressbar.setTextVisible(False)
-        vbox.addWidget(self.progressbar)
-        #self.startProgressBar(self)
-        self.setLayout(vbox)
-        self.show()
-    #def startProgressBar():
-        self.thread = MyThread_nginx_certbot_install()
-        self.thread.change_value.connect(self.setProgressVal)
-        self.thread.start()
- 
-    def setProgressVal(self, val):
-        self.progressbar.setValue(val)
-#End of Progress bar for nginx+certbot install
-
-###############################################################################
-#Progress bar for nginx+certbot uninstall
-class Window_nginx_certbot_uninstall(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet('background-color: #2B3440; color: black;') #rgb(255,255,255);
-        self.title = "Nginx + Certbot uninstall"
-        self.top = 200
-        self.left = 500
-        self.width = 300
-        self.height = 100
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-        vbox = QVBoxLayout()
-        self.progressbar = QProgressBar()
-        #self.progressbar.setOrientation(Qt.Vertical)
-        self.progressbar.setMaximum(100)
-        #self.progressbar.setStyleSheet("QProgressBar {border: 2px solid grey;border-radius:8px;padding:1px}""QProgressBar::chunk {background:black}")
-        #qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 red, stop: 1 white);
-        self.progressbar.setStyleSheet("QProgressBar::chunk {background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 lightblue, stop: 1 lightblue); }")
-        #self.progressbar.setTextVisible(False)
-        vbox.addWidget(self.progressbar)
-        #self.startProgressBar(self)
-        self.setLayout(vbox)
-        self.show()
-
-    #def startProgressBar():
-        self.thread = MyThread_nginx_certbot_uninstall()
-        self.thread.change_value.connect(self.setProgressVal)
-        self.thread.start()
- 
-    def setProgressVal(self, val):
-        self.progressbar.setValue(val)
-#End of Progress bar for nginx+certbot uninstall
 
 #####################################Start of Window frames############################################
 class Window1(QMainWindow):
@@ -268,7 +28,6 @@ class Window1(QMainWindow):
         #Window size
         self.setGeometry(self.left, self.top, self.width, self.height)
         #End of set window position and size
-
 
         """ for further tests
         # set the size of window
@@ -310,7 +69,6 @@ class Window1(QMainWindow):
         self.tab3 = self.ui3()
         #End of button 3 widget
 
-        
         #Invisible add button 4 widget
         self.btn_4 = QPushButton('Window 4', self)
         #Setting background color or transparency
@@ -363,12 +121,10 @@ class Window1(QMainWindow):
         left_layout.addWidget(self.btn_6) #(Help)
         left_layout.addWidget(self.btn_7) #(Quit)
       
-
         left_layout.addStretch(5)
         left_layout.setSpacing(25)
         left_widget = QWidget()
         left_widget.setLayout(left_layout)
-        
         
         self.right_widget = QTabWidget()
         self.right_widget.tabBar().setObjectName("mainTab")
@@ -389,7 +145,6 @@ class Window1(QMainWindow):
         self.setWindowOpacity(0.9875)
         #Background color Sidebar, Toolbar, widget windows
         self.setStyleSheet('background-color: #2B3440; color: white;') #rgb(255,255,255);  
-        
 
         #Start Toolbar
 
@@ -460,7 +215,6 @@ class Window1(QMainWindow):
     # End buttons
 
 	# ----------------- 
-  
 ################################################################################ Start pages ##############################################################################
 
 #Update menu tab
@@ -470,7 +224,6 @@ class Window1(QMainWindow):
         main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); #137394 this
         #Background Image + button image
         #main.setStyleSheet('background-color: #147695  ; color: white; ') #background-image: url("/var/lib/raspihive/background_widget_sites/b3.png"); background-repeat: no-repeat;  background-position: 0% 0%
-        
         
         #Start button 1 
         button = QPushButton('Update OS', main)
@@ -932,7 +685,6 @@ class Window1(QMainWindow):
         #End button 2
         """
      
-
         #Create label
         main.labelA = QtWidgets.QLabel(main) 
         #Set label text      
@@ -961,12 +713,7 @@ class Window1(QMainWindow):
 
     #End pages
 ###############################################################################   
-        
-    """
-    @pyqtSlot()
-    def system_update(self):
-        print('Update startet')
-    """ 
+
 ##############################################################################
 # Start Functions
     def system_update(self):
@@ -983,7 +730,6 @@ class Window1(QMainWindow):
         if os.geteuid()==0:
             app = Window_os_update()
             QMessageBox.about(self, "OS Update", "OS update is running...")
-
     
     def packages_update(self):
         if os.geteuid() != 0:
@@ -1257,7 +1003,6 @@ class Window1(QMainWindow):
         msg.setText("If you found a bug or experience any issues, please write as at: www.raspihive.org Thanks for your feedback!")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
-
 
 #End Functions
 ###############################################################################   
