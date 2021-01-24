@@ -1,22 +1,37 @@
 #!/usr/bin/env python3
 #!-*- coding: utf-8 -*-
 
-###############################################################################
+#################################################################
 # libraries
 import sys, time, os, subprocess
-from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QProgressBar, QPushButton, QAction, qApp, QDialog
+from PyQt5.QtWidgets import (
+    QApplication,
+    QWidget,
+    QMessageBox,
+    QProgressBar,
+    QPushButton,
+    QAction,
+    qApp,
+    QDialog
+)
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt, QtGui
 from subprocess import Popen, PIPE
-from PyQt5.QtWidgets import (QMainWindow, QToolTip, QLabel, QVBoxLayout, QTabWidget, QHBoxLayout)
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QToolTip,
+    QLabel,
+    QVBoxLayout,
+    QTabWidget,
+    QHBoxLayout
+)
 from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
- 
+
 from .progress_bars import *
-
 from .helpers import os_parse
-###############################################################################
+#################################################################
 
-#####################################Start of Window frames############################################
+################# Start of Window frames ########################
 class Window1(QMainWindow):
     def __init__(self):
         #Set window position and size
@@ -215,9 +230,9 @@ class Window1(QMainWindow):
     # End buttons
 
 	# ----------------- 
-################################################################################ Start pages ##############################################################################
+    ########################## Start pages ##########################
 
-#Update menu tab
+    #Update menu tab
     def ui1(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -307,9 +322,9 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of update menu tab
+    #End of update menu tab
 
-#Install menu
+    #Install menu
     def ui2(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -399,9 +414,9 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of install menu
+    #End of install menu
 
-#Node Control Center
+    #Node Control Center
     def ui3(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -456,9 +471,9 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of Node Control Center
+    #End of Node Control Center
 
-#Invisible Hornet Node Control Center
+    #Invisible Hornet Node Control Center
     def ui4(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -561,9 +576,9 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of invisible Hornet Node Control Center
+    #End of invisible Hornet Node Control Center
 
-#Dashboard access
+    #Dashboard access
     def ui5(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -619,9 +634,9 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of Dashboard access
+    #End of Dashboard access
 
-#Help menu
+    #Help menu
     def ui6(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -702,20 +717,20 @@ class Window1(QMainWindow):
         #End label
         
         return main
-#End of Help menu
+    #End of Help menu
 
-# Quit button
+    # Quit button
     def ui7(self):
         main = QWidget()
         
         return main
-#End of Quit-button
+    #End of Quit-button
 
     #End pages
-###############################################################################   
+    #################################################################  
 
-##############################################################################
-# Start Functions
+    #################################################################
+    # Start Functions
     def system_update(self):
         if os.geteuid() != 0:
             print("System-Update - You need to have root privileges")  
@@ -1005,7 +1020,7 @@ class Window1(QMainWindow):
         x = msg.exec_()  # this will show our messagebox
 
 #End Functions
-###############################################################################   
+######################################################################
 
 # Hornet Status test
 class hornet_status_win(Qt.QMainWindow):
@@ -1143,8 +1158,8 @@ def main():
 #End of MainWindow
 
 # Start main programm
-###############################################################################
+######################################################################
 if __name__ == '__main__':
     main()
-###############################################################################
+######################################################################
 #End main programm
