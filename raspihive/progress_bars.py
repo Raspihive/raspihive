@@ -1,14 +1,8 @@
+
 ###############################################################################
 # libraries
-import sys, time, os, subprocess
-from PyQt5.QtWidgets import QApplication, QWidget, \
-    QMessageBox, QProgressBar, QPushButton, QAction, qApp, QDialog
-from PyQt5 import QtCore, QtGui, QtWidgets, Qt, QtGui
-from subprocess import Popen, PIPE
-from PyQt5.QtWidgets import (QMainWindow, QToolTip, QLabel, \
-    QVBoxLayout, QTabWidget, QHBoxLayout)
-from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
-from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
+from PyQt5.QtWidgets import QProgressBar, QDialog
+from PyQt5.QtWidgets import (QVBoxLayout)
 
 from .threads import *
 
@@ -129,7 +123,7 @@ class Window_hornet_update(QDialog):
         self.thread = MyThread_hornet_update()
         self.thread.change_value.connect(self.setProgressVal)
         self.thread.start()
- 
+
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
 #End of Progress bar for hornet update
@@ -171,7 +165,7 @@ class Window_hornet_install(QDialog):
         self.thread = MyThread_hornet_install()
         self.thread.change_value.connect(self.setProgressVal)
         self.thread.start()
- 
+
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
 #End of Progress bar for hornet install
@@ -213,7 +207,7 @@ class Window_hornet_uninstall(QDialog):
         self.thread = MyThread_hornet_uninstall()
         self.thread.change_value.connect(self.setProgressVal)
         self.thread.start()
- 
+
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
 #End of Progress bar for hornet uninstall
@@ -254,7 +248,7 @@ class Window_nginx_certbot_install(QDialog):
         self.thread = MyThread_nginx_certbot_install()
         self.thread.change_value.connect(self.setProgressVal)
         self.thread.start()
- 
+
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
 #End of Progress bar for nginx+certbot install
@@ -296,7 +290,7 @@ class Window_nginx_certbot_uninstall(QDialog):
         self.thread = MyThread_nginx_certbot_uninstall()
         self.thread.change_value.connect(self.setProgressVal)
         self.thread.start()
- 
+
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
 #End of Progress bar for nginx+certbot uninstall
