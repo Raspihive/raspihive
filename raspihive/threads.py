@@ -1,12 +1,8 @@
 ###############################################################################
 # libraries
 import sys, time, os, subprocess
-from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QProgressBar, QPushButton, QAction, qApp, QDialog
-from PyQt5 import QtCore, QtGui, QtWidgets, Qt, QtGui
-from subprocess import Popen, PIPE
-from PyQt5.QtWidgets import (QMainWindow, QToolTip, QLabel, QVBoxLayout, QTabWidget, QHBoxLayout)
-from PyQt5.QtCore import pyqtSlot, QSize, QThread, pyqtSignal
-from PyQt5.QtGui import QIcon, QFont, QCursor, QImage
+from PyQt5.QtCore import QThread, pyqtSignal
+
 
 ##############################################################################
 #Thread for OS Update
