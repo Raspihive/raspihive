@@ -3,7 +3,7 @@
 import sys, time, os, subprocess
 from PyQt5.QtCore import QThread, pyqtSignal
 
-
+from .helpers import os_parse
 ##############################################################################
 #Thread for OS Update
 class MyThread_os_update(QThread):
