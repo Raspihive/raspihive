@@ -749,7 +749,17 @@ class Window1(QMainWindow):
 
         if os.geteuid()==0:
             app = Window_os_update()
-            QMessageBox.about(self, "OS Update", "OS update is running...")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("OS Update")
+            msg.setInformativeText("OS update is running")
+            msg.setWindowTitle("OS Update")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
+
 
     def packages_update(self):
         if os.geteuid() != 0:
@@ -767,7 +777,19 @@ class Window1(QMainWindow):
 
         if os.geteuid()==0:
             app = Window_packages()
-            QMessageBox.about(self,  "Packages Update", "Packages update is running...")
+            if os.geteuid()==0:
+            app = Window_os_update()
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Packages Update")
+            msg.setInformativeText("Packages update is running")
+            msg.setWindowTitle("Packages Update")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
+
 
     def raspihive_update(self):
         if os.geteuid() != 0:
@@ -807,7 +829,19 @@ class Window1(QMainWindow):
 
         if os.geteuid()==0:
             app = Window_hornet_update()
-            QMessageBox.about(self,  "Hornet Update", "Hornet update is running...")
+            if os.geteuid()==0:
+            app = Window_os_update()
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Hornet Update")
+            msg.setInformativeText("Hornet update is running")
+            msg.setWindowTitle("Hornet Update")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
+
 
     def hornet_install(self):
         if os.geteuid() != 0:
@@ -823,7 +857,19 @@ class Window1(QMainWindow):
         if os.geteuid()==0:
             #os.system('sudo service hornet start ')
             app = Window_hornet_install()
-            QMessageBox.about(self,  "Hornet install", "Hornet node installation is running...")
+            if os.geteuid()==0:
+            app = Window_os_update()
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Hornet installer")
+            msg.setInformativeText("Hornet installation is running")
+            msg.setWindowTitle("Hornet install")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
+
 
     def hornet_uninstall(self):
         if os.geteuid() != 0:
@@ -838,7 +884,19 @@ class Window1(QMainWindow):
 
         if os.geteuid()==0:
             app = Window_hornet_uninstall()
-            QMessageBox.about(self, "Hornet uninstall", "Hornet node uninstall is running...")
+            if os.geteuid()==0:
+            app = Window_os_update()
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Hornet uninstall")
+            msg.setInformativeText("Hornet uninstall is running")
+            msg.setWindowTitle("Hornet uninstall")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
+
 
     def install_nginx_certbot(self):
         if os.geteuid() != 0:
@@ -853,7 +911,19 @@ class Window1(QMainWindow):
 
         if os.geteuid()==0:
             app = Window_nginx_certbot_install()
-        QMessageBox.about(self, "Nginx + Certbot install", "Nginx + Certbot install is running...")
+            if os.geteuid()==0:
+            app = Window_os_update()
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Nginx + Certbot installer")
+            msg.setInformativeText("Nginx + Certbot installation is running")
+            msg.setWindowTitle("Nginx + Certbot installer")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
+
 
     def certbot(self):
         os.system("lxterminal") #just opens the terminal
@@ -886,8 +956,18 @@ class Window1(QMainWindow):
 
         if os.geteuid()==0:
             app = Window_nginx_certbot_uninstall()
-            QMessageBox.about(self, "Nginx + Certbot uninstall", "Nginx + Certbot \
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Nginx + Certbot uninstall")
+            msg.setInformativeText("Nginx + Certbot \
             uninstall is running...")
+            msg.setWindowTitle("Nginx + Certbot uninstall")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
+
 
     def start_hornet(self):
         if os.geteuid() != 0:
