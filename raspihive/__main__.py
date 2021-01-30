@@ -19,14 +19,18 @@ from PyQt5.QtWidgets import (
     QMainWindow,
     QVBoxLayout,
     QTabWidget,
-    QHBoxLayout
+    QHBoxLayout,
+    QInputDialog,
+    QLineEdit,
+    QApplication,
+    QWidget,
+    QLabel
 )
 
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout
 from .progress_bars import *
 from .helpers import os_parse
 ###########################################################################
@@ -812,30 +816,45 @@ class Window1(QMainWindow):
                 if the progress bar reaches 100 %, #IOTAstrong")
             show = msg.exec_()  # this will show our messagebox
 
+    def getPassword(self):
+        text, okPressed = QInputDialog.getText(self, "Root Password","Your system password:", QLineEdit.Password, "")
+        if okPressed and text != '':
+            return text
+        return None
 
     def raspihive_update(self):
+        print("geteuid:", os.geteuid())
+        pre_cmd = ""
         if os.geteuid() != 0:
             print("Raspihive-Update - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
+            # Ask Password.
+            password = self.getPassword()
+            if password is None:
+                msg = QMessageBox()
+                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+                msg.setIcon(QMessageBox.Information)
+                msg.setWindowTitle("Raspberry Pi Authentication")
+                msg.setText("You need to have root privileges")
+                #msg.setInformativeText("informative text, ya!")
+                x = msg.exec_()  # this will show our messagebox
+                return
+            else:
+                pre_cmd = f"echo {password} | sudo -S "
 
-        if os.geteuid()==0:
-            #os.system('sudo service hornet start ')
-            p=subprocess.Popen("cd /var/lib/ && sudo rm -r raspihive && \
-            sudo git clone https://github.com/Raspihive/raspihive.git \
-            /var/lib/raspihive", stdout=subprocess.PIPE, shell = True)
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
+        # os.system('sudo service hornet start ')
+        cmd = pre_cmd+"cd /var/lib/ && sudo rm -r /var/lib/raspihive && \
+                sudo git clone https://github.com/Raspihive/raspihive.git \
+                /var/lib/raspihive"
+        # cmd = pre_cmd + "echo Worked"
+        # print("cmd:", cmd)
+        p=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell = True)
+        while True:
+            #print ("Looping")
+            line = p.stdout.readline()
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
             QMessageBox.about(self,  "Raspihive Update", "Raspihive successfully updated")
 
     def hornet_update(self):
