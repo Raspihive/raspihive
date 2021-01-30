@@ -12,10 +12,12 @@ __OS_CMD__ = {
     'raspbian': 'apt',
     'fedora': 'dnf',
     'linuxmint': 'apt',
-    'honeycomb': 'apt-get'
+    'honeycomb': 'apt-get',
+    'debian': 'apt-get'
+
 }
 __OS_BASE__ = __OS_CMD__[distro.id()]
-__default_message__ = f'Your Platform is not supported. Please get in touch with us at '
+__default_message__ = f'Your Platform is not supported. Please get in touch with us at:'
 
 
 def os_parse(cmd):
