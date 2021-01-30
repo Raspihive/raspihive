@@ -1107,19 +1107,19 @@ class Window1(QMainWindow):
 #End Functions
 ###############################################################################
 
-# Hornet Status test
+# Hornet Status
 class hornet_status_win(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
         #Set window position and size
         super().__init__()
-        self.left = 300
-        self.top = 100
-        self.width = 1100
-        self.height = 500
+        #self.left = 300
+        #self.top = 100
+        #self.width = 1100
+        #self.height = 500
         #End of set window position and size
         #Window size
-        self.setGeometry(self.left, self.top, self.width, self.height)
+        #self.setGeometry(self.left, self.top, self.width, self.height)
 
         #self.setFixedSize(1000, 1000)
         self.setStyleSheet('background-color: #2B3440') #rgb(255,255,255);
@@ -1158,9 +1158,13 @@ class hornet_status_win(Qt.QMainWindow):
         # adding action to a button
         self.pushButton.clicked.connect(self.close)
         # End of creating a quit button
-#End of Hornet Status test
 
-#Hornet Log test
+        # opening window in maximized size
+        self.showMaximized()
+
+#End of Hornet Status
+
+#Hornet Log
 class hornet_log_win(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -1205,14 +1209,17 @@ class hornet_log_win(Qt.QMainWindow):
         # setting geometry of button x, y, width, height
         self.pushButton.setGeometry(0, 0, 150, 40)
         #Setting background color or transparency
-        self.pushButton.setStyleSheet('background-color: #353535; color: white')
+        self.pushButton.setStyleSheet('background-color: #2B3440; color: white')
         #Setting button text
         self.pushButton.setText('Close log window')
         # adding action to a button
         self.pushButton.clicked.connect(self.close)
         # End of creating a quit button
 
-#End of Hornet Log test
+        # opening window in maximized size
+        self.showMaximized()
+
+#End of Hornet Log
 
 #Mainwindow
 def main():
