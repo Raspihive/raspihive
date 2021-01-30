@@ -2,7 +2,7 @@
 # libraries
 import sys, time, os, subprocess
 from PyQt5.QtCore import QThread, pyqtSignal
-
+from PyQt5.QtWidgets import QMessageBox
 from .helpers import os_parse
 ##############################################################################
 #Thread for OS Update
@@ -16,14 +16,20 @@ class MyThread_os_update(QThread):
                     stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 4
+            cnt += 5
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
-            if not line:
+            print(line.strip())
+            sys.stdout.flush()
+            if cnt == 100:
+                print ("CNT 100 erreicht")
+                sys.stdout.flush()
                 break
             print(line.strip())
             sys.stdout.flush()
+            
+
 ##############################################################################
 #Thread for packages update
 class MyThread_packages(QThread):
@@ -38,11 +44,15 @@ class MyThread_packages(QThread):
                         stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 4
+            cnt += 5
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
-            if not line:
+            print(line.strip())
+            sys.stdout.flush()
+            if cnt == 100:
+                print ("CNT 100 erreicht")
+                sys.stdout.flush()
                 break
             print(line.strip())
             sys.stdout.flush()
@@ -58,11 +68,15 @@ class MyThread_hornet_update(QThread):
                 sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 4
+            cnt += 5
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
-            if not line:
+            print(line.strip())
+            sys.stdout.flush()
+            if cnt == 100:
+                print ("CNT 100 erreicht")
+                sys.stdout.flush()
                 break
             print(line.strip())
             sys.stdout.flush()
@@ -88,11 +102,15 @@ class MyThread_hornet_install(QThread):
             && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 4
+            cnt += 5
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
-            if not line:
+            print(line.strip())
+            sys.stdout.flush()
+            if cnt == 100:
+                print ("CNT 100 erreicht")
+                sys.stdout.flush()
                 break
             print(line.strip())
             sys.stdout.flush()
@@ -109,11 +127,15 @@ class MyThread_hornet_uninstall(QThread):
             stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 10
+            cnt += 5
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
-            if not line:
+            print(line.strip())
+            sys.stdout.flush()
+            if cnt == 100:
+                print ("CNT 100 erreicht")
+                sys.stdout.flush()
                 break
             print(line.strip())
             sys.stdout.flush()
@@ -148,11 +170,15 @@ class MyThread_nginx_certbot_install(QThread):
         os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
         cnt = 0
         while cnt <= 100:
-            cnt+=1
+            cnt += 5
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
-            if not line:
+            print(line.strip())
+            sys.stdout.flush()
+            if cnt == 100:
+                print ("CNT 100 erreicht")
+                sys.stdout.flush()
                 break
             print(line.strip())
             sys.stdout.flush()
@@ -170,11 +196,15 @@ class MyThread_nginx_certbot_uninstall(QThread):
         && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 4
+            cnt += 5
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
-            if not line:
+            print(line.strip())
+            sys.stdout.flush()
+            if cnt == 100:
+                print ("CNT 100 erreicht")
+                sys.stdout.flush()
                 break
             print(line.strip())
             sys.stdout.flush()
