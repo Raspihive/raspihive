@@ -23,10 +23,15 @@ from PyQt5.QtWidgets import (
 )
 
 from PyQt5.QtGui import QIcon, QFont
-
+from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout
 from .progress_bars import *
 from .helpers import os_parse
 ###########################################################################
+#Global variables
+ICON_IMAGE_URL = "https://raw.githubusercontent.com/Raspihive/raspihiveWebsite/master/public/favicon.ico"
 
 #####################################Start of Window frames################
 class Window1(QMainWindow):
@@ -40,6 +45,25 @@ class Window1(QMainWindow):
         #Window size
         self.setGeometry(self.left, self.top, self.width, self.height)
         #End of set window position and size
+
+        #icon in the taskbar
+        self.label = QLabel('Image loading demo')
+
+        self.vertical_layout = QVBoxLayout()
+        self.vertical_layout.addWidget(self.label)
+
+        self.setLayout(self.vertical_layout)
+
+        self.nam = QNetworkAccessManager()
+        self.nam.finished.connect(self.set_window_icon_from_response)
+        self.nam.get(QNetworkRequest(QUrl(ICON_IMAGE_URL)))
+
+    def set_window_icon_from_response(self, http_response):
+        pixmap = QPixmap()
+        pixmap.loadFromData(http_response.readAll())
+        icon = QIcon(pixmap)
+        self.setWindowIcon(icon)
+    #End of icon in the taskbar
 
         """ for further tests
         # set the size of window
@@ -171,8 +195,8 @@ class Window1(QMainWindow):
         #End Toolbar Icon 1
 
         #Toolbar Icon 2
-        Act = QAction(QIcon('https://github.com/Raspihive/raspihive/\
-        blob/main/assets/Logo/TheHive.png'), 'Close Raspihive', self)
+        Act = QAction(QIcon('https://raw.githubusercontent.com/Raspihive/raspihive/\
+            main/assets/Logo/TheHive.png'), 'Close Raspihive', self)
         Act.setShortcut('Ctrl+Q')
         Act.triggered.connect(qApp.quit) #qApp.quit
         self.toolbar = self.addToolBar('Exit')
