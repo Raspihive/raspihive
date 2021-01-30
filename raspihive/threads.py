@@ -26,7 +26,6 @@ class MyThread_os_update(QThread):
                 print ("CNT 100 erreicht")
                 sys.stdout.flush()
                 break
-            print(line.strip())
             sys.stdout.flush()
             
 
@@ -54,7 +53,6 @@ class MyThread_packages(QThread):
                 print ("CNT 100 erreicht")
                 sys.stdout.flush()
                 break
-            print(line.strip())
             sys.stdout.flush()
 ##############################################################################
 #Thread for hornet update
@@ -78,7 +76,6 @@ class MyThread_hornet_update(QThread):
                 print ("CNT 100 erreicht")
                 sys.stdout.flush()
                 break
-            print(line.strip())
             sys.stdout.flush()
 ##############################################################################
 #Thread for hornet install
@@ -112,7 +109,6 @@ class MyThread_hornet_install(QThread):
                 print ("CNT 100 erreicht")
                 sys.stdout.flush()
                 break
-            print(line.strip())
             sys.stdout.flush()
 ##############################################################################
 #Thread for hornet uninstall
@@ -137,7 +133,6 @@ class MyThread_hornet_uninstall(QThread):
                 print ("CNT 100 erreicht")
                 sys.stdout.flush()
                 break
-            print(line.strip())
             sys.stdout.flush()
 
 ##############################################################################
@@ -180,7 +175,6 @@ class MyThread_nginx_certbot_install(QThread):
                 print ("CNT 100 erreicht")
                 sys.stdout.flush()
                 break
-            print(line.strip())
             sys.stdout.flush()
 
 ##############################################################################
@@ -206,5 +200,4 @@ class MyThread_nginx_certbot_uninstall(QThread):
                 print ("CNT 100 erreicht")
                 sys.stdout.flush()
                 break
-            print(line.strip())
             sys.stdout.flush()
