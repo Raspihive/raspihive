@@ -2,7 +2,6 @@
 # libraries
 import sys, time, os, subprocess
 from PyQt5.QtCore import QThread, pyqtSignal
-from PyQt5.QtWidgets import QMessageBox
 from .helpers import os_parse
 ##############################################################################
 #Thread for OS Update
@@ -16,7 +15,7 @@ class MyThread_os_update(QThread):
                     stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 5
+            cnt += 2
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -27,7 +26,7 @@ class MyThread_os_update(QThread):
                 sys.stdout.flush()
                 break
             sys.stdout.flush()
-            
+
 
 ##############################################################################
 #Thread for packages update
@@ -43,7 +42,7 @@ class MyThread_packages(QThread):
                         stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 5
+            cnt += 2
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -66,7 +65,7 @@ class MyThread_hornet_update(QThread):
                 sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 5
+            cnt += 2
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -99,7 +98,7 @@ class MyThread_hornet_install(QThread):
             && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 5
+            cnt += 2
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -123,7 +122,7 @@ class MyThread_hornet_uninstall(QThread):
             stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 5
+            cnt += 2
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -165,7 +164,7 @@ class MyThread_nginx_certbot_install(QThread):
         os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
         cnt = 0
         while cnt <= 100:
-            cnt += 5
+            cnt += 2
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -190,7 +189,7 @@ class MyThread_nginx_certbot_uninstall(QThread):
         && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 5
+            cnt += 2
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
