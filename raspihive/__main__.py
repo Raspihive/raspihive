@@ -777,8 +777,6 @@ class Window1(QMainWindow):
 
         if os.geteuid()==0:
             app = Window_packages()
-            if os.geteuid()==0:
-            app = Window_os_update()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -829,8 +827,6 @@ class Window1(QMainWindow):
 
         if os.geteuid()==0:
             app = Window_hornet_update()
-            if os.geteuid()==0:
-            app = Window_os_update()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -858,7 +854,6 @@ class Window1(QMainWindow):
             #os.system('sudo service hornet start ')
             app = Window_hornet_install()
             if os.geteuid()==0:
-            app = Window_os_update()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -885,7 +880,6 @@ class Window1(QMainWindow):
         if os.geteuid()==0:
             app = Window_hornet_uninstall()
             if os.geteuid()==0:
-            app = Window_os_update()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -912,7 +906,6 @@ class Window1(QMainWindow):
         if os.geteuid()==0:
             app = Window_nginx_certbot_install()
             if os.geteuid()==0:
-            app = Window_os_update()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
