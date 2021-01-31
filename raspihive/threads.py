@@ -2,78 +2,13 @@
 # libraries
 import sys, time, os, subprocess
 from PyQt5.QtCore import QThread, pyqtSignal
-
-from PyQt5.QtWidgets import (
-    QMainWindow,
-    QVBoxLayout,
-    QTabWidget,
-    QHBoxLayout,
-    QInputDialog,
-    QLineEdit,
-    QApplication,
-    QWidget,
-    QLabel
-)
-
 from .helpers import os_parse
 ##############################################################################
 #Thread for OS Update
 class MyThread_os_update(QThread):
     # Create a counter thread
     change_value = pyqtSignal(int)
-    """
-    def getPassword(self):
-        text, okPressed = QInputDialog.getText(self, "Root Password","Your system password:", QLineEdit.Password, "")
-        if okPressed and text != '':
-            return text
-        return None
-    """
     def run(self):
-        print("geteuid:", os.geteuid())
-        pre_cmd = ""
-        if os.geteuid() != 0:
-            print("Raspihive-Update - You need to have root privileges")
-
-        def getPassword(self):
-            text, okPressed = QInputDialog.getText(self, "Root Password","Your system password:", QLineEdit.Password, "")
-            if okPressed and text != '':
-                return text
-            return None
-            # Ask Password.
-            password = self.getPassword()
-            if password is None:
-                msg = QMessageBox()
-                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-                msg.setIcon(QMessageBox.Information)
-                msg.setWindowTitle("Raspberry Pi Authentication")
-                msg.setText("You need to have root privileges")
-                #msg.setInformativeText("informative text, ya!")
-                x = msg.exec_()  # this will show our messagebox
-                return
-            else:
-                pre_cmd = f"echo {password} | sudo -S "
-
-        # os.system('sudo service hornet start ')
-        cmd = pre_cmd+"apt update"
-        # cmd = pre_cmd + "echo Worked"
-        # print("cmd:", cmd)
-        p=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt += 2
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            print(line.strip())
-            sys.stdout.flush()
-            if cnt == 100:
-                print ("CNT 100 erreicht")
-                sys.stdout.flush()
-                break
-            sys.stdout.flush()
-
-
-        """
         p=subprocess.Popen(os_parse("sudo apt update -y && \
             sudo apt full-upgrade -y && sudo apt autoremove -y \
                 && sudo apt clean -y && sudo apt autoclean -y"), \
@@ -91,7 +26,7 @@ class MyThread_os_update(QThread):
                 sys.stdout.flush()
                 break
             sys.stdout.flush()
-        """
+
 
 ##############################################################################
 #Thread for packages update
@@ -104,6 +39,30 @@ class MyThread_packages(QThread):
             sudo apt install -y build-essential && \
                 sudo apt install -y git && sudo apt install -y snapd \
                     && sudo snap install go --classic"), \
+                        stdout=subprocess.PIPE, shell = True)
+        cnt = 0
+        while cnt <= 100:
+            cnt += 2
+            time.sleep(0.1)
+            line = p.stdout.readline()
+            self.change_value.emit(cnt)
+            print(line.strip())
+            sys.stdout.flush()
+            if cnt == 100:
+                print ("CNT 100 erreicht")
+                sys.stdout.flush()
+                break
+            sys.stdout.flush()
+##############################################################################
+#Thread for raspihive update
+class MyThread_raspihive_update(QThread):
+    # Create a counter thread
+    change_value = pyqtSignal(int)
+    def run(self):
+        #print("Test packages")
+        p=subprocess.Popen(os_parse("cd /var/lib/ && sudo rm -r raspihive && \
+            sudo git clone https://github.com/Raspihive/raspihive.git \
+            /var/lib/raspihive"), \
                         stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
