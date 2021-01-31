@@ -761,6 +761,7 @@ class Window1(QMainWindow):
 ##############################################################################
 #Start Functions
     def system_update(self):
+        """
         if os.geteuid() != 0:
             print("System-Update - You need to have root privileges")
             msg = QMessageBox()
@@ -771,19 +772,19 @@ class Window1(QMainWindow):
             msg.setText("You need to have root privileges")
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
-
-        if os.geteuid()==0:
-            app = Window_os_update()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("OS Update")
-            msg.setInformativeText("OS update is running")
-            msg.setWindowTitle("OS Update")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
+        """
+        # Ask Password.
+        app = Window_os_update()
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #2B3440 ; color: \
+        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("OS Update")
+        msg.setInformativeText("OS update is running")
+        msg.setWindowTitle("OS Update")
+        msg.setDetailedText("Just close the window\
+            if the progress bar reaches 100 %, #IOTAstrong")
+        show = msg.exec_()  # this will show our messagebox
 
 
     def packages_update(self):
@@ -837,9 +838,7 @@ class Window1(QMainWindow):
                 pre_cmd = f"echo {password} | sudo -S "
 
         # os.system('sudo service hornet start ')
-        cmd = pre_cmd+"cd /var/lib/ && sudo rm -r /var/lib/raspihive && \
-                sudo git clone https://github.com/Raspihive/raspihive.git \
-                /var/lib/raspihive"
+        cmd = pre_cmd+"apt update"
         # cmd = pre_cmd + "echo Worked"
         # print("cmd:", cmd)
         p=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell = True)
@@ -847,10 +846,10 @@ class Window1(QMainWindow):
             #print ("Looping")
             line = p.stdout.readline()
             if not line:
-                QMessageBox.about(self,  "Raspihive Update", "Raspihive successfully updated")
                 break
             print (line.strip())
             sys.stdout.flush()
+        QMessageBox.about(self, "Raspihive Update", "Raspihive successfully updated")
       
 
     def hornet_update(self):
