@@ -260,12 +260,6 @@ class Window1(QMainWindow):
 	# -----------------
 ####################### Start pages ##############
 
-    def getPassword(self):
-        text, okPressed = QInputDialog.getText(self, "Root Password","Your system password:", QLineEdit.Password, "")
-        if okPressed and text != '':
-            return text
-        return None
-
 #Update menu tab
     def ui1(self):
         main = QWidget()
@@ -766,28 +760,23 @@ class Window1(QMainWindow):
 
 ##############################################################################
 #Start Functions
+
+    def getPassword(self):
+        text, okPressed = QInputDialog.getText(self, "Root Password","Your system password:", QLineEdit.Password, "")
+        if okPressed and text != '':
+            return text
+        return None
+
     def system_update(self):
-        """
-        if os.geteuid() != 0:
-            print("System-Update - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
-        """
+        print("geteuid:", os.geteuid())
         pre_cmd = ""
         if os.geteuid() != 0:
-            print("Raspihive-Update - You need to have root privileges")
+            print("System-Update - You need to have root privileges")
             # Ask Password.
             password = self.getPassword()
             if password is None:
                 msg = QMessageBox()
-                msg.setStyleSheet("background-color: #2B3440 ; color: \
-                rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
                 msg.setIcon(QMessageBox.Information)
                 msg.setWindowTitle("Raspberry Pi Authentication")
                 msg.setText("You need to have root privileges")
@@ -796,11 +785,6 @@ class Window1(QMainWindow):
                 return
             else:
                 pre_cmd = f"echo {password} | sudo -S "
-
-        # os.system('sudo service hornet start ')
-        cmd = pre_cmd+"apt update"
-        # cmd = pre_cmd + "echo Worked"
-        # print("cmd:", cmd)
 
         # Ask Password.
         app = Window_os_update()
@@ -815,33 +799,40 @@ class Window1(QMainWindow):
             if the progress bar reaches 100 %, #IOTAstrong")
         show = msg.exec_()  # this will show our messagebox
 
-
     def packages_update(self):
+        print("geteuid:", os.geteuid())
+        pre_cmd = ""
         if os.geteuid() != 0:
             print("Packages-Update - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
+            # Ask Password.
+            password = self.getPassword()
+            if password is None:
+                msg = QMessageBox()
+                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+                msg.setIcon(QMessageBox.Information)
+                msg.setWindowTitle("Raspberry Pi Authentication")
+                msg.setText("You need to have root privileges")
+                #msg.setInformativeText("informative text, ya!")
+                x = msg.exec_()  # this will show our messagebox
+                return
+            else:
+                pre_cmd = f"echo {password} | sudo -S "
 
-        if os.geteuid()==0:
-            app = Window_packages()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Packages Update")
-            msg.setInformativeText("Packages update is running")
-            msg.setWindowTitle("Packages Update")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
+        # Ask Password.
+        app = Window_packages()
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #2B3440 ; color: \
+        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Packages Update")
+        msg.setInformativeText("Packages update is running")
+        msg.setWindowTitle("Packages Update")
+        msg.setDetailedText("Just close the window\
+            if the progress bar reaches 100 %, #IOTAstrong")
+        show = msg.exec_()  # this will show our messagebox
 
     def raspihive_update(self):
+        print("geteuid:", os.geteuid())
         pre_cmd = ""
         if os.geteuid() != 0:
             print("Raspihive-Update - You need to have root privileges")
@@ -859,121 +850,146 @@ class Window1(QMainWindow):
             else:
                 pre_cmd = f"echo {password} | sudo -S "
 
-        # os.system('sudo service hornet start ')
-        cmd = pre_cmd+"apt update"
-        # cmd = pre_cmd + "echo Worked"
-        # print("cmd:", cmd)
-        p=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell = True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-        QMessageBox.about(self, "Raspihive Update", "Raspihive successfully updated")
-      
+        # Ask Password.
+        app = Window_raspihive_update()
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #2B3440 ; color: \
+        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Raspihive Update")
+        msg.setInformativeText("Raspihive update is running")
+        msg.setWindowTitle("Raspihive Update")
+        msg.setDetailedText("Just close the window\
+            if the progress bar reaches 100 %, #IOTAstrong")
+        show = msg.exec_()  # this will show our messagebox
 
     def hornet_update(self):
+        print("geteuid:", os.geteuid())
+        pre_cmd = ""
         if os.geteuid() != 0:
-            print("Update-Hornet - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
+            print("Hornet-Update - You need to have root privileges")
+            # Ask Password.
+            password = self.getPassword()
+            if password is None:
+                msg = QMessageBox()
+                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+                msg.setIcon(QMessageBox.Information)
+                msg.setWindowTitle("Raspberry Pi Authentication")
+                msg.setText("You need to have root privileges")
+                #msg.setInformativeText("informative text, ya!")
+                x = msg.exec_()  # this will show our messagebox
+                return
+            else:
+                pre_cmd = f"echo {password} | sudo -S "
 
-        if os.geteuid()==0:
-            app = Window_hornet_update()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Hornet Update")
-            msg.setInformativeText("Hornet update is running")
-            msg.setWindowTitle("Hornet Update")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
-
+        # Ask Password.
+        app = Window_hornet_update()
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #2B3440 ; color: \
+        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Hornet Update")
+        msg.setInformativeText("Hornet update is running")
+        msg.setWindowTitle("Hornet Update")
+        msg.setDetailedText("Just close the window\
+            if the progress bar reaches 100 %, #IOTAstrong")
+        show = msg.exec_()  # this will show our messagebox
 
     def hornet_install(self):
+        print("geteuid:", os.geteuid())
+        pre_cmd = ""
         if os.geteuid() != 0:
             print("Install-Hornet - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
+            # Ask Password.
+            password = self.getPassword()
+            if password is None:
+                msg = QMessageBox()
+                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+                msg.setIcon(QMessageBox.Information)
+                msg.setWindowTitle("Raspberry Pi Authentication")
+                msg.setText("You need to have root privileges")
+                #msg.setInformativeText("informative text, ya!")
+                x = msg.exec_()  # this will show our messagebox
+                return
+            else:
+                pre_cmd = f"echo {password} | sudo -S "
 
-        if os.geteuid()==0:
-            #os.system('sudo service hornet start ')
-            app = Window_hornet_install()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Hornet installer")
-            msg.setInformativeText("Hornet installation is running")
-            msg.setWindowTitle("Hornet install")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
-
+        # Ask Password.
+        app = Window_hornet_install()
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #2B3440 ; color: \
+        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Install Hornet")
+        msg.setInformativeText("Installation of Hornet is running")
+        msg.setWindowTitle("Install Hornet")
+        msg.setDetailedText("Just close the window\
+            if the progress bar reaches 100 %, #IOTAstrong")
+        show = msg.exec_()  # this will show our messagebox
 
     def hornet_uninstall(self):
+        print("geteuid:", os.geteuid())
+        pre_cmd = ""
         if os.geteuid() != 0:
-            print("Hornet Uninstall - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
+            print("Uninstall-Hornet - You need to have root privileges")
+            # Ask Password.
+            password = self.getPassword()
+            if password is None:
+                msg = QMessageBox()
+                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+                msg.setIcon(QMessageBox.Information)
+                msg.setWindowTitle("Raspberry Pi Authentication")
+                msg.setText("You need to have root privileges")
+                #msg.setInformativeText("informative text, ya!")
+                x = msg.exec_()  # this will show our messagebox
+                return
+            else:
+                pre_cmd = f"echo {password} | sudo -S "
 
-        if os.geteuid()==0:
-            app = Window_hornet_uninstall()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Hornet uninstall")
-            msg.setInformativeText("Hornet uninstall is running")
-            msg.setWindowTitle("Hornet uninstall")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
-
+        # Ask Password.
+        app = Window_hornet_uninstall()
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #2B3440 ; color: \
+        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Uninstall Hornet")
+        msg.setInformativeText("Uninstallation of Hornet is running")
+        msg.setWindowTitle("Uninstall Hornet")
+        msg.setDetailedText("Just close the window\
+            if the progress bar reaches 100 %, #IOTAstrong")
+        show = msg.exec_()  # this will show our messagebox
 
     def install_nginx_certbot(self):
+        print("geteuid:", os.geteuid())
+        pre_cmd = ""
         if os.geteuid() != 0:
             print("Install Nginx + Certbot - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
+            # Ask Password.
+            password = self.getPassword()
+            if password is None:
+                msg = QMessageBox()
+                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+                msg.setIcon(QMessageBox.Information)
+                msg.setWindowTitle("Raspberry Pi Authentication")
+                msg.setText("You need to have root privileges")
+                #msg.setInformativeText("informative text, ya!")
+                x = msg.exec_()  # this will show our messagebox
+                return
+            else:
+                pre_cmd = f"echo {password} | sudo -S "
 
-        if os.geteuid()==0:
-            app = Window_nginx_certbot_install()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Nginx + Certbot installer")
-            msg.setInformativeText("Nginx + Certbot installation is running")
-            msg.setWindowTitle("Nginx + Certbot installer")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
-
+        # Ask Password.
+        app = Window_nginx_certbot_install()
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #2B3440 ; color: \
+        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Install Nginx + Certbot")
+        msg.setInformativeText("Install Nginx + Certbot is running")
+        msg.setWindowTitle("Install Nginx + Certbot")
+        msg.setDetailedText("Just close the window\
+            if the progress bar reaches 100 %, #IOTAstrong")
+        show = msg.exec_()  # this will show our messagebox
 
     def certbot(self):
         os.system("lxterminal") #just opens the terminal
@@ -993,30 +1009,36 @@ class Window1(QMainWindow):
         #QMessageBox.about(self, "Certbot", "Certbot")
 
     def uninstall_nginx_certbot(self):
+        print("geteuid:", os.geteuid())
+        pre_cmd = ""
         if os.geteuid() != 0:
             print("Uninstall Nginx + Certbot - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
+            # Ask Password.
+            password = self.getPassword()
+            if password is None:
+                msg = QMessageBox()
+                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+                msg.setIcon(QMessageBox.Information)
+                msg.setWindowTitle("Raspberry Pi Authentication")
+                msg.setText("You need to have root privileges")
+                #msg.setInformativeText("informative text, ya!")
+                x = msg.exec_()  # this will show our messagebox
+                return
+            else:
+                pre_cmd = f"echo {password} | sudo -S "
 
-        if os.geteuid()==0:
-            app = Window_nginx_certbot_uninstall()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Nginx + Certbot uninstall")
-            msg.setInformativeText("Nginx + Certbot \
-            uninstall is running...")
-            msg.setWindowTitle("Nginx + Certbot uninstall")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
-
+        # Ask Password.
+        app = Window_nginx_certbot_install()
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #2B3440 ; color: \
+        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Uninstall Nginx + Certbot")
+        msg.setInformativeText("Uninstall Nginx + Certbot is running")
+        msg.setWindowTitle("Uninstall Nginx + Certbot")
+        msg.setDetailedText("Just close the window\
+            if the progress bar reaches 100 %, #IOTAstrong")
+        show = msg.exec_()  # this will show our messagebox
 
     def start_hornet(self):
         if os.geteuid() != 0:
