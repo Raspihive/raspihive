@@ -837,9 +837,7 @@ class Window1(QMainWindow):
                 pre_cmd = f"echo {password} | sudo -S "
 
         # os.system('sudo service hornet start ')
-        cmd = pre_cmd+"cd /var/lib/ && sudo rm -r /var/lib/raspihive && \
-                sudo git clone https://github.com/Raspihive/raspihive.git \
-                /var/lib/raspihive"
+        cmd = pre_cmd+"apt update"
         # cmd = pre_cmd + "echo Worked"
         # print("cmd:", cmd)
         p=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell = True)
@@ -847,10 +845,11 @@ class Window1(QMainWindow):
             #print ("Looping")
             line = p.stdout.readline()
             if not line:
+                QMessageBox.about(self,  "Raspihive Update", "Raspihive successfully updated")
                 break
             print (line.strip())
             sys.stdout.flush()
-            QMessageBox.about(self,  "Raspihive Update", "Raspihive successfully updated")
+      
 
     def hornet_update(self):
         if os.geteuid() != 0:
