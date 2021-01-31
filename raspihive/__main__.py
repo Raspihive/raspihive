@@ -260,6 +260,12 @@ class Window1(QMainWindow):
 	# -----------------
 ####################### Start pages ##############
 
+    def getPassword(self):
+        text, okPressed = QInputDialog.getText(self, "Root Password","Your system password:", QLineEdit.Password, "")
+        if okPressed and text != '':
+            return text
+        return None
+
 #Update menu tab
     def ui1(self):
         main = QWidget()
@@ -773,6 +779,29 @@ class Window1(QMainWindow):
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
         """
+        pre_cmd = ""
+        if os.geteuid() != 0:
+            print("Raspihive-Update - You need to have root privileges")
+            # Ask Password.
+            password = self.getPassword()
+            if password is None:
+                msg = QMessageBox()
+                msg.setStyleSheet("background-color: #2B3440 ; color: \
+                rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+                msg.setIcon(QMessageBox.Information)
+                msg.setWindowTitle("Raspberry Pi Authentication")
+                msg.setText("You need to have root privileges")
+                #msg.setInformativeText("informative text, ya!")
+                x = msg.exec_()  # this will show our messagebox
+                return
+            else:
+                pre_cmd = f"echo {password} | sudo -S "
+
+        # os.system('sudo service hornet start ')
+        cmd = pre_cmd+"apt update"
+        # cmd = pre_cmd + "echo Worked"
+        # print("cmd:", cmd)
+
         # Ask Password.
         app = Window_os_update()
         msg = QMessageBox()
@@ -812,14 +841,7 @@ class Window1(QMainWindow):
                 if the progress bar reaches 100 %, #IOTAstrong")
             show = msg.exec_()  # this will show our messagebox
 
-    def getPassword(self):
-        text, okPressed = QInputDialog.getText(self, "Root Password","Your system password:", QLineEdit.Password, "")
-        if okPressed and text != '':
-            return text
-        return None
-
     def raspihive_update(self):
-        print("geteuid:", os.geteuid())
         pre_cmd = ""
         if os.geteuid() != 0:
             print("Raspihive-Update - You need to have root privileges")
