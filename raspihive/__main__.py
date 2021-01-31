@@ -480,7 +480,6 @@ class Window1(QMainWindow):
         #Setting background color or transparency
         button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-
         #add action
         button.clicked.connect(self.packages_update)
         #End button 2
@@ -642,7 +641,6 @@ class Window1(QMainWindow):
         #Setting background color or transparency
         button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-
         #add action
         button.clicked.connect(self.hornet_uninstall)
         #End button 2
@@ -726,7 +724,6 @@ class Window1(QMainWindow):
         #Setting background color or transparency
         button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
-
         #add action
         button.clicked.connect(self.hornet_uninstall)
         #End button 2
@@ -793,13 +790,11 @@ class Window1(QMainWindow):
         if os.geteuid() != 0:
             print("Packages-Update - You need to have root privileges")
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
             msg.setIcon(QMessageBox.Information)
             msg.setWindowTitle("Raspberry Pi Authentication")
             msg.setText("You need to have root privileges")
-            App = QApplication(sys.argv)
-            window = Window()
-            sys.exit(App.exec())
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
 
@@ -965,7 +960,6 @@ class Window1(QMainWindow):
         #Open LX Terminal (Raspberry Pi OS)
         cmd = "lxterminal "
         subprocess.check_output(cmd, shell=True)
-
         #Open Gnome-Terminal (Ubuntu)
         cmd = "gnome-terminal "
         subprocess.check_output(cmd, shell=True)
