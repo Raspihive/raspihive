@@ -51,7 +51,7 @@ class Window1(QMainWindow):
         #End of set window position and size
 
         #icon in the taskbar
-        self.label = QLabel('Image loading demo')
+        self.label = QLabel('Raspihive')
 
         self.vertical_layout = QVBoxLayout()
         self.vertical_layout.addWidget(self.label)
@@ -1158,8 +1158,9 @@ class Window1(QMainWindow):
         msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
         msg.setIcon(QMessageBox.Information)
         msg.setWindowTitle("About")
-        msg.setText("The Plug and Play solution for a Raspberry Pi \
-            IOTA Fullnode! Raspihive: Version 1.0")
+        msg.setText("The Plug and Play solution for a Raspberry Pi\n\
+IOTA Fullnode!\n\n\
+Raspihive: Version 2.0\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo ")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
@@ -1168,10 +1169,10 @@ class Window1(QMainWindow):
         msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
         msg.setIcon(QMessageBox.Information)
         msg.setWindowTitle("Preparations")
-        msg.setText("The following ports are important for a flawless node \
-        operation. Allow basic ports in your router settings: \n \n 14626 UDP \
-        - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP \
-        - for Certbot \n \n 443 TCP for Certbot")
+        msg.setText("The following ports are important for a flawless node\
+operation. Allow the following basic ports in your router settings: \n \n 14626 UDP\
+- Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP\
+- for Certbot \n \n 443 TCP for Certbot")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
@@ -1180,8 +1181,9 @@ class Window1(QMainWindow):
         msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
         msg.setIcon(QMessageBox.Information)
         msg.setWindowTitle("Report")
-        msg.setText("If you found a bug or experience any issues, please write \
-        as at: www.raspihive.org Thanks for your feedback!")
+        msg.setText("If you found a bug or experience any issues, please write us \
+as at: www.raspihive.org or get directly in touch by sending \
+a e-mail to: piota@mail.de \nThanks for your feedback!")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
