@@ -1208,7 +1208,7 @@ class hornet_status_win(Qt.QMainWindow):
 
         #Test
         # For hornet node status
-        Outputfileobject=os.popen("sudo service hornet status")     #sudo service hornet status
+        Outputfileobject=os.popen("service hornet status")     #sudo service hornet status
         Output=Outputfileobject.read()
         Outputfileobject.close()
 
@@ -1264,7 +1264,7 @@ class hornet_log_win(Qt.QMainWindow):
         self.setWindowTitle('Hornet-Logs')
 
         # For hornet node logs
-        Outputfileobject=os.popen("sudo journalctl -u hornet -n 50")
+        Outputfileobject=os.popen("journalctl -u hornet -n 50")
         Output=Outputfileobject.read()
         Outputfileobject.close()
 
