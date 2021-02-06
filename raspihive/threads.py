@@ -60,9 +60,8 @@ class MyThread_raspihive_update(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        p=subprocess.Popen(os_parse("cd /var/lib/ && sudo rm -r raspihive && \
-            sudo git clone https://github.com/Raspihive/raspihive.git \
-            /var/lib/raspihive"), \
+        p=subprocess.Popen(os_parse("sudo rm -r raspihive && \
+            sudo git clone https://github.com/Raspihive/raspihive.git"), \
                         stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
