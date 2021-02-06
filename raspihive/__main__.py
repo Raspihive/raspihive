@@ -3,7 +3,7 @@
 
 ###############################################################################
 # libraries
-import sys, time, os
+import sys, time, os, requests
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -11,9 +11,9 @@ from PyQt5.QtWidgets import (
     QProgressBar,
     QPushButton,
     QAction,
-    qApp,
+    qApp
 )
-from PyQt5 import QtGui, QtWidgets, Qt, QtGui
+from PyQt5 import QtGui, QtWidgets, Qt, QtCore
 from subprocess import Popen
 from PyQt5.QtWidgets import (
     QMainWindow,
@@ -27,7 +27,7 @@ from PyQt5.QtWidgets import (
     QLabel
 )
 
-from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtGui import QIcon, QFont, QImage
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
@@ -36,7 +36,6 @@ from .helpers import os_parse
 ###########################################################################
 #Global variables
 ICON_IMAGE_URL = "https://raw.githubusercontent.com/Raspihive/raspihiveWebsite/master/public/favicon.ico"
-
 #####################################Start of Window frames################
 class Window1(QMainWindow):
     def __init__(self):
@@ -68,6 +67,49 @@ class Window1(QMainWindow):
         icon = QIcon(pixmap)
         self.setWindowIcon(icon)
     #End of icon in the taskbar
+    
+        #Start Toolbar
+        #Toolbar Icon 1
+        Act = QAction(QIcon('toolbar_raspihive_icons/raspihive_icon1.jpg'),\
+            'Raspihive', self)
+        #Act.setShortcut('Ctrl+Q')
+        Act.triggered.connect(self.button1) #qApp.quit
+        self.toolbar = self.addToolBar('Raspihive')
+        self.toolbar.addAction(Act)
+        # Set icon size and spacing
+        self.toolbar.setIconSize(QtCore.QSize(32, 32))
+        self.toolbar.setStyleSheet("background-color: #2B3440; QToolButton{padding-left: 5px; padding-right: 5px; }");
+        #End Toolbar Icon 1
+
+
+        #Toolbar Icon 2
+        Act = QAction(QIcon('toolbar_raspihive_icons/close_icon2.png'), 'Close Raspihive', self)
+        Act.setShortcut('Ctrl+Q')
+        Act.triggered.connect(qApp.quit) #qApp.quit
+        self.toolbar = self.addToolBar('Exit')
+        self.toolbar.addAction(Act)
+        # Set icon size and spacing
+        self.toolbar.setIconSize(QtCore.QSize(32, 32))
+        self.toolbar.setStyleSheet("background-color: #2B3440; QToolButton{padding-left: 5px; padding-right: 5px; }");
+        #End Toolbar Icon 2
+
+
+        """
+        #Toolbar Icon 3
+        Act = QAction(QIcon('toolbar_raspihive_icons/raspihive_icon1.png'), 'Close Raspihive', self)
+        Act.setShortcut('Ctrl+Q')
+        Act.triggered.connect(qApp.quit) #qApp.quit
+        self.toolbar = self.addToolBar('Exit')
+        self.toolbar.addAction(Act)
+        # Set icon size and spacing
+        self.toolbar.setIconSize(QtCore.QSize(32, 32))
+        self.toolbar.setStyleSheet("QToolButton{padding-left: 5px; padding-right: 5px; }");
+        #End Toolbar Icon 
+        """
+
+        #self.setGeometry(500, 500, 500, 500)
+        self.setWindowTitle('Raspihive')
+        #End Toolbar
 
         """ for further tests
         # set the size of window
@@ -162,8 +204,14 @@ class Window1(QMainWindow):
         left_layout.addWidget(self.btn_6) #(Help)
         left_layout.addWidget(self.btn_7) #(Quit)
 
+
+        #Add Status Bar
+        self.statusBar().showMessage('Raspihive Version 2.0')
+        #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
+        #End of status bar
+
         left_layout.addStretch(5)
-        left_layout.setSpacing(25)
+        left_layout.setSpacing(30)
         left_widget = QWidget()
         left_widget.setLayout(left_layout)
 
@@ -186,41 +234,6 @@ class Window1(QMainWindow):
         self.setWindowOpacity(0.9875)
         #Background color Sidebar, Toolbar, widget windows
         self.setStyleSheet('background-color: #2B3440; color: white;')
-
-        #Start Toolbar
-
-        #Toolbar Icon 1
-        Act = QAction(QIcon('/var/lib/raspihive/toolbar_raspihive_icons/raspihive.jpg'),\
-            'Raspihive', self)
-        #Act.setShortcut('Ctrl+Q')
-        Act.triggered.connect(self.button1) #qApp.quit
-        self.toolbar = self.addToolBar('Raspihive')
-        self.toolbar.addAction(Act)
-        #End Toolbar Icon 1
-
-        #Toolbar Icon 2
-        Act = QAction(QIcon('https://raw.githubusercontent.com/Raspihive/raspihive/\
-            main/assets/Logo/TheHive.png'), 'Close Raspihive', self)
-        Act.setShortcut('Ctrl+Q')
-        Act.triggered.connect(qApp.quit) #qApp.quit
-        self.toolbar = self.addToolBar('Exit')
-        self.toolbar.addAction(Act)
-        #End Toolbar Icon 2
-
-        """
-        #Toolbar Icon 3
-        Act = QAction(QIcon('/home/paul/Bilder/exit24.png'), 'Close Raspihive', self)
-        Act.setShortcut('Ctrl+Q')
-        Act.triggered.connect(qApp.quit) #qApp.quit
-        self.toolbar = self.addToolBar('Exit')
-        self.toolbar.addAction(Act)
-        #End Toolbar Icon 3
-        """
-
-        #self.setGeometry(500, 500, 500, 500)
-        self.setWindowTitle('Raspihive')
-
-        #End Toolbar
 
         main_layout = QHBoxLayout()
         main_layout.addWidget(left_widget)
@@ -670,7 +683,7 @@ class Window1(QMainWindow):
     def ui6(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
-        main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394
+        main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394 background-image: url(assets/Logo/TheHive.png
         #Background Image + button image
 
 
