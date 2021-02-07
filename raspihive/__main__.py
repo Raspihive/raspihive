@@ -294,18 +294,6 @@ class Window1(QMainWindow):
         button.clicked.connect(self.system_update)
         #End button 1
 
-        #Start button 1
-        button = QPushButton('Update OS', main)
-        #Hover text
-        button.setToolTip('Update operating system')
-        #button.move(10,50)
-        # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50)
-        #button regular state
-        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
-        #add action to the button
-        button.clicked.connect(self.system_update)
-        #End button 1
 
         #Start button 2
         button = QPushButton('Update packages', main)
@@ -773,7 +761,6 @@ class Window1(QMainWindow):
 
 ##############################################################################
 #Start Functions
-
     def getPassword(self):
         text, okPressed = QInputDialog.getText(self, "Root Password","Your system password:", QLineEdit.Password, "")
         if okPressed and text != '':
