@@ -15,7 +15,7 @@ class MyThread_os_update(QThread):
                     stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 2
+            cnt += 1
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -42,7 +42,7 @@ class MyThread_packages(QThread):
                         stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 2
+            cnt += 1
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -65,7 +65,7 @@ class MyThread_raspihive_update(QThread):
                         stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 2
+            cnt += 1
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -88,7 +88,7 @@ class MyThread_hornet_update(QThread):
                 sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 2
+            cnt += 1
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -121,7 +121,7 @@ class MyThread_hornet_install(QThread):
             && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 2
+            cnt += 1
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -145,7 +145,7 @@ class MyThread_hornet_uninstall(QThread):
             stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 2
+            cnt += 1
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -187,7 +187,7 @@ class MyThread_nginx_certbot_install(QThread):
         os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
         cnt = 0
         while cnt <= 100:
-            cnt += 2
+            cnt += 1
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
@@ -212,7 +212,7 @@ class MyThread_nginx_certbot_uninstall(QThread):
         && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
         cnt = 0
         while cnt <= 100:
-            cnt += 2
+            cnt += 1
             time.sleep(0.1)
             line = p.stdout.readline()
             self.change_value.emit(cnt)
