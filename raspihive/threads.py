@@ -9,7 +9,7 @@ class MyThread_os_update(QThread):
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
-        p=subprocess.Popen(os_parse("sudo apt update -y && \
+        p=subprocess.Popen(os_parse("pkexec apt update -y && \
             sudo apt full-upgrade -y && sudo apt autoremove -y \
                 && sudo apt clean -y && sudo apt autoclean -y"), \
                     stdout=subprocess.PIPE, shell = True)
