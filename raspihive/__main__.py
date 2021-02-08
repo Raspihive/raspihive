@@ -768,25 +768,6 @@ class Window1(QMainWindow):
         return None
 
     def system_update(self):
-        print("geteuid:", os.geteuid())
-        pre_cmd = ""
-        if os.geteuid() != 0:
-            print("System-Update - You need to have root privileges")
-            # Ask Password.
-            password = self.getPassword()
-            if password is None:
-                msg = QMessageBox()
-                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-                msg.setIcon(QMessageBox.Information)
-                msg.setWindowTitle("Raspberry Pi Authentication")
-                msg.setText("You need to have root privileges")
-                #msg.setInformativeText("informative text, ya!")
-                x = msg.exec_()  # this will show our messagebox
-                return
-            else:
-                pre_cmd = f"echo {password} | sudo -S "
-
-        # Ask Password.
         app = Window_os_update()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
@@ -798,6 +779,7 @@ class Window1(QMainWindow):
         msg.setDetailedText("Just close the window\
             if the progress bar reaches 100 %, #IOTAstrong")
         show = msg.exec_()  # this will show our messagebox
+
 
     def packages_update(self):
         print("geteuid:", os.geteuid())
