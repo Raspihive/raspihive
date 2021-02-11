@@ -6,7 +6,6 @@ from .helpers import os_parse
 ##############################################################################
 #Thread for OS Update
 class MyThread_os_update(QThread):
-    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
@@ -38,12 +37,11 @@ class MyThread_os_update(QThread):
 ##############################################################################
 #Thread for packages update
 class MyThread_packages(QThread):
-    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("sudo apt update -y && \
+        process = subprocess.Popen(os_parse("pkexec apt update -y && \
             sudo apt install -y build-essential && \
                 sudo apt install -y git && sudo apt install -y snapd \
                     && sudo snap install go --classic"), \
@@ -72,12 +70,11 @@ class MyThread_packages(QThread):
 ##############################################################################
 #Thread for raspihive update
 class MyThread_raspihive_update(QThread):
-    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("sudo rm -r raspihive && \
+        process = subprocess.Popen(os_parse("pkexec rm -r raspihive && \
             sudo git clone https://github.com/Raspihive/raspihive.git"), \
                         stdout=subprocess.PIPE, shell = True)
 
@@ -104,12 +101,11 @@ class MyThread_raspihive_update(QThread):
 ##############################################################################
 #Thread for hornet update
 class MyThread_hornet_update(QThread):
-    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("sudo service hornet stop && \
+        process = subprocess.Popen(os_parse("pkexec service hornet stop && \
             sudo apt update && sudo apt -y upgrade hornet && \
                 sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
 
@@ -136,12 +132,11 @@ class MyThread_hornet_update(QThread):
 ##############################################################################
 #Thread for hornet install
 class MyThread_hornet_install(QThread):
-    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse('sudo apt install -y build-essential \
+        process = subprocess.Popen(os_parse('pkexec apt install -y build-essential \
             && sudo apt install -y git && sudo apt install -y snapd \
             && sudo snap install go --classic && sudo apt update \
             && sudo apt -y upgrade && \
@@ -178,12 +173,11 @@ class MyThread_hornet_install(QThread):
 ##############################################################################
 #Thread for hornet uninstall
 class MyThread_hornet_uninstall(QThread):
-    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("sudo systemctl stop hornet \
+        process = subprocess.Popen(os_parse("pkexec systemctl stop hornet \
         && sudo apt -qq purge hornet -y && \
         sudo rm -rf /etc/apt/sources.list.d/hornet.list"), \
             stdout=subprocess.PIPE, shell = True)
@@ -211,12 +205,11 @@ class MyThread_hornet_uninstall(QThread):
 ##############################################################################
 #Thread for nginx+certbot install
 class MyThread_nginx_certbot_install(QThread):
-    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("sudo apt update \
+        process = subprocess.Popen(os_parse("pkexec apt update \
         && sudo apt -y upgrade && sudo apt install -y nginx \
         && sudo ufw allow 'Nginx Full' && sudo apt install -y apache2-utils \
         && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive && \
@@ -261,12 +254,11 @@ class MyThread_nginx_certbot_install(QThread):
 ##############################################################################
 #Thread for nginx+certbot uninstall
 class MyThread_nginx_certbot_uninstall(QThread):
-    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("sudo systemctl stop nginx && \
+        process = subprocess.Popen(os_parse("pkexec systemctl stop nginx && \
         sudo systemctl disable nginx && \
         sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y \
         && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
