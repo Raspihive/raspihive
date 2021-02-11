@@ -10,7 +10,7 @@ class MyThread_os_update(QThread):
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
-        process=subprocess.Popen(os_parse("pkexec apt update -y && \
+        process = subprocess.Popen(os_parse("pkexec apt update -y && \
             sudo apt full-upgrade -y && sudo apt autoremove -y \
                 && sudo apt clean -y && sudo apt autoclean -y"), \
                     stdout=subprocess.PIPE, shell = True)
@@ -43,7 +43,7 @@ class MyThread_packages(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        p=subprocess.Popen(os_parse("sudo apt update -y && \
+        process = subprocess.Popen(os_parse("sudo apt update -y && \
             sudo apt install -y build-essential && \
                 sudo apt install -y git && sudo apt install -y snapd \
                     && sudo snap install go --classic"), \
@@ -77,7 +77,7 @@ class MyThread_raspihive_update(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        p=subprocess.Popen(os_parse("sudo rm -r raspihive && \
+        process = subprocess.Popen(os_parse("sudo rm -r raspihive && \
             sudo git clone https://github.com/Raspihive/raspihive.git"), \
                         stdout=subprocess.PIPE, shell = True)
 
@@ -109,7 +109,7 @@ class MyThread_hornet_update(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        p=subprocess.Popen(os_parse("sudo service hornet stop && \
+        process = subprocess.Popen(os_parse("sudo service hornet stop && \
             sudo apt update && sudo apt -y upgrade hornet && \
                 sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
 
@@ -141,7 +141,7 @@ class MyThread_hornet_install(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        p=subprocess.Popen(os_parse('sudo apt install -y build-essential \
+        process = subprocess.Popen(os_parse('sudo apt install -y build-essential \
             && sudo apt install -y git && sudo apt install -y snapd \
             && sudo snap install go --classic && sudo apt update \
             && sudo apt -y upgrade && \
@@ -183,7 +183,7 @@ class MyThread_hornet_uninstall(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        p=subprocess.Popen(os_parse("sudo systemctl stop hornet \
+        process = subprocess.Popen(os_parse("sudo systemctl stop hornet \
         && sudo apt -qq purge hornet -y && \
         sudo rm -rf /etc/apt/sources.list.d/hornet.list"), \
             stdout=subprocess.PIPE, shell = True)
@@ -216,7 +216,7 @@ class MyThread_nginx_certbot_install(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        p=subprocess.Popen(os_parse("sudo apt update \
+        process = subprocess.Popen(os_parse("sudo apt update \
         && sudo apt -y upgrade && sudo apt install -y nginx \
         && sudo ufw allow 'Nginx Full' && sudo apt install -y apache2-utils \
         && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive && \
@@ -266,7 +266,7 @@ class MyThread_nginx_certbot_uninstall(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        p=subprocess.Popen(os_parse("sudo systemctl stop nginx && \
+        process = subprocess.Popen(os_parse("sudo systemctl stop nginx && \
         sudo systemctl disable nginx && \
         sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y \
         && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
