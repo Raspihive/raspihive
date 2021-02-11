@@ -761,12 +761,6 @@ class Window1(QMainWindow):
 
 ##############################################################################
 #Start Functions
-    def getPassword(self):
-        text, okPressed = QInputDialog.getText(self, "Root Password","Your system password:", QLineEdit.Password, "")
-        if okPressed and text != '':
-            return text
-        return None
-
     def system_update(self):
         app = Window_os_update()
         msg = QMessageBox()
@@ -780,27 +774,7 @@ class Window1(QMainWindow):
             if the progress bar reaches 100 %, #IOTAstrong")
         show = msg.exec_()  # this will show our messagebox
 
-
     def packages_update(self):
-        print("geteuid:", os.geteuid())
-        pre_cmd = ""
-        if os.geteuid() != 0:
-            print("Packages-Update - You need to have root privileges")
-            # Ask Password.
-            password = self.getPassword()
-            if password is None:
-                msg = QMessageBox()
-                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-                msg.setIcon(QMessageBox.Information)
-                msg.setWindowTitle("Raspberry Pi Authentication")
-                msg.setText("You need to have root privileges")
-                #msg.setInformativeText("informative text, ya!")
-                x = msg.exec_()  # this will show our messagebox
-                return
-            else:
-                pre_cmd = f"echo {password} | sudo -S "
-
-        # Ask Password.
         app = Window_packages()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
@@ -814,25 +788,6 @@ class Window1(QMainWindow):
         show = msg.exec_()  # this will show our messagebox
 
     def raspihive_update(self):
-        print("geteuid:", os.geteuid())
-        pre_cmd = ""
-        if os.geteuid() != 0:
-            print("Raspihive-Update - You need to have root privileges")
-            # Ask Password.
-            password = self.getPassword()
-            if password is None:
-                msg = QMessageBox()
-                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-                msg.setIcon(QMessageBox.Information)
-                msg.setWindowTitle("Raspberry Pi Authentication")
-                msg.setText("You need to have root privileges")
-                #msg.setInformativeText("informative text, ya!")
-                x = msg.exec_()  # this will show our messagebox
-                return
-            else:
-                pre_cmd = f"echo {password} | sudo -S "
-
-        # Ask Password.
         app = Window_raspihive_update()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
@@ -846,25 +801,6 @@ class Window1(QMainWindow):
         show = msg.exec_()  # this will show our messagebox
 
     def hornet_update(self):
-        print("geteuid:", os.geteuid())
-        pre_cmd = ""
-        if os.geteuid() != 0:
-            print("Hornet-Update - You need to have root privileges")
-            # Ask Password.
-            password = self.getPassword()
-            if password is None:
-                msg = QMessageBox()
-                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-                msg.setIcon(QMessageBox.Information)
-                msg.setWindowTitle("Raspberry Pi Authentication")
-                msg.setText("You need to have root privileges")
-                #msg.setInformativeText("informative text, ya!")
-                x = msg.exec_()  # this will show our messagebox
-                return
-            else:
-                pre_cmd = f"echo {password} | sudo -S "
-
-        # Ask Password.
         app = Window_hornet_update()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
@@ -878,25 +814,6 @@ class Window1(QMainWindow):
         show = msg.exec_()  # this will show our messagebox
 
     def hornet_install(self):
-        print("geteuid:", os.geteuid())
-        pre_cmd = ""
-        if os.geteuid() != 0:
-            print("Install-Hornet - You need to have root privileges")
-            # Ask Password.
-            password = self.getPassword()
-            if password is None:
-                msg = QMessageBox()
-                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-                msg.setIcon(QMessageBox.Information)
-                msg.setWindowTitle("Raspberry Pi Authentication")
-                msg.setText("You need to have root privileges")
-                #msg.setInformativeText("informative text, ya!")
-                x = msg.exec_()  # this will show our messagebox
-                return
-            else:
-                pre_cmd = f"echo {password} | sudo -S "
-
-        # Ask Password.
         app = Window_hornet_install()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
@@ -910,25 +827,6 @@ class Window1(QMainWindow):
         show = msg.exec_()  # this will show our messagebox
 
     def hornet_uninstall(self):
-        print("geteuid:", os.geteuid())
-        pre_cmd = ""
-        if os.geteuid() != 0:
-            print("Uninstall-Hornet - You need to have root privileges")
-            # Ask Password.
-            password = self.getPassword()
-            if password is None:
-                msg = QMessageBox()
-                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-                msg.setIcon(QMessageBox.Information)
-                msg.setWindowTitle("Raspberry Pi Authentication")
-                msg.setText("You need to have root privileges")
-                #msg.setInformativeText("informative text, ya!")
-                x = msg.exec_()  # this will show our messagebox
-                return
-            else:
-                pre_cmd = f"echo {password} | sudo -S "
-
-        # Ask Password.
         app = Window_hornet_uninstall()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
@@ -942,25 +840,6 @@ class Window1(QMainWindow):
         show = msg.exec_()  # this will show our messagebox
 
     def install_nginx_certbot(self):
-        print("geteuid:", os.geteuid())
-        pre_cmd = ""
-        if os.geteuid() != 0:
-            print("Install Nginx + Certbot - You need to have root privileges")
-            # Ask Password.
-            password = self.getPassword()
-            if password is None:
-                msg = QMessageBox()
-                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-                msg.setIcon(QMessageBox.Information)
-                msg.setWindowTitle("Raspberry Pi Authentication")
-                msg.setText("You need to have root privileges")
-                #msg.setInformativeText("informative text, ya!")
-                x = msg.exec_()  # this will show our messagebox
-                return
-            else:
-                pre_cmd = f"echo {password} | sudo -S "
-
-        # Ask Password.
         app = Window_nginx_certbot_install()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
@@ -991,25 +870,6 @@ class Window1(QMainWindow):
         #QMessageBox.about(self, "Certbot", "Certbot")
 
     def uninstall_nginx_certbot(self):
-        print("geteuid:", os.geteuid())
-        pre_cmd = ""
-        if os.geteuid() != 0:
-            print("Uninstall Nginx + Certbot - You need to have root privileges")
-            # Ask Password.
-            password = self.getPassword()
-            if password is None:
-                msg = QMessageBox()
-                msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-                msg.setIcon(QMessageBox.Information)
-                msg.setWindowTitle("Raspberry Pi Authentication")
-                msg.setText("You need to have root privileges")
-                #msg.setInformativeText("informative text, ya!")
-                x = msg.exec_()  # this will show our messagebox
-                return
-            else:
-                pre_cmd = f"echo {password} | sudo -S "
-
-        # Ask Password.
         app = Window_nginx_certbot_install()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
