@@ -6,31 +6,39 @@ from .helpers import os_parse
 ##############################################################################
 #Thread for OS Update
 class MyThread_os_update(QThread):
+    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
-        p=subprocess.Popen(os_parse("pkexec apt update -y && \
+        process=subprocess.Popen(os_parse("pkexec apt update -y && \
             sudo apt full-upgrade -y && sudo apt autoremove -y \
                 && sudo apt clean -y && sudo apt autoclean -y"), \
                     stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt += 1
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            print(line.strip())
-            sys.stdout.flush()
-            if cnt == 100:
-                print ("CNT 100 erreicht")
+
+        p = process.stdout.readline()
+        # Do something else
+        return_code = process.poll()
+        if return_code is not None:
+            print('RETURN CODE', return_code)
+        else:
+            print("STARTING")
+            cnt = 0
+            while cnt <= 100:
+                cnt += 1
+                time.sleep(0.1)
+                line = process.stdout.readline()
+                self.change_value.emit(cnt)
+                print(line.strip())
                 sys.stdout.flush()
-                break
-            sys.stdout.flush()
-
-
+                if cnt == 100:
+                    print ("CNT 100 erreicht")
+                    sys.stdout.flush()
+                    break
+                sys.stdout.flush()
 ##############################################################################
 #Thread for packages update
 class MyThread_packages(QThread):
+    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
@@ -40,22 +48,31 @@ class MyThread_packages(QThread):
                 sudo apt install -y git && sudo apt install -y snapd \
                     && sudo snap install go --classic"), \
                         stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt += 1
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            print(line.strip())
-            sys.stdout.flush()
-            if cnt == 100:
-                print ("CNT 100 erreicht")
+
+        p = process.stdout.readline()
+        # Do something else
+        return_code = process.poll()
+        if return_code is not None:
+            print('RETURN CODE', return_code)
+        else:
+            print("STARTING")
+            cnt = 0
+            while cnt <= 100:
+                cnt += 1
+                time.sleep(0.1)
+                line = process.stdout.readline()
+                self.change_value.emit(cnt)
+                print(line.strip())
                 sys.stdout.flush()
-                break
-            sys.stdout.flush()
+                if cnt == 100:
+                    print ("CNT 100 erreicht")
+                    sys.stdout.flush()
+                    break
+                sys.stdout.flush()
 ##############################################################################
 #Thread for raspihive update
 class MyThread_raspihive_update(QThread):
+    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
@@ -63,22 +80,31 @@ class MyThread_raspihive_update(QThread):
         p=subprocess.Popen(os_parse("sudo rm -r raspihive && \
             sudo git clone https://github.com/Raspihive/raspihive.git"), \
                         stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt += 1
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            print(line.strip())
-            sys.stdout.flush()
-            if cnt == 100:
-                print ("CNT 100 erreicht")
+
+        p = process.stdout.readline()
+        # Do something else
+        return_code = process.poll()
+        if return_code is not None:
+            print('RETURN CODE', return_code)
+        else:
+            print("STARTING")
+            cnt = 0
+            while cnt <= 100:
+                cnt += 1
+                time.sleep(0.1)
+                line = process.stdout.readline()
+                self.change_value.emit(cnt)
+                print(line.strip())
                 sys.stdout.flush()
-                break
-            sys.stdout.flush()
+                if cnt == 100:
+                    print ("CNT 100 erreicht")
+                    sys.stdout.flush()
+                    break
+                sys.stdout.flush()
 ##############################################################################
 #Thread for hornet update
 class MyThread_hornet_update(QThread):
+    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
@@ -86,22 +112,31 @@ class MyThread_hornet_update(QThread):
         p=subprocess.Popen(os_parse("sudo service hornet stop && \
             sudo apt update && sudo apt -y upgrade hornet && \
                 sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt += 1
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            print(line.strip())
-            sys.stdout.flush()
-            if cnt == 100:
-                print ("CNT 100 erreicht")
+
+        p = process.stdout.readline()
+        # Do something else
+        return_code = process.poll()
+        if return_code is not None:
+            print('RETURN CODE', return_code)
+        else:
+            print("STARTING")
+            cnt = 0
+            while cnt <= 100:
+                cnt += 1
+                time.sleep(0.1)
+                line = process.stdout.readline()
+                self.change_value.emit(cnt)
+                print(line.strip())
                 sys.stdout.flush()
-                break
-            sys.stdout.flush()
+                if cnt == 100:
+                    print ("CNT 100 erreicht")
+                    sys.stdout.flush()
+                    break
+                sys.stdout.flush()
 ##############################################################################
 #Thread for hornet install
 class MyThread_hornet_install(QThread):
+    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
@@ -119,22 +154,31 @@ class MyThread_hornet_install(QThread):
             sudo ufw allow 14626/udp && sudo ufw limit openssh && \
             sudo ufw enable && sudo apt install sshguard -y \
             && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt += 1
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            print(line.strip())
-            sys.stdout.flush()
-            if cnt == 100:
-                print ("CNT 100 erreicht")
+
+        p = process.stdout.readline()
+        # Do something else
+        return_code = process.poll()
+        if return_code is not None:
+            print('RETURN CODE', return_code)
+        else:
+            print("STARTING")
+            cnt = 0
+            while cnt <= 100:
+                cnt += 1
+                time.sleep(0.1)
+                line = process.stdout.readline()
+                self.change_value.emit(cnt)
+                print(line.strip())
                 sys.stdout.flush()
-                break
-            sys.stdout.flush()
+                if cnt == 100:
+                    print ("CNT 100 erreicht")
+                    sys.stdout.flush()
+                    break
+                sys.stdout.flush()
 ##############################################################################
 #Thread for hornet uninstall
 class MyThread_hornet_uninstall(QThread):
+    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
@@ -143,23 +187,31 @@ class MyThread_hornet_uninstall(QThread):
         && sudo apt -qq purge hornet -y && \
         sudo rm -rf /etc/apt/sources.list.d/hornet.list"), \
             stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt += 1
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            print(line.strip())
-            sys.stdout.flush()
-            if cnt == 100:
-                print ("CNT 100 erreicht")
-                sys.stdout.flush()
-                break
-            sys.stdout.flush()
 
+        p = process.stdout.readline()
+        # Do something else
+        return_code = process.poll()
+        if return_code is not None:
+            print('RETURN CODE', return_code)
+        else:
+            print("STARTING")
+            cnt = 0
+            while cnt <= 100:
+                cnt += 1
+                time.sleep(0.1)
+                line = process.stdout.readline()
+                self.change_value.emit(cnt)
+                print(line.strip())
+                sys.stdout.flush()
+                if cnt == 100:
+                    print ("CNT 100 erreicht")
+                    sys.stdout.flush()
+                    break
+                sys.stdout.flush()
 ##############################################################################
 #Thread for nginx+certbot install
 class MyThread_nginx_certbot_install(QThread):
+    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
@@ -185,23 +237,31 @@ class MyThread_nginx_certbot_install(QThread):
             \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
         f.close()
         os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-        cnt = 0
-        while cnt <= 100:
-            cnt += 1
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            print(line.strip())
-            sys.stdout.flush()
-            if cnt == 100:
-                print ("CNT 100 erreicht")
-                sys.stdout.flush()
-                break
-            sys.stdout.flush()
 
+        p = process.stdout.readline()
+        # Do something else
+        return_code = process.poll()
+        if return_code is not None:
+            print('RETURN CODE', return_code)
+        else:
+            print("STARTING")
+            cnt = 0
+            while cnt <= 100:
+                cnt += 1
+                time.sleep(0.1)
+                line = process.stdout.readline()
+                self.change_value.emit(cnt)
+                print(line.strip())
+                sys.stdout.flush()
+                if cnt == 100:
+                    print ("CNT 100 erreicht")
+                    sys.stdout.flush()
+                    break
+                sys.stdout.flush()
 ##############################################################################
 #Thread for nginx+certbot uninstall
 class MyThread_nginx_certbot_uninstall(QThread):
+    print("OS - You need to have root privileges")
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
@@ -210,16 +270,24 @@ class MyThread_nginx_certbot_uninstall(QThread):
         sudo systemctl disable nginx && \
         sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y \
         && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
-        cnt = 0
-        while cnt <= 100:
-            cnt += 1
-            time.sleep(0.1)
-            line = p.stdout.readline()
-            self.change_value.emit(cnt)
-            print(line.strip())
-            sys.stdout.flush()
-            if cnt == 100:
-                print ("CNT 100 erreicht")
+
+        p = process.stdout.readline()
+        # Do something else
+        return_code = process.poll()
+        if return_code is not None:
+            print('RETURN CODE', return_code)
+        else:
+            print("STARTING")
+            cnt = 0
+            while cnt <= 100:
+                cnt += 1
+                time.sleep(0.1)
+                line = process.stdout.readline()
+                self.change_value.emit(cnt)
+                print(line.strip())
                 sys.stdout.flush()
-                break
-            sys.stdout.flush()
+                if cnt == 100:
+                    print ("CNT 100 erreicht")
+                    sys.stdout.flush()
+                    break
+                sys.stdout.flush()
