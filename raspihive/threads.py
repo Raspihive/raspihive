@@ -23,7 +23,7 @@ class MyThread_os_update(QThread):
             print("STARTING")
             cnt = 0
             while cnt <= 100:
-                cnt += 1
+                cnt += 0.5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -56,7 +56,7 @@ class MyThread_packages(QThread):
             print("STARTING")
             cnt = 0
             while cnt <= 100:
-                cnt += 1
+                cnt += 0.5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -87,7 +87,7 @@ class MyThread_raspihive_update(QThread):
             print("STARTING")
             cnt = 0
             while cnt <= 100:
-                cnt += 1
+                cnt += 0.5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -118,7 +118,7 @@ class MyThread_hornet_update(QThread):
             print("STARTING")
             cnt = 0
             while cnt <= 100:
-                cnt += 1
+                cnt += 0.5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -159,7 +159,7 @@ class MyThread_hornet_install(QThread):
             print("STARTING")
             cnt = 0
             while cnt <= 100:
-                cnt += 1
+                cnt += 0.5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -191,7 +191,7 @@ class MyThread_hornet_uninstall(QThread):
             print("STARTING")
             cnt = 0
             while cnt <= 100:
-                cnt += 1
+                cnt += 0.5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -211,14 +211,16 @@ class MyThread_nginx_certbot_install(QThread):
         #print("Test packages")
         process = subprocess.Popen(os_parse("pkexec apt update \
         && sudo apt -y upgrade && sudo apt install -y nginx \
-        && sudo ufw allow 'Nginx Full' && sudo apt install -y apache2-utils \
+        && sudo apt install -y ufw && sudo ufw allow 'Nginx Full' && sudo apt install -y apache2-utils \
         && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive && \
         sudo apt install software-properties-common -y && sudo apt update \
         && sudo apt install certbot python3-certbot-nginx -y \
         && sudo certbot --nginx"), stdout=subprocess.PIPE, shell = True)
         # Nginx configuration
-        f = open("/etc/nginx/sites-available/default", "w")
-        f.write("server { \n listen 80 default_server; \
+        try: # temporarily fix that raspihive does not crash after function call
+            os.chown("/etc/nginx/sites-available/default", 100, -1)
+            f = open("/etc/nginx/sites-available/default", "w")
+            f.write("server { \n listen 80 default_server; \
             \n listen [::]:80 default_server; \n server_tokens off;  \
             \n server_name _; \n location /node { \
             \n proxy_pass http://127.0.0.1:14265/; \n } \
@@ -228,9 +230,10 @@ class MyThread_nginx_certbot_install(QThread):
             \n proxy_read_timeout 86400; \n } \n \n location / { \
             \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \
             \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
-        f.close()
-        os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-
+            f.close()
+            os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
+        except: # occurs because of permission denied error
+            print("An exception occurred") 
         p = process.stdout.readline()
         # Do something else
         return_code = process.poll()
@@ -240,7 +243,7 @@ class MyThread_nginx_certbot_install(QThread):
             print("STARTING")
             cnt = 0
             while cnt <= 100:
-                cnt += 1
+                cnt += 0.5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -272,7 +275,7 @@ class MyThread_nginx_certbot_uninstall(QThread):
             print("STARTING")
             cnt = 0
             while cnt <= 100:
-                cnt += 1
+                cnt += 0.5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
