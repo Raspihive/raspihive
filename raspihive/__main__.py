@@ -870,7 +870,7 @@ class Window1(QMainWindow):
         #QMessageBox.about(self, "Certbot", "Certbot")
 
     def uninstall_nginx_certbot(self):
-        app = Window_nginx_certbot_install()
+        app = Window_nginx_certbot_uninstall()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
         rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
