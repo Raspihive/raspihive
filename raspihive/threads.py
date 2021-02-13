@@ -148,17 +148,23 @@ class MyThread_hornet_install(QThread):
         #print("Test packages")
         process = subprocess.Popen(os_parse('pkexec apt update -y && sudo apt autoremove -y && sudo apt install -y build-essential \
             && sudo apt install -y git && sudo apt install -y snapd \
-            && sudo snap install go --classic && sudo apt update \
-            && sudo apt -y upgrade && \
-            sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | \
-            sudo apt-key add -  && \
-            sudo echo "deb http://ppa.hornet.zone stable main" >> \
-            /etc/apt/sources.list.d/hornet.list && \sudo apt update \
-            && sudo apt install hornet && sudo systemctl enable hornet.service \
+            && sudo snap install go --classic \
             && sudo apt install -y ufw && sudo ufw allow 15600/tcp && \
             sudo ufw allow 14626/udp && sudo ufw limit openssh && \
             sudo ufw enable && sudo apt install sshguard -y \
+            && sudo wget --no-check-certificate https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
+            && sudo echo "deb http://ppa.hornet.zone stable main" >> \
+            /etc/apt/sources.list.d/hornet.list && sudo apt update \
+            && sudo apt install hornet && sudo systemctl enable hornet.service \
             && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
+        
+        """
+        process = subprocess.Popen(('pkexec wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
+            && sudo echo "deb http://ppa.hornet.zone stable main" >> \
+            /etc/apt/sources.list.d/hornet.list && sudo apt update \
+            && sudo apt install hornet && sudo systemctl enable hornet.service \
+            && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
+        """
 
         p = process.stdout.readline()
         # Do something else
