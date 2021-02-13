@@ -43,7 +43,7 @@ class Window1(QMainWindow):
         super().__init__()
         self.left = 300
         self.top = 300
-        self.width = 780
+        self.width = 800
         self.height = 330
         #Window size
         self.setGeometry(self.left, self.top, self.width, self.height)
