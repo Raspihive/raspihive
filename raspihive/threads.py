@@ -1,6 +1,16 @@
 ###############################################################################
 # libraries
-import sys, time, os, subprocess
+import sys, time, os, subprocess, os.path
+from os import path
+from PyQt5.QtWidgets import (
+    QApplication,
+    QWidget,
+    QMessageBox,
+    QProgressBar,
+    QPushButton,
+    QAction,
+    qApp
+)
 from PyQt5.QtCore import QThread, pyqtSignal
 from .helpers import os_parse
 ##############################################################################
@@ -21,7 +31,7 @@ class MyThread_os_update(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 0
+            cnt = 5
             while cnt <= 100:
                 cnt += 0.1
                 time.sleep(0.1)
@@ -54,7 +64,7 @@ class MyThread_packages(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 0
+            cnt = 5
             while cnt <= 100:
                 cnt += 0.1
                 time.sleep(0.1)
@@ -85,7 +95,7 @@ class MyThread_raspihive_update(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 0
+            cnt = 5
             while cnt <= 100:
                 cnt += 0.1
                 time.sleep(0.1)
@@ -116,7 +126,7 @@ class MyThread_hornet_update(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 0
+            cnt = 5
             while cnt <= 100:
                 cnt += 0.1
                 time.sleep(0.1)
@@ -136,7 +146,7 @@ class MyThread_hornet_install(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse('pkexec apt install -y build-essential \
+        process = subprocess.Popen(os_parse('pkexec apt update -y && sudo apt autoremove -y && sudo apt install -y build-essential \
             && sudo apt install -y git && sudo apt install -y snapd \
             && sudo snap install go --classic && sudo apt update \
             && sudo apt -y upgrade && \
@@ -157,7 +167,7 @@ class MyThread_hornet_install(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 0
+            cnt = 5
             while cnt <= 100:
                 cnt += 0.1
                 time.sleep(0.1)
@@ -177,9 +187,9 @@ class MyThread_hornet_uninstall(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("pkexec systemctl stop hornet \
-        && sudo apt -qq purge hornet -y && \
-        sudo rm -rf /etc/apt/sources.list.d/hornet.list"), \
+        process = subprocess.Popen(os_parse("pkexec apt update -y && sudo apt autoremove -y \
+            sudo systemctl stop hornet && sudo apt -qq purge hornet -y  \
+            sudo rm -rf /etc/apt/sources.list.d/hornet.list"), \
             stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
@@ -189,7 +199,7 @@ class MyThread_hornet_uninstall(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 0
+            cnt = 5
             while cnt <= 100:
                 cnt += 0.1
                 time.sleep(0.1)
@@ -209,31 +219,14 @@ class MyThread_nginx_certbot_install(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("pkexec apt update \
+        process = subprocess.Popen(os_parse("pkexec apt update -y \
         && sudo apt -y upgrade && sudo apt install -y nginx \
         && sudo apt install -y ufw && sudo ufw allow 'Nginx Full' && sudo apt install -y apache2-utils \
         && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive && \
         sudo apt install software-properties-common -y && sudo apt update \
         && sudo apt install certbot python3-certbot-nginx -y \
-        && sudo certbot --nginx"), stdout=subprocess.PIPE, shell = True)
-        # Nginx configuration
-        try: # temporarily fix that raspihive does not crash after function call
-            os.chown("/etc/nginx/sites-available/default", 100, -1)
-            f = open("/etc/nginx/sites-available/default", "w")
-            f.write("server { \n listen 80 default_server; \
-            \n listen [::]:80 default_server; \n server_tokens off;  \
-            \n server_name _; \n location /node { \
-            \n proxy_pass http://127.0.0.1:14265/; \n } \
-            \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \
-            \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \
-            \n proxy_set_header Connection "'"upgrade"'"; \
-            \n proxy_read_timeout 86400; \n } \n \n location / { \
-            \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \
-            \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
-            f.close()
-            os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-        except: # occurs because of permission denied error
-            print("An exception occurred") 
+        "), stdout=subprocess.PIPE, shell = True)
+
         p = process.stdout.readline()
         # Do something else
         return_code = process.poll()
@@ -241,7 +234,7 @@ class MyThread_nginx_certbot_install(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 0
+            cnt = 5
             while cnt <= 100:
                 cnt += 0.1
                 time.sleep(0.1)
@@ -260,29 +253,35 @@ class MyThread_nginx_certbot_uninstall(QThread):
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
-        #print("Test packages")
-        process = subprocess.Popen(os_parse("pkexec systemctl stop nginx && \
-        sudo systemctl disable nginx && \
-        sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y \
-        && sudo apt purge -y nginx"), stdout=subprocess.PIPE, shell = True)
+        if path.exists("/etc/nginx/") == True:
+            #print("Test packages")
+            process = subprocess.Popen(os_parse("pkexec apt update -y && \
+            sudo apt purge -y nginx nginx-common && sudo apt purge -y --auto-remove apache2-utils \
+            && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y \
+            && sudo apt autoremove -y\
+                "), stdout=subprocess.PIPE, shell = True)
 
-        p = process.stdout.readline()
-        # Do something else
-        return_code = process.poll()
-        if return_code is not None:
-            print('RETURN CODE', return_code)
-        else:
-            print("STARTING")
-            cnt = 0
-            while cnt <= 100:
-                cnt += 0.1
-                time.sleep(0.1)
-                line = process.stdout.readline()
-                self.change_value.emit(cnt)
-                print(line.strip())
-                sys.stdout.flush()
-                if cnt == 100:
-                    print ("CNT 100 erreicht")
+            p = process.stdout.readline()
+            # Do something else
+            return_code = process.poll()
+            if return_code is not None:
+                print('RETURN CODE', return_code)
+            else:
+                print("STARTING")
+                cnt = 5
+                while cnt <= 100:
+                    cnt += 0.1
+                    time.sleep(0.1)
+                    line = process.stdout.readline()
+                    self.change_value.emit(cnt)
+                    print(line.strip())
                     sys.stdout.flush()
-                    break
-                sys.stdout.flush()
+                    if cnt == 100:
+                        print ("CNT 100 erreicht")
+                        sys.stdout.flush()
+                        break
+                    sys.stdout.flush()
+        else:
+            print("Nginx not installed")
+
+
