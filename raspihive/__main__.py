@@ -3,7 +3,7 @@
 
 ###############################################################################
 # libraries
-import sys, time, os, requests
+import sys, time, os, requests, pwd, grp
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -43,7 +43,7 @@ class Window1(QMainWindow):
         super().__init__()
         self.left = 300
         self.top = 300
-        self.width = 750
+        self.width = 780
         self.height = 330
         #Window size
         self.setGeometry(self.left, self.top, self.width, self.height)
@@ -228,7 +228,7 @@ class Window1(QMainWindow):
 
         self.right_widget.setCurrentIndex(0)
         self.right_widget.setStyleSheet('''QTabBar::tab{width: 0; \
-            height: 0; margin: 0; padding: 0; border: none;}''')
+            height: 0; margin: 5; padding: 0; border: none;}''')
 
         #Transparency
         self.setWindowOpacity(0.9875)
@@ -287,7 +287,7 @@ class Window1(QMainWindow):
         button.setToolTip('Update operating system')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50)
+        button.setGeometry(20, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -301,7 +301,7 @@ class Window1(QMainWindow):
         button.setToolTip('Update necessary packages')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 160, 50)
+        button.setGeometry(220, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -314,7 +314,7 @@ class Window1(QMainWindow):
         button.setToolTip('Update Raspihive')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 50, 160, 50)
+        button.setGeometry(420, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -327,7 +327,7 @@ class Window1(QMainWindow):
         button.setToolTip('Update Hornet')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 130, 160, 50)
+        button.setGeometry(220, 130, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -367,7 +367,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Install IOTA Hornet Fullnode ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50)
+        button.setGeometry(20, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -380,7 +380,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Uninstall IOTA Hornet Fullnode ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 160, 50)
+        button.setGeometry(220, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -394,7 +394,7 @@ class Window1(QMainWindow):
             Certbot for SSL Certificates ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 150, 160, 50)
+        button.setGeometry(20, 150, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -409,7 +409,7 @@ class Window1(QMainWindow):
             certbot --nginx" (Domain needed) ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 150, 160, 50)
+        button.setGeometry(220, 150, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -423,7 +423,7 @@ class Window1(QMainWindow):
         Certbot for SSL Certificates ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 150, 160, 50)
+        button.setGeometry(420, 150, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -463,7 +463,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Hornet Control Center (settings) ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50)
+        button.setGeometry(40, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -519,7 +519,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Start Hornet Node ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50)
+        button.setGeometry(20, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -532,7 +532,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Stop Hornet Node ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 160, 50)
+        button.setGeometry(220, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -545,7 +545,7 @@ class Window1(QMainWindow):
         button.setToolTip('Restart Hornet Node')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 50, 160, 50)
+        button.setGeometry(420, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -558,7 +558,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Status Hornet Node ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 150, 160, 50)
+        button.setGeometry(20, 150, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -571,7 +571,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Show Hornet Logs ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 150, 160, 50)
+        button.setGeometry(220, 150, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -584,7 +584,7 @@ class Window1(QMainWindow):
         button.setToolTip('Remove the mainnetdb (e.g. in case of a failure) ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 150, 160, 50)
+        button.setGeometry(420, 150, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -624,7 +624,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Open Hornet Dashboard ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50)
+        button.setGeometry(40, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -681,7 +681,7 @@ class Window1(QMainWindow):
         button.setToolTip(' About Raspihive ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 160, 50)
+        button.setGeometry(20, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -694,7 +694,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Preparations - Port forwarding etc. ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 160, 50)
+        button.setGeometry(220, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -707,7 +707,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Report or Feedback ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(400, 50, 160, 50)
+        button.setGeometry(420, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -855,6 +855,29 @@ class Window1(QMainWindow):
     def certbot(self):
         os.system("lxterminal") #just opens the terminal
         os.system("gnome-terminal") #just opens the terminal
+
+        # Nginx configuration
+        if path.exists("/etc/nginx/sites-available/") == True:
+            os.system("sudo chown pi:pi -R /etc/nginx/ ")
+            #os.chown("/etc/nginx/sites-available/default", 100, -1)
+            try: # temporarily fix that raspihive does not crash after function call
+                f = open("/etc/nginx/sites-available/default", "w")
+                f.write("server { \n listen 80 default_server; \
+                \n listen [::]:80 default_server; \n server_tokens off;  \
+                \n server_name _; \n location /node { \
+                \n proxy_pass http://127.0.0.1:14265/; \n } \
+                \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \
+                \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \
+                \n proxy_set_header Connection "'"upgrade"'"; \
+                \n proxy_read_timeout 86400; \n } \n \n location / { \
+                \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \
+                \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
+                f.close()
+                os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
+            except: # occurs because of permission denied error
+                print("An exception occurred - Config not written - FAILURE") 
+        else:
+            print("Config not written - FAILURE")
         """
         #Open LX Terminal (Raspberry Pi OS)
         cmd = "lxterminal "
