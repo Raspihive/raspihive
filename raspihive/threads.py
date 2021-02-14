@@ -33,7 +33,7 @@ class MyThread_os_update(QThread):
             print("STARTING")
             cnt = 5
             while cnt <= 100:
-                cnt += 0.1
+                cnt += 0.2
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -66,7 +66,7 @@ class MyThread_packages(QThread):
             print("STARTING")
             cnt = 5
             while cnt <= 100:
-                cnt += 0.1
+                cnt += 0.2
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -97,7 +97,7 @@ class MyThread_raspihive_update(QThread):
             print("STARTING")
             cnt = 5
             while cnt <= 100:
-                cnt += 0.1
+                cnt += 1
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -128,7 +128,7 @@ class MyThread_hornet_update(QThread):
             print("STARTING")
             cnt = 5
             while cnt <= 100:
-                cnt += 0.1
+                cnt += 1
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -175,7 +175,7 @@ class MyThread_hornet_install(QThread):
             print("STARTING")
             cnt = 5
             while cnt <= 100:
-                cnt += 0.1
+                cnt += 0.5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -206,7 +206,7 @@ class MyThread_hornet_uninstall(QThread):
             print("STARTING")
             cnt = 5
             while cnt <= 100:
-                cnt += 0.1
+                cnt += 1
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -241,7 +241,7 @@ class MyThread_nginx_certbot_install(QThread):
             print("STARTING")
             cnt = 5
             while cnt <= 100:
-                cnt += 0.1
+                cnt += 0.5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -275,7 +275,7 @@ class MyThread_nginx_certbot_uninstall(QThread):
                 print("STARTING")
                 cnt = 5
                 while cnt <= 100:
-                    cnt += 0.1
+                    cnt += 0.5
                     time.sleep(0.1)
                     line = process.stdout.readline()
                     self.change_value.emit(cnt)
