@@ -152,8 +152,8 @@ class MyThread_hornet_install(QThread):
             && sudo apt install -y ufw && sudo ufw allow 15600/tcp && \
             sudo ufw allow 14626/udp && sudo ufw limit openssh && \
             sudo ufw enable && sudo apt install sshguard -y \
-            && sudo wget --no-check-certificate https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
-            && sudo echo "deb http://ppa.hornet.zone stable main" >> \
+            && wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
+            && sudo mkdir /etc/apt/sources.list.d && sudo chown pi:pi /etc/apt/sources.list.d && sudo echo "deb http://ppa.hornet.zone stable main" >> \
             /etc/apt/sources.list.d/hornet.list && sudo apt update \
             && sudo apt install hornet && sudo systemctl enable hornet.service \
             && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
@@ -193,9 +193,8 @@ class MyThread_hornet_uninstall(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("pkexec apt update -y && sudo apt autoremove -y \
-            sudo systemctl stop hornet && sudo apt -qq purge hornet -y  \
-            sudo rm -rf /etc/apt/sources.list.d/hornet.list"), \
+        process = subprocess.Popen(os_parse("pkexec apt -qq purge hornet -y  \
+            && sudo rm -r /etc/apt/sources.list.d/hornet.list "), \
             stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
