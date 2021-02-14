@@ -194,7 +194,7 @@ class MyThread_hornet_uninstall(QThread):
     def run(self):
         #print("Test packages")
         process = subprocess.Popen(os_parse("pkexec apt -qq purge hornet -y  \
-            && sudo rm -r /etc/apt/sources.list.d/hornet.list "), \
+            && sudo rm -r /etc/apt/sources.list.d "), \
             stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
@@ -288,5 +288,3 @@ class MyThread_nginx_certbot_uninstall(QThread):
                     sys.stdout.flush()
         else:
             print("Nginx not installed")
-
-
