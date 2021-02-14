@@ -187,7 +187,7 @@ class MyThread_hornet_uninstall(QThread):
     def run(self):
         #print("Test packages")
         process = subprocess.Popen(os_parse("pkexec apt -qq purge hornet -y  \
-            && sudo rm -r /etc/apt/sources.list.d "), \
+            && sudo rm -r /etc/apt/sources.list.d/hornet.list "), \
             stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
