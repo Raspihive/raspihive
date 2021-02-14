@@ -906,73 +906,37 @@ class Window1(QMainWindow):
         show = msg.exec_()  # this will show our messagebox
 
     def start_hornet(self):
-        if os.geteuid() != 0:
-            print("Start Hornet - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
-
-        if os.geteuid()==0:
-            #os.system('sudo service hornet start ')
-            p=subprocess.Popen("sudo service hornet start", stdout=subprocess.PIPE, shell = True)
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
-            QMessageBox.about(self, "Hornet", "Hornet node started")
+        p=subprocess.Popen("pkexec service hornet start", stdout=subprocess.PIPE, shell = True)
+        while True:
+            #print ("Looping")
+            line = p.stdout.readline()
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
+        QMessageBox.about(self, "Hornet", "Hornet node started")
 
     def stop_hornet(self):
-        if os.geteuid() != 0:
-            print("Stop Hornet - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
-
-        if os.geteuid()==0:
-            #os.system('sudo service hornet start ')
-            p=subprocess.Popen("sudo service hornet stop", stdout=subprocess.PIPE, shell = True)
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
-            QMessageBox.about(self, "Hornet", "Hornet node stopped")
+        p=subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell = True)
+        while True:
+            #print ("Looping")
+            line = p.stdout.readline()
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
+        QMessageBox.about(self, "Hornet", "Hornet node stopped")
 
     def restart_hornet(self):
-        if os.geteuid() != 0:
-            print("Restart Hornet - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
-
-        if os.geteuid()==0:
-            #os.system('sudo service hornet start ')
-            p=subprocess.Popen("sudo service hornet restart", stdout=subprocess.PIPE, shell = True)
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
-            QMessageBox.about(self, "Hornet", "Hornet node restarted")
+        p=subprocess.Popen("pkexec service hornet restart", stdout=subprocess.PIPE, shell = True)
+        while True:
+            #print ("Looping")
+            line = p.stdout.readline()
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
+        QMessageBox.about(self, "Hornet", "Hornet node restarted")
 
     def status_hornet(self):
         self.cams = hornet_status_win()
