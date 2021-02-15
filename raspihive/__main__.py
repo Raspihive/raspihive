@@ -949,29 +949,18 @@ class Window1(QMainWindow):
         #self.close()
 
     def mainnetDB_hornet(self):
-        if os.geteuid() != 0:
-            print("Delete Mainnetdb - You need to have root privileges")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Raspberry Pi Authentication")
-            msg.setText("You need to have root privileges")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
-
-        if os.geteuid()==0:
-            #os.system('sudo service hornet start ')
-            p=subprocess.Popen("sudo service hornet stop && \
+        p=subprocess.Popen("pkexec service hornet stop && \
             sudo rm -r /var/lib/hornet/mainnetdb && \
             sudo service hornet start", stdout=subprocess.PIPE, shell = True)
-            while True:
-                #print ("Looping")
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print (line.strip())
-                sys.stdout.flush()
-            QMessageBox.about(self, "Hornet", "Hornet node restarted")
+        while True:
+            #print ("Looping")
+            line = p.stdout.readline()
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
+        QMessageBox.about(self, "Hornet", "Hornet DB successfully deleted")
+
 
     def hornet_dashboard_access(self):
         subprocess.Popen("sudo -upi chromium http://localhost",shell = True)
