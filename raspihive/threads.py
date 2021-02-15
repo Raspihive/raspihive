@@ -31,9 +31,9 @@ class MyThread_os_update(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 5
+            cnt = 1
             while cnt <= 100:
-                cnt += 0.2
+                cnt += 0.1
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -64,7 +64,7 @@ class MyThread_packages(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 5
+            cnt = 1
             while cnt <= 100:
                 cnt += 0.2
                 time.sleep(0.1)
