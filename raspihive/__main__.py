@@ -294,13 +294,8 @@ class Window1(QMainWindow):
         button.clicked.connect(self.system_update)
         #End button 1
 
-
         #Start button 2
-        button = QPushButton('Update packages', main)
         #Hover text
-        button.setToolTip('Update necessary packages')
-        #button.move(10,50)
-        # setting geometry of button x, y, width, height
         button.setGeometry(220, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
