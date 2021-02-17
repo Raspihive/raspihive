@@ -1,6 +1,6 @@
 ###############################################################################
 # libraries
-import sys, time, os, subprocess, os.path
+import sys, time, os, subprocess, os.path, shutil
 from os import path
 from PyQt5.QtWidgets import (
     QApplication,
@@ -84,30 +84,39 @@ class MyThread_raspihive_update(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("pkexec rm -r raspihive && \
-            sudo git clone https://github.com/Raspihive/raspihive.git"), \
-                        stdout=subprocess.PIPE, shell = True)
-
-        p = process.stdout.readline()
-        # Do something else
-        return_code = process.poll()
-        if return_code is not None:
-            print('RETURN CODE', return_code)
+        os.chdir('/tmp') 
+        os.system(" sudo find -name raspihive -exec rm -rf {} +")
+        if path.exists("/home/pi/raspihive") == True:
+            print("Try to update Raspihive")
+            process = subprocess.Popen(os_parse("sudo chown pi:pi -R /home/pi/raspihive "), stdout=subprocess.PIPE, shell = True)
+            shutil.rmtree('/home/pi/raspihive')
+            print("Raspihive successfully deleted")
         else:
-            print("STARTING")
-            cnt = 5
-            while cnt <= 100:
-                cnt += 1
-                time.sleep(0.1)
-                line = process.stdout.readline()
-                self.change_value.emit(cnt)
-                print(line.strip())
-                sys.stdout.flush()
-                if cnt == 100:
-                    print ("CNT 100 erreicht")
+            print("ELSE-TEST")
+            os.system(" sudo git clone https://github.com/Raspihive/raspihive.git /home/pi/raspihive ") #/home/pi/
+
+            """
+            p = process.stdout.readline()
+            # Do something else
+            return_code = process.poll()
+            if return_code is not None:
+                print('RETURN CODE', return_code)
+            else:
+                print("STARTING")
+                cnt = 5
+                while cnt <= 100:
+                    cnt += 1
+                    time.sleep(0.1)
+                    line = process.stdout.readline()
+                    self.change_value.emit(cnt)
+                    print(line.strip())
                     sys.stdout.flush()
-                    break
-                sys.stdout.flush()
+                    if cnt == 100:
+                        print ("CNT 100 erreicht")
+                        sys.stdout.flush()
+                        break
+                    sys.stdout.flush()
+            """
 ##############################################################################
 #Thread for hornet update
 class MyThread_hornet_update(QThread):
@@ -159,14 +168,6 @@ class MyThread_hornet_install(QThread):
             && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
         
         #sudo mkdir /etc/apt/sources.list.d
-        """
-        process = subprocess.Popen(('pkexec wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
-            && sudo echo "deb http://ppa.hornet.zone stable main" >> \
-            /etc/apt/sources.list.d/hornet.list && sudo apt update \
-            && sudo apt install hornet && sudo systemctl enable hornet.service \
-            && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
-        """
-
         p = process.stdout.readline()
         # Do something else
         return_code = process.poll()
