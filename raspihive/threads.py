@@ -78,23 +78,6 @@ class MyThread_packages(QThread):
                     break
                 sys.stdout.flush()
 ##############################################################################
-#Thread for raspihive update
-class MyThread_raspihive_update(QThread):
-    # Create a counter thread
-    change_value = pyqtSignal(int)
-    def run(self):
-        #print("Test packages")
-        #os.chdir('/tmp') 
-        #os.system(" cd /tmp && sudo find -name raspihive -exec rm -rf {} +")
-        #if path.exists("/home/pi/raspihive") == True:
-        print("Try to update Raspihive")
-        #process = subprocess.Popen(os_parse("sudo chown pi:pi -R /home/pi/raspihive "), stdout=subprocess.PIPE, shell = True)
-        os.system("sudo find -name raspihive -exec rm -rf {} +")
-        #shutil.rmtree('/home/pi/raspihive')
-        print("Raspihive successfully deleted")
-        os.system("sudo git clone https://github.com/Raspihive/raspihive.git")
-        #else:
-        #print("ELSE-TEST")
 
 ##############################################################################
 #Thread for hornet update
