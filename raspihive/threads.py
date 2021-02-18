@@ -84,13 +84,15 @@ class MyThread_raspihive_update(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        os.chdir('/tmp') 
-        os.system(" sudo find -name raspihive -exec rm -rf {} +")
+        #os.chdir('/tmp') 
+        os.system(" cd /tmp && sudo find -name raspihive -exec rm -rf {} +")
         if path.exists("/home/pi/raspihive") == True:
             print("Try to update Raspihive")
             process = subprocess.Popen(os_parse("sudo chown pi:pi -R /home/pi/raspihive "), stdout=subprocess.PIPE, shell = True)
-            shutil.rmtree('/home/pi/raspihive')
+            #shutil.rmtree('/home/pi/raspihive')
+            os.system("sudo rm -r /home/pi/raspihive ")
             print("Raspihive successfully deleted")
+            os.system(" sudo git clone --branch develop https://github.com/Raspihive/raspihive.git /home/pi/raspihive ")
         else:
             print("ELSE-TEST")
             os.system(" sudo git clone https://github.com/Raspihive/raspihive.git /home/pi/raspihive ") #/home/pi/
