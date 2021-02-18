@@ -294,8 +294,13 @@ class Window1(QMainWindow):
         button.clicked.connect(self.system_update)
         #End button 1
 
+
         #Start button 2
+        button = QPushButton('Update packages', main)
         #Hover text
+        button.setToolTip('Update necessary packages')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
         button.setGeometry(220, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
@@ -782,18 +787,27 @@ class Window1(QMainWindow):
             if the progress bar reaches 100 %, #IOTAstrong")
         show = msg.exec_()  # this will show our messagebox
 
+#IMPORATANT: Raspihive needs to be cloned into the "/home"-folder, then restart is necessary.
     def raspihive_update(self):
-        app = Window_raspihive_update()
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: \
-        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Raspihive Update")
-        msg.setInformativeText("Raspihive update is running")
-        msg.setWindowTitle("Raspihive Update")
-        msg.setDetailedText("Just close the window\
-            if the progress bar reaches 100 %, #IOTAstrong")
-        show = msg.exec_()  # this will show our messagebox
+        #print("Test packages")
+        #os.chdir('/tmp') 
+        #os.system(" cd /tmp && sudo find -name raspihive -exec rm -rf {} +")
+        #if path.exists("/home/pi/raspihive") == True:
+        print("Update Raspihive")
+        #process = subprocess.Popen(os_parse("sudo chown pi:pi -R /home/pi/raspihive "), stdout=subprocess.PIPE, shell = True)
+        #os.system("sudo find -name raspihive -exec rm -rf {} +")
+        #shutil.rmtree('/home/pi/raspihive')
+        p=os.system("cd /home && sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git /home/raspihive")
+        #else:
+        #print("ELSE-TEST")
+        while True:
+            #print ("Looping")
+            line = p.stdout.readline()
+            if not line:
+                break
+            print (line.strip())
+            sys.stdout.flush()
+        QMessageBox.about(self, "Raspihive", "Raspihive updated")
 
     def hornet_update(self):
         app = Window_hornet_update()
@@ -973,7 +987,7 @@ class Window1(QMainWindow):
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version 2.0\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo ")
+Raspihive: Version 2.0\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
