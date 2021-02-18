@@ -797,7 +797,8 @@ class Window1(QMainWindow):
         #process = subprocess.Popen(os_parse("sudo chown pi:pi -R /home/pi/raspihive "), stdout=subprocess.PIPE, shell = True)
         #os.system("sudo find -name raspihive -exec rm -rf {} +")
         #shutil.rmtree('/home/pi/raspihive')
-        p=os.system("cd /home && sudo rm -r raspihive && sudo git clone https://github.com/Raspihive/raspihive.git /home/raspihive")
+        p=subprocess.Popen("cd /home && sudo rm -r raspihive && \
+        sudo git clone https://github.com/Raspihive/raspihive.git /home/raspihive", stdout=subprocess.PIPE, shell = True)
         #else:
         #print("ELSE-TEST")
         while True:
