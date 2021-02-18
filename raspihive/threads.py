@@ -78,47 +78,7 @@ class MyThread_packages(QThread):
                     break
                 sys.stdout.flush()
 ##############################################################################
-#Thread for raspihive update
-class MyThread_raspihive_update(QThread):
-    # Create a counter thread
-    change_value = pyqtSignal(int)
-    def run(self):
-        #print("Test packages")
-        #os.chdir('/tmp') 
-        os.system(" cd /tmp && sudo find -name raspihive -exec rm -rf {} +")
-        if path.exists("/home/pi/raspihive") == True:
-            print("Try to update Raspihive")
-            process = subprocess.Popen(os_parse("sudo chown pi:pi -R /home/pi/raspihive "), stdout=subprocess.PIPE, shell = True)
-            #shutil.rmtree('/home/pi/raspihive')
-            os.system("sudo rm -r /home/pi/raspihive ")
-            print("Raspihive successfully deleted")
-            os.system(" sudo git clone --branch develop https://github.com/Raspihive/raspihive.git /home/pi/raspihive ")
-        else:
-            print("ELSE-TEST")
-            os.system(" sudo git clone https://github.com/Raspihive/raspihive.git /home/pi/raspihive ") #/home/pi/
 
-            """
-            p = process.stdout.readline()
-            # Do something else
-            return_code = process.poll()
-            if return_code is not None:
-                print('RETURN CODE', return_code)
-            else:
-                print("STARTING")
-                cnt = 5
-                while cnt <= 100:
-                    cnt += 1
-                    time.sleep(0.1)
-                    line = process.stdout.readline()
-                    self.change_value.emit(cnt)
-                    print(line.strip())
-                    sys.stdout.flush()
-                    if cnt == 100:
-                        print ("CNT 100 erreicht")
-                        sys.stdout.flush()
-                        break
-                    sys.stdout.flush()
-            """
 ##############################################################################
 #Thread for hornet update
 class MyThread_hornet_update(QThread):
