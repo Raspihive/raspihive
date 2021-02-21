@@ -87,7 +87,7 @@ class Window1(QMainWindow):
             'Raspihive', self)
         #Act.setShortcut('Ctrl+Q')
         Act.triggered.connect(qApp.quit) #qApp.quit
-        self.toolbar = self.addToolBar('Raspihive')
+        self.toolbar = self.addToolBar('Close Raspihive')
         self.toolbar.addAction(Act)
         # Set icon size and spacing
         self.toolbar.setIconSize(QtCore.QSize(32, 32))
