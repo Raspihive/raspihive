@@ -70,7 +70,7 @@ class Window1(QMainWindow):
     
         #Start Toolbar
         #Toolbar Icon 1
-        Act = QAction(QIcon('toolbar_raspihive_icons/raspihive_icon1.jpg'),\
+        Act = QAction(QIcon('/home/raspihive/toolbar_raspihive_icons/raspihive_icon1.jpg'),\
             'Raspihive', self)
         #Act.setShortcut('Ctrl+Q')
         Act.triggered.connect(self.button1) #qApp.quit
@@ -83,10 +83,11 @@ class Window1(QMainWindow):
 
 
         #Toolbar Icon 2
-        Act = QAction(QIcon('toolbar_raspihive_icons/close_icon2.png'), 'Close Raspihive', self)
-        Act.setShortcut('Ctrl+Q')
+        Act = QAction(QIcon('/home/raspihive/toolbar_raspihive_icons/close_icon2.jpg'),\
+            'Raspihive', self)
+        #Act.setShortcut('Ctrl+Q')
         Act.triggered.connect(qApp.quit) #qApp.quit
-        self.toolbar = self.addToolBar('Exit')
+        self.toolbar = self.addToolBar('Raspihive')
         self.toolbar.addAction(Act)
         # Set icon size and spacing
         self.toolbar.setIconSize(QtCore.QSize(32, 32))
