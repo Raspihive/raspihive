@@ -809,7 +809,8 @@ class Window1(QMainWindow):
                 break
             print (line.strip())
             sys.stdout.flush()
-        QMessageBox.about(self, "Raspihive", "Raspihive updated")
+        QMessageBox.about(self, "Raspihive", "Raspihive updated. Please close and start Raspihive again, \
+            that changes take effect")
 
     def hornet_update(self):
         app = Window_hornet_update()
