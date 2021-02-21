@@ -123,12 +123,12 @@ class MyThread_hornet_install(QThread):
             && sudo apt install -y ufw && sudo ufw allow 15600/tcp && \
             sudo ufw allow 14626/udp && sudo ufw limit openssh && \
             sudo ufw enable && sudo apt install sshguard -y \
-            && wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
+            && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
             && sudo chown pi:pi /etc/apt/sources.list.d && sudo echo "deb http://ppa.hornet.zone stable main" >> \
             /etc/apt/sources.list.d/hornet.list && sudo apt update \
             && sudo apt install hornet && sudo systemctl enable hornet.service \
             && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
-        
+
         #sudo mkdir /etc/apt/sources.list.d
         p = process.stdout.readline()
         # Do something else
@@ -137,7 +137,7 @@ class MyThread_hornet_install(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 5
+            cnt = 1
             while cnt <= 100:
                 cnt += 0.4
                 time.sleep(0.1)
