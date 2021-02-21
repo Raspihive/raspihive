@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 -m raspihive
+PYTHONPATH=/home/raspihive python3 -m raspihive
