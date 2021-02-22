@@ -122,12 +122,18 @@ class MyThread_hornet_install(QThread):
             && sudo snap install go --classic \
             && sudo apt install -y ufw && sudo ufw allow 15600/tcp && \
             sudo ufw allow 14626/udp && sudo ufw limit openssh && \
-            sudo ufw enable && sudo apt install sshguard -y \
-            && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
-            && sudo -i echo "deb http://ppa.hornet.zone stable main" >>  \
+            sudo ufw enable && sudo apt install sshguard -y '), stdout=subprocess.PIPE, shell = True)
+        
+        os.system(" sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
+            && echo 'deb http://ppa.hornet.zone stable main' >>  \
             /etc/apt/sources.list.d/hornet.list && sudo apt update \
             && sudo apt install hornet && sudo systemctl enable hornet.service \
-            && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
+            && sudo service hornet start")
+
+
+
+        
+
             #&& sudo chown pi:pi /etc/apt/sources.list.d
         #sudo mkdir /etc/apt/sources.list.d
         p = process.stdout.readline()
