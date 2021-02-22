@@ -124,7 +124,7 @@ class MyThread_hornet_install(QThread):
             sudo ufw allow 14626/udp && sudo ufw limit openssh && \
             sudo ufw enable && sudo apt install sshguard -y \
             && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
-            && sudo echo "deb http://ppa.hornet.zone stable main" >> \
+            && sudo -i echo "deb http://ppa.hornet.zone stable main" >>  \
             /etc/apt/sources.list.d/hornet.list && sudo apt update \
             && sudo apt install hornet && sudo systemctl enable hornet.service \
             && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
