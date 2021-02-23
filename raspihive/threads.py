@@ -171,7 +171,7 @@ class MyThread_hornet_uninstall(QThread):
             print("STARTING")
             cnt = 5
             while cnt <= 100:
-                cnt += 1
+                cnt += 5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -204,9 +204,9 @@ class MyThread_nginx_certbot_install(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 5
+            cnt = 1
             while cnt <= 100:
-                cnt += 0.5
+                cnt += 0.2
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -238,9 +238,9 @@ class MyThread_nginx_certbot_uninstall(QThread):
                 print('RETURN CODE', return_code)
             else:
                 print("STARTING")
-                cnt = 5
+                cnt = 1
                 while cnt <= 100:
-                    cnt += 0.5
+                    cnt += 0.2
                     time.sleep(0.1)
                     line = process.stdout.readline()
                     self.change_value.emit(cnt)
