@@ -122,13 +122,14 @@ class MyThread_hornet_install(QThread):
             && sudo snap install go --classic \
             && sudo apt install -y ufw && sudo ufw allow 15600/tcp && \
             sudo ufw allow 14626/udp && sudo ufw limit openssh && \
-            sudo ufw enable && sudo apt install sshguard -y \
-            && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
-            && sudo chown pi:pi /etc/apt/sources.list.d && sudo echo "deb http://ppa.hornet.zone stable main" >> \
-            /etc/apt/sources.list.d/hornet.list && sudo apt update \
+            sudo ufw enable && sudo apt install sshguard -y && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
+            && echo "deb http://ppa.hornet.zone stable main" | sudo tee -a  /etc/apt/sources.list.d/hornet.list \
+            && sudo apt update \
             && sudo apt install hornet && sudo systemctl enable hornet.service \
-            && sudo service hornet start'), stdout=subprocess.PIPE, shell = True)
+            && sudo service hornet start '), stdout=subprocess.PIPE, shell = True)
+        
 
+            #&& sudo chown pi:pi /etc/apt/sources.list.d
         #sudo mkdir /etc/apt/sources.list.d
         p = process.stdout.readline()
         # Do something else
@@ -170,7 +171,7 @@ class MyThread_hornet_uninstall(QThread):
             print("STARTING")
             cnt = 5
             while cnt <= 100:
-                cnt += 1
+                cnt += 5
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -203,9 +204,9 @@ class MyThread_nginx_certbot_install(QThread):
             print('RETURN CODE', return_code)
         else:
             print("STARTING")
-            cnt = 5
+            cnt = 1
             while cnt <= 100:
-                cnt += 0.5
+                cnt += 0.2
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -237,9 +238,9 @@ class MyThread_nginx_certbot_uninstall(QThread):
                 print('RETURN CODE', return_code)
             else:
                 print("STARTING")
-                cnt = 5
+                cnt = 1
                 while cnt <= 100:
-                    cnt += 0.5
+                    cnt += 0.2
                     time.sleep(0.1)
                     line = process.stdout.readline()
                     self.change_value.emit(cnt)
