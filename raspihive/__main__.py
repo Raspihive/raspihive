@@ -868,13 +868,9 @@ class Window1(QMainWindow):
                 if the progress bar reaches 100 %, #IOTAstrong")
             show = msg.exec_()  # this will show our messagebox
 
-    def certbot(self):
-        os.system("lxterminal") #just opens the terminal
-        os.system("gnome-terminal") #just opens the terminal
-
         # Nginx configuration
         if path.exists("/etc/nginx/sites-available/") == True:
-            os.system("sudo chown pi:pi -R /etc/nginx/ ")
+            os.system("sudo chown pi:pi -R /etc/nginx/")
             #os.chown("/etc/nginx/sites-available/default", 100, -1)
             try: # temporarily fix that raspihive does not crash after function call
                 f = open("/etc/nginx/sites-available/default", "w")
@@ -907,6 +903,10 @@ class Window1(QMainWindow):
 
         #os.system(('sudo certbot --nginx'))
         #QMessageBox.about(self, "Certbot", "Certbot")
+
+    def certbot(self):
+        os.system("lxterminal") #just opens the terminal
+        os.system("gnome-terminal") #just opens the terminal
 
     def uninstall_nginx_certbot(self):
         if path.exists("/etc/nginx/") == True:
