@@ -998,7 +998,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version 2.0\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n www.easy-passphrase-saver.de")
+Raspihive: Version 2.0\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
@@ -1021,7 +1021,7 @@ operation. Allow the following basic ports in your router settings: \n \n 14626 
         msg.setWindowTitle("Report")
         msg.setText("If you found a bug or experience any issues, please write us \
 as at: www.raspihive.org or get directly in touch by sending \
-a e-mail to: piota@mail.de \nThanks for your feedback!")
+an e-mail to: piota@mail.de \nThanks for your feedback!")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
