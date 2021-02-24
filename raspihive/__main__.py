@@ -852,17 +852,21 @@ class Window1(QMainWindow):
         show = msg.exec_()  # this will show our messagebox
 
     def install_nginx_certbot(self):
-        app = Window_nginx_certbot_install()
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: \
-        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Install Nginx + Certbot")
-        msg.setInformativeText("Install Nginx + Certbot is running")
-        msg.setWindowTitle("Install Nginx + Certbot")
-        msg.setDetailedText("Just close the window\
-            if the progress bar reaches 100 %, #IOTAstrong")
-        show = msg.exec_()  # this will show our messagebox
+        if path.exists("/etc/nginx/") == True:
+            print("Nginx + Certbot is already installed. Please uninstall it first")
+        elif path.exists("/etc/nginx/") == False:
+            print("TEST RUNNING")
+            app = Window_nginx_certbot_install()
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Install Nginx + Certbot")
+            msg.setInformativeText("Install Nginx + Certbot is running")
+            msg.setWindowTitle("Install Nginx + Certbot")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
 
     def certbot(self):
         os.system("lxterminal") #just opens the terminal
@@ -905,17 +909,21 @@ class Window1(QMainWindow):
         #QMessageBox.about(self, "Certbot", "Certbot")
 
     def uninstall_nginx_certbot(self):
-        app = Window_nginx_certbot_uninstall()
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: \
-        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Uninstall Nginx + Certbot")
-        msg.setInformativeText("Uninstall Nginx + Certbot is running")
-        msg.setWindowTitle("Uninstall Nginx + Certbot")
-        msg.setDetailedText("Just close the window\
-            if the progress bar reaches 100 %, #IOTAstrong")
-        show = msg.exec_()  # this will show our messagebox
+        if path.exists("/etc/nginx/") == True:
+            app = Window_nginx_certbot_uninstall()
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Uninstall Nginx + Certbot")
+            msg.setInformativeText("Uninstall Nginx + Certbot is running")
+            msg.setWindowTitle("Uninstall Nginx + Certbot")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
+        else:
+            print("Nginx + Certbot is not installed. Please install it first")
+            
 
     def start_hornet(self):
         p=subprocess.Popen("pkexec service hornet start", stdout=subprocess.PIPE, shell = True)
