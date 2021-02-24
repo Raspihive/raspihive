@@ -240,7 +240,7 @@ class MyThread_nginx_certbot_uninstall(QThread):
                 print("STARTING")
                 cnt = 1
                 while cnt <= 100:
-                    cnt += 0.2
+                    cnt += 0.5
                     time.sleep(0.1)
                     line = process.stdout.readline()
                     self.change_value.emit(cnt)
