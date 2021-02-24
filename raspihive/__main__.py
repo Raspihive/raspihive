@@ -854,8 +854,14 @@ certbot --nginx" (Domain needed) ')
     def install_nginx_certbot(self):
         if path.exists("/etc/nginx/") == True:
             print("Nginx + Certbot is already installed. Please uninstall it first")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Install Nginx + Certbot")
+            msg.setText("Nginx + Certbot is already installed. Please uninstall it first")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
         elif path.exists("/etc/nginx/") == False:
-            print("TEST RUNNING")
             app = Window_nginx_certbot_install()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
@@ -922,6 +928,13 @@ certbot --nginx" (Domain needed) ')
                 if the progress bar reaches 100 %, #IOTAstrong")
             show = msg.exec_()  # this will show our messagebox
         else:
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Install Nginx + Certbot")
+            msg.setText("Nginx + Certbot is not installed. Please install it first")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
             print("Nginx + Certbot is not installed. Please install it first")
             
 
