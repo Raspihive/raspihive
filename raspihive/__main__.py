@@ -407,7 +407,7 @@ class Window1(QMainWindow):
         #Hover text
         button.setToolTip(' Enter the following command after the \
         installation of nginx+certbot into the terminal: \n "sudo \
-            certbot --nginx" (Domain needed) ')
+certbot --nginx" (Domain needed) ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
         button.setGeometry(220, 150, 180, 60)
