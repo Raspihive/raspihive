@@ -826,30 +826,51 @@ certbot --nginx" (Domain needed) ')
         show = msg.exec_()  # this will show our messagebox
 
     def hornet_install(self):
-        app = Window_hornet_install()
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: \
-        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Install Hornet")
-        msg.setInformativeText("Installation of Hornet is running")
-        msg.setWindowTitle("Install Hornet")
-        msg.setDetailedText("Just close the window\
-            if the progress bar reaches 100 %, #IOTAstrong")
-        show = msg.exec_()  # this will show our messagebox
+        if path.exists("/var/lib/hornet/") == True:
+            print("Hornet Node is already installed. Please uninstall it first")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Install Nginx + Certbot")
+            msg.setText("Hornet Node is already installed. Please uninstall it first")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+        elif path.exists("/var/lib/hornet") == False:
+            app = Window_hornet_install()
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Install Hornet")
+            msg.setInformativeText("Installation of Hornet is running")
+            msg.setWindowTitle("Install Hornet")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
 
     def hornet_uninstall(self):
-        app = Window_hornet_uninstall()
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: \
-        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Uninstall Hornet")
-        msg.setInformativeText("Uninstallation of Hornet is running")
-        msg.setWindowTitle("Uninstall Hornet")
-        msg.setDetailedText("Just close the window\
-            if the progress bar reaches 100 %, #IOTAstrong")
-        show = msg.exec_()  # this will show our messagebox
+        if path.exists("/var/lib/hornet/") == True:
+            app = Window_hornet_uninstall()
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Uninstall Hornet")
+            msg.setInformativeText("Uninstallation of Hornet is running")
+            msg.setWindowTitle("Uninstall Hornet")
+            msg.setDetailedText("Just close the window\
+                if the progress bar reaches 100 %, #IOTAstrong")
+            show = msg.exec_()  # this will show our messagebox
+        elif path.exists("/var/lib/hornet") == False:
+            print("Hornet Node is not installed. Please install it first")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Install Nginx + Certbot")
+            msg.setText("Hornet Node is not installed. Please install it first")
+            #msg.setInformativeText("informative text, ya!")
+            x = msg.exec_()  # this will show our messagebox
+            
 
     def install_nginx_certbot(self):
         if path.exists("/etc/nginx/") == True:
