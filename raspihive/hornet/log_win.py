@@ -1,0 +1,86 @@
+import sys, time, os, requests, pwd, grp
+from PyQt5.QtWidgets import (
+    QApplication,
+    QWidget,
+    QMessageBox,
+    QProgressBar,
+    QPushButton,
+    QAction,
+    qApp
+)
+from PyQt5 import QtGui, QtWidgets, Qt, QtCore
+from subprocess import Popen
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QVBoxLayout,
+    QTabWidget,
+    QHBoxLayout,
+    QInputDialog,
+    QLineEdit,
+    QApplication,
+    QWidget,
+    QLabel
+)
+
+from PyQt5.QtGui import QIcon, QFont, QImage
+from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
+from raspihive.progress_bars import *
+from raspihive.helpers import os_parse
+
+
+class hornet_log_win(Qt.QMainWindow):
+    def __init__(self):
+        Qt.QMainWindow.__init__(self)
+        #Set window position and size
+        super().__init__()
+        self.left = 300
+        self.top = 100
+        self.width = 1450
+        self.height = 810
+        #End of set window position and size
+        #Window size
+        self.setGeometry(self.left, self.top, self.width, self.height)
+
+        #self.setFixedSize(1000, 1000)
+        self.setStyleSheet('background-color: #2B3440') #rgb(255,255,255);  #2B3440
+        self.setWindowTitle('Hornet-Logs')
+
+        # For hornet node logs
+        Outputfileobject=os.popen("journalctl -u hornet -n 50")
+        Output=Outputfileobject.read()
+        Outputfileobject.close()
+
+        #Create label
+        labelT = QtWidgets.QLabel(self)
+        #Set label text
+        Text=labelT.setText(Output)
+        #Set label font
+        labelT.setFont(QtGui.QFont("Arial", 10, QtGui.QFont.Black))
+        # setting up background and text color
+        labelT.setStyleSheet("background-color: #2B3440 ; color: white; border: \
+        0px solid black")
+        #Setting position x y
+        labelT.move(10, 30)
+        #Setting label width
+        labelT.setFixedWidth(1450)
+        #Setting label height
+        labelT.setFixedHeight(810)
+        #End label
+
+        # creating a quit button
+        self.pushButton = Qt.QPushButton(self)
+        # setting geometry of button x, y, width, height
+        self.pushButton.setGeometry(0, 0, 150, 40)
+        #Setting background color or transparency
+        self.pushButton.setStyleSheet('background-color: #2B3440; color: white')
+        #Setting button text
+        self.pushButton.setText('Close log window')
+        # adding action to a button
+        self.pushButton.clicked.connect(self.close)
+        # End of creating a quit button
+
+        # opening window in maximized size
+        self.showMaximized()
+
