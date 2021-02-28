@@ -32,7 +32,10 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from .progress_bars import *
-from .helpers import os_parse
+#from .helpers import os_parse
+
+#test import for cpu and ram values etc. 
+#import psutil
 ###########################################################################
 #Global variables
 ICON_IMAGE_URL = "https://raw.githubusercontent.com/Raspihive/raspihiveWebsite/master/public/favicon.ico"
@@ -870,7 +873,7 @@ certbot --nginx" (Domain needed) ')
             msg.setText("Hornet Node is not installed. Please install it first")
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
-            
+
 
     def install_nginx_certbot(self):
         if path.exists("/etc/nginx/") == True:
@@ -1176,11 +1179,12 @@ class hornet_log_win(Qt.QMainWindow):
 
 #End of Hornet Log
 
+
 #Mainwindow
 def main():
     # create pyqt5 app
     app = Qt.QApplication(sys.argv)
-
+    
     screen = app.primaryScreen()
     #print('Screen: %s' % screen.name())
     size = screen.size()
