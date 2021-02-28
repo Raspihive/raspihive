@@ -750,12 +750,12 @@ class Window1(QMainWindow):
         return main
     #End of Quit-button
 
-    def status_hornet():
+    def status_hornet(self):
         self.cams = hornet_status_win()
         self.cams.show()
         #self.close()
 
-    def hornet_log_window(): # Test
+    def hornet_log_window(self): # Test
         self.cams = hornet_log_win()
         self.cams.show()
         #self.close()
