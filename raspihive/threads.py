@@ -12,14 +12,14 @@ from PyQt5.QtWidgets import (
     qApp
 )
 from PyQt5.QtCore import QThread, pyqtSignal
-from .helpers import os_parse
+#from .helpers import os_parse
 ##############################################################################
 #Thread for OS Update
 class MyThread_os_update(QThread):
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
-        process = subprocess.Popen(os_parse("pkexec apt update -y && \
+        process = subprocess.Popen(("pkexec apt update -y && \
             sudo apt full-upgrade -y && sudo apt autoremove -y \
                 && sudo apt clean -y && sudo apt autoclean -y"), \
                     stdout=subprocess.PIPE, shell = True)
@@ -51,7 +51,7 @@ class MyThread_packages(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("pkexec apt update -y && \
+        process = subprocess.Popen(("pkexec apt update -y && \
             sudo apt install -y build-essential && \
                 sudo apt install -y git && sudo apt install -y snapd \
                     && sudo snap install go --classic"), \
@@ -86,7 +86,7 @@ class MyThread_hornet_update(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("pkexec service hornet stop && \
+        process = subprocess.Popen(("pkexec service hornet stop && \
             sudo apt update && sudo apt -y upgrade hornet && \
                 sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
 
@@ -117,7 +117,7 @@ class MyThread_hornet_install(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse('pkexec apt update -y && sudo apt autoremove -y && sudo apt install -y build-essential \
+        process = subprocess.Popen(('pkexec apt update -y && sudo apt autoremove -y && sudo apt install -y build-essential \
             && sudo apt install -y git && sudo apt install -y snapd \
             && sudo snap install go --classic \
             && sudo apt install -y ufw && sudo ufw allow 15600/tcp && \
@@ -158,7 +158,7 @@ class MyThread_hornet_uninstall(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("pkexec apt -qq purge hornet -y  \
+        process = subprocess.Popen(("pkexec apt -qq purge hornet -y  \
             && sudo rm -r /etc/apt/sources.list.d/hornet.list "), \
             stdout=subprocess.PIPE, shell = True)
 
@@ -189,7 +189,7 @@ class MyThread_nginx_certbot_install(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse("pkexec apt update -y \
+        process = subprocess.Popen(("pkexec apt update -y \
         && sudo apt -y upgrade && sudo apt install -y nginx \
         && sudo apt install -y ufw && sudo ufw allow 'Nginx Full' && sudo apt install -y apache2-utils \
         && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive && \
@@ -225,7 +225,7 @@ class MyThread_nginx_certbot_uninstall(QThread):
     def run(self):
         if path.exists("/etc/nginx/") == True:
             #print("Test packages")
-            process = subprocess.Popen(os_parse("pkexec apt update -y && \
+            process = subprocess.Popen(("pkexec apt update -y && \
             sudo apt purge -y nginx nginx-common && sudo apt purge -y --auto-remove apache2-utils \
             && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y \
             && sudo apt autoremove -y\
