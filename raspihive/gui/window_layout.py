@@ -1,13 +1,4 @@
 import sys, time, os, requests, pwd, grp
-from PyQt5.QtWidgets import (
-    QApplication,
-    QWidget,
-    QMessageBox,
-    QProgressBar,
-    QPushButton,
-    QAction,
-    qApp
-)
 from PyQt5 import QtGui, QtWidgets, Qt, QtCore
 from subprocess import Popen
 from PyQt5.QtWidgets import (
@@ -19,7 +10,13 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QApplication,
     QWidget,
-    QLabel
+    QLabel,
+    QApplication,
+    QMessageBox,
+    QProgressBar,
+    QPushButton,
+    QAction,
+    qApp
 )
 
 from PyQt5.QtGui import QIcon, QFont, QImage
@@ -30,6 +27,7 @@ from raspihive.progress_bars import *
 from raspihive.helpers import os_parse
 from raspihive.hornet.log_win import hornet_log_win
 from raspihive.hornet.status_win import hornet_status_win
+from raspihive.functions import functions
 
 ICON_IMAGE_URL = "https://raw.githubusercontent.com/Raspihive/raspihiveWebsite/master/public/favicon.ico"
 
@@ -267,9 +265,7 @@ class Window1(QMainWindow):
 
     # End buttons
 
-	# -----------------
-    ####################### Start pages ##############
-
+    # Pages
     #Update menu tab
     def ui1(self):
         main = QWidget()
@@ -288,9 +284,8 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.system_update)
+        button.clicked.connect(functions.system_update)
         #End button 1
-
 
         #Start button 2
         button = QPushButton('Update packages', main)
@@ -302,7 +297,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.packages_update)
+        button.clicked.connect(functions.packages_update)
         #End button 2
 
         #Start button 3
@@ -315,7 +310,9 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.raspihive_update)
+        button.clicked.connect(functions.raspihive_update)
+        QMessageBox.about(self, "Raspihive", "Raspihive updated. Please close and start Raspihive again, \
+            that changes take effect")
         #End button 3
 
         #Start button 4
@@ -328,7 +325,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.hornet_update)
+        button.clicked.connect(functions.hornet_update)
         #End button 4
 
         #Create label
@@ -368,7 +365,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.hornet_install)
+        button.clicked.connect(functions.hornet_install)
         #End button 1
 
         #Start button 2
@@ -381,7 +378,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.hornet_uninstall)
+        button.clicked.connect(functions.hornet_uninstall)
         #End button 2
 
         #Start button 3
@@ -395,7 +392,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.install_nginx_certbot)
+        button.clicked.connect(functions.install_nginx_certbot)
         #End button 3
 
         #Start button 4
@@ -410,7 +407,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.certbot)
+        button.clicked.connect(functions.certbot)
         #End button 4
 
         #Start button 5
@@ -424,7 +421,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.uninstall_nginx_certbot)
+        button.clicked.connect(functions.uninstall_nginx_certbot)
         #End button 5
 
         #Create label
@@ -479,7 +476,7 @@ class Window1(QMainWindow):
         button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
         #add action
-        button.clicked.connect(self.packages_update)
+        button.clicked.connect(functions.packages_update)
         #End button 2
         """
 
@@ -520,7 +517,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.start_hornet)
+        button.clicked.connect(functions.start_hornet)
         #End button 1
 
         #Start button 2
@@ -533,7 +530,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.stop_hornet)
+        button.clicked.connect(functions.stop_hornet)
         #End button 2
 
         #Start button 3
@@ -546,7 +543,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.restart_hornet)
+        button.clicked.connect(functions.restart_hornet)
         #End button 3
 
         #Start button 4
@@ -585,7 +582,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.mainnetDB_hornet)
+        button.clicked.connect(functions.mainnetDB_hornet)
         #End button 6
 
         #Create label
@@ -607,26 +604,26 @@ class Window1(QMainWindow):
         return main
     #End of invisible Hornet Node Control Center
 
-    #Dashboard access
+    # Dashboard access
     def ui5(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
         main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394
-        #Background Image + button image
+        # Background Image + button image
 
 
-        #Start button 1
+        # Start button 1
         button = QPushButton(' Hornet Dashboard ', main)
-        #Hover text
+        # Hover text
         button.setToolTip(' Open Hornet Dashboard ')
-        #button.move(10,50)
+        # button.move(10,50)
         # setting geometry of button x, y, width, height
         button.setGeometry(40, 50, 180, 60)
-        #button regular state
+        # button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
-        #add action to the button
-        button.clicked.connect(self.hornet_dashboard_access)
-        #End button 1
+        # add action to the button
+        button.clicked.connect(functions.hornet_dashboard_access)
+        # End button 1
 
         """
         #Start button 2
@@ -640,7 +637,7 @@ class Window1(QMainWindow):
         button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
         #add action
-        button.clicked.connect(self.hornet_uninstall)
+        button.clicked.connect(functions.hornet_uninstall)
         #End button 2
         """
 
@@ -682,7 +679,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.about)
+        button.clicked.connect(functions.about)
         #End button 1
 
         #Start button 2
@@ -695,7 +692,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.preparations)
+        button.clicked.connect(functions.preparations)
         #End button 2
 
         #Start button 3
@@ -708,7 +705,7 @@ class Window1(QMainWindow):
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.report)
+        button.clicked.connect(functions.report)
         #End button 3
 
         """
@@ -723,7 +720,7 @@ class Window1(QMainWindow):
         button.setStyleSheet('background-color: #2B3440; color: white')
         #Background image for button
         #add action
-        button.clicked.connect(self.hornet_uninstall)
+        button.clicked.connect(functions.hornet_uninstall)
         #End button 2
         """
 
@@ -753,299 +750,12 @@ class Window1(QMainWindow):
         return main
     #End of Quit-button
 
-    #End pages
-    ##############################################################################
-
-    def system_update(self):
-        app = Window_os_update()
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: \
-        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("OS Update")
-        msg.setInformativeText("OS update is running")
-        msg.setWindowTitle("OS Update")
-        msg.setDetailedText("Just close the window\
-            if the progress bar reaches 100 %, #IOTAstrong")
-        show = msg.exec_()  # this will show our messagebox
-
-    def packages_update(self):
-        app = Window_packages()
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: \
-        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Packages Update")
-        msg.setInformativeText("Packages update is running")
-        msg.setWindowTitle("Packages Update")
-        msg.setDetailedText("Just close the window\
-            if the progress bar reaches 100 %, #IOTAstrong")
-        show = msg.exec_()  # this will show our messagebox
-
-    #IMPORATANT: Raspihive needs to be cloned into the "/home"-folder, then restart is necessary.
-    def raspihive_update(self):
-        #print("Test packages")
-        #os.chdir('/tmp') 
-        #os.system(" cd /tmp && sudo find -name raspihive -exec rm -rf {} +")
-        #if path.exists("/home/pi/raspihive") == True:
-        print("Update Raspihive")
-        #process = subprocess.Popen(os_parse("sudo chown pi:pi -R /home/pi/raspihive "), stdout=subprocess.PIPE, shell = True)
-        #os.system("sudo find -name raspihive -exec rm -rf {} +")
-        #shutil.rmtree('/home/pi/raspihive')
-        p=subprocess.Popen("cd /home && sudo rm -r raspihive && \
-        sudo git clone https://github.com/Raspihive/raspihive.git /home/raspihive", stdout=subprocess.PIPE, shell = True)
-        #else:
-        #print("ELSE-TEST")
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-        QMessageBox.about(self, "Raspihive", "Raspihive updated. Please close and start Raspihive again, \
-            that changes take effect")
-
-    def hornet_update(self):
-        app = Window_hornet_update()
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: \
-        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Hornet Update")
-        msg.setInformativeText("Hornet update is running")
-        msg.setWindowTitle("Hornet Update")
-        msg.setDetailedText("Just close the window\
-            if the progress bar reaches 100 %, #IOTAstrong")
-        show = msg.exec_()  # this will show our messagebox
-
-    def hornet_install(self):
-        if path.exists("/var/lib/hornet/") == True:
-            print("Hornet Node is already installed. Please uninstall it first")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Install Nginx + Certbot")
-            msg.setText("Hornet Node is already installed. Please uninstall it first")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
-        elif path.exists("/var/lib/hornet") == False:
-            app = Window_hornet_install()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Install Hornet")
-            msg.setInformativeText("Installation of Hornet is running")
-            msg.setWindowTitle("Install Hornet")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
-
-    def hornet_uninstall(self):
-        if path.exists("/var/lib/hornet/") == True:
-            app = Window_hornet_uninstall()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Uninstall Hornet")
-            msg.setInformativeText("Uninstallation of Hornet is running")
-            msg.setWindowTitle("Uninstall Hornet")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
-        elif path.exists("/var/lib/hornet") == False:
-            print("Hornet Node is not installed. Please install it first")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Install Nginx + Certbot")
-            msg.setText("Hornet Node is not installed. Please install it first")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
-
-    def install_nginx_certbot(self):
-        if path.exists("/etc/nginx/") == True:
-            print("Nginx + Certbot is already installed. Please uninstall it first")
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Install Nginx + Certbot")
-            msg.setText("Nginx + Certbot is already installed. Please uninstall it first")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
-        elif path.exists("/etc/nginx/") == False:
-            app = Window_nginx_certbot_install()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Install Nginx + Certbot")
-            msg.setInformativeText("Install Nginx + Certbot is running")
-            msg.setWindowTitle("Install Nginx + Certbot")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
-
-        # Nginx configuration
-        if path.exists("/etc/nginx/sites-available/") == True:
-            os.system("sudo chown pi:pi -R /etc/nginx/")
-            #os.chown("/etc/nginx/sites-available/default", 100, -1)
-            try: # temporarily fix that raspihive does not crash after function call
-                f = open("/etc/nginx/sites-available/default", "w")
-                f.write("server { \n listen 80 default_server; \
-                \n listen [::]:80 default_server; \n server_tokens off;  \
-                \n server_name _; \n location /node { \
-                \n proxy_pass http://127.0.0.1:14265/; \n } \
-                \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \
-                \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \
-                \n proxy_set_header Connection "'"upgrade"'"; \
-                \n proxy_read_timeout 86400; \n } \n \n location / { \
-                \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \
-                \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
-                f.close()
-                os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-            except: # occurs because of permission denied error
-                print("An exception occurred - Config not written - FAILURE") 
-        else:
-            print("Config not written - FAILURE")
-        """
-        #Open LX Terminal (Raspberry Pi OS)
-        cmd = "lxterminal "
-        subprocess.check_output(cmd, shell=True)
-        #Open Gnome-Terminal (Ubuntu)
-        cmd = "gnome-terminal "
-        subprocess.check_output(cmd, shell=True)
-        #print("I'm done!")
-        print(cmd)
-        """
-
-        #os.system(('sudo certbot --nginx'))
-        #QMessageBox.about(self, "Certbot", "Certbot")
-
-    def certbot(self):
-        os.system("lxterminal") #just opens the terminal
-        os.system("gnome-terminal") #just opens the terminal
-
-    def uninstall_nginx_certbot(self):
-        if path.exists("/etc/nginx/") == True:
-            app = Window_nginx_certbot_uninstall()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Uninstall Nginx + Certbot")
-            msg.setInformativeText("Uninstall Nginx + Certbot is running")
-            msg.setWindowTitle("Uninstall Nginx + Certbot")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
-        else:
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Install Nginx + Certbot")
-            msg.setText("Nginx + Certbot is not installed. Please install it first")
-            #msg.setInformativeText("informative text, ya!")
-            x = msg.exec_()  # this will show our messagebox
-            print("Nginx + Certbot is not installed. Please install it first")
-
-    def start_hornet(self):
-        p=subprocess.Popen("pkexec service hornet start", stdout=subprocess.PIPE, shell = True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-        QMessageBox.about(self, "Hornet", "Hornet node started")
-
-    def stop_hornet(self):
-        p=subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell = True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-        QMessageBox.about(self, "Hornet", "Hornet node stopped")
-
-    def restart_hornet(self):
-        p=subprocess.Popen("pkexec service hornet restart", stdout=subprocess.PIPE, shell = True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-        QMessageBox.about(self, "Hornet", "Hornet node restarted")
-
-    def status_hornet(self):
+    def status_hornet():
         self.cams = hornet_status_win()
         self.cams.show()
         #self.close()
 
-    def hornet_log_window(self): # Test
+    def hornet_log_window(): # Test
         self.cams = hornet_log_win()
         self.cams.show()
         #self.close()
-
-    def mainnetDB_hornet(self):
-        p=subprocess.Popen("pkexec service hornet stop && \
-            sudo rm -r /var/lib/hornet/mainnetdb && \
-            sudo service hornet start", stdout=subprocess.PIPE, shell = True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print (line.strip())
-            sys.stdout.flush()
-        QMessageBox.about(self, "Hornet", "Hornet DB successfully deleted")
-
-    def hornet_dashboard_access(self):
-        subprocess.Popen("sudo -upi chromium http://localhost",shell = True)
-        subprocess.Popen("sudo -upi firefox http://localhost",shell = True)
-        #os.system('sudo -upi chromium http://localhost')
-        subprocess.Popen("sudo -uubuntu firefox http://localhost",shell = True)
-        #os.system('sudo -uubuntu firefox http://localhost')
-        subprocess.Popen("sudo -ubeekeeper firefox http://localhost",shell = True)
-        #os.system('sudo -ubeekeeper firefox http://localhost')
-
-    def about(self):
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
-        msg.setIcon(QMessageBox.Information)
-        msg.setWindowTitle("About")
-        msg.setText("The Plug and Play solution for a Raspberry Pi\n\
-        IOTA Fullnode!\n\n\
-        Raspihive: Version 2.0\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
-        #msg.setInformativeText("informative text, ya!")
-        x = msg.exec_()  # this will show our messagebox
-
-    def preparations(self):
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
-        msg.setIcon(QMessageBox.Information)
-        msg.setWindowTitle("Preparations")
-        msg.setText("The following ports are important for a flawless node\
-        operation. Allow the following basic ports in your router settings: \n \n 14626 UDP\
-        - Autopeering port \n \n 15600 TCP - Gossip (neighbors) port \n \n 80 TCP\
-        - for Certbot \n \n 443 TCP for Certbot")
-        #msg.setInformativeText("informative text, ya!")
-        x = msg.exec_()  # this will show our messagebox
-
-    def report(self):
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
-        msg.setIcon(QMessageBox.Information)
-        msg.setWindowTitle("Report")
-        msg.setText("If you found a bug or experience any issues, please write us \
-            as at: www.raspihive.org or get directly in touch by sending \
-            an e-mail to: piota@mail.de \nThanks for your feedback!")
-        #msg.setInformativeText("informative text, ya!")
-        x = msg.exec_()  # this will show our messagebox

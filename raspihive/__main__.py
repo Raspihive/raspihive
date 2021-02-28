@@ -4,15 +4,6 @@
 ###############################################################################
 # libraries
 import sys, time, os, requests, pwd, grp
-from PyQt5.QtWidgets import (
-    QApplication,
-    QWidget,
-    QMessageBox,
-    QProgressBar,
-    QPushButton,
-    QAction,
-    qApp
-)
 from PyQt5 import QtGui, QtWidgets, Qt, QtCore
 from subprocess import Popen
 from PyQt5.QtWidgets import (
@@ -24,7 +15,13 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QApplication,
     QWidget,
-    QLabel
+    QLabel,
+    QApplication,
+    QMessageBox,
+    QProgressBar,
+    QPushButton,
+    QAction,
+    qApp
 )
 
 from PyQt5.QtGui import QIcon, QFont, QImage
