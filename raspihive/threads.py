@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QThread, pyqtSignal
 from raspihive.helpers import os_parse
+
 ##############################################################################
 #Thread for OS Update
 class MyThread_os_update(QThread):
