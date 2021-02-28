@@ -28,8 +28,6 @@ from raspihive.helpers import os_parse
 from raspihive.hornet.log_win import hornet_log_win
 from raspihive.hornet.status_win import hornet_status_win
 
-ICON_IMAGE_URL = "https://raw.githubusercontent.com/Raspihive/raspihiveWebsite/master/public/favicon.ico"
-
 
 def system_update():
     app = Window_os_update()

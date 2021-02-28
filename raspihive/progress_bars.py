@@ -4,7 +4,7 @@
 from PyQt5.QtWidgets import QProgressBar, QDialog
 from PyQt5.QtWidgets import (QVBoxLayout)
 
-from .threads import *
+from raspihive.threads import *
 
 ##############################################################################
 #Progress bar for OS Update

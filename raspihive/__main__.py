@@ -28,13 +28,9 @@ from PyQt5.QtGui import QIcon, QFont, QImage
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
-from .progress_bars import *
-from .helpers import os_parse
-from .gui.window_layout import Window1
-###########################################################################
-#Global variables
-ICON_IMAGE_URL = "https://raw.githubusercontent.com/Raspihive/raspihiveWebsite/master/public/favicon.ico"
-#####################################Start of Window frames################
+from raspihive.progress_bars import *
+from raspihive.helpers import os_parse
+from raspihive.gui.window_layout import Window1
 
 def main():
     # create pyqt5 app
@@ -63,7 +59,6 @@ def main():
 
     # start the app
     sys.exit(app.exec_())
-
 
 if __name__ == '__main__':
     main()
