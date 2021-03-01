@@ -192,7 +192,7 @@ class MyThread_nginx_certbot_install(QThread):
         process = subprocess.Popen(("pkexec apt update -y \
         && sudo apt -y upgrade && sudo apt install -y nginx \
         && sudo apt install -y ufw && sudo ufw allow 'Nginx Full' && sudo apt install -y apache2-utils \
-        && sudo htpasswd -c /etc/nginx/.htpasswd Raspihive && \
+        && sudo htpasswd -Bc /etc/nginx/.htpasswd Raspihive && \
         sudo apt install software-properties-common -y && sudo apt update \
         && sudo apt install certbot python3-certbot-nginx -y \
         "), stdout=subprocess.PIPE, shell = True)
