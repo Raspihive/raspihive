@@ -42,7 +42,6 @@ class MyThread_os_update(QThread):
                 if cnt == 100:
                     print ("CNT 100 erreicht")
                     sys.stdout.flush()
-                    break
                 sys.stdout.flush()
 ##############################################################################
 #Thread for packages update
@@ -75,7 +74,6 @@ class MyThread_packages(QThread):
                 if cnt == 100:
                     print ("CNT 100 erreicht")
                     sys.stdout.flush()
-                    break
                 sys.stdout.flush()
 ##############################################################################
 
@@ -108,7 +106,6 @@ class MyThread_hornet_update(QThread):
                 if cnt == 100:
                     print ("CNT 100 erreicht")
                     sys.stdout.flush()
-                    break
                 sys.stdout.flush()
 ##############################################################################
 #Thread for hornet install
@@ -149,7 +146,6 @@ class MyThread_hornet_install(QThread):
                 if cnt == 100:
                     print ("CNT 100 erreicht")
                     sys.stdout.flush()
-                    break
                 sys.stdout.flush()
 ##############################################################################
 #Thread for hornet uninstall
@@ -180,7 +176,6 @@ class MyThread_hornet_uninstall(QThread):
                 if cnt == 100:
                     print ("CNT 100 erreicht")
                     sys.stdout.flush()
-                    break
                 sys.stdout.flush()
 ##############################################################################
 #Thread for nginx+certbot install
@@ -206,7 +201,7 @@ class MyThread_nginx_certbot_install(QThread):
             print("STARTING")
             cnt = 1
             while cnt <= 100:
-                cnt += 0.2
+                cnt += 0.1
                 time.sleep(0.1)
                 line = process.stdout.readline()
                 self.change_value.emit(cnt)
@@ -215,7 +210,6 @@ class MyThread_nginx_certbot_install(QThread):
                 if cnt == 100:
                     print ("CNT 100 erreicht")
                     sys.stdout.flush()
-                    break
                 sys.stdout.flush()
 ##############################################################################
 #Thread for nginx+certbot uninstall
@@ -249,7 +243,6 @@ class MyThread_nginx_certbot_uninstall(QThread):
                     if cnt == 100:
                         print ("CNT 100 erreicht")
                         sys.stdout.flush()
-                        break
                     sys.stdout.flush()
         else:
             print("Nginx not installed")
