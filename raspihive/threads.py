@@ -19,8 +19,8 @@ class MyThread_os_update(QThread):
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
-        process = subprocess.Popen(("pkexec apt update -y && \
-            sudo apt full-upgrade -y && sudo apt autoremove -y \
+        process = subprocess.Popen(("pkexec apt-get update -y && \
+            sudo apt-get full-upgrade -y && sudo apt-get autoremove -y \
                 && sudo apt clean -y && sudo apt autoclean -y"), \
                     stdout=subprocess.PIPE, shell = True)
 
@@ -50,9 +50,9 @@ class MyThread_packages(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(("pkexec apt update -y && \
-            sudo apt install -y build-essential && \
-                sudo apt install -y git && sudo apt install -y snapd \
+        process = subprocess.Popen(("pkexec apt-get update -y && \
+            sudo apt-get install -y build-essential && \
+                sudo apt-get install -y git && sudo apt-get install -y snapd \
                     && sudo snap install go --classic"), \
                         stdout=subprocess.PIPE, shell = True)
 
@@ -85,7 +85,7 @@ class MyThread_hornet_update(QThread):
     def run(self):
         #print("Test packages")
         process = subprocess.Popen(("pkexec service hornet stop && \
-            sudo apt update && sudo apt -y upgrade hornet && \
+            sudo apt-get update && sudo apt-get -y upgrade hornet && \
                 sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
@@ -114,15 +114,15 @@ class MyThread_hornet_install(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(('pkexec apt update -y && sudo apt autoremove -y && sudo apt install -y build-essential \
-            && sudo apt install -y git && sudo apt install -y snapd \
+        process = subprocess.Popen(('pkexec apt-get update -y && sudo apt autoremove -y && sudo apt-get install -y build-essential \
+            && sudo apt-get install -y git && sudo apt-get install -y snapd \
             && sudo snap install go --classic \
-            && sudo apt install -y ufw && sudo ufw allow 15600/tcp && \
+            && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && \
             sudo ufw allow 14626/udp && sudo ufw limit openssh && \
             sudo ufw enable && sudo apt install sshguard -y && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
             && echo "deb http://ppa.hornet.zone stable main" | sudo tee -a  /etc/apt/sources.list.d/hornet.list \
-            && sudo apt update \
-            && sudo apt install hornet && sudo systemctl enable hornet.service \
+            && sudo apt-get update \
+            && sudo apt-get install hornet && sudo systemctl enable hornet.service \
             && sudo service hornet start '), stdout=subprocess.PIPE, shell = True)
         
 
@@ -185,11 +185,11 @@ class MyThread_nginx_certbot_install(QThread):
     def run(self):
         #print("Test packages")
         process = subprocess.Popen(("pkexec apt update -y \
-        && sudo apt -y upgrade && sudo apt install -y nginx \
-        && sudo apt install -y ufw && sudo ufw allow 'Nginx Full' && sudo apt install -y apache2-utils \
+        && sudo apt-get -y upgrade && sudo apt-get install -y nginx \
+        && sudo apt-get install -y ufw && sudo ufw allow 'Nginx Full' && sudo apt-get install -y apache2-utils \
         && sudo htpasswd -Bc /etc/nginx/.htpasswd Raspihive && \
-        sudo apt install software-properties-common -y && sudo apt update \
-        && sudo apt install certbot python3-certbot-nginx -y \
+        sudo apt-get install software-properties-common -y && sudo apt-get update \
+        && sudo apt-get install certbot python3-certbot-nginx -y \
         "), stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
