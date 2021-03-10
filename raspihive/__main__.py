@@ -1035,7 +1035,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version 2.0\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
+Raspihive: Version 2.1\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
