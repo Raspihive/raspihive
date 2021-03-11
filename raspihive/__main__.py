@@ -210,7 +210,7 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.0')
+        self.statusBar().showMessage('Raspihive Version 2.1')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
         #End of status bar
 
@@ -1020,12 +1020,12 @@ certbot --nginx" (Domain needed) ')
 
 
     def hornet_dashboard_access(self):
-        subprocess.Popen("sudo -upi chromium http://localhost",shell = True)
-        subprocess.Popen("sudo -upi firefox http://localhost",shell = True)
+        subprocess.Popen("sudo -upi chromium http://localhost:8081",shell = True)
+        subprocess.Popen("sudo -upi firefox http://localhost:8081",shell = True)
         #os.system('sudo -upi chromium http://localhost')
-        subprocess.Popen("sudo -uubuntu firefox http://localhost",shell = True)
+        subprocess.Popen("sudo -uubuntu firefox http://localhost:8081",shell = True)
         #os.system('sudo -uubuntu firefox http://localhost')
-        subprocess.Popen("sudo -ubeekeeper firefox http://localhost",shell = True)
+        subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081",shell = True)
         #os.system('sudo -ubeekeeper firefox http://localhost')
 
     def about(self):
