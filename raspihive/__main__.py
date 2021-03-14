@@ -1020,13 +1020,23 @@ certbot --nginx" (Domain needed) ')
 
 
     def hornet_dashboard_access(self):
-        subprocess.Popen("sudo -upi chromium http://localhost:8081",shell = True)
-        subprocess.Popen("sudo -upi firefox http://localhost:8081",shell = True)
-        #os.system('sudo -upi chromium http://localhost')
-        subprocess.Popen("sudo -uubuntu firefox http://localhost:8081",shell = True)
-        #os.system('sudo -uubuntu firefox http://localhost')
-        subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081",shell = True)
-        #os.system('sudo -ubeekeeper firefox http://localhost')
+        if path.exists("/etc/letsencrypt/live") == True:
+            subprocess.Popen("sudo -upi chromium http://127.0.0.1",shell = True)
+            subprocess.Popen("sudo -upi firefox http://127.0.0.1",shell = True)
+            #os.system('sudo -upi chromium http://localhost')
+            subprocess.Popen("sudo -uubuntu firefox http://127.0.0.1",shell = True)
+            #os.system('sudo -uubuntu firefox http://localhost')
+            subprocess.Popen("sudo -ubeekeeper firefox http://127.0.0.1",shell = True)
+            #os.system('sudo -ubeekeeper firefox http://localhost')
+        else:
+            subprocess.Popen("sudo -upi chromium http://localhost:8081",shell = True)
+            subprocess.Popen("sudo -upi firefox http://localhost:8081",shell = True)
+            #os.system('sudo -upi chromium http://localhost')
+            subprocess.Popen("sudo -uubuntu firefox http://localhost:8081",shell = True)
+            #os.system('sudo -uubuntu firefox http://localhost')
+            subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081",shell = True)
+            #os.system('sudo -ubeekeeper firefox http://localhost')
+
 
     def about(self):
         msg = QMessageBox()
