@@ -210,7 +210,7 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.1')
+        self.statusBar().showMessage('Raspihive Version 2.1.1')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
         #End of status bar
 
@@ -1007,7 +1007,7 @@ certbot --nginx" (Domain needed) ')
 
     def mainnetDB_hornet(self):
         p=subprocess.Popen("pkexec service hornet stop && \
-            sudo rm -r /var/lib/hornet/mainnetdb && \
+            sudo rm -r /var/lib/hornet/mainnetdb && sudo rm -r /var/lib/hornet/snapshots &&\
             sudo service hornet start", stdout=subprocess.PIPE, shell = True)
         while True:
             #print ("Looping")
@@ -1045,7 +1045,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version 2.1\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
+Raspihive: Version 2.1.1\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
