@@ -210,7 +210,7 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.1.1')
+        self.statusBar().showMessage('Raspihive Version 2.1.2')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
         #End of status bar
 
@@ -912,8 +912,7 @@ certbot --nginx" (Domain needed) ')
                 \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \
                 \n proxy_set_header Connection "'"upgrade"'"; \
                 \n proxy_read_timeout 86400; \n } \n \n location / { \
-                \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \
-                \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
+                \n proxy_pass http://127.0.0.1:8081; \n   } \n } \n")
                 f.close()
                 os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
             except: # occurs because of permission denied error
@@ -1045,7 +1044,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version 2.1.1\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
+Raspihive: Version 2.1.2\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
