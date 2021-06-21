@@ -32,6 +32,8 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from .progress_bars import *
+
+
 #from .helpers import os_parse
 
 #test import for cpu and ram values etc. 
@@ -210,7 +212,7 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.1.2')
+        self.statusBar().showMessage('Raspihive Version 2.1.3')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
         #End of status bar
 
@@ -433,6 +435,19 @@ certbot --nginx" (Domain needed) ')
         #add action to the button
         button.clicked.connect(self.uninstall_nginx_certbot)
         #End button 5
+
+        #Start button 6
+        button = QPushButton('Auto renewing SSL cert', main)
+        #Hover text
+        button.setToolTip('Auto renewing SSL cert')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(420, 50, 180, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.auto_renew_ssl)
+        #End button 6
 
         #Create label
         main.labelA = QtWidgets.QLabel(main)
@@ -960,6 +975,15 @@ certbot --nginx" (Domain needed) ')
             x = msg.exec_()  # this will show our messagebox
             print("Nginx + Certbot is not installed. Please install it first")
             
+    def auto_renew_ssl(self):
+        os.system("pkexec chown pi:pi -R /var/spool/cron/crontabs")
+        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
+        process = subprocess.Popen((' echo "0 12 * * * /usr/bin/certbot renew --quiet" | tee -a /var/spool/cron/crontabs/pi'), stdout=subprocess.PIPE, shell = True)
+        #f = open("crontab -e", "w") # 
+        #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
+        #f.close() 
+        QMessageBox.about(self, "SSL-certificate", "Auto renewing enabled")
+        
 
     def start_hornet(self):
         p=subprocess.Popen("pkexec service hornet start", stdout=subprocess.PIPE, shell = True)
@@ -1044,7 +1068,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version 2.1.2\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
+Raspihive: Version 2.1.3\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
