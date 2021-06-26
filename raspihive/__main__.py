@@ -333,12 +333,25 @@ class Window1(QMainWindow):
         button.setToolTip('Update Hornet')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 130, 180, 60)
+        button.setGeometry(220, 150, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
         button.clicked.connect(self.hornet_update)
         #End button 4
+
+        #Start button 5
+        button = QPushButton(' Enable auto updates ', main)
+        #Hover text
+        button.setToolTip(' Automatic updates ')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(20, 150, 180, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.automatic_updates)
+        #End button 5
 
         #Create label
         main.labelA = QtWidgets.QLabel(main)
@@ -974,7 +987,7 @@ certbot --nginx" (Domain needed) ')
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
             print("Nginx + Certbot is not installed. Please install it first")
-            
+  
     def auto_renew_ssl(self):
         os.system("pkexec chown pi:pi -R /var/spool/cron/crontabs")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
@@ -983,7 +996,17 @@ certbot --nginx" (Domain needed) ')
         #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
         #f.close() 
         QMessageBox.about(self, "SSL-certificate", "Auto renewing enabled")
-        
+
+    def automatic_updates(self):
+        os.system("pkexec chown pi:pi -R /etc/crontab")
+        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
+        process = subprocess.Popen((' echo "50 19 * * 3 root /usr/bin/apt update -q -y >> /var/log/apt/automaticupdates.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
+        process = subprocess.Popen((' echo "0 20 * * 3 root /usr/bin/apt upgrade -q -y >> /var/log/apt/automaticupdates.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
+        #f = open("crontab -e", "w") # 
+        #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
+        #f.close() 
+        QMessageBox.about(self, "Automatic update", "Automatic updates enabled")
+
 
     def start_hornet(self):
         p=subprocess.Popen("pkexec service hornet start", stdout=subprocess.PIPE, shell = True)
