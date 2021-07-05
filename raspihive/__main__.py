@@ -3,7 +3,7 @@
 
 ###############################################################################
 # libraries
-import sys, time, os, requests, pwd, grp
+import sys, time, os, requests, pwd, grp, stat
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -301,7 +301,7 @@ class Window1(QMainWindow):
                 datafile = f.readlines()
             found = False  # This isn't really necessary
             for line in datafile:
-                if "upgrade" in line:
+                if "update.sh" in line:
                     #print("success")
                     # adding background color to indicator
                     checkbox.setStyleSheet("QCheckBox::indicator"
@@ -1066,21 +1066,23 @@ certbot --nginx" (Domain needed) ')
             print("Nginx + Certbot is not installed. Please install it first")
 
     def enable_automatic_updates(self):
-        os.system("pkexec chown pi:pi -R /etc/crontab")
-        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
-        process = subprocess.Popen((' echo "50 19 * * * root /usr/bin/apt update -q -y >> /var/log/apt/automaticupdates.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
-        process = subprocess.Popen((' echo "0 20 * * * root /usr/bin/apt upgrade -q -y >> /var/log/apt/automaticupdates.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
-        #f = open("crontab -e", "w") # 
-        #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
-        #f.close() 
+        os.system("pkexec chown pi:pi -R /home/ ")
+        f = open("/home/update.sh", "w") # 
+        f.write("apt-get update && apt-get upgrade -y") 
+        f.close() 
+        os.chmod('/home/update.sh', stat.S_IEXEC)
+        #os.system("pkexec chown paul:paul -R /etc/crontab")
+        process = subprocess.Popen((' echo "0 20 * * * root /home/update.sh" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
+        #process = subprocess.Popen((' echo "0 20 * * * root /usr/bin/apt upgrade -q -y >> /var/log/apt/automaticupdates.log" | tee -a /'), stdout=subprocess.PIPE, shell = True)
         QMessageBox.about(self, "Automatic update", "Automatic updates enabled\nPlease restart Raspihive that changes take effect")
 
     def disable_automatic_updates(self):
-        os.system("pkexec chown pi:pi -R /etc/crontab")
+        os.system("pkexec rm -r /home/update.sh ")
+        #os.system("pkexec chown paul:paul -R /etc/crontab")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
         filename = '/etc/crontab' 
-        line_to_delete = 24
-        line_to_delete2 = 25
+        line_to_delete = 23
+        line_to_delete2 = 24
         initial_line = 1
         file_lines = {}
 
