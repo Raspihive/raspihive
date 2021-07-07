@@ -1067,7 +1067,7 @@ certbot --nginx" (Domain needed) ')
 
     def enable_automatic_updates(self):
         #os.system("pkexec chown pi:pi -R /home/ ")
-        os.system("sudo chown pi:pi -R /etc/crontab")
+        os.system("pkexec chown pi:pi -R /etc/crontab")
         f = open("/home/update.sh", "w") # 
         f.write("apt-get update && apt-get full-upgrade -y") 
         f.close() 
@@ -1078,7 +1078,7 @@ certbot --nginx" (Domain needed) ')
         QMessageBox.about(self, "Automatic update", "Automatic updates enabled\nPlease restart Raspihive that changes take effect")
 
     def disable_automatic_updates(self):
-        os.system("sudo rm -r /home/update.sh ")
+        os.system("pkexec rm -r /home/update.sh ")
         os.system("sudo chown pi:pi -R /etc/crontab")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
         filename = '/etc/crontab' 
