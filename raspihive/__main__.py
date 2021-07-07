@@ -1066,19 +1066,20 @@ certbot --nginx" (Domain needed) ')
             print("Nginx + Certbot is not installed. Please install it first")
 
     def enable_automatic_updates(self):
-        os.system("pkexec chown pi:pi -R /home/ ")
+        #os.system("pkexec chown pi:pi -R /home/ ")
+        os.system("sudo chown pi:pi -R /etc/crontab")
         f = open("/home/update.sh", "w") # 
-        f.write("apt-get update && apt-get upgrade -y") 
+        f.write("apt-get update && apt-get full-upgrade -y") 
         f.close() 
         os.chmod('/home/update.sh', stat.S_IEXEC)
-        #os.system("pkexec chown paul:paul -R /etc/crontab")
-        process = subprocess.Popen((' echo "0 20 * * * root /home/update.sh" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
+        process = subprocess.Popen((' echo "0 20 * * * root /home/update.sh >> /var/log/update_raspihive.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
+        os.system("sudo chown root:root -R /etc/crontab")
         #process = subprocess.Popen((' echo "0 20 * * * root /usr/bin/apt upgrade -q -y >> /var/log/apt/automaticupdates.log" | tee -a /'), stdout=subprocess.PIPE, shell = True)
         QMessageBox.about(self, "Automatic update", "Automatic updates enabled\nPlease restart Raspihive that changes take effect")
 
     def disable_automatic_updates(self):
-        os.system("pkexec rm -r /home/update.sh ")
-        #os.system("pkexec chown paul:paul -R /etc/crontab")
+        os.system("sudo rm -r /home/update.sh ")
+        os.system("sudo chown pi:pi -R /etc/crontab")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
         filename = '/etc/crontab' 
         line_to_delete = 23
@@ -1099,6 +1100,7 @@ certbot --nginx" (Domain needed) ')
                 f.write('{}\n'.format(line_content))
 
         f.close()
+        os.system("sudo chown root:root -R /etc/crontab")
         #print('Deleted line: {}'.format(line_to_delete))
         #print('Deleted line: {}'.format(line_to_delete2))
         
