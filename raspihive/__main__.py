@@ -1112,12 +1112,13 @@ certbot --nginx" (Domain needed) ')
         QMessageBox.about(self, "Automatic update", "Automatic updates disabled\nPlease restart Raspihive that changes take effect")
 
     def enable_auto_renew_ssl(self):
-        os.system("pkexec chown pi:pi -R /var/spool/cron/crontabs/pi")
+        os.system("pkexec chown pi:pi -R /var/spool/cron/crontabs/")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
         process = subprocess.Popen((' echo "0 12 * * * /usr/bin/certbot renew --quiet" | tee -a /var/spool/cron/crontabs/pi'), stdout=subprocess.PIPE, shell = True)
         #f = open("crontab -e", "w") # 
         #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
         #f.close() 
+        os.system("sudo chown root:root -R /var/spool/cron/crontabs/pi")
         QMessageBox.about(self, "SSL-certificate", "Auto renewing enabled\nPlease restart Raspihive that changes take effect")
 
     def disable_auto_renew_ssl(self):
@@ -1148,6 +1149,7 @@ certbot --nginx" (Domain needed) ')
         #f = open("crontab -e", "w") # 
         #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
         #f.close() 
+        os.system("sudo chown root:root -R /var/spool/cron/crontabs/")
         QMessageBox.about(self, "Automatic update", "Auto renewing disabled\nPlease restart Raspihive that changes take effect")
 
     def start_hornet(self):
