@@ -1067,7 +1067,7 @@ certbot --nginx" (Domain needed) ')
 
     def enable_automatic_updates(self):
         #os.system("pkexec chown pi:pi -R /home/ ")
-        os.system("pkexec chown pi:pi -R /etc/crontab")
+        os.system("pkexec chown pi:pi -R /etc/crontab && sudo chown pi:pi -R /home/")
         f = open("/home/update.sh", "w") # 
         f.write("apt-get update && apt-get full-upgrade -y") 
         f.close() 
