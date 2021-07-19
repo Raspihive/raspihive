@@ -3,7 +3,7 @@
 
 ###############################################################################
 # libraries
-import sys, time, os, requests, pwd, grp
+import sys, time, os, requests, pwd, grp, stat
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -11,7 +11,8 @@ from PyQt5.QtWidgets import (
     QProgressBar,
     QPushButton,
     QAction,
-    qApp
+    qApp, 
+    QCheckBox
 )
 from PyQt5 import QtGui, QtWidgets, Qt, QtCore
 from subprocess import Popen
@@ -31,7 +32,10 @@ from PyQt5.QtGui import QIcon, QFont, QImage
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
+from PyQt5.QtWidgets import QCheckBox
 from .progress_bars import *
+
+
 #from .helpers import os_parse
 
 #test import for cpu and ram values etc. 
@@ -64,13 +68,14 @@ class Window1(QMainWindow):
         self.nam.finished.connect(self.set_window_icon_from_response)
         self.nam.get(QNetworkRequest(QUrl(ICON_IMAGE_URL)))
 
+
     def set_window_icon_from_response(self, http_response):
         pixmap = QPixmap()
         pixmap.loadFromData(http_response.readAll())
         icon = QIcon(pixmap)
         self.setWindowIcon(icon)
     #End of icon in the taskbar
-    
+
         #Start Toolbar
         #Toolbar Icon 1
         Act = QAction(QIcon('/home/raspihive/toolbar_raspihive_icons/raspihive_icon1.jpg'),\
@@ -210,8 +215,9 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.1')
+        self.statusBar().showMessage('Raspihive Version 2.2.1')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
+
         #End of status bar
 
         left_layout.addStretch(5)
@@ -283,36 +289,86 @@ class Window1(QMainWindow):
         main.setWindowOpacity(1.0)
         main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); #137394 this
         #Background Image + button image
+        
+        # creating the check-box
+        checkbox = QCheckBox('Status Auto update', main)
+        # setting geometry of check box
+        checkbox.setGeometry(20, 220, 170, 50)
+        
+        
+        if path.exists("/etc/crontab") == True:
+            with open('/etc/crontab') as f:
+                datafile = f.readlines()
+            found = False  # This isn't really necessary
+            for line in datafile:
+                if "update.sh" in line:
+                    #print("success")
+                    # adding background color to indicator
+                    checkbox.setStyleSheet("QCheckBox::indicator"
+                               "{"
+                               "background-color : lightgreen;"
+                               "}")
+                else:
+                    checkbox.setStyleSheet("QCheckBox::indicator"
+                               "{"
+                               "background-color : red;"
+                               "}")
 
 
         #Start button 1
-        button = QPushButton('Update OS', main)
+        button = QPushButton(' Enable auto updates ', main)
         #Hover text
-        button.setToolTip('Update operating system')
+        button.setToolTip(' Enable automatic updates ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
         button.setGeometry(20, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.system_update)
+        button.clicked.connect(self.enable_automatic_updates)
         #End button 1
 
-
         #Start button 2
-        button = QPushButton('Update packages', main)
+        button = QPushButton(' Disable auto updates ', main)
         #Hover text
-        button.setToolTip('Update necessary packages')
+        button.setToolTip(' Disable automatic updates ')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(20, 130, 180, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.disable_automatic_updates)
+        #End button 2
+
+        #Start button 3
+        button = QPushButton('Update OS', main)
+        #Hover text
+        button.setToolTip('Update operating system')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
         button.setGeometry(220, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.packages_update)
-        #End button 2
+        button.clicked.connect(self.system_update)
+        #End button 3
 
-        #Start button 3
+
+        #Start button 4
+        button = QPushButton('Update packages', main)
+        #Hover text
+        button.setToolTip('Update necessary packages')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(220, 130, 180, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.packages_update)
+        #End button 4
+
+        #Start button 5
         button = QPushButton('Update Raspihive', main)
         #Hover text
         button.setToolTip('Update Raspihive')
@@ -323,20 +379,21 @@ class Window1(QMainWindow):
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
         button.clicked.connect(self.raspihive_update)
-        #End button 3
+        #End button 5
 
-        #Start button 4
-        button = QPushButton('Update Hornet', main)
+        #Start button 6
+        button = QPushButton('Update Hornet-Node', main)
         #Hover text
-        button.setToolTip('Update Hornet')
+        button.setToolTip('Update Hornet-Node')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 130, 180, 60)
+        button.setGeometry(420, 130, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
         button.clicked.connect(self.hornet_update)
-        #End button 4
+        #End button 6
+
 
         #Create label
         main.labelA = QtWidgets.QLabel(main)
@@ -364,7 +421,6 @@ class Window1(QMainWindow):
         main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394
         #Background Image + button image
 
-
         #Start button 1
         button = QPushButton(' Install Hornet ', main)
         #Hover text
@@ -384,7 +440,7 @@ class Window1(QMainWindow):
         button.setToolTip(' Uninstall IOTA Hornet Fullnode ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 180, 60)
+        button.setGeometry(20, 130, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -398,7 +454,7 @@ class Window1(QMainWindow):
             Certbot for SSL Certificates ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(20, 150, 180, 60)
+        button.setGeometry(220, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -413,7 +469,7 @@ class Window1(QMainWindow):
 certbot --nginx" (Domain needed) ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 150, 180, 60)
+        button.setGeometry(220, 130, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -427,12 +483,61 @@ certbot --nginx" (Domain needed) ')
         Certbot for SSL Certificates ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(420, 150, 180, 60)
+        button.setGeometry(220, 210, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
         button.clicked.connect(self.uninstall_nginx_certbot)
         #End button 5
+
+         # creating the check-box
+        checkbox = QCheckBox('Status automatic \ncertificate renewal', main)
+        # setting geometry of check box
+        checkbox.setGeometry(440, 220, 170, 50)
+        
+        if path.exists("/var/spool/cron/crontabs/pi") == True:
+            with open('/var/spool/cron/crontabs/pi') as f:
+                datafile = f.readlines()
+            found = False  # This isn't really necessary
+            for line in datafile:
+                if "renew" in line:
+                    # adding background color to indicator
+                    checkbox.setStyleSheet("QCheckBox::indicator"
+                           "{"
+                           "background-color : lightgreen;"
+                           "}")
+                else:
+                    checkbox.setStyleSheet("QCheckBox::indicator"
+                           "{"
+                           "background-color : red;"
+                           "}")
+        
+
+        #Start button 6
+        button = QPushButton('Enable auto renewing \n SSL certificate', main)
+        #Hover text
+        button.setToolTip('Auto renewing SSL cert')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(420, 50, 180, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.enable_auto_renew_ssl)
+        #End button 6
+
+        #Start button 7
+        button = QPushButton(' Disable auto renewal \nSSL certificate ', main)
+        #Hover text
+        button.setToolTip(' Automatic certificate renewal ')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(420, 130, 180, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.disable_auto_renew_ssl)
+        #End button 7
 
         #Create label
         main.labelA = QtWidgets.QLabel(main)
@@ -536,7 +641,7 @@ certbot --nginx" (Domain needed) ')
         button.setToolTip(' Stop Hornet Node ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 180, 60)
+        button.setGeometry(20, 130, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -549,7 +654,7 @@ certbot --nginx" (Domain needed) ')
         button.setToolTip('Restart Hornet Node')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(420, 50, 180, 60)
+        button.setGeometry(20, 210, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -562,7 +667,7 @@ certbot --nginx" (Domain needed) ')
         button.setToolTip(' Status Hornet Node ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(20, 150, 180, 60)
+        button.setGeometry(220, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -575,7 +680,7 @@ certbot --nginx" (Domain needed) ')
         button.setToolTip(' Show Hornet Logs ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(220, 150, 180, 60)
+        button.setGeometry(220, 130, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -588,7 +693,7 @@ certbot --nginx" (Domain needed) ')
         button.setToolTip('Remove the mainnetdb (e.g. in case of a failure) ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(420, 150, 180, 60)
+        button.setGeometry(420, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -912,8 +1017,7 @@ certbot --nginx" (Domain needed) ')
                 \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \
                 \n proxy_set_header Connection "'"upgrade"'"; \
                 \n proxy_read_timeout 86400; \n } \n \n location / { \
-                \n proxy_pass http://127.0.0.1:8081; \n auth_basic “Dashboard”; \
-                \n  auth_basic_user_file /etc/nginx/.htpasswd;  } \n } \n")
+                \n proxy_pass http://127.0.0.1:8081; \n   } \n } \n")
                 f.close()
                 os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
             except: # occurs because of permission denied error
@@ -960,7 +1064,93 @@ certbot --nginx" (Domain needed) ')
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
             print("Nginx + Certbot is not installed. Please install it first")
-            
+
+    def enable_automatic_updates(self):
+        #os.system("pkexec chown pi:pi -R /home/ ")
+        os.system("pkexec chown pi:pi -R /etc/crontab && sudo chown pi:pi -R /home/")
+        f = open("/home/update.sh", "w") # 
+        f.write("apt-get update && apt-get full-upgrade -y") 
+        f.close() 
+        os.chmod('/home/update.sh', stat.S_IEXEC)
+        process = subprocess.Popen((' echo "0 20 * * * root /home/update.sh >> /var/log/update_raspihive.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
+        os.system("sudo chown root:root -R /etc/crontab")
+        #process = subprocess.Popen((' echo "0 20 * * * root /usr/bin/apt upgrade -q -y >> /var/log/apt/automaticupdates.log" | tee -a /'), stdout=subprocess.PIPE, shell = True)
+        QMessageBox.about(self, "Automatic update", "Automatic updates enabled\nPlease restart Raspihive that changes take effect")
+
+    def disable_automatic_updates(self):
+        os.system("pkexec rm -r /home/update.sh ")
+        os.system("sudo chown pi:pi -R /etc/crontab")
+        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
+        filename = '/etc/crontab' 
+        line_to_delete = 23
+        line_to_delete2 = 24
+        initial_line = 1
+        file_lines = {}
+
+        with open(filename) as f:
+            content = f.readlines() 
+
+        for line in content:
+            file_lines[initial_line] = line.strip()
+            initial_line += 1
+
+        f = open(filename, "w")
+        for line_number, line_content in file_lines.items():
+            if ((line_number != line_to_delete) and (line_number != line_to_delete2)):
+                f.write('{}\n'.format(line_content))
+
+        f.close()
+        os.system("sudo chown root:root -R /etc/crontab")
+        #print('Deleted line: {}'.format(line_to_delete))
+        #print('Deleted line: {}'.format(line_to_delete2))
+        
+        #process = subprocess.Popen((' echo "50 19 * * 3 root /usr/bin/apt update -q -y >> /var/log/apt/automaticupdates.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
+        
+        #f = open("crontab -e", "w") # 
+        #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
+        #f.close() 
+        QMessageBox.about(self, "Automatic update", "Automatic updates disabled\nPlease restart Raspihive that changes take effect")
+
+    def enable_auto_renew_ssl(self):
+        os.system("pkexec chown pi:pi -R /var/spool/cron/crontabs/")
+        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
+        process = subprocess.Popen((' echo "0 12 * * * /usr/bin/certbot renew --quiet" | tee -a /var/spool/cron/crontabs/pi'), stdout=subprocess.PIPE, shell = True)
+        #f = open("crontab -e", "w") # 
+        #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
+        #f.close() 
+        os.system("sudo chown root:root -R /var/spool/cron/crontabs/pi")
+        QMessageBox.about(self, "SSL-certificate", "Auto renewing enabled\nPlease restart Raspihive that changes take effect")
+
+    def disable_auto_renew_ssl(self):
+        os.system("pkexec chown pi:pi -R /var/spool/cron/crontabs/pi")
+        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
+        filename = '/var/spool/cron/crontabs/pi' 
+        line_to_delete = 1
+        initial_line = 1
+        file_lines = {}
+
+        with open(filename) as f:
+            content = f.readlines() 
+
+        for line in content:
+            file_lines[initial_line] = line.strip()
+            initial_line += 1
+
+        f = open(filename, "w")
+        for line_number, line_content in file_lines.items():
+            if ((line_number != line_to_delete) and (line_number != line_to_delete2)):
+                f.write('{}\n'.format(line_content))
+
+        f.close()
+        #print('Deleted line: {}'.format(line_to_delete))
+        
+        #process = subprocess.Popen((' echo "50 19 * * 3 root /usr/bin/apt update -q -y >> /var/log/apt/automaticupdates.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
+        
+        #f = open("crontab -e", "w") # 
+        #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
+        #f.close() 
+        os.system("sudo chown root:root -R /var/spool/cron/crontabs/")
+        QMessageBox.about(self, "Automatic update", "Auto renewing disabled\nPlease restart Raspihive that changes take effect")
 
     def start_hornet(self):
         p=subprocess.Popen("pkexec service hornet start", stdout=subprocess.PIPE, shell = True)
@@ -1007,7 +1197,7 @@ certbot --nginx" (Domain needed) ')
 
     def mainnetDB_hornet(self):
         p=subprocess.Popen("pkexec service hornet stop && \
-            sudo rm -r /var/lib/hornet/mainnetdb && \
+            sudo rm -r /var/lib/hornet/mainnetdb && sudo rm -r /var/lib/hornet/snapshots &&\
             sudo service hornet start", stdout=subprocess.PIPE, shell = True)
         while True:
             #print ("Looping")
@@ -1045,7 +1235,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version 2.1\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
+Raspihive: Version 2.2.1\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
