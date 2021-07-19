@@ -1,4 +1,3 @@
-
 ###############################################################################
 # libraries
 from PyQt5.QtWidgets import QProgressBar, QDialog
