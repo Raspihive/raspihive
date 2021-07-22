@@ -84,9 +84,11 @@ class MyThread_hornet_update(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(("pkexec service hornet stop && \
-            sudo apt-get update && sudo apt-get -y upgrade hornet && \
-                sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
+        process = subprocess.Popen(("pkexec service hornet stop \
+            && sudo apt-get update && sudo apt-get -y upgrade hornet \
+            && sudo wget -q -O /usr/bin/hornet https://tanglebay.com/assets/hornet-arm64 \
+            && sudo wget -q -O /var/lib/hornet/config.json https://tanglebay.com/assets/config.json \
+            sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
         # Do something else
@@ -123,6 +125,8 @@ class MyThread_hornet_install(QThread):
             && echo "deb http://ppa.hornet.zone stable main" | sudo tee -a  /etc/apt/sources.list.d/hornet.list \
             && sudo apt-get update \
             && sudo apt-get install hornet && sudo systemctl enable hornet.service \
+            && sudo wget -q -O /usr/bin/hornet https://tanglebay.com/assets/hornet-arm64 \
+            && sudo wget -q -O /var/lib/hornet/config.json https://tanglebay.com/assets/config.json \
             && sudo service hornet start '), stdout=subprocess.PIPE, shell = True)
         
 
