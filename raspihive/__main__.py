@@ -3,7 +3,7 @@
 
 ###############################################################################
 # libraries
-import sys, time, os, requests, pwd, grp, stat
+import sys, time, os, requests, pwd, grp, stat, getpass
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -1005,7 +1005,7 @@ certbot --nginx" (Domain needed) ')
 
         # Nginx configuration
         if path.exists("/etc/nginx/sites-available/") == True:
-            os.system("sudo chown pi:pi -R /etc/nginx/")
+            os.system("sudo chown $USER:$GROUPS -R /etc/nginx/")
             #os.chown("/etc/nginx/sites-available/default", 100, -1)
             try: # temporarily fix that raspihive does not crash after function call
                 f = open("/etc/nginx/sites-available/default", "w")
@@ -1066,20 +1066,19 @@ certbot --nginx" (Domain needed) ')
             print("Nginx + Certbot is not installed. Please install it first")
 
     def enable_automatic_updates(self):
-        #os.system("pkexec chown pi:pi -R /home/ ")
-        os.system("pkexec chown pi:pi -R /etc/crontab && sudo chown pi:pi -R /home/")
+        
+        os.system("pkexec chown $USER:$GROUPS -R /etc/crontab && sudo chown $USER:$GROUPS -R /home/")
         f = open("/home/update.sh", "w") # 
         f.write("apt-get update && apt-get full-upgrade -y") 
         f.close() 
         os.chmod('/home/update.sh', stat.S_IEXEC)
         process = subprocess.Popen((' echo "0 20 * * * root /home/update.sh >> /var/log/update_raspihive.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
         os.system("sudo chown root:root -R /etc/crontab")
-        #process = subprocess.Popen((' echo "0 20 * * * root /usr/bin/apt upgrade -q -y >> /var/log/apt/automaticupdates.log" | tee -a /'), stdout=subprocess.PIPE, shell = True)
         QMessageBox.about(self, "Automatic update", "Automatic updates enabled\nPlease restart Raspihive that changes take effect")
 
     def disable_automatic_updates(self):
         os.system("pkexec rm -r /home/update.sh ")
-        os.system("sudo chown pi:pi -R /etc/crontab")
+        os.system("sudo chown $USER:$GROUPS -R /etc/crontab")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
         filename = '/etc/crontab' 
         line_to_delete = 23
@@ -1112,7 +1111,7 @@ certbot --nginx" (Domain needed) ')
         QMessageBox.about(self, "Automatic update", "Automatic updates disabled\nPlease restart Raspihive that changes take effect")
 
     def enable_auto_renew_ssl(self):
-        os.system("pkexec chown pi:pi -R /var/spool/cron/crontabs/")
+        os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
         process = subprocess.Popen((' echo "0 12 * * * /usr/bin/certbot renew --quiet" | tee -a /var/spool/cron/crontabs/pi'), stdout=subprocess.PIPE, shell = True)
         #f = open("crontab -e", "w") # 
@@ -1122,7 +1121,7 @@ certbot --nginx" (Domain needed) ')
         QMessageBox.about(self, "SSL-certificate", "Auto renewing enabled\nPlease restart Raspihive that changes take effect")
 
     def disable_auto_renew_ssl(self):
-        os.system("pkexec chown pi:pi -R /var/spool/cron/crontabs/pi")
+        os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/pi")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
         filename = '/var/spool/cron/crontabs/pi' 
         line_to_delete = 1
