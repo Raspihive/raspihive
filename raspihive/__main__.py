@@ -1121,34 +1121,8 @@ certbot --nginx" (Domain needed) ')
         QMessageBox.about(self, "SSL-certificate", "Auto renewing enabled\nPlease restart Raspihive that changes take effect")
 
     def disable_auto_renew_ssl(self):
-        os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/pi")
-        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
-        filename = '/var/spool/cron/crontabs/pi' 
-        line_to_delete = 1
-        initial_line = 1
-        file_lines = {}
-
-        with open(filename) as f:
-            content = f.readlines() 
-
-        for line in content:
-            file_lines[initial_line] = line.strip()
-            initial_line += 1
-
-        f = open(filename, "w")
-        for line_number, line_content in file_lines.items():
-            if ((line_number != line_to_delete) and (line_number != line_to_delete2)):
-                f.write('{}\n'.format(line_content))
-
-        f.close()
-        #print('Deleted line: {}'.format(line_to_delete))
-        
-        #process = subprocess.Popen((' echo "50 19 * * 3 root /usr/bin/apt update -q -y >> /var/log/apt/automaticupdates.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
-        
-        #f = open("crontab -e", "w") # 
-        #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
-        #f.close() 
-        os.system("sudo chown root:root -R /var/spool/cron/crontabs/")
+        #os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/pi")
+        subprocess.Popen("crontab -r", stdout=subprocess.PIPE, shell = True)
         QMessageBox.about(self, "Automatic update", "Auto renewing disabled\nPlease restart Raspihive that changes take effect")
 
     def start_hornet(self):
