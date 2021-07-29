@@ -3,7 +3,7 @@
 
 ###############################################################################
 # libraries
-import sys, time, os, requests, pwd, grp, stat, getpass
+import sys, time, os, requests, pwd, grp, stat, getpass, re, fileinput
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -34,7 +34,7 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PyQt5.QtWidgets import QCheckBox
 from .progress_bars import *
-
+from pathlib import Path
 
 #from .helpers import os_parse
 
@@ -180,6 +180,8 @@ class Window1(QMainWindow):
         # add tab
         self.tab5 = self.ui5()
         #End of button 5 widget (Dashboard access)
+
+
 
         # add button 6 widget (Help)
         self.btn_6 = QPushButton(' Help ', self)
@@ -726,36 +728,31 @@ certbot --nginx" (Domain needed) ')
         main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394
         #Background Image + button image
 
-
         #Start button 1
+        button = QPushButton(' Set username and password ', main)
+        #Hover text
+        button.setToolTip(' Set username and password ')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(40, 50, 220, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.hornet_dashboard_user_and_pw)
+        #End button 1
+
+        #Start button 2
         button = QPushButton(' Hornet Dashboard ', main)
         #Hover text
         button.setToolTip(' Open Hornet Dashboard ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 180, 60)
+        button.setGeometry(280, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
         button.clicked.connect(self.hornet_dashboard_access)
-        #End button 1
-
-        """
-        #Start button 2
-        button = QPushButton(' Uninstall Hornet ', main)
-        #Hover text
-        button.setToolTip(' Uninstall IOTA Hornet Fullnode ')
-        #button.move(150 ,50)
-        # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 150, 50)
-        #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        #add action
-        button.clicked.connect(self.hornet_uninstall)
         #End button 2
-        """
-
 
         #Create label
         main.labelA = QtWidgets.QLabel(main)
@@ -1199,6 +1196,55 @@ certbot --nginx" (Domain needed) ')
             #os.system('sudo -uubuntu firefox http://localhost')
             subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081",shell = True)
             #os.system('sudo -ubeekeeper firefox http://localhost')
+    
+    def hornet_dashboard_user_and_pw(self):
+        #Get permission on config.json
+        os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")
+        text1 , pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
+
+        #Define search string/pattern
+        string1 = "admin"
+        string2 = text1
+
+        # opening a text file
+        file1 = open("/var/lib/hornet/config.json", "r")
+        readfile = file1.read()
+  
+        # checking condition for string found or not
+        if string1 in readfile: 
+            path = Path("/var/lib/hornet/config.json")
+            print('String', string1, 'Found In File') 
+        
+            text = path.read_text()
+            text = text.replace("admin", string2) #text to search / replacement text #replace of user admin
+            path.write_text(text)
+        elif string2 not in readfile: #does not work right atm
+            print('String', string2, 'Not Found In File string2')
+            file1 = open("test.txt", "a+")
+            file1.write("username" + text1);
+            print("current username replaced")
+        else:
+            print('String', string1 , 'Not Found') 
+        # closing a file
+        file1.close() 
+        os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+
+        #show window
+        window = QWidget()
+        window.setGeometry(400,400,250,250)
+        window.setWindowTitle("Raspihive")
+
+        label = QLabel(window)
+        label.setText("User and PW for Dashboard")
+        label.move(60,80)
+
+        button = QPushButton(window)
+        button.setText("Set user and pw")
+        button.clicked.connect(self.hornet_dashboard_user_and_pw)
+        button.move(60,120)
+ 
+        window.show()
+        
 
 
     def about(self):
