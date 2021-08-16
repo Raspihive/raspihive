@@ -1198,33 +1198,43 @@ certbot --nginx" (Domain needed) ')
             #os.system('sudo -ubeekeeper firefox http://localhost')
     
     def hornet_dashboard_user_and_pw(self):
-        #Get permission on config.json
-        os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")
-        text1 , pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
-
         #Define search string/pattern
         string1 = "admin"
-        string2 = text1
+        string2 = "admin"
 
-        # opening a text file
-        file1 = open("/var/lib/hornet/config.json", "r")
+        # opening and reading the text file
+        file1 = open("/var/lib/hornet/config.json", "r")    #/var/lib/hornet/config.json
         readfile = file1.read()
   
         # checking condition for string found or not
         if string1 in readfile: 
-            path = Path("/var/lib/hornet/config.json")
+            #Get permission on config.json
+            os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
+            
+            text1 , pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
+            path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
             print('String', string1, 'Found In File') 
-        
             text = path.read_text()
-            text = text.replace("admin", string2) #text to search / replacement text #replace of user admin
+            text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
             path.write_text(text)
         elif string2 not in readfile: #does not work right atm
-            print('String', string2, 'Not Found In File string2')
-            file1 = open("test.txt", "a+")
-            file1.write("username" + text1);
-            print("current username replaced")
-        else:
-            print('String', string1 , 'Not Found') 
+            old =  oldusername , pressed = QInputDialog.getText(self, "Input old username", "Old username: ", QLineEdit.Normal, "")
+            new =  newusername , pressed = QInputDialog.getText(self, "Input new username", "New username: ", QLineEdit.Normal, "")
+
+            if old[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
+                old1 = old[0] 
+                new1 = new[0]
+                path = Path("/var/lib/hornet/config.json") 
+                text = path.read_text()
+                text = text.replace(old1, new1) #text to search / replacement text #replace of user admin
+                path.write_text(text)
+
+
+            #file1 = open("test.txt", "a+")
+            #file1.write("username" + text1);
+                print("current username replaced")
+            else:
+                print('String', string1 , 'Not Found') 
         # closing a file
         file1.close() 
         os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
