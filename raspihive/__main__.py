@@ -729,19 +729,32 @@ certbot --nginx" (Domain needed) ')
         #Background Image + button image
 
         #Start button 1
-        button = QPushButton(' Set username and password ', main)
+        button = QPushButton(' Set or change username', main)
         #Hover text
-        button.setToolTip(' Set username and password ')
+        button.setToolTip(' Set or change username')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
         button.setGeometry(40, 50, 220, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.hornet_dashboard_user_and_pw)
+        button.clicked.connect(self.hornet_dashboard_username)
         #End button 1
 
         #Start button 2
+        button = QPushButton(' Set password', main)
+        #Hover text
+        button.setToolTip(' Set password')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(40, 130, 220, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.hornet_dashboard_password)
+        #End button 2
+
+        #Start button 3
         button = QPushButton(' Hornet Dashboard ', main)
         #Hover text
         button.setToolTip(' Open Hornet Dashboard ')
@@ -752,7 +765,7 @@ certbot --nginx" (Domain needed) ')
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
         button.clicked.connect(self.hornet_dashboard_access)
-        #End button 2
+        #End button 3
 
         #Create label
         main.labelA = QtWidgets.QLabel(main)
@@ -1197,7 +1210,7 @@ certbot --nginx" (Domain needed) ')
             subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081",shell = True)
             #os.system('sudo -ubeekeeper firefox http://localhost')
     
-    def hornet_dashboard_user_and_pw(self):
+    def hornet_dashboard_username(self):
         #Define search string/pattern
         string1 = "admin"
         string2 = "admin"
@@ -1208,7 +1221,7 @@ certbot --nginx" (Domain needed) ')
   
         # checking condition for string found or not
         if string1 in readfile: 
-            #Get permission on config.json
+            #Get permission for config.json
             os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
             
             text1 , pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
@@ -1218,8 +1231,8 @@ certbot --nginx" (Domain needed) ')
             text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
             path.write_text(text)
         elif string2 not in readfile: #does not work right atm
-            old =  oldusername , pressed = QInputDialog.getText(self, "Input old username", "Old username: ", QLineEdit.Normal, "")
-            new =  newusername , pressed = QInputDialog.getText(self, "Input new username", "New username: ", QLineEdit.Normal, "")
+            old =  oldusername , pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
+            new =  newusername , pressed = QInputDialog.getText(self, "Input new username", "Enter new username: ", QLineEdit.Normal, "")
 
             if old[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
                 old1 = old[0] 
@@ -1228,8 +1241,6 @@ certbot --nginx" (Domain needed) ')
                 text = path.read_text()
                 text = text.replace(old1, new1) #text to search / replacement text #replace of user admin
                 path.write_text(text)
-
-
             #file1 = open("test.txt", "a+")
             #file1.write("username" + text1);
                 print("current username replaced")
@@ -1255,7 +1266,8 @@ certbot --nginx" (Domain needed) ')
  
         window.show()
         
-
+    def hornet_dashboard_password(self):
+        print("Test")
 
     def about(self):
         msg = QMessageBox()
