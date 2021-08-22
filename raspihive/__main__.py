@@ -1237,6 +1237,7 @@ certbot --nginx" (Domain needed) ')
             if old[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
                 old1 = old[0] 
                 new1 = new[0]
+                print("OLD", new1)
                 path = Path("/var/lib/hornet/config.json") 
                 text = path.read_text()
                 text = text.replace(old1, new1) #text to search / replacement text #replace of user admin
@@ -1256,18 +1257,77 @@ certbot --nginx" (Domain needed) ')
         window.setWindowTitle("Raspihive")
 
         label = QLabel(window)
-        label.setText("User and PW for Dashboard")
+        label.setText("Username")
         label.move(60,80)
 
         button = QPushButton(window)
-        button.setText("Set user and pw")
-        button.clicked.connect(self.hornet_dashboard_user_and_pw)
+        button.setText("Set username")
+        button.clicked.connect(self.hornet_dashboard_username)
         button.move(60,120)
  
         window.show()
         
     def hornet_dashboard_password(self):
-        print("Test")
+        #print("Test")
+        #cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
+        #os.system(cmd1)
+        subprocess.Popen("cd /var/lib/hornet && hornet tool pwdhash",shell = True)
+        
+        """
+        #show window
+        window = QWidget()
+        window.setGeometry(400,400,250,250)
+        window.setWindowTitle("Raspihive")
+
+        label = QLabel(window)
+        label.setText("Password")
+        label.move(60,80)
+
+        button = QPushButton(window)
+        button.setText("Set password")
+        button.clicked.connect(self.hornet_dashboard_password)
+        button.move(60,120)
+
+        window.show()
+        """
+
+        #print("Output", password)
+        password , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+        password , pressed = QInputDialog.getText(self, "Retype password", "Retype password: ", QLineEdit.Normal, "")
+        #value = input("Please enter a string:\n")
+        print(f'You entered {password}')
+        #cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
+        #os.system(cmd1)
+        
+
+        
+
+
+        
+
+
+        """ GUI stuff
+
+        text1 , pressed = QInputDialog.getText(self, "Input Text", "Set password: ", QLineEdit.Normal, "")
+        print("Output: ", text1)
+
+        #show window
+        window = QWidget()
+        window.setGeometry(400,400,250,250)
+        window.setWindowTitle("Raspihive")
+
+        label = QLabel(window)
+        label.setText("Password")
+        label.move(60,80)
+
+        button = QPushButton(window)
+        button.setText("Set password")
+        button.clicked.connect(self.hornet_dashboard_user_and_pw)
+        button.move(60,120)
+
+        window.show()
+        #os.system("hornet tool pwdhash  /var/lib/hornet" )
+        """
 
     def about(self):
         msg = QMessageBox()
