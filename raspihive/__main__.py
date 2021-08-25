@@ -1251,57 +1251,36 @@ certbot --nginx" (Domain needed) ')
         file1.close() 
         os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
 
-        #show window
-        window = QWidget()
-        window.setGeometry(400,400,250,250)
-        window.setWindowTitle("Raspihive")
-
-        label = QLabel(window)
-        label.setText("Username")
-        label.move(60,80)
-
-        button = QPushButton(window)
-        button.setText("Set username")
-        button.clicked.connect(self.hornet_dashboard_username)
-        button.move(60,120)
- 
-        window.show()
         
     def hornet_dashboard_password(self):
         #print("Test")
         #cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
         #os.system(cmd1)
-        subprocess.Popen("cd /var/lib/hornet && hornet tool pwdhash",shell = True)
+        #subprocess.Popen("cd /var/lib/hornet && hornet tool pwdhash",shell = True)
         
-        """
-        #show window
-        window = QWidget()
-        window.setGeometry(400,400,250,250)
-        window.setWindowTitle("Raspihive")
 
-        label = QLabel(window)
-        label.setText("Password")
-        label.move(60,80)
-
-        button = QPushButton(window)
-        button.setText("Set password")
-        button.clicked.connect(self.hornet_dashboard_password)
-        button.move(60,120)
-
-        window.show()
-        """
 
         #print("Output", password)
-        password , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
-        password , pressed = QInputDialog.getText(self, "Retype password", "Retype password: ", QLineEdit.Normal, "")
+        password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+        
+        def my_function(password1):
+            print(password1 + " IOTA")
+
+
+        my_function(password1)
+            
+           
+        #password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+        #password2 , pressed = QInputDialog.getText(self, "Retype password", "Retype password: ", QLineEdit.Normal, "")
+
+        #os.popen('cat /etc/services').read()
+        #output = subprocess.check_output("cat /etc/services", shell=True)
         #value = input("Please enter a string:\n")
-        print(f'You entered {password}')
+        #print(f'You entered {password}')
         #cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
         #os.system(cmd1)
         
-
-        
-
+    
 
         
 
