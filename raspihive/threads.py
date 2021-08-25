@@ -86,9 +86,6 @@ class MyThread_hornet_update(QThread):
         #print("Test packages")
         process = subprocess.Popen(("pkexec service hornet stop \
             && sudo apt-get update && sudo apt-get -y upgrade hornet \
-            && sudo wget -q -O /usr/bin/hornet https://tanglebay.com/assets/hornet-arm64 \
-            && sudo wget -q -O /var/lib/hornet/config.json https://raw.githubusercontent.com/gohornet/hornet/develop/config.json \
-            && sudo ufw allow 14626/udp \
             && sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
@@ -128,7 +125,6 @@ class MyThread_hornet_install(QThread):
             && sudo apt-get install hornet && sudo systemctl enable hornet.service \
             && sudo wget -q -O /usr/bin/hornet https://tanglebay.com/assets/hornet-arm64 \
             && sudo wget -q -O /var/lib/hornet/config.json https://tanglebay.com/assets/config.json \
-            && sudo ufw allow 14626/udp \
             && sudo service hornet start '), stdout=subprocess.PIPE, shell = True)
         
 
