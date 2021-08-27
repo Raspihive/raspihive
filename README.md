@@ -2,9 +2,9 @@
 
 
 ![PyPI](https://img.shields.io/pypi/v/raspihive?style=for-the-badge) ![PyPI - Status](https://img.shields.io/pypi/status/raspihive?style=for-the-badge) ![PyPI - Downloads](https://img.shields.io/pypi/dw/raspihive?style=for-the-badge) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/raspihive?style=for-the-badge)
-![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/raspihive/raspihive?style=for-the-badge) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/raspihive/raspihive?style=for-the-badge) ![GitHub issues](https://img.shields.io/github/issues-raw/raspihive/raspihive?style=for-the-badge) ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/raspihive/raspihive?style=for-the-badge) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/raspihive/raspihive?style=for-the-badge) 
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/raspihive/raspihive?style=for-the-badge) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/raspihive/raspihive?style=for-the-badge) ![GitHub issues](https://img.shields.io/github/issues-raw/raspihive/raspihive?style=for-the-badge) ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/raspihive/raspihive?style=for-the-badge) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/raspihive/raspihive?style=for-the-badge)
 
-![GitHub](https://img.shields.io/github/license/raspihive/raspihive?style=for-the-badge) ![GitHub contributors](https://img.shields.io/github/contributors/raspihive/raspihive?style=for-the-badge) 
+![GitHub](https://img.shields.io/github/license/raspihive/raspihive?style=for-the-badge) ![GitHub contributors](https://img.shields.io/github/contributors/raspihive/raspihive?style=for-the-badge)
 
 # Install
 
@@ -22,7 +22,7 @@ if you want to run RaspiHive on Raspberry Pi OS, you need the 64 Bit version (wi
 download the Image from:
 [Raspberry Pi 64 Bit Beta OS](https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2020-05-28/2020-05-27-raspios-buster-arm64.zip)
 
-and use the Raspberry Pi imager to write it on a SD Card: 
+and use the Raspberry Pi imager to write it on a SD Card:
 
 [Raspberry Pi Downloads](https://www.raspberrypi.org/downloads/)
 
@@ -71,7 +71,8 @@ __Works on__:
 - [x] Ubuntu 20.04
 - [x] Fedora 33
 - [x] LinuxMint 20
+- [x] Manjaro 21.1.0
 
-Development screenshots: 
+Development screenshots:
 
    ![](/assets/Logo/raspihive0.png)

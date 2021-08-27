@@ -13,7 +13,8 @@ __OS_CMD__ = {
     'fedora': 'dnf',
     'linuxmint': 'apt',
     'honeycomb': 'apt-get',
-    'debian': 'apt-get'
+    'debian': 'apt-get',
+    'manjaro': 'pamac'
 
 }
 __OS_BASE__ = __OS_CMD__[distro.id()]

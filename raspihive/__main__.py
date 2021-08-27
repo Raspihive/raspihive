@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import (
     QProgressBar,
     QPushButton,
     QAction,
-    qApp, 
+    qApp,
     QCheckBox
 )
 from PyQt5 import QtGui, QtWidgets, Qt, QtCore
@@ -38,7 +38,7 @@ from pathlib import Path
 
 #from .helpers import os_parse
 
-#test import for cpu and ram values etc. 
+#test import for cpu and ram values etc.
 #import psutil
 ###########################################################################
 #Global variables
@@ -113,7 +113,7 @@ class Window1(QMainWindow):
         # Set icon size and spacing
         self.toolbar.setIconSize(QtCore.QSize(32, 32))
         self.toolbar.setStyleSheet("QToolButton{padding-left: 5px; padding-right: 5px; }");
-        #End Toolbar Icon 
+        #End Toolbar Icon
         """
 
         #self.setGeometry(500, 500, 500, 500)
@@ -291,13 +291,13 @@ class Window1(QMainWindow):
         main.setWindowOpacity(1.0)
         main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); #137394 this
         #Background Image + button image
-        
+
         # creating the check-box
         checkbox = QCheckBox('Status Auto update', main)
         # setting geometry of check box
         checkbox.setGeometry(20, 220, 170, 50)
-        
-        
+
+
         if path.exists("/etc/crontab") == True:
             with open('/etc/crontab') as f:
                 datafile = f.readlines()
@@ -496,7 +496,7 @@ certbot --nginx" (Domain needed) ')
         checkbox = QCheckBox('Status automatic \ncertificate renewal', main)
         # setting geometry of check box
         checkbox.setGeometry(440, 220, 170, 50)
-        
+
         if path.exists("/var/spool/cron/crontabs/pi") == True:
             with open('/var/spool/cron/crontabs/pi') as f:
                 datafile = f.readlines()
@@ -513,7 +513,7 @@ certbot --nginx" (Domain needed) ')
                            "{"
                            "background-color : red;"
                            "}")
-        
+
 
         #Start button 6
         button = QPushButton('Enable auto renewing \n SSL certificate', main)
@@ -909,7 +909,7 @@ certbot --nginx" (Domain needed) ')
 #IMPORATANT: Raspihive needs to be cloned into the "/home"-folder, then restart is necessary.
     def raspihive_update(self):
         #print("Test packages")
-        #os.chdir('/tmp') 
+        #os.chdir('/tmp')
         #os.system(" cd /tmp && sudo find -name raspihive -exec rm -rf {} +")
         #if path.exists("/home/pi/raspihive") == True:
         print("Update Raspihive")
@@ -1031,7 +1031,7 @@ certbot --nginx" (Domain needed) ')
                 f.close()
                 os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
             except: # occurs because of permission denied error
-                print("An exception occurred - Config not written - FAILURE") 
+                print("An exception occurred - Config not written - FAILURE")
         else:
             print("Config not written - FAILURE")
         """
@@ -1076,11 +1076,11 @@ certbot --nginx" (Domain needed) ')
             print("Nginx + Certbot is not installed. Please install it first")
 
     def enable_automatic_updates(self):
-        
+
         os.system("pkexec chown $USER:$GROUPS -R /etc/crontab && sudo chown $USER:$GROUPS -R /home/")
-        f = open("/home/update.sh", "w") # 
-        f.write("apt-get update && apt-get full-upgrade -y") 
-        f.close() 
+        f = open("/home/update.sh", "w") #
+        f.write("apt-get update && apt-get full-upgrade -y")
+        f.close()
         os.chmod('/home/update.sh', stat.S_IEXEC)
         process = subprocess.Popen((' echo "0 20 * * * root /home/update.sh >> /var/log/update_raspihive.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
         os.system("sudo chown root:root -R /etc/crontab")
@@ -1090,14 +1090,14 @@ certbot --nginx" (Domain needed) ')
         os.system("pkexec rm -r /home/update.sh ")
         os.system("sudo chown $USER:$GROUPS -R /etc/crontab")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
-        filename = '/etc/crontab' 
+        filename = '/etc/crontab'
         line_to_delete = 23
         line_to_delete2 = 24
         initial_line = 1
         file_lines = {}
 
         with open(filename) as f:
-            content = f.readlines() 
+            content = f.readlines()
 
         for line in content:
             file_lines[initial_line] = line.strip()
@@ -1112,21 +1112,21 @@ certbot --nginx" (Domain needed) ')
         os.system("sudo chown root:root -R /etc/crontab")
         #print('Deleted line: {}'.format(line_to_delete))
         #print('Deleted line: {}'.format(line_to_delete2))
-        
+
         #process = subprocess.Popen((' echo "50 19 * * 3 root /usr/bin/apt update -q -y >> /var/log/apt/automaticupdates.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
-        
-        #f = open("crontab -e", "w") # 
+
+        #f = open("crontab -e", "w") #
         #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
-        #f.close() 
+        #f.close()
         QMessageBox.about(self, "Automatic update", "Automatic updates disabled\nPlease restart Raspihive that changes take effect")
 
     def enable_auto_renew_ssl(self):
         os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
         process = subprocess.Popen((' echo "0 12 * * * /usr/bin/certbot renew --quiet" | tee -a /var/spool/cron/crontabs/pi'), stdout=subprocess.PIPE, shell = True)
-        #f = open("crontab -e", "w") # 
+        #f = open("crontab -e", "w") #
         #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
-        #f.close() 
+        #f.close()
         os.system("sudo chown root:root -R /var/spool/cron/crontabs/pi")
         QMessageBox.about(self, "SSL-certificate", "Auto renewing enabled\nPlease restart Raspihive that changes take effect")
 
@@ -1209,7 +1209,7 @@ certbot --nginx" (Domain needed) ')
             #os.system('sudo -uubuntu firefox http://localhost')
             subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081",shell = True)
             #os.system('sudo -ubeekeeper firefox http://localhost')
-    
+
     def hornet_dashboard_username(self):
         #Define search string/pattern
         string1 = "admin"
@@ -1218,15 +1218,15 @@ certbot --nginx" (Domain needed) ')
         # opening and reading the text file
         file1 = open("/var/lib/hornet/config.json", "r")    #/var/lib/hornet/config.json
         readfile = file1.read()
-  
+
         # checking condition for string found or not
-        if string1 in readfile: 
+        if string1 in readfile:
             #Get permission for config.json
             os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
-            
+
             text1 , pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
             path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
-            print('String', string1, 'Found In File') 
+            print('String', string1, 'Found In File')
             text = path.read_text()
             text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
             path.write_text(text)
@@ -1235,10 +1235,10 @@ certbot --nginx" (Domain needed) ')
             new =  newusername , pressed = QInputDialog.getText(self, "Input new username", "Enter new username: ", QLineEdit.Normal, "")
 
             if old[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
-                old1 = old[0] 
+                old1 = old[0]
                 new1 = new[0]
                 print("OLD", new1)
-                path = Path("/var/lib/hornet/config.json") 
+                path = Path("/var/lib/hornet/config.json")
                 text = path.read_text()
                 text = text.replace(old1, new1) #text to search / replacement text #replace of user admin
                 path.write_text(text)
@@ -1246,9 +1246,9 @@ certbot --nginx" (Domain needed) ')
             #file1.write("username" + text1);
                 print("current username replaced")
             else:
-                print('String', string1 , 'Not Found') 
+                print('String', string1 , 'Not Found')
         # closing a file
-        file1.close() 
+        file1.close()
         os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
 
         #show window
@@ -1264,15 +1264,15 @@ certbot --nginx" (Domain needed) ')
         button.setText("Set username")
         button.clicked.connect(self.hornet_dashboard_username)
         button.move(60,120)
- 
+
         window.show()
-        
+
     def hornet_dashboard_password(self):
-        #print("Test")
+        print("Test")
         #cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
         #os.system(cmd1)
         subprocess.Popen("cd /var/lib/hornet && hornet tool pwdhash",shell = True)
-        
+
         """
         #show window
         window = QWidget()
@@ -1291,20 +1291,14 @@ certbot --nginx" (Domain needed) ')
         window.show()
         """
 
-        #print("Output", password)
         password , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+        # print("Output:", password)
         password , pressed = QInputDialog.getText(self, "Retype password", "Retype password: ", QLineEdit.Normal, "")
+        # print("Output 2:", password)
         #value = input("Please enter a string:\n")
         print(f'You entered {password}')
         #cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
         #os.system(cmd1)
-        
-
-        
-
-
-        
-
 
         """ GUI stuff
 
@@ -1485,7 +1479,7 @@ class hornet_log_win(Qt.QMainWindow):
 def main():
     # create pyqt5 app
     app = Qt.QApplication(sys.argv)
-    
+
     screen = app.primaryScreen()
     #print('Screen: %s' % screen.name())
     size = screen.size()
