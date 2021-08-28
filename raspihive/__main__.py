@@ -36,12 +36,12 @@ from PyQt5.QtWidgets import QCheckBox
 from .progress_bars import *
 from pathlib import Path
 
-#from .helpers import os_parse
+# from .helpers import os_parse
 
-#test import for cpu and ram values etc.
-#import psutil
+# test import for cpu and ram values etc.
+# import psutil
 ###########################################################################
-#Global variables
+# Global variables
 ICON_IMAGE_URL = "https://raw.githubusercontent.com/Raspihive/raspihiveWebsite/master/public/favicon.ico"
 #####################################Start of Window frames################
 class Window1(QMainWindow):
@@ -283,9 +283,9 @@ class Window1(QMainWindow):
     # End buttons
 
 	# -----------------
-####################### Start pages ##############
+    ####################### Start pages ##############
 
-#Update menu tab
+    # Update menu tab
     def ui1(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -414,9 +414,9 @@ class Window1(QMainWindow):
         #End label
 
         return main
-#End of update menu tab
+    # End of update menu tab
 
-#Install menu
+    # Install menu
     def ui2(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -558,9 +558,9 @@ certbot --nginx" (Domain needed) ')
         #End label
 
         return main
-#End of install menu
+    # End of install menu
 
-#Node Control Center
+    # Node Control Center
     def ui3(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -614,9 +614,9 @@ certbot --nginx" (Domain needed) ')
         #End label
 
         return main
-#End of Node Control Center
+    # End of Node Control Center
 
-#Invisible Hornet Node Control Center
+    # Invisible Hornet Node Control Center
     def ui4(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -719,9 +719,9 @@ certbot --nginx" (Domain needed) ')
         #End label
 
         return main
-#End of invisible Hornet Node Control Center
+    # End of invisible Hornet Node Control Center
 
-#Dashboard access
+    # Dashboard access
     def ui5(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -784,9 +784,9 @@ certbot --nginx" (Domain needed) ')
         #End label
 
         return main
-#End of Dashboard access
+    # End of Dashboard access
 
-#Help menu
+    # Help menu
     def ui6(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -866,20 +866,20 @@ certbot --nginx" (Domain needed) ')
         #End label
 
         return main
-#End of Help menu
+    # End of Help menu
 
-# Quit button
+    # Quit button
     def ui7(self):
         main = QWidget()
 
         return main
-#End of Quit-button
+    # End of Quit-button
 
-#End pages
-##############################################################################
+    # End pages
+    ##############################################################################
 
-##############################################################################
-#Start Functions
+    ##############################################################################
+    # Start Functions
     def system_update(self):
         app = Window_os_update()
         msg = QMessageBox()
@@ -906,7 +906,7 @@ certbot --nginx" (Domain needed) ')
             if the progress bar reaches 100 %, #IOTAstrong")
         show = msg.exec_()  # this will show our messagebox
 
-#IMPORATANT: Raspihive needs to be cloned into the "/home"-folder, then restart is necessary.
+    # IMPORATANT: Raspihive needs to be cloned into the "/home"-folder, then restart is necessary.
     def raspihive_update(self):
         #print("Test packages")
         #os.chdir('/tmp')
@@ -988,7 +988,6 @@ certbot --nginx" (Domain needed) ')
             msg.setText("Hornet Node is not installed. Please install it first")
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
-
 
     def install_nginx_certbot(self):
         if path.exists("/etc/nginx/") == True:
@@ -1079,7 +1078,7 @@ certbot --nginx" (Domain needed) ')
 
         os.system("pkexec chown $USER:$GROUPS -R /etc/crontab && sudo chown $USER:$GROUPS -R /home/")
         f = open("/home/update.sh", "w") #
-        f.write("apt-get update && apt-get full-upgrade -y")
+        f.write("apt update && apt full-upgrade -y")
         f.close()
         os.chmod('/home/update.sh', stat.S_IEXEC)
         process = subprocess.Popen((' echo "0 20 * * * root /home/update.sh >> /var/log/update_raspihive.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
@@ -1191,7 +1190,6 @@ certbot --nginx" (Domain needed) ')
             sys.stdout.flush()
         QMessageBox.about(self, "Hornet", "Hornet DB successfully deleted")
 
-
     def hornet_dashboard_access(self):
         if path.exists("/etc/letsencrypt/live") == True:
             subprocess.Popen("sudo -upi chromium http://127.0.0.1",shell = True)
@@ -1215,42 +1213,47 @@ certbot --nginx" (Domain needed) ')
         string1 = "admin"
         string2 = "admin"
 
-        # opening and reading the text file
-        file1 = open("/var/lib/hornet/config.json", "r")    #/var/lib/hornet/config.json
-        readfile = file1.read()
+        try:
+            # opening and reading the text file
+            file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+            readfile = file1.read()
 
-        # checking condition for string found or not
-        if string1 in readfile:
-            #Get permission for config.json
-            os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
+            # checking condition for string found or not
+            if string1 in readfile:
+                #Get permission for config.json
+                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
 
-            text1 , pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
-            path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
-            print('String', string1, 'Found In File')
-            text = path.read_text()
-            text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
-            path.write_text(text)
-        elif string2 not in readfile: #does not work right atm
-            old =  oldusername , pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
-            new =  newusername , pressed = QInputDialog.getText(self, "Input new username", "Enter new username: ", QLineEdit.Normal, "")
-
-            if old[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
-                old1 = old[0]
-                new1 = new[0]
-                print("OLD", new1)
-                path = Path("/var/lib/hornet/config.json")
+                text1 , pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
+                path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+                print('String', string1, 'Found In File')
                 text = path.read_text()
-                text = text.replace(old1, new1) #text to search / replacement text #replace of user admin
+                text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
                 path.write_text(text)
-            #file1 = open("test.txt", "a+")
-            #file1.write("username" + text1);
-                print("current username replaced")
-            else:
-                print('String', string1 , 'Not Found')
-        # closing a file
-        file1.close()
-        os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+            elif string2 not in readfile: #does not work right atm
+                old =  oldusername , pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
+                new =  newusername , pressed = QInputDialog.getText(self, "Input new username", "Enter new username: ", QLineEdit.Normal, "")
 
+                if old[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
+                    old1 = old[0]
+                    new1 = new[0]
+                    print("OLD", new1)
+                    path = Path("/var/lib/hornet/config.json")
+                    text = path.read_text()
+                    text = text.replace(old1, new1) #text to search / replacement text #replace of user admin
+                    path.write_text(text)
+                #file1 = open("test.txt", "a+")
+                #file1.write("username" + text1);
+                    print("current username replaced")
+                else:
+                    print('String', string1 , 'Not Found')
+            # closing a file
+            file1.close()
+            os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+        except OSError as ose:
+            print('os err:', ose)
+            print('Hornet Not Installed. Please Install Hornet First.')
+        except Exception as e:
+            print("Other Exception:", e)
 
     def hornet_dashboard_password(self):
         print("Test")
@@ -1262,7 +1265,7 @@ certbot --nginx" (Domain needed) ')
 
         #print("Output", password)
         password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
-        
+
         def my_function(password1):
             print(password1 + " IOTA")
 
@@ -1342,7 +1345,7 @@ an e-mail to: piota@mail.de \nThanks for your feedback!")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
-#End Functions
+# End Functions
 ###############################################################################
 
 # Hornet Status
@@ -1400,9 +1403,9 @@ class hornet_status_win(Qt.QMainWindow):
         # opening window in maximized size
         self.showMaximized()
 
-#End of Hornet Status
+# End of Hornet Status
 
-#Hornet Log
+# Hornet Log
 class hornet_log_win(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -1457,10 +1460,10 @@ class hornet_log_win(Qt.QMainWindow):
         # opening window in maximized size
         self.showMaximized()
 
-#End of Hornet Log
+# End of Hornet Log
 
 
-#Mainwindow
+# Mainwindow
 def main():
     # create pyqt5 app
     app = Qt.QApplication(sys.argv)
@@ -1488,11 +1491,11 @@ def main():
 
     # start the app
     sys.exit(app.exec_())
-#End of MainWindow
+# End of MainWindow
 
 # Start main programm
 ###############################################################################
 if __name__ == '__main__':
     main()
 ###############################################################################
-#End main programm
+# End main programm

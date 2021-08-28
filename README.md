@@ -58,20 +58,31 @@ If you are interested in contributing, please go through our [CONTRIBUTING](CONT
 - Activate venv: `source venv/bin/activate`
 
 #### Dependencies
-`pip3 install -r requirements/dev.txt`
+`pip install -r requirements/dev.txt`
+
+You can also use `pip3`: `pip3 install -r requirements/dev.txt`
+
 
 ### Run
-`python3 -m raspihive`
+`python -m raspihive`
+
+If you have multiple python versions installed in your system, make sure to use python3: `python3 -m raspihive`
 
 
 ---
-__Works on__:
+__Tested on__:
 
+- [x] Raspberry Pi
+    - [x] 2 Model B
+    - [x] 3 Model B
+    - [x] 4 Model B
 - [x] Ubuntu 18.04
 - [x] Ubuntu 20.04
 - [x] Fedora 33
 - [x] LinuxMint 20
-- [x] Manjaro 21.1.0
+- [ ] Manjaro 21.1.0 (Arch)
+
+(Add your OS to the list)
 
 Development screenshots:
 

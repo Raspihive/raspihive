@@ -12,6 +12,9 @@ from PyQt5.QtWidgets import (
     qApp
 )
 from PyQt5.QtCore import QThread, pyqtSignal
+
+from raspihive.helpers import os_parse
+
 #from .helpers import os_parse
 ##############################################################################
 #Thread for OS Update
@@ -19,9 +22,9 @@ class MyThread_os_update(QThread):
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
-        process = subprocess.Popen(("pkexec apt-get update -y && \
-            sudo apt-get full-upgrade -y && sudo apt-get autoremove -y \
-                && sudo apt-get clean -y && sudo apt autoclean -y"), \
+        process = subprocess.Popen(("pkexec apt update -y && \
+            sudo apt full-upgrade -y && sudo apt autoremove -y \
+                && sudo apt clean -y && sudo apt autoclean -y"), \
                     stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
@@ -50,9 +53,9 @@ class MyThread_packages(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(("pkexec apt-get update -y && \
-            sudo apt-get install -y build-essential && \
-                sudo apt-get install -y git && sudo apt-get install -y snapd \
+        process = subprocess.Popen(("pkexec apt update -y && \
+            sudo apt install -y build-essential && \
+                sudo apt install -y git && sudo apt install -y snapd \
                     && sudo snap install go --classic"), \
                         stdout=subprocess.PIPE, shell = True)
 
@@ -84,8 +87,8 @@ class MyThread_hornet_update(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(("pkexec service hornet stop \
-            && sudo apt-get update && sudo apt-get -y upgrade hornet \
+        process = subprocess.Popen(os_parse("pkexec service hornet stop \
+            && sudo apt update && sudo apt -y upgrade hornet \
             && sudo wget -q -O /usr/bin/hornet https://tanglebay.com/assets/hornet-arm64 \
             && sudo wget -q -O /var/lib/hornet/config.json https://raw.githubusercontent.com/gohornet/hornet/develop/config.json \
             && sudo ufw allow 14626/udp \
@@ -117,20 +120,20 @@ class MyThread_hornet_install(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(('pkexec apt-get update -y && sudo apt-get autoremove -y && sudo apt-get install -y build-essential \
-            && sudo apt-get install -y git && sudo apt-get install -y snapd \
+        process = subprocess.Popen(os_parse('pkexec apt update -y && sudo apt autoremove -y && sudo apt install -y build-essential \
+            && sudo apt install -y git && sudo apt install -y snapd \
             && sudo snap install go --classic \
-            && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && \
+            && sudo apt install -y ufw && sudo ufw allow 15600/tcp && \
             sudo ufw allow 14626/udp && sudo ufw limit openssh && \
-            sudo ufw enable && sudo apt-get install sshguard -y && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
+            sudo ufw enable && sudo apt install sshguard -y && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
             && echo "deb http://ppa.hornet.zone stable main" | sudo tee -a  /etc/apt/sources.list.d/hornet.list \
-            && sudo apt-get update \
-            && sudo apt-get install hornet && sudo systemctl enable hornet.service \
+            && sudo apt update \
+            && sudo apt install hornet && sudo systemctl enable hornet.service \
             && sudo wget -q -O /usr/bin/hornet https://tanglebay.com/assets/hornet-arm64 \
             && sudo wget -q -O /var/lib/hornet/config.json https://tanglebay.com/assets/config.json \
             && sudo ufw allow 14626/udp \
             && sudo service hornet start '), stdout=subprocess.PIPE, shell = True)
-        
+
 
             #&& sudo chown pi:pi /etc/apt/sources.list.d
         #sudo mkdir /etc/apt/sources.list.d
@@ -160,7 +163,7 @@ class MyThread_hornet_uninstall(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(("pkexec apt-get -qq purge hornet -y  \
+        process = subprocess.Popen(os_parse("pkexec apt -qq purge hornet -y  \
             && sudo rm -r /etc/apt/sources.list.d/hornet.list "), \
             stdout=subprocess.PIPE, shell = True)
 
@@ -190,11 +193,11 @@ class MyThread_nginx_certbot_install(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(("pkexec apt-get update -y \
-        && sudo apt-get -y upgrade && sudo apt-get install -y nginx \
-        && sudo apt-get install -y ufw && sudo ufw allow 'Nginx Full' && sudo apt-get install -y apache2-utils \
-        && sudo apt-get install software-properties-common -y && sudo apt-get update \
-        && sudo apt-get install certbot python3-certbot-nginx -y \
+        process = subprocess.Popen(os_parse("pkexec apt update -y \
+        && sudo apt -y upgrade && sudo apt install -y nginx \
+        && sudo apt install -y ufw && sudo ufw allow 'Nginx Full' && sudo apt install -y apache2-utils \
+        && sudo apt install software-properties-common -y && sudo apt update \
+        && sudo apt install certbot python3-certbot-nginx -y \
         "), stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
@@ -224,10 +227,10 @@ class MyThread_nginx_certbot_uninstall(QThread):
     def run(self):
         if path.exists("/etc/nginx/") == True:
             #print("Test packages")
-            process = subprocess.Popen(("pkexec apt-get update -y && \
-            sudo apt-get purge -y nginx nginx-common && sudo apt-get purge -y --auto-remove apache2-utils \
-            && sudo apt-get -qq purge software-properties-common certbot python3-certbot-nginx -y \
-            && sudo apt-get autoremove -y\
+            process = subprocess.Popen(os_parse("pkexec apt update -y && \
+            sudo apt purge -y nginx nginx-common && sudo apt purge -y --auto-remove apache2-utils \
+            && sudo apt -qq purge software-properties-common certbot python3-certbot-nginx -y \
+            && sudo apt autoremove -y\
                 "), stdout=subprocess.PIPE, shell = True)
 
             p = process.stdout.readline()
