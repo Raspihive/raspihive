@@ -4,6 +4,7 @@
 ###############################################################################
 # libraries
 import sys, time, os, requests, pwd, grp, stat, getpass, re, fileinput
+from os import path
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -33,7 +34,12 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PyQt5.QtWidgets import QCheckBox
-from .progress_bars import *
+from .progress_bars import (
+    Window_os_update,
+    Window_packages,
+    HornetProgress,
+    NGINXCertbot
+)
 from pathlib import Path
 
 # from .helpers import __default_message__

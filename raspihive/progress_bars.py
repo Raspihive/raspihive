@@ -2,8 +2,16 @@
 # libraries
 from PyQt5.QtWidgets import QProgressBar, QDialog
 from PyQt5.QtWidgets import (QVBoxLayout)
-
-from .threads import *
+from os import path
+from .threads import (
+    MyThread_os_update,
+    MyThread_packages,
+    MyThread_hornet_update,
+    MyThread_hornet_install,
+    MyThread_hornet_uninstall,
+    MyThread_nginx_certbot_install,
+    MyThread_nginx_certbot_uninstall
+)
 
 ##############################################################################
 #Progress bar for OS Update
