@@ -22,7 +22,7 @@ class MyThread_os_update(QThread):
     # Create a counter thread
     change_value = pyqtSignal(int)
     def run(self):
-        process = subprocess.Popen(("pkexec apt update -y && \
+        process = subprocess.Popen(os_parse("pkexec apt update -y && \
             sudo apt full-upgrade -y && sudo apt autoremove -y \
                 && sudo apt clean -y && sudo apt autoclean -y"), \
                     stdout=subprocess.PIPE, shell = True)
@@ -53,7 +53,7 @@ class MyThread_packages(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(("pkexec apt update -y && \
+        process = subprocess.Popen(os_parse("pkexec apt update -y && \
             sudo apt install -y build-essential && \
                 sudo apt install -y git && sudo apt install -y snapd \
                     && sudo snap install go --classic"), \
@@ -120,7 +120,7 @@ class MyThread_hornet_install(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(os_parse('pkexec apt update -y && sudo apt autoremove -y && sudo apt install -y build-essential \
+        cmd1 = os_parse('pkexec apt update -y && sudo apt autoremove -y && sudo apt install -y build-essential \
             && sudo apt install -y git && sudo apt install -y snapd \
             && sudo snap install go --classic \
             && sudo apt install -y ufw && sudo ufw allow 15600/tcp && \
@@ -132,30 +132,33 @@ class MyThread_hornet_install(QThread):
             && sudo wget -q -O /usr/bin/hornet https://tanglebay.com/assets/hornet-arm64 \
             && sudo wget -q -O /var/lib/hornet/config.json https://tanglebay.com/assets/config.json \
             && sudo ufw allow 14626/udp \
-            && sudo service hornet start '), stdout=subprocess.PIPE, shell = True)
+            && sudo service hornet start ')
+        if cmd1 != 'exit':
+            process = subprocess.Popen(cmd1, stdout=subprocess.PIPE, shell = True)
 
-
-            #&& sudo chown pi:pi /etc/apt/sources.list.d
-        #sudo mkdir /etc/apt/sources.list.d
-        p = process.stdout.readline()
-        # Do something else
-        return_code = process.poll()
-        if return_code is not None:
-            print('RETURN CODE', return_code)
-        else:
-            print("STARTING")
-            cnt = 1
-            while cnt <= 100:
-                cnt += 0.4
-                time.sleep(0.1)
-                line = process.stdout.readline()
-                self.change_value.emit(cnt)
-                print(line.strip())
-                sys.stdout.flush()
-                if cnt == 100:
-                    print ("CNT 100 erreicht")
+            # && sudo chown pi:pi /etc/apt/sources.list.d
+            # sudo mkdir /etc/apt/sources.list.d
+            p = process.stdout.readline()
+            # Do something else
+            return_code = process.poll()
+            if return_code is not None:
+                print('RETURN CODE', return_code)
+            else:
+                print("STARTING")
+                cnt = 1
+                while cnt <= 100:
+                    cnt += 0.4
+                    time.sleep(0.1)
+                    line = process.stdout.readline()
+                    self.change_value.emit(cnt)
+                    print(line.strip())
                     sys.stdout.flush()
-                sys.stdout.flush()
+                    if cnt == 100:
+                        print ("CNT 100 erreicht")
+                        sys.stdout.flush()
+                    sys.stdout.flush()
+        else:
+            return None
 ##############################################################################
 #Thread for hornet uninstall
 class MyThread_hornet_uninstall(QThread):

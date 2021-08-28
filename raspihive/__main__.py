@@ -36,7 +36,9 @@ from PyQt5.QtWidgets import QCheckBox
 from .progress_bars import *
 from pathlib import Path
 
-# from .helpers import os_parse
+# from .helpers import __default_message__
+
+__default_message__ = f'Your Platform is not supported. Please raise a request for your OS on the discord server, on `#help` channel.'
 
 # test import for cpu and ram values etc.
 # import psutil
@@ -955,16 +957,19 @@ certbot --nginx" (Domain needed) ')
             x = msg.exec_()  # this will show our messagebox
         elif path.exists("/var/lib/hornet") == False:
             app = Window_hornet_install()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Install Hornet")
-            msg.setInformativeText("Installation of Hornet is running")
-            msg.setWindowTitle("Install Hornet")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
+            if app.start():
+                msg = QMessageBox()
+                msg.setStyleSheet("background-color: #2B3440 ; color: \
+                rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+                msg.setIcon(QMessageBox.Information)
+                msg.setText("Install Hornet")
+                msg.setInformativeText("Installation of Hornet is running")
+                msg.setWindowTitle("Install Hornet")
+                msg.setDetailedText("Just close the window\
+                    if the progress bar reaches 100 %, #IOTAstrong")
+                show = msg.exec_()  # this will show our messagebox
+            else:
+                self.not_supported()
 
     def hornet_uninstall(self):
         if path.exists("/var/lib/hornet/") == True:
@@ -1209,7 +1214,7 @@ certbot --nginx" (Domain needed) ')
             #os.system('sudo -ubeekeeper firefox http://localhost')
 
     def hornet_dashboard_username(self):
-        #Define search string/pattern
+        # Define search string/pattern
         string1 = "admin"
         string2 = "admin"
 
@@ -1257,59 +1262,53 @@ certbot --nginx" (Domain needed) ')
 
     def hornet_dashboard_password(self):
         print("Test")
-        #cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
-        #os.system(cmd1)
-        #subprocess.Popen("cd /var/lib/hornet && hornet tool pwdhash",shell = True)
+        try:
+            #cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
+            #os.system(cmd1)
+            #subprocess.Popen("cd /var/lib/hornet && hornet tool pwdhash",shell = True)
 
+            #print("Output", password)
+            # password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+            #
+            # def my_function(password1):
+            #     print(password1 + " IOTA")
+            #
+            # my_function(password1)
 
+            password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+            password2 , pressed = QInputDialog.getText(self, "Retype password", "Retype password: ", QLineEdit.Normal, "")
 
-        #print("Output", password)
-        password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+            os.popen('cat /etc/services').read()
+            output = subprocess.check_output("cat /etc/services", shell=True)
+            value = input("Please enter a string:\n")
+            print(f'You entered {password}')
+            cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
+            os.system(cmd1)
 
-        def my_function(password1):
-            print(password1 + " IOTA")
+            """ GUI stuff
 
+            text1 , pressed = QInputDialog.getText(self, "Input Text", "Set password: ", QLineEdit.Normal, "")
+            print("Output: ", text1)
 
-        my_function(password1)
+            #show window
+            window = QWidget()
+            window.setGeometry(400,400,250,250)
+            window.setWindowTitle("Raspihive")
 
+            label = QLabel(window)
+            label.setText("Password")
+            label.move(60,80)
 
-        #password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
-        #password2 , pressed = QInputDialog.getText(self, "Retype password", "Retype password: ", QLineEdit.Normal, "")
+            button = QPushButton(window)
+            button.setText("Set password")
+            button.clicked.connect(self.hornet_dashboard_user_and_pw)
+            button.move(60,120)
 
-        #os.popen('cat /etc/services').read()
-        #output = subprocess.check_output("cat /etc/services", shell=True)
-        #value = input("Please enter a string:\n")
-        #print(f'You entered {password}')
-        #cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
-        #os.system(cmd1)
-
-
-
-
-
-
-        """ GUI stuff
-
-        text1 , pressed = QInputDialog.getText(self, "Input Text", "Set password: ", QLineEdit.Normal, "")
-        print("Output: ", text1)
-
-        #show window
-        window = QWidget()
-        window.setGeometry(400,400,250,250)
-        window.setWindowTitle("Raspihive")
-
-        label = QLabel(window)
-        label.setText("Password")
-        label.move(60,80)
-
-        button = QPushButton(window)
-        button.setText("Set password")
-        button.clicked.connect(self.hornet_dashboard_user_and_pw)
-        button.move(60,120)
-
-        window.show()
-        #os.system("hornet tool pwdhash  /var/lib/hornet" )
-        """
+            window.show()
+            #os.system("hornet tool pwdhash  /var/lib/hornet" )
+            """
+        except Exception as ex:
+            print('ex:', ex)
 
     def about(self):
         msg = QMessageBox()
@@ -1344,6 +1343,17 @@ as at: www.raspihive.org or get directly in touch by sending \
 an e-mail to: piota@mail.de \nThanks for your feedback!")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
+
+    def not_supported(self, msg=__default_message__):
+        print(msg)
+        # TODO: Display msg in a pop up. Right now, below one is not working.
+        # msg = QMessageBox()
+        # msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
+        # msg.setIcon(QMessageBox.Information)
+        # msg.setWindowTitle("Un-Supported")
+        # msg.setText(msg)
+        # # msg.setInformativeText(msg)
+        # x = msg.exec_()
 
 # End Functions
 ###############################################################################

@@ -10,6 +10,7 @@ from .threads import *
 class Window_os_update(QDialog):
     def __init__(self):
         super().__init__()
+
         self.setStyleSheet('background-color: #2B3440; color: black;')
         self.title = "OS Update"
         self.top = 200
@@ -35,7 +36,6 @@ class Window_os_update(QDialog):
         self.setLayout(vbox)
         self.show()
 
-    #def startProgressBar():
         self.thread = MyThread_os_update()
         self.thread.change_value.connect(self.setProgressVal)
         self.thread.start()
@@ -133,6 +133,8 @@ class Window_hornet_update(QDialog):
 class Window_hornet_install(QDialog):
     def __init__(self):
         super().__init__()
+
+    def start(self):
         self.setStyleSheet('background-color: #2B3440; \
         color: black;') #rgb(255,255,255);
         self.title = "Hornet install"
@@ -161,9 +163,13 @@ class Window_hornet_install(QDialog):
         self.show()
 
     #def startProgressBar():
-        self.thread = MyThread_hornet_install()
-        self.thread.change_value.connect(self.setProgressVal)
-        self.thread.start()
+        thread_cmd = MyThread_hornet_install()
+        if thread_cmd:
+            self.thread = thread_cmd
+            self.thread.change_value.connect(self.setProgressVal)
+            self.thread.start()
+        else:
+            return None
 
     def setProgressVal(self, val):
         self.progressbar.setValue(val)
