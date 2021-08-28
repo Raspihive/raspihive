@@ -45,6 +45,7 @@ __default_message__ = f'Your Platform is not supported. Please raise a request f
 ###########################################################################
 # Global variables
 ICON_IMAGE_URL = "https://raw.githubusercontent.com/Raspihive/raspihiveWebsite/master/public/favicon.ico"
+
 #####################################Start of Window frames################
 class Window1(QMainWindow):
     def __init__(self):
@@ -70,6 +71,9 @@ class Window1(QMainWindow):
         self.nam.finished.connect(self.set_window_icon_from_response)
         self.nam.get(QNetworkRequest(QUrl(ICON_IMAGE_URL)))
 
+        # Progress Bar Clients
+        self.hornet_progress = HornetProgress()
+        self.nginx_certbot_progress = NGINXCertbot()
 
     def set_window_icon_from_response(self, http_response):
         pixmap = QPixmap()
@@ -933,7 +937,7 @@ certbot --nginx" (Domain needed) ')
             that changes take effect")
 
     def hornet_update(self):
-        app = Window_hornet_update()
+        self.hornet_progress.update()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
         rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -956,8 +960,7 @@ certbot --nginx" (Domain needed) ')
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
         elif path.exists("/var/lib/hornet") == False:
-            app = Window_hornet_install()
-            if app.start():
+            if self.hornet_progress.install():
                 msg = QMessageBox()
                 msg.setStyleSheet("background-color: #2B3440 ; color: \
                 rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -973,7 +976,7 @@ certbot --nginx" (Domain needed) ')
 
     def hornet_uninstall(self):
         if path.exists("/var/lib/hornet/") == True:
-            app = Window_hornet_uninstall()
+            self.hornet_progress.uninstall()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -1005,7 +1008,7 @@ certbot --nginx" (Domain needed) ')
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
         elif path.exists("/etc/nginx/") == False:
-            app = Window_nginx_certbot_install()
+            self.nginx_certbot_progress.install()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -1058,7 +1061,7 @@ certbot --nginx" (Domain needed) ')
 
     def uninstall_nginx_certbot(self):
         if path.exists("/etc/nginx/") == True:
-            app = Window_nginx_certbot_uninstall()
+            self.nginx_certbot_progress.uninstall()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
