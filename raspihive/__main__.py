@@ -1272,27 +1272,27 @@ certbot --nginx" (Domain needed) ')
     def hornet_dashboard_password(self):
         print("Test")
         try:
-            #cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
-            #os.system(cmd1)
-            #subprocess.Popen("cd /var/lib/hornet && hornet tool pwdhash",shell = True)
-
-            #print("Output", password)
-            # password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
-            #
-            # def my_function(password1):
-            #     print(password1 + " IOTA")
-            #
-            # my_function(password1)
-
-            password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
-            password2 , pressed = QInputDialog.getText(self, "Retype password", "Retype password: ", QLineEdit.Normal, "")
-
-            os.popen('cat /etc/services').read()
-            output = subprocess.check_output("cat /etc/services", shell=True)
-            value = input("Please enter a string:\n")
-            print(f'You entered {password}')
             cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
             os.system(cmd1)
+            subprocess.Popen("cd /var/lib/hornet && hornet tool pwdhash",shell = True)
+
+            print("Output", password)
+            password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+
+            def my_function(password1):
+                print(password1 + " IOTA")
+
+            my_function(password1)
+
+            # password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+            # password2 , pressed = QInputDialog.getText(self, "Retype password", "Retype password: ", QLineEdit.Normal, "")
+            #
+            # os.popen('cat /etc/services').read()
+            # output = subprocess.check_output("cat /etc/services", shell=True)
+            # value = input("Please enter a string:\n")
+            # print(f'You entered {password}')
+            # cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
+            # os.system(cmd1)
 
             """ GUI stuff
 
