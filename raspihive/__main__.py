@@ -1244,6 +1244,7 @@ certbot --nginx" (Domain needed) ')
                 text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
                 path.write_text(text)
             elif string2 not in readfile: #does not work right atm
+                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")  
                 old =  oldusername , pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
                 new =  newusername , pressed = QInputDialog.getText(self, "Input new username", "Enter new username: ", QLineEdit.Normal, "")
 
@@ -1255,8 +1256,8 @@ certbot --nginx" (Domain needed) ')
                     text = path.read_text()
                     text = text.replace(old1, new1) #text to search / replacement text #replace of user admin
                     path.write_text(text)
-                #file1 = open("test.txt", "a+")
-                #file1.write("username" + text1);
+                    #file1 = open("test.txt", "a+")
+                    #file1.write("username" + text1);
                     print("current username replaced")
                 else:
                     print('String', string1 , 'Not Found')
