@@ -3,7 +3,7 @@
 
 ###############################################################################
 # libraries
-import sys, time, os, requests, pwd, grp, stat, getpass, re, fileinput
+import sys, time, os, requests, pwd, grp, stat, getpass, re, fileinput, subprocess
 from os import path
 from PyQt5.QtWidgets import (
     QApplication,
@@ -1089,7 +1089,6 @@ certbot --nginx" (Domain needed) ')
             print("Nginx + Certbot is not installed. Please install it first")
 
     def enable_automatic_updates(self):
-
         os.system("pkexec chown $USER:$GROUPS -R /etc/crontab && sudo chown $USER:$GROUPS -R /home/")
         f = open("/home/update.sh", "w") #
         f.write("apt update && apt full-upgrade -y")
@@ -1271,52 +1270,20 @@ certbot --nginx" (Domain needed) ')
             print("Other Exception:", e)
 
     def hornet_dashboard_password(self):
-        print("Test")
         try:
-            cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
-            os.system(cmd1)
-            subprocess.Popen("cd /var/lib/hornet && hornet tool pwdhash",shell = True)
+            password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+            #subprocess.Popen("cd /var/lib/hornet && hornet tool pwd-hash",shell = True)
+            #print("Output", password1)
+            if password[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
+                    password2 = password[0]
+                    cmd1 = 'cd /var/lib/hornet && hornet tool pwd-hash' 
+                    os.system(cmd1+password1)
+            
+            
 
-            print("Output", password)
-            password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+            #if pressed:
+            #    print(password1)
 
-            def my_function(password1):
-                print(password1 + " IOTA")
-
-            my_function(password1)
-
-            # password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
-            # password2 , pressed = QInputDialog.getText(self, "Retype password", "Retype password: ", QLineEdit.Normal, "")
-            #
-            # os.popen('cat /etc/services').read()
-            # output = subprocess.check_output("cat /etc/services", shell=True)
-            # value = input("Please enter a string:\n")
-            # print(f'You entered {password}')
-            # cmd1 = 'cd /var/lib/hornet && hornet tool pwdhash'
-            # os.system(cmd1)
-
-            """ GUI stuff
-
-            text1 , pressed = QInputDialog.getText(self, "Input Text", "Set password: ", QLineEdit.Normal, "")
-            print("Output: ", text1)
-
-            #show window
-            window = QWidget()
-            window.setGeometry(400,400,250,250)
-            window.setWindowTitle("Raspihive")
-
-            label = QLabel(window)
-            label.setText("Password")
-            label.move(60,80)
-
-            button = QPushButton(window)
-            button.setText("Set password")
-            button.clicked.connect(self.hornet_dashboard_user_and_pw)
-            button.move(60,120)
-
-            window.show()
-            #os.system("hornet tool pwdhash  /var/lib/hornet" )
-            """
         except Exception as ex:
             print('ex:', ex)
 
