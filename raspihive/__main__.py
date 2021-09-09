@@ -1271,18 +1271,19 @@ certbot --nginx" (Domain needed) ')
 
     def hornet_dashboard_password(self):
         try:
+            cmd1 = 'cd /var/lib/hornet && hornet tool pwd-hash' 
+            #os.system(cmd1)
+            subprocess.Popen(cmd1,shell = True)
             password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
             #subprocess.Popen("cd /var/lib/hornet && hornet tool pwd-hash",shell = True)
             #print("Output", password1)
-            if password[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
-                    password2 = password[0]
-                    cmd1 = 'cd /var/lib/hornet && hornet tool pwd-hash' 
-                    os.system(cmd1+password1)
-            
-            
+            #print("Password", password)
+            #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
+            password1 = password[0]
+            #subprocess.Popen(password1,shell = True)
+            #os.system(password2)
+            #print(password1)
 
-            #if pressed:
-            #    print(password1)
 
         except Exception as ex:
             print('ex:', ex)
