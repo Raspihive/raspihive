@@ -3,7 +3,9 @@
 
 ###############################################################################
 # libraries
-import sys, time, os, requests, pwd, grp, stat, getpass, re, fileinput, subprocess
+import sys, time, os, requests, pwd, grp, stat, getpass, re, fileinput, subprocess, pexpect
+from subprocess import Popen, PIPE
+import shlex
 from os import path
 from PyQt5.QtWidgets import (
     QApplication,
@@ -1271,20 +1273,16 @@ certbot --nginx" (Domain needed) ')
 
     def hornet_dashboard_password(self):
         try:
-            cmd1 = 'cd /var/lib/hornet && hornet tool pwd-hash' 
-            #os.system(cmd1)
-            subprocess.Popen(cmd1,shell = True)
             password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
-            #subprocess.Popen("cd /var/lib/hornet && hornet tool pwd-hash",shell = True)
-            #print("Output", password1)
-            #print("Password", password)
-            #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
-            password1 = password[0]
-            #subprocess.Popen(password1,shell = True)
-            #os.system(password2)
-            #print(password1)
-
-
+            password2 = password[0]
+            child = pexpect.spawn("hornet tools pwd-hash")
+            #child.logfile_read = sys.stdout.buffer
+            child.expect("password:")
+            child.sendline(password2)
+            child.expect("Re-enter your password:")
+            child.sendline(password2)
+            child.interact()
+        
         except Exception as ex:
             print('ex:', ex)
 
