@@ -1244,7 +1244,7 @@ certbot --nginx" (Domain needed) ')
                 text = path.read_text()
                 text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
                 path.write_text(text)
-            elif string2 not in readfile: #does not work right atm
+            elif string2 not in readfile: 
                 os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")  
                 old =  oldusername , pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
                 new =  newusername , pressed = QInputDialog.getText(self, "Input new username", "Enter new username: ", QLineEdit.Normal, "")
@@ -1275,13 +1275,44 @@ certbot --nginx" (Domain needed) ')
         try:
             password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
             password2 = password[0]
-            child = pexpect.spawn("hornet tools pwd-hash")
-            #child.logfile_read = sys.stdout.buffer
+            child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
+            fout = open('passwd.txt','wb')
+            child.logfile = fout
             child.expect("password:")
             child.sendline(password2)
             child.expect("Re-enter your password:")
             child.sendline(password2)
             child.interact()
+            child.close()
+
+            # Define search string/pattern
+            string1 = "00000000"
+            # opening and reading the text file
+            file2 = open("/home/paul/Dokumente/Raspihive/raspihive/config.txt", "r")  #/var/lib/hornet/config.json
+            readfile = file2.read()
+            if string1 in readfile:
+                print('String', string1, 'Found In File')
+                #Get permission for config.json
+                #os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
+
+                # read pw hash from file 
+                with open("/home/paul/Dokumente/Raspihive/raspihive/passwd.txt",'r') as file:
+                    for line in file.readlines():
+                        # python can do regexes, but this is for s fixed string only
+                        if "hash" in line:
+                            idx1 = line.find('"')
+                            idx2 = line.find('"', idx1)
+                            field = line[idx1+1:idx2]
+                            print(field)
+                # opening and reading the text file
+                """
+                file3 = open("/home/paul/Dokumente/Raspihive/raspihive/config.txt", "r")  #/var/lib/hornet/config.json
+                readfile = file3.read() 
+                field
+                text = file3.read_text()
+                text = text.replace("Success", field) #text to search / replacement text #replace of user admin
+                file3.write_text(text)
+                """
         
         except Exception as ex:
             print('ex:', ex)
