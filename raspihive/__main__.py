@@ -1287,6 +1287,7 @@ certbot --nginx" (Domain needed) ')
 
             # Define search string/pattern
             string1 = "00000000"
+            test = "0000000000000000000000000000000000000000000000000000000000000000"
             # opening and reading the text file
             file2 = open("/home/paul/Dokumente/Raspihive/raspihive/config.txt", "r")  #/var/lib/hornet/config.json
             readfile = file2.read()
@@ -1300,20 +1301,19 @@ certbot --nginx" (Domain needed) ')
                     for line in file.readlines():
                         # python can do regexes, but this is for s fixed string only
                         if "hash" in line:
-                            idx1 = line.find('"')
+                            idx1 = line.find(':')
                             idx2 = line.find('"', idx1)
                             field = line[idx1+1:idx2]
                             print(field)
                 # opening and reading the text file
-                """
-                file3 = open("/home/paul/Dokumente/Raspihive/raspihive/config.txt", "r")  #/var/lib/hornet/config.json
-                readfile = file3.read() 
-                field
-                text = file3.read_text()
-                text = text.replace("Success", field) #text to search / replacement text #replace of user admin
-                file3.write_text(text)
-                """
-        
+               
+                path = Path("/home/paul/Dokumente/Raspihive/raspihive/config.txt")      #/var/lib/hornet/config.json
+                text = path.read_text() 
+                text = text.replace(test, field) #text to search / replacement text #replace of user admin
+                path.write_text(text)
+              
+                
+       
         except Exception as ex:
             print('ex:', ex)
 
