@@ -1303,14 +1303,32 @@ certbot --nginx" (Domain needed) ')
                         if "hash" in line:
                             idx1 = line.find(':')
                             idx2 = line.find('"', idx1)
-                            field = line[idx1+1:idx2]
+                            field = line[idx1+2:idx2]
                             print(field)
                 # opening and reading the text file
-               
+                #read input file
+                
                 path = Path("/home/paul/Dokumente/Raspihive/raspihive/config.txt")      #/var/lib/hornet/config.json
                 text = path.read_text() 
                 text = text.replace(test, field) #text to search / replacement text #replace of user admin
                 path.write_text(text)
+              
+
+                """
+                fin = open("/home/paul/Dokumente/Raspihive/raspihive/config.txt", "rt")
+                #read file contents to string
+                data = fin.read()
+                #replace all occurrences of the required string
+                data = data.replace(test, field)
+                #close the input file
+                fin.close()
+                #open the input file in write mode
+                fin = open("/home/paul/Dokumente/Raspihive/raspihive/config.txt", "wt")
+                #overrite the input file with the resulting data
+                fin.write(data)
+                #close the file
+                fin.close()
+                """
               
                 
        
