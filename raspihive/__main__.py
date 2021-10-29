@@ -311,7 +311,6 @@ class Window1(QMainWindow):
         # setting geometry of check box
         checkbox.setGeometry(20, 220, 170, 50)
 
-
         if path.exists("/etc/crontab") == True:
             with open('/etc/crontab') as f:
                 datafile = f.readlines()
@@ -1244,6 +1243,7 @@ certbot --nginx" (Domain needed) ')
                 text = path.read_text()
                 text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
                 path.write_text(text)
+                QMessageBox.about(self, "Set username", "Username was set\nPlease set the password and restart Hornet")
             elif string2 not in readfile: 
                 os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")  
                 old =  oldusername , pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
@@ -1260,6 +1260,7 @@ certbot --nginx" (Domain needed) ')
                     #file1 = open("test.txt", "a+")
                     #file1.write("username" + text1);
                     print("current username replaced")
+                    QMessageBox.about(self, "Set username", "Username was set")
                 else:
                     print('String', string1 , 'Not Found')
             # closing a file
@@ -1341,6 +1342,7 @@ certbot --nginx" (Domain needed) ')
                 os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
                 #Rm passwd file - (important for security)
                 os.system("sudo rm /home/pi/Documents/passwd.txt")
+                QMessageBox.about(self, "Set password", "Password was set\nPlease restart Hornet")
             #elif string2 not in readfile: 
         except Exception as ex:
             print('ex:', ex)
