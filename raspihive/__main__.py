@@ -1260,7 +1260,7 @@ certbot --nginx" (Domain needed) ')
                     #file1 = open("test.txt", "a+")
                     #file1.write("username" + text1);
                     print("current username replaced")
-                    QMessageBox.about(self, "Set username", "Username was set")
+                    QMessageBox.about(self, "Set username", "New username was set")
                 else:
                     print('String', string1 , 'Not Found')
             # closing a file
