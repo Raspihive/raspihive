@@ -1276,7 +1276,7 @@ certbot --nginx" (Domain needed) ')
             password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
             password2 = password[0]
             child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
-            fout = open('passwd.txt','wb')
+            fout = open('/var/lib/hornet/passwd.txt','wb')
             child.logfile = fout
             child.expect("password:")
             child.sendline(password2)
@@ -1288,72 +1288,60 @@ certbot --nginx" (Domain needed) ')
             # Define search string/pattern
             old_pw_hashvalue = "0000000000000000000000000000000000000000000000000000000000000000"
             # opening and reading the text file
-            file2 = open("/home/paul/Dokumente/Raspihive/raspihive/config.txt", "r")  #/var/lib/hornet/config.json
+            file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
             readfile = file2.read()
             if old_pw_hashvalue in readfile:
                 #Get permission for config.json
-                #os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
+                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
 
-                # read pw hash from file 
-                with open("/home/paul/Dokumente/Raspihive/raspihive/passwd.txt",'r') as file:
+                # read pw hash from passwd file 
+                with open("/var/lib/hornet/passwd.txt",'r') as file:
                     for line in file.readlines():
                         # python can do regexes, but this is for s fixed string only
-                        if "hash" in line:
+                        if "salt:" in line:
                             idx1 = line.find(':')
                             idx2 = line.find('"', idx1)
                             field = line[idx1+2:idx2]
                             print(field)
                 # opening and reading the text file
                 #read input file
-                path = Path("/home/paul/Dokumente/Raspihive/raspihive/config.txt")      #/var/lib/hornet/config.json
+                path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
                 text = path.read_text() 
                 text = text.replace(old_pw_hashvalue, field) #text to search / replacement text #replace of user admin
                 path.write_text(text)
+                os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+                os.system("sudo rm /var/lib/hornet/passwd.txt")
+            #elif string2 not in readfile: 
 ##################################################
             #Define search string/pattern
-            old_salt_hashvalue = field
+            old_salt_hashvalue = field+'",'
+            print(old_salt_hashvalue)
             # opening and reading the text file
-            file2 = open("/home/paul/Dokumente/Raspihive/raspihive/config.txt", "r")  #/var/lib/hornet/config.json
+            file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
             readfile = file2.read()
             if old_salt_hashvalue in readfile:
                 #Get permission for config.json
-                #os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
+                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
 
                 # read pw hash from file 
-                with open("/home/paul/Dokumente/Raspihive/raspihive/passwd.txt",'r') as file:
+                with open("/var/lib/hornet/passwd.txt",'r') as file:
                     for line in file.readlines():
                         # python can do regexes, but this is for s fixed string only
-                        if "salt" in line:
+                        if "hash:" in line:
                             idx1 = line.find(':')
                             idx2 = line.find('"', idx1)
                             field = line[idx1+2:idx2]
+                            field = field + '"'
                             print(field)
                 # opening and reading the text file
                 #read input file
-                path = Path("/home/paul/Dokumente/Raspihive/raspihive/config.txt")      #/var/lib/hornet/config.json
+                path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
                 text = path.read_text() 
                 text = text.replace(old_salt_hashvalue, field) #text to search / replacement text #replace of user admin
                 path.write_text(text)
-
-
-                """
-                fin = open("/home/paul/Dokumente/Raspihive/raspihive/config.txt", "rt")
-                #read file contents to string
-                data = fin.read()
-                #replace all occurrences of the required string
-                data = data.replace(test, field)
-                #close the input file
-                fin.close()
-                #open the input file in write mode
-                fin = open("/home/paul/Dokumente/Raspihive/raspihive/config.txt", "wt")
-                #overrite the input file with the resulting data
-                fin.write(data)
-                #close the file
-                fin.close()
-                """
-              
-                
-       
+                os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+                os.system("sudo rm /var/lib/hornet/passwd.txt")
+            #elif string2 not in readfile: 
         except Exception as ex:
             print('ex:', ex)
 
