@@ -231,7 +231,7 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.3')
+        self.statusBar().showMessage('Raspihive Version 2.4')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
 
         #End of status bar
@@ -1240,7 +1240,7 @@ certbot --nginx" (Domain needed) ')
 
                 text1 , pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
                 path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
-                print('String', string1, 'Found In File')
+                #print('String', string1, 'Found In File')
                 text = path.read_text()
                 text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
                 path.write_text(text)
@@ -1252,7 +1252,7 @@ certbot --nginx" (Domain needed) ')
                 if old[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
                     old1 = old[0]
                     new1 = new[0]
-                    print("OLD", new1)
+                    #print("OLD", new1)
                     path = Path("/var/lib/hornet/config.json")
                     text = path.read_text()
                     text = text.replace(old1, new1) #text to search / replacement text #replace of user admin
@@ -1302,7 +1302,7 @@ certbot --nginx" (Domain needed) ')
                             idx1 = line.find(':')
                             idx2 = line.find('"', idx1)
                             field = line[idx1+2:idx2]
-                            print(field)
+                            #print(field)
                 # opening and reading the text file
                 #read input file
                 path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
@@ -1314,7 +1314,7 @@ certbot --nginx" (Domain needed) ')
 ##################################################
             #Define search string/pattern
             old_salt_hashvalue = field+'",'
-            print(old_salt_hashvalue)
+            #print(old_salt_hashvalue)
             # opening and reading the text file
             file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
             readfile = file2.read()
@@ -1331,7 +1331,7 @@ certbot --nginx" (Domain needed) ')
                             idx2 = line.find('"', idx1)
                             field = line[idx1+2:idx2]
                             field = field + '",'
-                            print(field)
+                            #print(field)
                 # opening and reading the text file
                 #read input file
                 path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
@@ -1352,7 +1352,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version 2.3\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
+Raspihive: Version 2.4\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
