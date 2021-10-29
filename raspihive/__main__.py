@@ -1276,7 +1276,7 @@ certbot --nginx" (Domain needed) ')
             password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
             password2 = password[0]
             child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
-            fout = open('/home/paul/Dokumente/passwd.txt','wb')  #'/home/pi/Documents/passwd.txt'
+            fout = open('/home/pi/Documents/passwd.txt','wb')  #'/home/pi/Documents/passwd.txt'
             child.logfile = fout
             child.expect("password:")
             child.sendline(password2)
