@@ -1276,7 +1276,7 @@ certbot --nginx" (Domain needed) ')
             password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
             password2 = password[0]
             child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
-            fout = open('/var/lib/hornet/passwd.txt','wb')
+            fout = open('/home/paul/Dokumente/passwd.txt','wb')  #'/home/pi/Documents/passwd.txt'
             child.logfile = fout
             child.expect("password:")
             child.sendline(password2)
@@ -1295,7 +1295,7 @@ certbot --nginx" (Domain needed) ')
                 os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
 
                 # read pw hash from passwd file 
-                with open("/var/lib/hornet/passwd.txt",'r') as file:
+                with open("/home/pi/Documents/passwd.txt",'r') as file:
                     for line in file.readlines():
                         # python can do regexes, but this is for s fixed string only
                         if "salt:" in line:
@@ -1310,7 +1310,6 @@ certbot --nginx" (Domain needed) ')
                 text = text.replace(old_pw_hashvalue, field) #text to search / replacement text #replace of user admin
                 path.write_text(text)
                 os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
-                os.system("sudo rm /var/lib/hornet/passwd.txt")
             #elif string2 not in readfile: 
 ##################################################
             #Define search string/pattern
@@ -1324,14 +1323,14 @@ certbot --nginx" (Domain needed) ')
                 os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
 
                 # read pw hash from file 
-                with open("/var/lib/hornet/passwd.txt",'r') as file:
+                with open("/home/pi/Documents/passwd.txt",'r') as file:
                     for line in file.readlines():
                         # python can do regexes, but this is for s fixed string only
                         if "hash:" in line:
                             idx1 = line.find(':')
                             idx2 = line.find('"', idx1)
                             field = line[idx1+2:idx2]
-                            field = field + '"'
+                            field = field + '",'
                             print(field)
                 # opening and reading the text file
                 #read input file
@@ -1340,7 +1339,8 @@ certbot --nginx" (Domain needed) ')
                 text = text.replace(old_salt_hashvalue, field) #text to search / replacement text #replace of user admin
                 path.write_text(text)
                 os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
-                os.system("sudo rm /var/lib/hornet/passwd.txt")
+                #Rm passwd file - (important for security)
+                os.system("sudo rm /home/pi/Documents/passwd.txt")
             #elif string2 not in readfile: 
         except Exception as ex:
             print('ex:', ex)
