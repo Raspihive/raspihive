@@ -3,7 +3,10 @@
 
 ###############################################################################
 # libraries
-import sys, time, os, requests, pwd, grp, stat, getpass
+import sys, time, os, requests, pwd, grp, stat, getpass, re, fileinput, subprocess, pexpect
+from subprocess import Popen, PIPE
+import shlex
+from os import path
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -11,7 +14,7 @@ from PyQt5.QtWidgets import (
     QProgressBar,
     QPushButton,
     QAction,
-    qApp, 
+    qApp,
     QCheckBox
 )
 from PyQt5 import QtGui, QtWidgets, Qt, QtCore
@@ -33,16 +36,24 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PyQt5.QtWidgets import QCheckBox
-from .progress_bars import *
+from .progress_bars import (
+    Window_os_update,
+    Window_packages,
+    HornetProgress,
+    NGINXCertbot
+)
+from pathlib import Path
 
+# from .helpers import __default_message__
 
-#from .helpers import os_parse
+__default_message__ = f'Your Platform is not supported. Please raise a request for your OS on the discord server, on `#help` channel.'
 
-#test import for cpu and ram values etc. 
-#import psutil
+# test import for cpu and ram values etc.
+# import psutil
 ###########################################################################
-#Global variables
+# Global variables
 ICON_IMAGE_URL = "https://raw.githubusercontent.com/Raspihive/raspihiveWebsite/master/public/favicon.ico"
+
 #####################################Start of Window frames################
 class Window1(QMainWindow):
     def __init__(self):
@@ -68,6 +79,9 @@ class Window1(QMainWindow):
         self.nam.finished.connect(self.set_window_icon_from_response)
         self.nam.get(QNetworkRequest(QUrl(ICON_IMAGE_URL)))
 
+        # Progress Bar Clients
+        self.hornet_progress = HornetProgress()
+        self.nginx_certbot_progress = NGINXCertbot()
 
     def set_window_icon_from_response(self, http_response):
         pixmap = QPixmap()
@@ -113,7 +127,7 @@ class Window1(QMainWindow):
         # Set icon size and spacing
         self.toolbar.setIconSize(QtCore.QSize(32, 32))
         self.toolbar.setStyleSheet("QToolButton{padding-left: 5px; padding-right: 5px; }");
-        #End Toolbar Icon 
+        #End Toolbar Icon
         """
 
         #self.setGeometry(500, 500, 500, 500)
@@ -181,6 +195,8 @@ class Window1(QMainWindow):
         self.tab5 = self.ui5()
         #End of button 5 widget (Dashboard access)
 
+
+
         # add button 6 widget (Help)
         self.btn_6 = QPushButton(' Help ', self)
         #Setting background color or transparency
@@ -215,7 +231,7 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.3')
+        self.statusBar().showMessage('Raspihive Version 2.4')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
 
         #End of status bar
@@ -281,21 +297,20 @@ class Window1(QMainWindow):
     # End buttons
 
 	# -----------------
-####################### Start pages ##############
+    ####################### Start pages ##############
 
-#Update menu tab
+    # Update menu tab
     def ui1(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
         main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); #137394 this
         #Background Image + button image
-        
+
         # creating the check-box
         checkbox = QCheckBox('Status Auto update', main)
         # setting geometry of check box
         checkbox.setGeometry(20, 220, 170, 50)
-        
-        
+
         if path.exists("/etc/crontab") == True:
             with open('/etc/crontab') as f:
                 datafile = f.readlines()
@@ -412,9 +427,9 @@ class Window1(QMainWindow):
         #End label
 
         return main
-#End of update menu tab
+    # End of update menu tab
 
-#Install menu
+    # Install menu
     def ui2(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -494,7 +509,7 @@ certbot --nginx" (Domain needed) ')
         checkbox = QCheckBox('Status automatic \ncertificate renewal', main)
         # setting geometry of check box
         checkbox.setGeometry(440, 220, 170, 50)
-        
+
         if path.exists("/var/spool/cron/crontabs/pi") == True:
             with open('/var/spool/cron/crontabs/pi') as f:
                 datafile = f.readlines()
@@ -511,7 +526,7 @@ certbot --nginx" (Domain needed) ')
                            "{"
                            "background-color : red;"
                            "}")
-        
+
 
         #Start button 6
         button = QPushButton('Enable auto renewing \n SSL certificate', main)
@@ -556,9 +571,9 @@ certbot --nginx" (Domain needed) ')
         #End label
 
         return main
-#End of install menu
+    # End of install menu
 
-#Node Control Center
+    # Node Control Center
     def ui3(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -612,9 +627,9 @@ certbot --nginx" (Domain needed) ')
         #End label
 
         return main
-#End of Node Control Center
+    # End of Node Control Center
 
-#Invisible Hornet Node Control Center
+    # Invisible Hornet Node Control Center
     def ui4(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -717,45 +732,53 @@ certbot --nginx" (Domain needed) ')
         #End label
 
         return main
-#End of invisible Hornet Node Control Center
+    # End of invisible Hornet Node Control Center
 
-#Dashboard access
+    # Dashboard access
     def ui5(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
         main.setStyleSheet('background-color:  #137394 ') #rgb(255,255,255); ##137394
         #Background Image + button image
 
-
         #Start button 1
+        button = QPushButton(' Set or change username', main)
+        #Hover text
+        button.setToolTip(' Set or change username')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(40, 50, 220, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.hornet_dashboard_username)
+        #End button 1
+
+        #Start button 2
+        button = QPushButton(' Set password', main)
+        #Hover text
+        button.setToolTip(' Set password')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(40, 130, 220, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.hornet_dashboard_password)
+        #End button 2
+
+        #Start button 3
         button = QPushButton(' Hornet Dashboard ', main)
         #Hover text
         button.setToolTip(' Open Hornet Dashboard ')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(40, 50, 180, 60)
+        button.setGeometry(280, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
         button.clicked.connect(self.hornet_dashboard_access)
-        #End button 1
-
-        """
-        #Start button 2
-        button = QPushButton(' Uninstall Hornet ', main)
-        #Hover text
-        button.setToolTip(' Uninstall IOTA Hornet Fullnode ')
-        #button.move(150 ,50)
-        # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 150, 50)
-        #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        #add action
-        button.clicked.connect(self.hornet_uninstall)
-        #End button 2
-        """
-
+        #End button 3
 
         #Create label
         main.labelA = QtWidgets.QLabel(main)
@@ -774,9 +797,9 @@ certbot --nginx" (Domain needed) ')
         #End label
 
         return main
-#End of Dashboard access
+    # End of Dashboard access
 
-#Help menu
+    # Help menu
     def ui6(self):
         main = QWidget()
         main.setWindowOpacity(1.0)
@@ -856,20 +879,20 @@ certbot --nginx" (Domain needed) ')
         #End label
 
         return main
-#End of Help menu
+    # End of Help menu
 
-# Quit button
+    # Quit button
     def ui7(self):
         main = QWidget()
 
         return main
-#End of Quit-button
+    # End of Quit-button
 
-#End pages
-##############################################################################
+    # End pages
+    ##############################################################################
 
-##############################################################################
-#Start Functions
+    ##############################################################################
+    # Start Functions
     def system_update(self):
         app = Window_os_update()
         msg = QMessageBox()
@@ -896,10 +919,10 @@ certbot --nginx" (Domain needed) ')
             if the progress bar reaches 100 %, #IOTAstrong")
         show = msg.exec_()  # this will show our messagebox
 
-#IMPORATANT: Raspihive needs to be cloned into the "/home"-folder, then restart is necessary.
+    # IMPORATANT: Raspihive needs to be cloned into the "/home"-folder, then restart is necessary.
     def raspihive_update(self):
         #print("Test packages")
-        #os.chdir('/tmp') 
+        #os.chdir('/tmp')
         #os.system(" cd /tmp && sudo find -name raspihive -exec rm -rf {} +")
         #if path.exists("/home/pi/raspihive") == True:
         print("Update Raspihive")
@@ -921,7 +944,7 @@ certbot --nginx" (Domain needed) ')
             that changes take effect")
 
     def hornet_update(self):
-        app = Window_hornet_update()
+        self.hornet_progress.update()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
         rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -944,21 +967,23 @@ certbot --nginx" (Domain needed) ')
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
         elif path.exists("/var/lib/hornet") == False:
-            app = Window_hornet_install()
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Install Hornet")
-            msg.setInformativeText("Installation of Hornet is running")
-            msg.setWindowTitle("Install Hornet")
-            msg.setDetailedText("Just close the window\
-                if the progress bar reaches 100 %, #IOTAstrong")
-            show = msg.exec_()  # this will show our messagebox
+            if self.hornet_progress.install():
+                msg = QMessageBox()
+                msg.setStyleSheet("background-color: #2B3440 ; color: \
+                rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+                msg.setIcon(QMessageBox.Information)
+                msg.setText("Install Hornet")
+                msg.setInformativeText("Installation of Hornet is running")
+                msg.setWindowTitle("Install Hornet")
+                msg.setDetailedText("Just close the window\
+                    if the progress bar reaches 100 %, #IOTAstrong")
+                show = msg.exec_()  # this will show our messagebox
+            else:
+                self.not_supported()
 
     def hornet_uninstall(self):
         if path.exists("/var/lib/hornet/") == True:
-            app = Window_hornet_uninstall()
+            self.hornet_progress.uninstall()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -979,7 +1004,6 @@ certbot --nginx" (Domain needed) ')
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
 
-
     def install_nginx_certbot(self):
         if path.exists("/etc/nginx/") == True:
             print("Nginx + Certbot is already installed. Please uninstall it first")
@@ -991,7 +1015,7 @@ certbot --nginx" (Domain needed) ')
             #msg.setInformativeText("informative text, ya!")
             x = msg.exec_()  # this will show our messagebox
         elif path.exists("/etc/nginx/") == False:
-            app = Window_nginx_certbot_install()
+            self.nginx_certbot_progress.install()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -1021,7 +1045,7 @@ certbot --nginx" (Domain needed) ')
                 f.close()
                 os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
             except: # occurs because of permission denied error
-                print("An exception occurred - Config not written - FAILURE") 
+                print("An exception occurred - Config not written - FAILURE")
         else:
             print("Config not written - FAILURE")
         """
@@ -1044,7 +1068,7 @@ certbot --nginx" (Domain needed) ')
 
     def uninstall_nginx_certbot(self):
         if path.exists("/etc/nginx/") == True:
-            app = Window_nginx_certbot_uninstall()
+            self.nginx_certbot_progress.uninstall()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -1066,11 +1090,10 @@ certbot --nginx" (Domain needed) ')
             print("Nginx + Certbot is not installed. Please install it first")
 
     def enable_automatic_updates(self):
-        
         os.system("pkexec chown $USER:$GROUPS -R /etc/crontab && sudo chown $USER:$GROUPS -R /home/")
-        f = open("/home/update.sh", "w") # 
-        f.write("apt-get update && apt-get full-upgrade -y") 
-        f.close() 
+        f = open("/home/update.sh", "w") #
+        f.write("apt update && apt full-upgrade -y")
+        f.close()
         os.chmod('/home/update.sh', stat.S_IEXEC)
         process = subprocess.Popen((' echo "0 20 * * * root /home/update.sh >> /var/log/update_raspihive.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
         os.system("sudo chown root:root -R /etc/crontab")
@@ -1080,14 +1103,14 @@ certbot --nginx" (Domain needed) ')
         os.system("pkexec rm -r /home/update.sh ")
         os.system("sudo chown $USER:$GROUPS -R /etc/crontab")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
-        filename = '/etc/crontab' 
+        filename = '/etc/crontab'
         line_to_delete = 23
         line_to_delete2 = 24
         initial_line = 1
         file_lines = {}
 
         with open(filename) as f:
-            content = f.readlines() 
+            content = f.readlines()
 
         for line in content:
             file_lines[initial_line] = line.strip()
@@ -1102,21 +1125,21 @@ certbot --nginx" (Domain needed) ')
         os.system("sudo chown root:root -R /etc/crontab")
         #print('Deleted line: {}'.format(line_to_delete))
         #print('Deleted line: {}'.format(line_to_delete2))
-        
+
         #process = subprocess.Popen((' echo "50 19 * * 3 root /usr/bin/apt update -q -y >> /var/log/apt/automaticupdates.log" | tee -a /etc/crontab'), stdout=subprocess.PIPE, shell = True)
-        
-        #f = open("crontab -e", "w") # 
+
+        #f = open("crontab -e", "w") #
         #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
-        #f.close() 
+        #f.close()
         QMessageBox.about(self, "Automatic update", "Automatic updates disabled\nPlease restart Raspihive that changes take effect")
 
     def enable_auto_renew_ssl(self):
         os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/")
         #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
         process = subprocess.Popen((' echo "0 12 * * * /usr/bin/certbot renew --quiet" | tee -a /var/spool/cron/crontabs/pi'), stdout=subprocess.PIPE, shell = True)
-        #f = open("crontab -e", "w") # 
+        #f = open("crontab -e", "w") #
         #f.write("0 12 * * * /usr/bin/certbot renew --quiet") #test - quiet
-        #f.close() 
+        #f.close()
         os.system("sudo chown root:root -R /var/spool/cron/crontabs/pi")
         QMessageBox.about(self, "SSL-certificate", "Auto renewing enabled\nPlease restart Raspihive that changes take effect")
 
@@ -1181,7 +1204,6 @@ certbot --nginx" (Domain needed) ')
             sys.stdout.flush()
         QMessageBox.about(self, "Hornet", "Hornet DB successfully deleted")
 
-
     def hornet_dashboard_access(self):
         if path.exists("/etc/letsencrypt/live") == True:
             subprocess.Popen("sudo -upi chromium http://127.0.0.1",shell = True)
@@ -1200,6 +1222,145 @@ certbot --nginx" (Domain needed) ')
             subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081",shell = True)
             #os.system('sudo -ubeekeeper firefox http://localhost')
 
+    def hornet_dashboard_username(self):
+        # Define search string/pattern
+        string1 = "admin"
+        string2 = "admin"
+
+        try:
+            # opening and reading the text file
+            file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+            readfile = file1.read()
+
+            # checking condition for string found or not
+            if string1 in readfile:
+                #Get permission for config.json
+                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
+
+                text1 , pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
+                path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+                #print('String', string1, 'Found In File')
+                text = path.read_text()
+                text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
+                path.write_text(text)
+                QMessageBox.about(self, "Set username", "Username was set\nPlease set the password and restart Hornet")
+            elif string2 not in readfile: 
+                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")  
+                old =  oldusername , pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
+                new =  newusername , pressed = QInputDialog.getText(self, "Input new username", "Enter new username: ", QLineEdit.Normal, "")
+
+                if old[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
+                    old1 = old[0]
+                    new1 = new[0]
+                    #print("OLD", new1)
+                    path = Path("/var/lib/hornet/config.json")
+                    text = path.read_text()
+                    text = text.replace(old1, new1) #text to search / replacement text #replace of user admin
+                    path.write_text(text)
+                    #file1 = open("test.txt", "a+")
+                    #file1.write("username" + text1);
+                    print("current username replaced")
+                    QMessageBox.about(self, "Set username", "New username was set")
+                else:
+                    print('String', string1 , 'Not Found')
+            # closing a file
+            file1.close()
+            os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+        except OSError as ose:
+            print('os err:', ose)
+            print('Hornet Not Installed. Please Install Hornet First.')
+        except Exception as e:
+            print("Other Exception:", e)
+
+    def hornet_dashboard_password(self):
+        try:
+            # Define search string/pattern
+            old_pw_hashvalue = "0000000000000000000000000000000000000000000000000000000000000000"
+            # opening and reading the text file
+            file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+            readfile = file2.read()
+            if old_pw_hashvalue in readfile:
+                #Get permission for config.json
+                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
+
+                password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+                password2 = password[0]
+                child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
+                fout = open('/home/pi/Documents/passwd.txt','wb')  #'/home/pi/Documents/passwd.txt'
+                child.logfile = fout
+                child.expect("password:")
+                child.sendline(password2)
+                child.expect("Re-enter your password:")
+                child.sendline(password2)
+                child.interact()
+                child.close()
+
+                # read pw hash from passwd file 
+                with open("/home/pi/Documents/passwd.txt",'r') as file:
+                    for line in file.readlines():
+                        # python can do regexes, but this is for s fixed string only
+                        if "salt:" in line:
+                            idx1 = line.find(':')
+                            idx2 = line.find('"', idx1)
+                            field = line[idx1+2:idx2]
+                            #print(field)
+                # opening and reading the text file
+                #read input file
+                path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+                text = path.read_text() 
+                text = text.replace(old_pw_hashvalue, field) #text to search / replacement text #replace of user admin
+                path.write_text(text)
+                os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+
+                #Define search string/pattern - for salt
+                old_salt_hashvalue = field+'",'
+                #print(old_salt_hashvalue)
+                # opening and reading the text file
+                file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+                readfile = file2.read()
+                if old_salt_hashvalue in readfile:
+                    #Get permission for config.json
+                    os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
+
+                    # read pw hash from file 
+                    with open("/home/pi/Documents/passwd.txt",'r') as file:
+                        for line in file.readlines():
+                            # python can do regexes, but this is for s fixed string only
+                            if "hash:" in line:
+                                idx1 = line.find(':')
+                                idx2 = line.find('"', idx1)
+                                field = line[idx1+2:idx2]
+                                field = field + '",'
+                                #print(field)
+                    # opening and reading the text file
+                    #read input file
+                    path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+                    text = path.read_text() 
+                    text = text.replace(old_salt_hashvalue, field) #text to search / replacement text #replace of user admin
+                    path.write_text(text)
+                    os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+                    #Rm passwd file - (important for security)
+                    os.system("sudo rm /home/pi/Documents/passwd.txt")
+                    QMessageBox.about(self, "Set password", "Password was set\nPlease restart Hornet")
+######################################################################################################################################
+            #Set new password
+            elif old_pw_hashvalue not in readfile:
+                print("Need new password")
+                """
+                #Get permission for config.json
+                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
+                # read pw hash from file 
+                with open("/var/lib/hornet/config.json",'r') as file:
+                    for line in file.readlines():
+                        # python can do regexes, but this is for s fixed string only
+                        if "passwordHash:" in line:
+                            idx1 = line.find(':')
+                            idx2 = line.find('"', idx1)
+                            field = line[idx1+2:idx2]
+                            print(field)
+                """
+        except Exception as ex:
+            print('ex:', ex)
 
     def about(self):
         msg = QMessageBox()
@@ -1208,7 +1369,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version 2.3\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
+Raspihive: Version 2.4\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
@@ -1235,7 +1396,18 @@ an e-mail to: piota@mail.de \nThanks for your feedback!")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
-#End Functions
+    def not_supported(self, msg=__default_message__):
+        print(msg)
+        # TODO: Display msg in a pop up. Right now, below one is not working.
+        # msg = QMessageBox()
+        # msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)")
+        # msg.setIcon(QMessageBox.Information)
+        # msg.setWindowTitle("Un-Supported")
+        # msg.setText(msg)
+        # # msg.setInformativeText(msg)
+        # x = msg.exec_()
+
+# End Functions
 ###############################################################################
 
 # Hornet Status
@@ -1293,9 +1465,9 @@ class hornet_status_win(Qt.QMainWindow):
         # opening window in maximized size
         self.showMaximized()
 
-#End of Hornet Status
+# End of Hornet Status
 
-#Hornet Log
+# Hornet Log
 class hornet_log_win(Qt.QMainWindow):
     def __init__(self):
         Qt.QMainWindow.__init__(self)
@@ -1350,14 +1522,14 @@ class hornet_log_win(Qt.QMainWindow):
         # opening window in maximized size
         self.showMaximized()
 
-#End of Hornet Log
+# End of Hornet Log
 
 
-#Mainwindow
+# Mainwindow
 def main():
     # create pyqt5 app
     app = Qt.QApplication(sys.argv)
-    
+
     screen = app.primaryScreen()
     #print('Screen: %s' % screen.name())
     size = screen.size()
@@ -1381,11 +1553,11 @@ def main():
 
     # start the app
     sys.exit(app.exec_())
-#End of MainWindow
+# End of MainWindow
 
 # Start main programm
 ###############################################################################
 if __name__ == '__main__':
     main()
 ###############################################################################
-#End main programm
+# End main programm
