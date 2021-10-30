@@ -1274,18 +1274,6 @@ certbot --nginx" (Domain needed) ')
 
     def hornet_dashboard_password(self):
         try:
-            password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
-            password2 = password[0]
-            child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
-            fout = open('/home/pi/Documents/passwd.txt','wb')  #'/home/pi/Documents/passwd.txt'
-            child.logfile = fout
-            child.expect("password:")
-            child.sendline(password2)
-            child.expect("Re-enter your password:")
-            child.sendline(password2)
-            child.interact()
-            child.close()
-
             # Define search string/pattern
             old_pw_hashvalue = "0000000000000000000000000000000000000000000000000000000000000000"
             # opening and reading the text file
@@ -1294,6 +1282,18 @@ certbot --nginx" (Domain needed) ')
             if old_pw_hashvalue in readfile:
                 #Get permission for config.json
                 os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
+
+                password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+                password2 = password[0]
+                child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
+                fout = open('/home/pi/Documents/passwd.txt','wb')  #'/home/pi/Documents/passwd.txt'
+                child.logfile = fout
+                child.expect("password:")
+                child.sendline(password2)
+                child.expect("Re-enter your password:")
+                child.sendline(password2)
+                child.interact()
+                child.close()
 
                 # read pw hash from passwd file 
                 with open("/home/pi/Documents/passwd.txt",'r') as file:
@@ -1311,39 +1311,42 @@ certbot --nginx" (Domain needed) ')
                 text = text.replace(old_pw_hashvalue, field) #text to search / replacement text #replace of user admin
                 path.write_text(text)
                 os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
-            #elif string2 not in readfile: 
-##################################################
-            #Define search string/pattern
-            old_salt_hashvalue = field+'",'
-            #print(old_salt_hashvalue)
-            # opening and reading the text file
-            file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
-            readfile = file2.read()
-            if old_salt_hashvalue in readfile:
-                #Get permission for config.json
-                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
 
-                # read pw hash from file 
-                with open("/home/pi/Documents/passwd.txt",'r') as file:
-                    for line in file.readlines():
-                        # python can do regexes, but this is for s fixed string only
-                        if "hash:" in line:
-                            idx1 = line.find(':')
-                            idx2 = line.find('"', idx1)
-                            field = line[idx1+2:idx2]
-                            field = field + '",'
-                            #print(field)
+                #Define search string/pattern - for salt
+                old_salt_hashvalue = field+'",'
+                #print(old_salt_hashvalue)
                 # opening and reading the text file
-                #read input file
-                path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
-                text = path.read_text() 
-                text = text.replace(old_salt_hashvalue, field) #text to search / replacement text #replace of user admin
-                path.write_text(text)
-                os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
-                #Rm passwd file - (important for security)
-                os.system("sudo rm /home/pi/Documents/passwd.txt")
-                QMessageBox.about(self, "Set password", "Password was set\nPlease restart Hornet")
-            #elif string2 not in readfile: 
+                file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+                readfile = file2.read()
+                if old_salt_hashvalue in readfile:
+                    #Get permission for config.json
+                    os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
+
+                    # read pw hash from file 
+                    with open("/home/pi/Documents/passwd.txt",'r') as file:
+                        for line in file.readlines():
+                            # python can do regexes, but this is for s fixed string only
+                            if "hash:" in line:
+                                idx1 = line.find(':')
+                                idx2 = line.find('"', idx1)
+                                field = line[idx1+2:idx2]
+                                field = field + '",'
+                                #print(field)
+                    # opening and reading the text file
+                    #read input file
+                    path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+                    text = path.read_text() 
+                    text = text.replace(old_salt_hashvalue, field) #text to search / replacement text #replace of user admin
+                    path.write_text(text)
+                    os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+                    #Rm passwd file - (important for security)
+                    os.system("sudo rm /home/pi/Documents/passwd.txt")
+                    QMessageBox.about(self, "Set password", "Password was set\nPlease restart Hornet")
+######################################################################################################################################
+            #Set new password
+            elif old_pw_hashvalue not in readfile:
+                print("Need new password")
+
         except Exception as ex:
             print('ex:', ex)
 
