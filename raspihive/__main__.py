@@ -1225,12 +1225,22 @@ certbot --nginx" (Domain needed) ')
         QMessageBox.about(self, "Hornet", "Hornet DB successfully deleted")
 
     def config_update(self):
-        if path.exists("/var/lib/hornet/") == True:
+        if path.exists("/tmp/hornet/") == True:
+            #os.system("pkexec chown $USER:$GROUPS -R /var/lib/hornet/")
             os.system('sudo rm config.json /var/lib/hornet/config.json')
-            if path.exists("/tmp/hornet/") == True:
-                os.system('sudo rm -r /tmp/hornet/')
-                os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
-                os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
+            os.system("pkexec chown $USER:$GROUPS -R /tmp/")
+            os.system('sudo rm -r /tmp/hornet/')
+            os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
+            os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
+            os.system("sudo chown root:root -R /tmp/")
+        elif path.exists("/tmp/hornet/") == False:
+            os.system('sudo rm config.json /var/lib/hornet/config.json')
+            os.system("pkexec chown $USER:$GROUPS -R /tmp/")
+            os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
+            os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
+            os.system("sudo chown root:root -R /tmp/")
+        
+        
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -1241,17 +1251,13 @@ certbot --nginx" (Domain needed) ')
             msg.setDetailedText("Please set a new username\
                 and password and restart Hornet")
             show = msg.exec_()  # this will show our messagebox
+        """
         elif path.exists("/var/lib/hornet/") == True:
+            os.system("pkexec chown $USER:$GROUPS -R /tmp/")
             os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
             os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
-           
-            
-        
-        
-
-            
-
-
+            os.system("sudo chown root:root -R /tmp/")
+        """
 
     def hornet_dashboard_access(self):
         if path.exists("/etc/letsencrypt/live") == True:
@@ -1277,15 +1283,14 @@ certbot --nginx" (Domain needed) ')
         string2 = "admin"
 
         try:
+            #Get permission for config.json
+            os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
             # opening and reading the text file
             file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
             readfile = file1.read()
 
             # checking condition for string found or not
             if string1 in readfile:
-                #Get permission for config.json
-                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
-
                 text1 , pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
                 path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
                 #print('String', string1, 'Found In File')
@@ -1323,6 +1328,8 @@ certbot --nginx" (Domain needed) ')
 
     def hornet_dashboard_password(self):
         try:
+            #Get permission for config.json
+            os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
             # Define search string/pattern
             old_pw_hashvalue = "0000000000000000000000000000000000000000000000000000000000000000"
             # opening and reading the text file
@@ -1331,7 +1338,6 @@ certbot --nginx" (Domain needed) ')
             if old_pw_hashvalue in readfile:
                 #Get permission for config.json
                 os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json") 
-
                 password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
                 password2 = password[0]
                 child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
