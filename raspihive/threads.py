@@ -84,9 +84,9 @@ class MyThread_hornet_update(QThread):
     change_value = pyqtSignal(int)
     def run(self):
         #print("Test packages")
-        process = subprocess.Popen(("pkexec service hornet stop \
-            && sudo apt-get update && sudo apt-get -y upgrade hornet \
-            && sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
+        process = subprocess.Popen(("pkexec service hornet stop && \
+            sudo apt-get update && sudo apt-get -y upgrade hornet && \
+                sudo systemctl restart hornet"), stdout=subprocess.PIPE, shell = True)
 
         p = process.stdout.readline()
         # Do something else
@@ -118,7 +118,7 @@ class MyThread_hornet_install(QThread):
             && sudo apt-get install -y git && sudo apt-get install -y snapd \
             && sudo snap install go --classic \
             && sudo apt-get install -y ufw && sudo ufw allow 15600/tcp && \
-            sudo ufw allow 14626/udp && sudo ufw limit openssh && \
+            sudo ufw allow 14626/udp && \
             sudo ufw enable && sudo apt-get install sshguard -y && sudo wget -qO - https://ppa.hornet.zone/pubkey.txt | sudo apt-key add - \
             && echo "deb http://ppa.hornet.zone stable main" | sudo tee -a  /etc/apt/sources.list.d/hornet.list \
             && sudo apt-get update \
