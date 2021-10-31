@@ -219,7 +219,7 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.4')
+        self.statusBar().showMessage('Raspihive Version 2.4.1')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
 
         #End of status bar
@@ -703,6 +703,19 @@ certbot --nginx" (Domain needed) ')
         #add action to the button
         button.clicked.connect(self.mainnetDB_hornet)
         #End button 6
+
+        #Start button 7
+        button = QPushButton('Reset hornet config', main)
+        #Hover text
+        button.setToolTip('Reset hornet config')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(420, 130, 180, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.config_update)
+        #End button 7
 
         #Create label
         main.labelA = QtWidgets.QLabel(main)
@@ -1211,6 +1224,34 @@ certbot --nginx" (Domain needed) ')
             sys.stdout.flush()
         QMessageBox.about(self, "Hornet", "Hornet DB successfully deleted")
 
+    def config_update(self):
+        if path.exists("/var/lib/hornet/") == True:
+            os.system('sudo rm config.json /var/lib/hornet/config.json')
+            if path.exists("/tmp/hornet/") == True:
+                os.system('sudo rm -r /tmp/hornet/')
+                os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
+                os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Config Update")
+            msg.setInformativeText("Click on Show Details for more informations")
+            msg.setWindowTitle("Hornet config update")
+            msg.setDetailedText("Please set a new username\
+                and password and restart Hornet")
+            show = msg.exec_()  # this will show our messagebox
+        elif path.exists("/var/lib/hornet/") == True:
+            os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
+            os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
+           
+            
+        
+        
+
+            
+
+
 
     def hornet_dashboard_access(self):
         if path.exists("/etc/letsencrypt/live") == True:
@@ -1365,7 +1406,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version 2.4\n \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
+Raspihive: Version \2.4.1 \n Special thanks to: \n Anistark \n Martin N \n Bernardo \n\n Thanks for testing and bug reporting to\n Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         x = msg.exec_()  # this will show our messagebox
 
