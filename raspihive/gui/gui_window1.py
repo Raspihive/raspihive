@@ -1225,6 +1225,7 @@ certbot --nginx" (Domain needed) ')
 
     def config_update(self):
         if path.exists("/tmp/hornet/") == True:
+            subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell=True)
             #os.system("pkexec chown $USER:$GROUPS -R /var/lib/hornet/")
             os.system('sudo rm config.json /var/lib/hornet/config.json')
             os.system("pkexec chown $USER:$GROUPS -R /tmp/")
@@ -1232,12 +1233,15 @@ certbot --nginx" (Domain needed) ')
             os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
             os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
             os.system("sudo chown root:root -R /tmp/")
+            subprocess.Popen("sudo service hornet start", stdout=subprocess.PIPE, shell=True)
         elif path.exists("/tmp/hornet/") == False:
+            subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell=True)
             os.system('sudo rm config.json /var/lib/hornet/config.json')
             os.system("pkexec chown $USER:$GROUPS -R /tmp/")
             os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
             os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
             os.system("sudo chown root:root -R /tmp/")
+            subprocess.Popen("sudo service hornet start", stdout=subprocess.PIPE, shell=True)
 
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
@@ -1349,7 +1353,7 @@ certbot --nginx" (Domain needed) ')
                 child.close()
 
                 # read pw hash from passwd file
-                with open("/home/pi/Documents/passwd.txt",'r') as file:
+                with open("/home/pi/Documents/passwd.txt", 'r') as file:
                     for line in file.readlines():
                         # python can do regexes, but this is for s fixed string only
                         if "salt:" in line:
