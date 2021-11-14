@@ -712,7 +712,7 @@ certbot --nginx" (Domain needed) ')
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
-        button.clicked.connect(self.config_update)
+        button.clicked.connect(self.config_reset)
         #End button 7
 
         #Create label
@@ -1223,44 +1223,19 @@ certbot --nginx" (Domain needed) ')
             sys.stdout.flush()
         QMessageBox.about(self, "Hornet", "Hornet DB successfully deleted")
 
-    def config_update(self):
-        if path.exists("/tmp/hornet/") == True:
-            #subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell=True)
-            os.system("pkexec chown $USER:$GROUPS -R /var/lib/hornet/")
-            os.system("sudo service hornet stop")
-            os.system('sudo rm config.json /var/lib/hornet/config.json')
-            os.system("sudo chown $USER:$GROUPS -R /tmp/")
-            os.system('sudo rm -r /tmp/hornet/')
-            os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
-            os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
-            os.system("sudo chown root:root -R /tmp/")
-            os.system("sudo service hornet start")
-        elif path.exists("/tmp/hornet/") == False:
-            os.system("pkexec chown $USER:$GROUPS -R /tmp/")
-            os.system('sudo service hornet stop')
-            os.system('sudo rm config.json /var/lib/hornet/config.json')
-            os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
-            os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
-            os.system("sudo chown root:root -R /tmp/")
-            os.system("sudo service hornet start")
+    def config_reset(self):
+        app = Hornet_config_reset()
+        msg = QMessageBox()
+        msg.setStyleSheet("background-color: #2B3440 ; color: \
+        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Config reset")
+        msg.setInformativeText("Click on Show Details for more informations")
+        msg.setWindowTitle("Hornet config reset")
+        msg.setDetailedText("Please set a new username\
+            and password.")
+        msg.exec_()  # this will show our messagebox
 
-            msg = QMessageBox()
-            msg.setStyleSheet("background-color: #2B3440 ; color: \
-            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Config Update")
-            msg.setInformativeText("Click on Show Details for more informations")
-            msg.setWindowTitle("Hornet config update")
-            msg.setDetailedText("Please set a new username\
-                and password and restart Hornet")
-            msg.exec_()  # this will show our messagebox
-        """
-        elif path.exists("/var/lib/hornet/") == True:
-            os.system("pkexec chown $USER:$GROUPS -R /tmp/")
-            os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
-            os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
-            os.system("sudo chown root:root -R /tmp/")
-        """
 
     def hornet_dashboard_access(self):
         if path.exists("/etc/letsencrypt/live") == True:
