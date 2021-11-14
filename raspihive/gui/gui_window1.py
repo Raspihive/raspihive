@@ -1225,23 +1225,24 @@ certbot --nginx" (Domain needed) ')
 
     def config_update(self):
         if path.exists("/tmp/hornet/") == True:
-            subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell=True)
-            #os.system("pkexec chown $USER:$GROUPS -R /var/lib/hornet/")
+            #subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell=True)
+            os.system("pkexec chown $USER:$GROUPS -R /var/lib/hornet/")
+            os.system("sudo service hornet stop")
             os.system('sudo rm config.json /var/lib/hornet/config.json')
-            os.system("pkexec chown $USER:$GROUPS -R /tmp/")
+            os.system("sudo chown $USER:$GROUPS -R /tmp/")
             os.system('sudo rm -r /tmp/hornet/')
             os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
             os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
             os.system("sudo chown root:root -R /tmp/")
-            subprocess.Popen("sudo service hornet start", stdout=subprocess.PIPE, shell=True)
+            os.system("sudo service hornet start")
         elif path.exists("/tmp/hornet/") == False:
-            subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell=True)
-            os.system('sudo rm config.json /var/lib/hornet/config.json')
             os.system("pkexec chown $USER:$GROUPS -R /tmp/")
+            os.system('sudo service hornet stop')
+            os.system('sudo rm config.json /var/lib/hornet/config.json')
             os.system('sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet')
             os.system('sudo mv /tmp/hornet/config.json /var/lib/hornet/')
             os.system("sudo chown root:root -R /tmp/")
-            subprocess.Popen("sudo service hornet start", stdout=subprocess.PIPE, shell=True)
+            os.system("sudo service hornet start")
 
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
@@ -1342,7 +1343,7 @@ certbot --nginx" (Domain needed) ')
                 password2 = password[0]
                 child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
                 #Get permission for home
-                os.system("pkexec chown $USER:$GROUPS /home")
+                os.system("sudo chown $USER:$GROUPS /home")
                 fout = open('/home/passwd.txt', 'wb')  #'/home/pi/Documents/passwd.txt'
                 child.logfile = fout
                 child.expect("password:")
@@ -1377,7 +1378,7 @@ certbot --nginx" (Domain needed) ')
                 readfile = file2.read()
                 if old_salt_hashvalue in readfile:
                     #Get permission for config.json
-                    os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")
+                    os.system("sudo chown $USER:$GROUPS /var/lib/hornet/config.json")
 
                     # read pw hash from file
                     with open("/home/passwd.txt", 'r') as file:
