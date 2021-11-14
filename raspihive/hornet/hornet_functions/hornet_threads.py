@@ -1,9 +1,12 @@
 ###############################################################################
 # libraries
 import sys
+import os
 import time
 import subprocess
 from PyQt5.QtCore import QThread, pyqtSignal
+from os import path
+from pathlib import Path
 #from .helpers import os_parse
 ##############################################################################
 #Necessary packages for hornet
@@ -15,8 +18,7 @@ class MyThread_packages(QThread):
         process = subprocess.Popen(("pkexec apt-get update -y && \
             sudo apt-get install -y build-essential && \
                 sudo apt-get install -y git && sudo apt-get install -y snapd \
-                    && sudo snap install go --classic"), \
-                        stdout=subprocess.PIPE, shell=True)
+                    && sudo snap install go --classic"), stdout=subprocess.PIPE, shell=True)
 
         process.stdout.readline()
         # Do something else
@@ -114,8 +116,7 @@ class MyThread_hornet_uninstall(QThread):
     def run(self):
         #print("Test packages")
         process = subprocess.Popen(("pkexec apt-get -qq purge hornet -y  \
-            && sudo rm -r /etc/apt/sources.list.d/hornet.list "), \
-            stdout=subprocess.PIPE, shell=True)
+            && sudo rm -r /etc/apt/sources.list.d/hornet.list "), stdout=subprocess.PIPE, shell=True)
 
         process.stdout.readline()
         # Do something else
@@ -136,3 +137,58 @@ class MyThread_hornet_uninstall(QThread):
                     print("CNT 100 erreicht")
                     sys.stdout.flush()
                 sys.stdout.flush()
+##############################################################################
+#Thread for hornet config reset
+class  MyThreadhornetconfigreset(QThread):
+    # Create a counter thread
+    change_value = pyqtSignal(int)
+    def run(self):
+        if path.exists("/tmp/hornet/") == True:
+            print("Test1")
+            os.system("pkexec chown $USER:$GROUPS -R /var/lib/hornet/")
+            subprocess.Popen(("sudo service hornet stop \
+            && sudo chown $USER:$GROUPS -R /tmp/ \
+            && sudo rm -r /tmp/hornet/ \
+            && sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet \
+            && sudo mv /tmp/hornet/config.json /var/lib/hornet/ \
+            && sudo chown root:root -R /tmp/ \
+            && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
+            
+            cnt = 5
+            while cnt <= 100:
+                cnt += 1
+                time.sleep(1)
+                #line = process.stdout.readline()
+                self.change_value.emit(cnt)
+                #print(line.strip())
+                sys.stdout.flush()
+                if cnt == 100:
+                    print("CNT 100 erreicht")
+                    sys.stdout.flush()
+                sys.stdout.flush()
+        elif path.exists("/tmp/hornet/") == False:
+            print("Test2")
+
+            os.system("pkexec chown $USER:$GROUPS -R /tmp/")
+            subprocess.Popen(("sudo service hornet stop \
+            && sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet \
+            && sudo mv /tmp/hornet/config.json /var/lib/hornet/ \
+            && sudo chown root:root -R /tmp/ \
+            && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
+
+
+            cnt = 1
+            while cnt <= 100:
+                cnt += 1
+                time.sleep(1)
+                #line = process.stdout.readline()
+                self.change_value.emit(cnt)
+                #print(line.strip())
+                sys.stdout.flush()
+                if cnt == 100:
+                    print("CNT 100 erreicht")
+                    sys.stdout.flush()
+                sys.stdout.flush()
+            #print("Test packages")
+            #stdout.readline()
+            # Do something else
