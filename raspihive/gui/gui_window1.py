@@ -1299,7 +1299,7 @@ certbot --nginx" (Domain needed) ')
                 text = path.read_text()
                 text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
                 path.write_text(text)
-                QMessageBox.about(self, "Set username", "Username was set\nPlease set the password.)
+                QMessageBox.about(self, "Set username", "Username was set\nPlease set the password.")
             elif string2 not in readfile: 
                 os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")
                 old = oldusername, pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
@@ -1400,7 +1400,7 @@ certbot --nginx" (Domain needed) ')
                     os.system("sudo rm /home/passwd.txt")
                     os.system("sudo chown root:root /home")
                     QMessageBox.about(self, "Set password", "Password was set\n\
-                        You can now login into your hornet dashboard")
+                        You can now login into your dashboard")
                     os.system("sudo service hornet restart")
 ######################################################################################################################################
             #Set new password
