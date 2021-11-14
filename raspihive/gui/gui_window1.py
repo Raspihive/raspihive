@@ -913,7 +913,7 @@ certbot --nginx" (Domain needed) ')
 ##############################################################################
 #Start Functions
     def system_update(self):
-        Window_os_update()
+        app = Window_os_update()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
         rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -926,7 +926,7 @@ certbot --nginx" (Domain needed) ')
         msg.exec_()  # this will show our messagebox
 
     def packages_update(self):
-        Window_packages()
+        app = Window_packages()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
         rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -966,7 +966,7 @@ certbot --nginx" (Domain needed) ')
             that changes take effect")
 
     def hornet_update(self):
-        Window_hornet_update()
+        app = Window_hornet_update()
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
         rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -989,7 +989,7 @@ certbot --nginx" (Domain needed) ')
             #msg.setInformativeText("informative text, ya!")
             msg.exec_()  # this will show our messagebox
         elif path.exists("/var/lib/hornet") == False:
-            Window_hornet_install()
+            app = Window_hornet_install()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -1003,7 +1003,7 @@ certbot --nginx" (Domain needed) ')
 
     def hornet_uninstall(self):
         if path.exists("/var/lib/hornet/") == True:
-            Window_hornet_uninstall()
+            app = Window_hornet_uninstall()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -1036,7 +1036,7 @@ certbot --nginx" (Domain needed) ')
             #msg.setInformativeText("informative text, ya!")
             msg.exec_()  # this will show our messagebox
         elif path.exists("/etc/nginx/") == False:
-            Window_nginx_certbot_install()
+            app = Window_nginx_certbot_install()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -1089,7 +1089,7 @@ certbot --nginx" (Domain needed) ')
 
     def uninstall_nginx_certbot(self):
         if path.exists("/etc/nginx/") == True:
-            Window_nginx_certbot_uninstall()
+            app = Window_nginx_certbot_uninstall()
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: \
             rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
