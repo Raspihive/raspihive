@@ -1299,7 +1299,7 @@ certbot --nginx" (Domain needed) ')
                 text = path.read_text()
                 text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
                 path.write_text(text)
-                QMessageBox.about(self, "Set username", "Username was set\nPlease set the password and restart Hornet")
+                QMessageBox.about(self, "Set username", "Username was set\nPlease set the password.)
             elif string2 not in readfile: 
                 os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")
                 old = oldusername, pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
@@ -1338,12 +1338,12 @@ certbot --nginx" (Domain needed) ')
             file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
             readfile = file2.read()
             if old_pw_hashvalue in readfile:
-                #Get permission for config.json
-                os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")
                 password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
                 password2 = password[0]
                 child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
-                fout = open('/home/pi/Documents/passwd.txt', 'wb')  #'/home/pi/Documents/passwd.txt'
+                #Get permission for home
+                os.system("pkexec chown $USER:$GROUPS /home")
+                fout = open('/home/passwd.txt', 'wb')  #'/home/pi/Documents/passwd.txt'
                 child.logfile = fout
                 child.expect("password:")
                 child.sendline(password2)
@@ -1353,7 +1353,7 @@ certbot --nginx" (Domain needed) ')
                 child.close()
 
                 # read pw hash from passwd file
-                with open("/home/pi/Documents/passwd.txt", 'r') as file:
+                with open("/home/passwd.txt", 'r') as file:
                     for line in file.readlines():
                         # python can do regexes, but this is for s fixed string only
                         if "salt:" in line:
@@ -1380,7 +1380,7 @@ certbot --nginx" (Domain needed) ')
                     os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")
 
                     # read pw hash from file
-                    with open("/home/pi/Documents/passwd.txt", 'r') as file:
+                    with open("/home/passwd.txt", 'r') as file:
                         for line in file.readlines():
                             # python can do regexes, but this is for s fixed string only
                             if "hash:" in line:
@@ -1397,8 +1397,11 @@ certbot --nginx" (Domain needed) ')
                     path.write_text(text)
                     os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
                     #Rm passwd file - (important for security)
-                    os.system("sudo rm /home/pi/Documents/passwd.txt")
-                    QMessageBox.about(self, "Set password", "Password was set\nPlease restart Hornet")
+                    os.system("sudo rm /home/passwd.txt")
+                    os.system("sudo chown root:root /home")
+                    QMessageBox.about(self, "Set password", "Password was set\n\
+                        You can now login into your hornet dashboard")
+                    os.system("sudo service hornet restart")
 ######################################################################################################################################
             #Set new password
             #elif old_pw_hashvalue not in readfile:
