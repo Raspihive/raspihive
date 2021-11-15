@@ -300,6 +300,7 @@ class Window_nginx_certbot_uninstall(QDialog):
 #Progress bar for hornet config reset
 class Hornet_config_reset(QDialog):
     def __init__(self):
+        """
         super().__init__()
         self.setStyleSheet('background-color: #2B3440; \
         color: black;') #rgb(255,255,255);
@@ -327,7 +328,7 @@ class Hornet_config_reset(QDialog):
         #self.startProgressBar(self)
         self.setLayout(vbox)
         self.show()
-
+        """
     #def startProgressBar():
         self.thread = MyThreadhornetconfigreset()
         self.thread.change_value.connect(self.setProgressVal)
