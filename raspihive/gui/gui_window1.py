@@ -715,6 +715,19 @@ certbot --nginx" (Domain needed) ')
         button.clicked.connect(self.config_reset)
         #End button 7
 
+        #Start button 8
+        button = QPushButton('Activate autopeering', main)
+        #Hover text
+        button.setToolTip('Activate autopeering')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(220, 210, 180, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.autopeering_activation)
+        #End button 8
+
         #Create label
         main.labelA = QtWidgets.QLabel(main)
         #Set label text
@@ -1256,6 +1269,35 @@ certbot --nginx" (Domain needed) ')
             #os.system('sudo -uubuntu firefox http://localhost')
             subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081", shell=True)
             #os.system('sudo -ubeekeeper firefox http://localhost')
+
+    def autopeering_activation(self):
+        # Define search string/pattern
+        string1 = "Spammer"
+
+        try:
+            #Get permission for config.json
+            os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
+            # opening and reading the text file
+            file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+            readfile = file1.read()
+
+            # checking condition for string found or not
+            if string1 in readfile:
+                path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+                #print('String', string1, 'Found In File')
+                text = path.read_text()
+                text = text.replace("Spammer", "autopeering") #text to search / replacement text #replace text
+                path.write_text(text)
+                QMessageBox.about(self, "Activation autopeering", "Autopeering is now enabled\nPlease restart Hornet.")
+            elif string1 not in readfile:
+                print("Error - autopeering could not be enabled")
+            # closing a file
+            file1.close()
+            os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+        except OSError as ose:
+            print('os err:', ose)
+        except Exception as e:
+            print("Other Exception:", e)
 
     def hornet_dashboard_username(self):
         # Define search string/pattern
