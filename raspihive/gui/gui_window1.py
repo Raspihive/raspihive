@@ -1225,6 +1225,8 @@ certbot --nginx" (Domain needed) ')
 
     def config_reset(self):
         app = Hornet_config_reset()
+        QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
+        """
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: \
         rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
@@ -1235,7 +1237,7 @@ certbot --nginx" (Domain needed) ')
         msg.setDetailedText("Please set a new username\
             and password.")
         msg.exec_()  # this will show our messagebox
-
+        """
 
     def hornet_dashboard_access(self):
         if path.exists("/etc/letsencrypt/live") == True:
