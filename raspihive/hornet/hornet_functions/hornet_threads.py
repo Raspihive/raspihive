@@ -149,7 +149,7 @@ class  MyThreadhornetconfigreset(QThread):
             subprocess.Popen(("sudo service hornet stop \
             && sudo chown $USER:$GROUPS -R /tmp/ \
             && sudo rm -r /tmp/hornet/ \
-            && sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet \
+            && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json /tmp/hornet \
             && sudo mv /tmp/hornet/config.json /var/lib/hornet/ \
             && sudo chown root:root -R /tmp/ \
             && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
@@ -171,7 +171,7 @@ class  MyThreadhornetconfigreset(QThread):
 
             os.system("pkexec chown $USER:$GROUPS -R /tmp/")
             subprocess.Popen(("sudo service hornet stop \
-            && sudo git clone https://github.com/gohornet/hornet.git /tmp/hornet \
+            && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json /tmp/hornet \
             && sudo mv /tmp/hornet/config.json /var/lib/hornet/ \
             && sudo chown root:root -R /tmp/ \
             && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
