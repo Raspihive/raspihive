@@ -5,6 +5,7 @@ import os
 import time
 import subprocess
 from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtWidgets import QMessageBox
 from os import path
 from pathlib import Path
 #from .helpers import os_parse
@@ -149,11 +150,12 @@ class  MyThreadhornetconfigreset(QThread):
             subprocess.Popen(("sudo service hornet stop \
             && sudo chown $USER:$GROUPS -R /tmp/ \
             && sudo rm -r /tmp/hornet/ \
-            && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json /tmp/hornet \
+            && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json -P /tmp/hornet \
             && sudo mv /tmp/hornet/config.json /var/lib/hornet/ \
             && sudo chown root:root -R /tmp/ \
             && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
-            
+            #QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
+            """
             cnt = 5
             while cnt <= 100:
                 cnt += 1
@@ -166,17 +168,18 @@ class  MyThreadhornetconfigreset(QThread):
                     print("CNT 100 erreicht")
                     sys.stdout.flush()
                 sys.stdout.flush()
+            """
         elif path.exists("/tmp/hornet/") == False:
             print("Test2")
 
             os.system("pkexec chown $USER:$GROUPS -R /tmp/")
             subprocess.Popen(("sudo service hornet stop \
-            && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json /tmp/hornet \
+            && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json -P /tmp/hornet \
             && sudo mv /tmp/hornet/config.json /var/lib/hornet/ \
             && sudo chown root:root -R /tmp/ \
             && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
-
-
+            #QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
+            """
             cnt = 1
             while cnt <= 100:
                 cnt += 1
@@ -189,6 +192,7 @@ class  MyThreadhornetconfigreset(QThread):
                     print("CNT 100 erreicht")
                     sys.stdout.flush()
                 sys.stdout.flush()
+            """
             #print("Test packages")
             #stdout.readline()
             # Do something else
