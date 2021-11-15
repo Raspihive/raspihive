@@ -1377,7 +1377,7 @@ certbot --nginx" (Domain needed) ')
                     os.system("sudo chown root:root /home")
                     QMessageBox.about(self, "Set password", "Password was set\n\
                         You can now login into your dashboard")
-                    os.system("pkexec service hornet stop && \
+                    os.system("sudo service hornet stop && \
                                 sudo rm -r /var/lib/hornet/mainnetdb &&\
                                 sudo rm -r /var/lib/hornet/snapshots &&\
                                 sudo service hornet start")
