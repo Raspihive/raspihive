@@ -1420,11 +1420,13 @@ certbot --nginx" (Domain needed) ')
                     os.system("sudo rm /home/passwd.txt")
                     os.system("sudo chown root:root /home")
                     QMessageBox.about(self, "Set password", "Password was set\n\
-                        You can now login into your dashboard")
+                        Please restart Hornet and you can login into your dashboard")
+                    """
                     os.system("sudo service hornet stop && \
                                 sudo rm -r /var/lib/hornet/mainnetdb &&\
                                 sudo rm -r /var/lib/hornet/snapshots &&\
                                 sudo service hornet start")
+                    """
 ######################################################################################################################################
             #Set new password
             #elif old_pw_hashvalue not in readfile:
