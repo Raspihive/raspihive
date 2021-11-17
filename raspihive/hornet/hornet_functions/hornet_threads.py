@@ -155,23 +155,7 @@ class  MyThreadhornetconfigreset(QThread):
             && sudo chown root:root -R /tmp/ \
             && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
             #QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
-            """
-            cnt = 5
-            while cnt <= 100:
-                cnt += 1
-                time.sleep(1)
-                #line = process.stdout.readline()
-                self.change_value.emit(cnt)
-                #print(line.strip())
-                sys.stdout.flush()
-                if cnt == 100:
-                    print("CNT 100 erreicht")
-                    sys.stdout.flush()
-                sys.stdout.flush()
-            """
         elif path.exists("/tmp/hornet/") == False:
-            print("Test2")
-
             os.system("pkexec chown $USER:$GROUPS -R /tmp/")
             subprocess.Popen(("sudo service hornet stop \
             && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json -P /tmp/hornet \
@@ -179,20 +163,54 @@ class  MyThreadhornetconfigreset(QThread):
             && sudo chown root:root -R /tmp/ \
             && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
             #QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
-            """
-            cnt = 1
-            while cnt <= 100:
-                cnt += 1
-                time.sleep(1)
-                #line = process.stdout.readline()
-                self.change_value.emit(cnt)
-                #print(line.strip())
-                sys.stdout.flush()
-                if cnt == 100:
-                    print("CNT 100 erreicht")
-                    sys.stdout.flush()
-                sys.stdout.flush()
-            """
-            #print("Test packages")
-            #stdout.readline()
-            # Do something else
+##############################################################################
+#Thread for activation hornet autopeering
+#Thread for hornet update
+def MyThread_hornet_autopeering():
+    string1 = "Spammer"
+    try:
+        #Get permission for config.json
+        os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
+        # opening and reading the text file
+        file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+        readfile = file1.read()
+
+        # checking condition for string found or not
+        if string1 in readfile:
+            path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+            #print('String', string1, 'Found In File')
+            text = path.read_text()
+            text = text.replace("Spammer", "autopeering") #text to search / replacement text #replace text
+            path.write_text(text)
+            #QMessageBox.about("Activation autopeering", "Autopeering is now enabled\nPlease restart Hornet.")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Hornet autopeering activated")
+            #msg.setInformativeText("Hornet autopeering")
+            msg.setWindowTitle("Hornet autopeering")
+            #msg.setDetailedText("Just close the window\
+            #    if the progress bar reaches 100 %, #IOTAstrong")
+            msg.exec_()  # this will show our messagebox
+        elif string1 not in readfile:
+            print("Error - autopeering could not be enabled")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: \
+            rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Hornet autopeering could not be activated\n\
+                Probably already set")
+            #msg.setInformativeText("Hornet autopeering")
+            msg.setWindowTitle("Hornet autopeering")
+            #msg.setDetailedText("Just close the window\
+            #    if the progress bar reaches 100 %, #IOTAstrong")
+            msg.exec_()  # this will show our messagebox
+        # closing a file
+        file1.close()
+        os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+    except OSError as ose:
+        print('os err:', ose)
+    except Exception as e:
+        print("Other Exception:", e)
+
