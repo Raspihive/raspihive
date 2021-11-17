@@ -6,6 +6,7 @@ import os
 import stat
 import subprocess
 import pexpect
+from time import sleep
 from PyQt5.QtWidgets import (
 
     QWidget,
@@ -38,6 +39,7 @@ from PyQt5.QtWidgets import QCheckBox
 from raspihive.hornet.hornet_log_stat_windows.log_win import *
 from raspihive.hornet.hornet_log_stat_windows.status_win import *
 from .progress_bars.progress_bars import *
+from raspihive.hornet.hornet_functions.hornet_threads import *
 
 
 ICON_IMAGE_URL = "https://raw.githubusercontent.com/\
@@ -953,20 +955,10 @@ certbot --nginx" (Domain needed) ')
 
 #IMPORATANT: Raspihive needs to be cloned into the "/home"-folder, then restart is necessary.
     def raspihive_update(self):
-        #print("Test packages")
-        #os.chdir('/tmp')
-        #os.system(" cd /tmp && sudo find -name raspihive -exec rm -rf {} +")
-        #if path.exists("/home/pi/raspihive") == True:
         print("Update Raspihive")
-        #process = subprocess.Popen(os_parse("sudo chown pi:pi -R /home/pi/raspihive "),\
-        #  stdout=subprocess.PIPE, shell = True)
-        #os.system("sudo find -name raspihive -exec rm -rf {} +")
-        #shutil.rmtree('/home/pi/raspihive')
         p = subprocess.Popen("cd /home && sudo rm -r raspihive && \
         sudo git clone https://github.com/Raspihive/raspihive.git /home/raspihive",\
             stdout=subprocess.PIPE, shell=True)
-        #else:
-        #print("ELSE-TEST")
         while True:
             #print ("Looping")
             line = p.stdout.readline()
@@ -1238,19 +1230,8 @@ certbot --nginx" (Domain needed) ')
 
     def config_reset(self):
         app = Hornet_config_reset()
+        sleep(7)
         QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
-        """
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: \
-        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Config reset")
-        msg.setInformativeText("Click on Show Details for more informations")
-        msg.setWindowTitle("Hornet config reset")
-        msg.setDetailedText("Please set a new username\
-            and password.")
-        msg.exec_()  # this will show our messagebox
-        """
 
     def hornet_dashboard_access(self):
         if path.exists("/etc/letsencrypt/live") == True:
@@ -1259,7 +1240,7 @@ certbot --nginx" (Domain needed) ')
             #os.system('sudo -upi chromium http://localhost')
             subprocess.Popen("sudo -uubuntu firefox http://127.0.0.1", shell=True)
             #os.system('sudo -uubuntu firefox http://localhost')
-            subprocess.Popen("sudo -ubeekeeper firefox http://127.0.0.1", shell=True)
+            #subprocess.Popen("sudo -ubeekeeper firefox http://127.0.0.1", shell=True)
             #os.system('sudo -ubeekeeper firefox http://localhost')
         else:
             subprocess.Popen("sudo -upi chromium http://localhost:8081", shell=True)
@@ -1267,37 +1248,13 @@ certbot --nginx" (Domain needed) ')
             #os.system('sudo -upi chromium http://localhost')
             subprocess.Popen("sudo -uubuntu firefox http://localhost:8081", shell=True)
             #os.system('sudo -uubuntu firefox http://localhost')
-            subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081", shell=True)
+            #subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081", shell=True)
             #os.system('sudo -ubeekeeper firefox http://localhost')
 
     def autopeering_activation(self):
-        # Define search string/pattern
-        string1 = "Spammer"
+        # calling functions
+        MyThread_hornet_autopeering()
 
-        try:
-            #Get permission for config.json
-            os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
-            # opening and reading the text file
-            file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
-            readfile = file1.read()
-
-            # checking condition for string found or not
-            if string1 in readfile:
-                path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
-                #print('String', string1, 'Found In File')
-                text = path.read_text()
-                text = text.replace("Spammer", "autopeering") #text to search / replacement text #replace text
-                path.write_text(text)
-                QMessageBox.about(self, "Activation autopeering", "Autopeering is now enabled\nPlease restart Hornet.")
-            elif string1 not in readfile:
-                print("Error - autopeering could not be enabled")
-            # closing a file
-            file1.close()
-            os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
-        except OSError as ose:
-            print('os err:', ose)
-        except Exception as e:
-            print("Other Exception:", e)
 
     def hornet_dashboard_username(self):
         # Define search string/pattern
