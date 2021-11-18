@@ -23,8 +23,6 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QTabWidget,
     QHBoxLayout,
-    QInputDialog,
-    QLineEdit,
     QWidget,
     QLabel
 )
