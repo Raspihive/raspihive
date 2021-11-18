@@ -8,6 +8,10 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
 from os import path
 from pathlib import Path
+from PyQt5.QtWidgets import (
+    QInputDialog,
+    QLineEdit
+)
 #from .helpers import os_parse
 ##############################################################################
 #Necessary packages for hornet
@@ -293,7 +297,7 @@ def sethornetpasswort():
         file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
         readfile = file2.read()
         if old_pw_hashvalue in readfile:
-            password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+            password = password1 , pressed = QInputDialog.getText("Set password", "Set password: ", QLineEdit.Normal, "")
             password2 = password[0]
             child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
             #Get permission for home
@@ -351,7 +355,7 @@ def sethornetpasswort():
                 #Rm passwd file - (important for security)
                 os.system("sudo rm /home/passwd.txt")
                 os.system("sudo chown root:root /home")
-                QMessageBox.about(self, "Set password", "Password was set\n\
+                QMessageBox.about("Set password", "Password was set\n\
                     Please restart Hornet and you can login into your dashboard")
     except Exception as ex:
         print('ex:', ex)
