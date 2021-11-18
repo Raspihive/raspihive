@@ -1236,7 +1236,7 @@ certbot --nginx" (Domain needed) ')
             sys.stdout.flush()
         QMessageBox.about(self, "Hornet", "Hornet DB successfully deleted")
 
-    def Hornet_config_reset(self):
+    def config_reset(self):
         app = Hornet_config_reset()
         sleep(7)
         QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
