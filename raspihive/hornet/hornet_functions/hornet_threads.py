@@ -237,7 +237,7 @@ def dashboard_access():
         #os.system('sudo -ubeekeeper firefox http://localhost')
 
 #Dashboard access
-def sethornetusername():
+def set_hornet_username():
 # Define search string/pattern
     string1 = "admin"
     string2 = "admin"
@@ -287,7 +287,7 @@ def sethornetusername():
 
 
 #Dashboard access
-def sethornetpasswort():
+def set_hornet_password():
     try:
         #Get permission for config.json
         os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
