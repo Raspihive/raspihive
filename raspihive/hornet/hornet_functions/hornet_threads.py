@@ -279,11 +279,11 @@ def set_hornet_username():
         # closing a file
         file1.close()
         os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
-    except OSError as ose:
-        print('os err:', ose)
-        print('Hornet Not Installed. Please Install Hornet First.')
-    except Exception as e:
-        print("Other Exception:", e)
+        except OSError as ose:
+            print('os err:', ose)
+            print('Hornet Not Installed. Please Install Hornet First.')
+        except Exception as e:
+            print("Other Exception:", e)
 
 
 #Dashboard access
@@ -357,8 +357,8 @@ def set_hornet_password():
                 os.system("sudo chown root:root /home")
                 QMessageBox.about("Set password", "Password was set\n\
                     Please restart Hornet and you can login into your dashboard")
-    except Exception as ex:
-        print('ex:', ex)
+        except Exception as ex:
+            print('ex:', ex)
 ######################################################################################################################################
 
 
