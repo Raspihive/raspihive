@@ -1240,10 +1240,11 @@ certbot --nginx" (Domain needed) ')
 
 
     def hornet_dashboard_username(self):
-        app = sethornetusername()
+        app = set_hornet_username()
+
 
     def hornet_dashboard_password(self):
-        app = sethornetpasswort()
+        app = set_hornet_password()
 
     def about(self):
         msg = QMessageBox()
