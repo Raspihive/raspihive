@@ -144,7 +144,6 @@ class MyThread_hornet_uninstall(QThread):
 # Hornet config reset
 def Hornet_config_reset():
     if path.exists("/tmp/hornet/") == True:
-        print("Test1")
         os.system("pkexec chown $USER:$GROUPS -R /var/lib/hornet/")
         subprocess.Popen(("sudo service hornet stop \
         && sudo chown $USER:$GROUPS -R /tmp/ \
