@@ -251,17 +251,17 @@ def sethornetusername():
 
         # checking condition for string found or not
         if string1 in readfile:
-            text1, pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
+            text1, pressed = QInputDialog.getText("Input Text", "Set username: ", QLineEdit.Normal, "")
             path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
             #print('String', string1, 'Found In File')
             text = path.read_text()
             text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
             path.write_text(text)
-            QMessageBox.about(self, "Set username", "Username was set\nPlease set the password.")
+            QMessageBox.about("Set username", "Username was set\nPlease set the password.")
         elif string2 not in readfile: 
             os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")
-            old = oldusername, pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
-            new = newusername, pressed = QInputDialog.getText(self, "Input new username", "Enter new username: ", QLineEdit.Normal, "")
+            old = oldusername, pressed = QInputDialog.getText("Input old username", "Enter old username first: ", QLineEdit.Normal, "")
+            new = newusername, pressed = QInputDialog.getText("Input new username", "Enter new username: ", QLineEdit.Normal, "")
             if old[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
                 old1 = old[0]
                 new1 = new[0]
@@ -273,7 +273,7 @@ def sethornetusername():
                 #file1 = open("test.txt", "a+")
                 #file1.write("username" + text1);
                 print("current username replaced")
-                QMessageBox.about(self, "Set username", "New username was set")
+                QMessageBox.about("Set username", "New username was set")
             else:
                 print('String', string1 , 'Not Found')
         # closing a file
