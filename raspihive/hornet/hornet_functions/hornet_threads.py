@@ -162,3 +162,32 @@ def Hornet_config_reset():
         && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
         #QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
 ##############################################################################
+# Hornet activation autopeering
+def Hornet_activation_autopeering():
+    # Define search string/pattern
+    string1 = "Spammer"
+    try:
+        #Get permission for config.json
+        os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
+        # opening and reading the text file
+        file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+        readfile = file1.read()
+        # checking condition for string found or not
+        if string1 in readfile:
+            path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+            #print('String', string1, 'Found In File')
+            text = path.read_text()
+            text = text.replace("Spammer", "autopeering") #text to search / replacement text #replace text
+            path.write_text(text)
+            QMessageBox.about("Activation autopeering", "Autopeering is now enabled\nPlease restart Hornet.")
+        elif string1 not in readfile:
+            print("Error - autopeering could not be enabled")
+        # closing a file
+        file1.close()
+        os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+    except OSError as ose:
+        print('os err:', ose)
+    except Exception as e:
+        print("Other Exception:", e)
+
+
