@@ -164,8 +164,7 @@ class  MyThreadhornetconfigreset(QThread):
             && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
             #QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
 ##############################################################################
-#Thread for activation hornet autopeering
-#Thread for hornet update
+#Def activation hornet autopeering
 def MyThread_hornet_autopeering():
     string1 = "Spammer"
     try:
@@ -213,4 +212,149 @@ def MyThread_hornet_autopeering():
         print('os err:', ose)
     except Exception as e:
         print("Other Exception:", e)
+##############################################################################
+#Dashboard access
+def dashboard_access():
+    if path.exists("/etc/letsencrypt/live") == True:
+        subprocess.Popen("sudo -upi chromium http://127.0.0.1", shell=True)
+        subprocess.Popen("sudo -upi firefox http://127.0.0.1", shell=True)
+        #os.system('sudo -upi chromium http://localhost')
+        subprocess.Popen("sudo -uubuntu firefox http://127.0.0.1", shell=True)
+        #os.system('sudo -uubuntu firefox http://localhost')
+        #subprocess.Popen("sudo -ubeekeeper firefox http://127.0.0.1", shell=True)
+        #os.system('sudo -ubeekeeper firefox http://localhost')
+    else:
+        subprocess.Popen("sudo -upi chromium http://localhost:8081", shell=True)
+        subprocess.Popen("sudo -upi firefox http://localhost:8081", shell=True)
+        #os.system('sudo -upi chromium http://localhost')
+        subprocess.Popen("sudo -uubuntu firefox http://localhost:8081", shell=True)
+        #os.system('sudo -uubuntu firefox http://localhost')
+        #subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081", shell=True)
+        #os.system('sudo -ubeekeeper firefox http://localhost')
+
+#Dashboard access
+def sethornetusername():
+# Define search string/pattern
+    string1 = "admin"
+    string2 = "admin"
+
+    try:
+        #Get permission for config.json
+        os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
+        # opening and reading the text file
+        file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+        readfile = file1.read()
+
+        # checking condition for string found or not
+        if string1 in readfile:
+            text1, pressed = QInputDialog.getText(self, "Input Text", "Set username: ", QLineEdit.Normal, "")
+            path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+            #print('String', string1, 'Found In File')
+            text = path.read_text()
+            text = text.replace("admin", text1) #text to search / replacement text #replace of user admin
+            path.write_text(text)
+            QMessageBox.about(self, "Set username", "Username was set\nPlease set the password.")
+        elif string2 not in readfile: 
+            os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")
+            old = oldusername, pressed = QInputDialog.getText(self, "Input old username", "Enter old username first: ", QLineEdit.Normal, "")
+            new = newusername, pressed = QInputDialog.getText(self, "Input new username", "Enter new username: ", QLineEdit.Normal, "")
+            if old[1]:   #this is because: QInputDialog.gettext() returns a tuple: first value is the text in the inputfield (QLineEdit), the second is bool, True if 'OK' is pressed else False
+                old1 = old[0]
+                new1 = new[0]
+                #print("OLD", new1)
+                path = Path("/var/lib/hornet/config.json")
+                text = path.read_text()
+                text = text.replace(old1, new1) #text to search / replacement text #replace of user admin
+                path.write_text(text)
+                #file1 = open("test.txt", "a+")
+                #file1.write("username" + text1);
+                print("current username replaced")
+                QMessageBox.about(self, "Set username", "New username was set")
+            else:
+                print('String', string1 , 'Not Found')
+        # closing a file
+        file1.close()
+        os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+    except OSError as ose:
+        print('os err:', ose)
+        print('Hornet Not Installed. Please Install Hornet First.')
+    except Exception as e:
+        print("Other Exception:", e)
+
+
+#Dashboard access
+def sethornetpasswort():
+    try:
+        #Get permission for config.json
+        os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
+        # Define search string/pattern
+        old_pw_hashvalue = "0000000000000000000000000000000000000000000000000000000000000000"
+        # opening and reading the text file
+        file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+        readfile = file2.read()
+        if old_pw_hashvalue in readfile:
+            password = password1 , pressed = QInputDialog.getText(self, "Set password", "Set password: ", QLineEdit.Normal, "")
+            password2 = password[0]
+            child = pexpect.spawn("hornet tools pwd-hash", timeout=None)
+            #Get permission for home
+            os.system("sudo chown $USER:$GROUPS /home")
+            fout = open('/home/passwd.txt', 'wb')  #'/home/pi/Documents/passwd.txt'
+            child.logfile = fout
+            child.expect("password:")
+            child.sendline(password2)
+            child.expect("Re-enter your password:")
+            child.sendline(password2)
+            child.interact()
+            child.close()
+            # read pw hash from passwd file
+            with open("/home/passwd.txt", 'r') as file:
+                for line in file.readlines():
+                    # python can do regexes, but this is for s fixed string only
+                    if "salt:" in line:
+                        idx1 = line.find(':')
+                        idx2 = line.find('"', idx1)
+                        field = line[idx1+2:idx2]
+                        #print(field)
+            # opening and reading the text file
+            #read input file
+            path = Path("/var/lib/hornet/config.json")
+            text = path.read_text()
+            text = text.replace(old_pw_hashvalue, field) #text to search / replacement text #replace of user admin
+            path.write_text(text)
+            os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+            #Define search string/pattern - for salt
+            old_salt_hashvalue = field+'",'
+            #print(old_salt_hashvalue)
+            # opening and reading the text file
+            file2 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+            readfile = file2.read()
+            if old_salt_hashvalue in readfile:
+                #Get permission for config.json
+                os.system("sudo chown $USER:$GROUPS /var/lib/hornet/config.json")
+                # read pw hash from file
+                with open("/home/passwd.txt", 'r') as file:
+                    for line in file.readlines():
+                        # python can do regexes, but this is for s fixed string only
+                        if "hash:" in line:
+                            idx1 = line.find(':')
+                            idx2 = line.find('"', idx1)
+                            field = line[idx1+2:idx2]
+                            field = field + '",'
+                            #print(field)
+                # opening and reading the text file
+                #read input file
+                path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+                text = path.read_text()
+                text = text.replace(old_salt_hashvalue, field) #text to search / replacement text #replace of user admin
+                path.write_text(text)
+                os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+                #Rm passwd file - (important for security)
+                os.system("sudo rm /home/passwd.txt")
+                os.system("sudo chown root:root /home")
+                QMessageBox.about(self, "Set password", "Password was set\n\
+                    Please restart Hornet and you can login into your dashboard")
+    except Exception as ex:
+        print('ex:', ex)
+######################################################################################################################################
+
 
