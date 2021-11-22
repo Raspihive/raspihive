@@ -197,6 +197,7 @@ def Hornet_activation_autopeering():
             msg.exec_()  # this will show our messagebox
         # closing a file
         file1.close()
+        os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
     except OSError as ose:
         print('os err:', ose)
     except Exception as e:
