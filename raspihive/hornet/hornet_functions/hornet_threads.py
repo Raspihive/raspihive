@@ -179,12 +179,24 @@ def Hornet_activation_autopeering():
             text = path.read_text()
             text = text.replace("Spammer", "autopeering") #text to search / replacement text #replace text
             path.write_text(text)
-            QMessageBox.about("Activation autopeering", "Autopeering is now enabled\nPlease restart Hornet.")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("About")
+            msg.setText("Autopeering activated")
+            #msg.setInformativeText("informative text, ya!")
+            msg.exec_()  # this will show our messagebox
         elif string1 not in readfile:
             print("Error - autopeering could not be enabled")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("About")
+            msg.setText("Autopeering could not be activated")
+            #msg.setInformativeText("informative text, ya!")
+            msg.exec_()  # this will show our messagebox
         # closing a file
         file1.close()
-        os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
     except OSError as ose:
         print('os err:', ose)
     except Exception as e:
