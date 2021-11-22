@@ -1261,7 +1261,7 @@ certbot --nginx" (Domain needed) ')
 
     def autopeering_activation(self):
         app = Hornet_activation_autopeering()
-        QMessageBox.about(self, "Hornet autopeering", "Hornet autopeering activated")
+        #QMessageBox.about(self, "Hornet autopeering", "Hornet autopeering activated")
 
     def hornet_dashboard_username(self):
         # Define search string/pattern
