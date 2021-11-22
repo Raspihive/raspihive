@@ -1238,26 +1238,11 @@ certbot --nginx" (Domain needed) ')
 
     def config_reset(self):
         app = Hornet_config_reset()
-        sleep(6)
+        sleep(5)
         QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
 
     def hornet_dashboard_access(self):
-        if path.exists("/etc/letsencrypt/live") == True:
-            subprocess.Popen("sudo -upi chromium http://127.0.0.1", shell=True)
-            subprocess.Popen("sudo -upi firefox http://127.0.0.1", shell=True)
-            #os.system('sudo -upi chromium http://localhost')
-            subprocess.Popen("sudo -uubuntu firefox http://127.0.0.1", shell=True)
-            #os.system('sudo -uubuntu firefox http://localhost')
-            subprocess.Popen("sudo -ubeekeeper firefox http://127.0.0.1", shell=True)
-            #os.system('sudo -ubeekeeper firefox http://localhost')
-        else:
-            subprocess.Popen("sudo -upi chromium http://localhost:8081", shell=True)
-            subprocess.Popen("sudo -upi firefox http://localhost:8081", shell=True)
-            #os.system('sudo -upi chromium http://localhost')
-            subprocess.Popen("sudo -uubuntu firefox http://localhost:8081", shell=True)
-            #os.system('sudo -uubuntu firefox http://localhost')
-            subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081", shell=True)
-            #os.system('sudo -ubeekeeper firefox http://localhost')
+        app = Hornet_dashboard_access()
 
     def autopeering_activation(self):
         app = Hornet_activation_autopeering()
