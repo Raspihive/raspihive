@@ -1061,40 +1061,7 @@ certbot --nginx" (Domain needed) ')
                 if the progress bar reaches 100 %, #IOTAstrong")
             msg.exec_()  # this will show our messagebox
 
-        # Nginx configuration
-        if path.exists("/etc/nginx/sites-available/") == True:
-            os.system("sudo chown $USER:$GROUPS -R /etc/nginx/")
-            #os.chown("/etc/nginx/sites-available/default", 100, -1)
-            try: # temporarily fix that raspihive does not crash after function call
-                f = open("/etc/nginx/sites-available/default", "w")
-                f.write("server { \n listen 80 default_server; \
-                \n listen [::]:80 default_server; \n server_tokens off;  \
-                \n server_name _; \n location /node { \
-                \n proxy_pass http://127.0.0.1:14265/; \n } \
-                \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \
-                \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \
-                \n proxy_set_header Connection "'"upgrade"'"; \
-                \n proxy_read_timeout 86400; \n } \n \n location / { \
-                \n proxy_pass http://127.0.0.1:8081; \n   } \n } \n")
-                f.close()
-                os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-            except: # occurs because of permission denied error
-                print("An exception occurred - Config not written - FAILURE")
-        else:
-            print("Config not written - FAILURE")
-        """
-        #Open LX Terminal (Raspberry Pi OS)
-        cmd = "lxterminal "
-        subprocess.check_output(cmd, shell=True)
-        #Open Gnome-Terminal (Ubuntu)
-        cmd = "gnome-terminal "
-        subprocess.check_output(cmd, shell=True)
-        #print("I'm done!")
-        print(cmd)
-        """
 
-        #os.system(('sudo certbot --nginx'))
-        #QMessageBox.about(self, "Certbot", "Certbot")
 
     def certbot(self):
         os.system("lxterminal") #just opens the terminal
@@ -1249,6 +1216,8 @@ certbot --nginx" (Domain needed) ')
         #QMessageBox.about(self, "Hornet autopeering", "Hornet autopeering activated")
 
     def hornet_dashboard_username(self):
+        #app = Hornet_dash_username()
+
         # Define search string/pattern
         string1 = "admin"
         string2 = "admin"
@@ -1376,14 +1345,14 @@ certbot --nginx" (Domain needed) ')
                                 sudo rm -r /var/lib/hornet/snapshots &&\
                                 sudo service hornet start")
                     """
-######################################################################################################################################
+
             #Set new password
             #elif old_pw_hashvalue not in readfile:
             #    print("Need new password")
 
         except Exception as ex:
             print('ex:', ex)
-
+######################################################################################################################################
     def about(self):
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
