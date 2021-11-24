@@ -3,7 +3,6 @@ from os import path
 from pathlib import Path
 import sys
 import os
-import stat
 import subprocess
 import pexpect
 from PyQt5.QtWidgets import (
@@ -37,6 +36,7 @@ from PyQt5.QtWidgets import QCheckBox
 #imports
 from raspihive.hornet.hornet_log_stat_windows.log_win import *
 from raspihive.hornet.hornet_log_stat_windows.status_win import *
+from raspihive.os_update.update_os import *
 from .progress_bars.progress_bars import *
 
 
@@ -1091,43 +1091,12 @@ certbot --nginx" (Domain needed) ')
             print("Nginx + Certbot is not installed. Please install it first")
 
     def enable_automatic_updates(self):
-        os.system("pkexec chown $USER:$GROUPS -R /etc/crontab &&\
-            sudo chown $USER:$GROUPS -R /home/")
-        f = open("/home/update.sh", "w")
-        f.write("apt-get update && apt-get full-upgrade -y")
-        f.close()
-        os.chmod('/home/update.sh', stat.S_IEXEC)
-        subprocess.Popen((' echo "0 20 * * * root /home/update.sh >>\
-             /var/log/update_raspihive.log" |\
-                tee -a /etc/crontab'), stdout=subprocess.PIPE, shell=True)
-        os.system("sudo chown root:root -R /etc/crontab")
+        app = enable_automatic_system_updates()
         QMessageBox.about(self, "Automatic update", "Automatic updates enabled\n\
             Please restart Raspihive that changes take effect")
 
     def disable_automatic_updates(self):
-        os.system("pkexec rm -r /home/update.sh ")
-        os.system("sudo chown $USER:$GROUPS -R /etc/crontab")
-        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
-        filename = '/etc/crontab'
-        line_to_delete = 23
-        line_to_delete2 = 24
-        initial_line = 1
-        file_lines = {}
-
-        with open(filename) as f:
-            content = f.readlines()
-
-        for line in content:
-            file_lines[initial_line] = line.strip()
-            initial_line += 1
-
-        f = open(filename, "w")
-        for line_number, line_content in file_lines.items():
-            if ((line_number != line_to_delete) and (line_number != line_to_delete2)):
-                f.write('{}\n'.format(line_content))
-
-        f.close()
-        os.system("sudo chown root:root -R /etc/crontab")
+        app = disable_automatic_system_updates()
         QMessageBox.about(self, "Automatic update", "Automatic updates disabled\n\
             Please restart Raspihive that changes take effect")
 
