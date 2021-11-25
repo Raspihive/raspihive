@@ -223,4 +223,54 @@ def Hornet_dashboard_access():
         subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081", shell=True)
         #os.system('sudo -ubeekeeper firefox http://localhost')
 
+##############################################################################
+# Start Hornet
+def Hornet_start():
+    p = subprocess.Popen("pkexec service hornet start", stdout=subprocess.PIPE, shell=True)
+    while True:
+        #print ("Looping")
+        line = p.stdout.readline()
+        if not line:
+            break
+        print(line.strip())
+        sys.stdout.flush()
+
+##############################################################################
+# Stop Hornet
+def Hornet_stop():
+    p = subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell=True)
+    while True:
+        #print ("Looping")
+        line = p.stdout.readline()
+        if not line:
+            break
+        print(line.strip())
+        sys.stdout.flush()
+
+##############################################################################
+# Restart Hornet
+def Hornet_restart():
+    p = subprocess.Popen("pkexec service hornet restart", stdout=subprocess.PIPE, shell=True)
+    while True:
+        #print ("Looping")
+        line = p.stdout.readline()
+        if not line:
+            break
+        print(line.strip())
+        sys.stdout.flush()
+
+##############################################################################
+# Remove Hornet DB in case of failures
+def Hornet_reset_mainnetDB():
+    p = subprocess.Popen("pkexec service hornet stop && \
+        sudo rm -r /var/lib/hornet/mainnetdb &&\
+            sudo rm -r /var/lib/hornet/snapshots &&\
+        sudo service hornet start", stdout=subprocess.PIPE, shell=True)
+    while True:
+        #print ("Looping")
+        line = p.stdout.readline()
+        if not line:
+            break
+        print(line.strip())
+        sys.stdout.flush()
 
