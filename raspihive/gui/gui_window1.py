@@ -1114,40 +1114,19 @@ certbot --nginx" (Domain needed) ')
         subprocess.Popen("crontab -r", stdout=subprocess.PIPE, shell=True)
         QMessageBox.about(self, "Automatic update", "Auto renewing disabled\n\
             Please restart Raspihive that changes take effect")
-
+###########
     def start_hornet(self):
-        p = subprocess.Popen("pkexec service hornet start", stdout=subprocess.PIPE, shell=True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print(line.strip())
-            sys.stdout.flush()
+        app = Hornet_start()
         QMessageBox.about(self, "Hornet", "Hornet node started")
 
     def stop_hornet(self):
-        p = subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell=True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print(line.strip())
-            sys.stdout.flush()
+        app = Hornet_stop()
         QMessageBox.about(self, "Hornet", "Hornet node stopped")
 
     def restart_hornet(self):
-        p = subprocess.Popen("pkexec service hornet restart", stdout=subprocess.PIPE, shell=True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print(line.strip())
-            sys.stdout.flush()
+        app = Hornet_restart()
         QMessageBox.about(self, "Hornet", "Hornet node restarted")
-
+###############################
     def status_hornet(self):
         self.cams = hornet_status_win()
         self.cams.show()
@@ -1159,17 +1138,7 @@ certbot --nginx" (Domain needed) ')
         #self.close()
 
     def mainnetDB_hornet(self):
-        p = subprocess.Popen("pkexec service hornet stop && \
-            sudo rm -r /var/lib/hornet/mainnetdb &&\
-                sudo rm -r /var/lib/hornet/snapshots &&\
-            sudo service hornet start", stdout=subprocess.PIPE, shell=True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print(line.strip())
-            sys.stdout.flush()
+        app = Hornet_reset_mainnetDB()
         QMessageBox.about(self, "Hornet", "Hornet DB successfully deleted")
 
     def config_reset(self):
