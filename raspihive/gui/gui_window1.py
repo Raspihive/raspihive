@@ -32,7 +32,7 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PyQt5.QtWidgets import QCheckBox
-
+import os.path
 #imports
 from raspihive.hornet.hornet_log_stat_windows.log_win import *
 from raspihive.hornet.hornet_log_stat_windows.status_win import *
@@ -297,11 +297,10 @@ class Window1(QMainWindow):
         # setting geometry of check box
         checkbox.setGeometry(20, 220, 170, 50)
 
-
         if path.exists("/etc/crontab") == True:
             with open('/etc/crontab') as f:
                 datafile = f.readlines()
-            found = False  # This isn't really necessary
+            #found = False  # This isn't really necessary
             for line in datafile:
                 if "update.sh" in line:
                     #print("success")
@@ -310,12 +309,35 @@ class Window1(QMainWindow):
                                            "{"
                                            "background-color : lightgreen;"
                                            "}")
-                else:
+                elif "update.sh" not in line:
                     checkbox.setStyleSheet("QCheckBox::indicator"
                                            "{"
                                            "background-color : red;"
                                            "}")
-
+        
+        # creating the check-box
+        checkbox_renew_ssl = QCheckBox('Status ssl renew', main)
+        # setting geometry of check box
+        checkbox_renew_ssl.setGeometry(220, 220, 170, 50)
+        if os.path.isfile('/var/spool/cron/crontabs/paul'):
+            print ("File exist")
+            with open('/var/spool/cron/crontabs/paul') as f:
+                datafile2 = f.readlines()
+            #found = False  # This isn't really necessary
+                for line in datafile2:
+                    if "renew" in line:
+                        # adding background color to indicator
+                        checkbox_renew_ssl.setStyleSheet("QCheckBox::indicator"
+                                               "{"
+                                               "background-color: lightgreen;"
+                                               "}")
+                    elif "renew" not in line:
+                        checkbox_renew_ssl.setStyleSheet("QCheckBox::indicator"
+                                               "{"
+                                               "background-color: red;"
+                                               "}")
+        else:
+            print ("File not exist")
 
         #Start button 1
         button = QPushButton(' Enable auto updates ', main)
@@ -491,29 +513,6 @@ certbot --nginx" (Domain needed) ')
         #add action to the button
         button.clicked.connect(self.uninstall_nginx_certbot)
         #End button 5
-
-         # creating the check-box
-        checkbox = QCheckBox('Status automatic \ncertificate renewal', main)
-        # setting geometry of check box
-        checkbox.setGeometry(440, 220, 170, 50)
-
-        if path.exists("/var/spool/cron/crontabs/pi") == True:
-            with open('/var/spool/cron/crontabs/pi') as f:
-                datafile = f.readlines()
-            found = False  # This isn't really necessary
-            for line in datafile:
-                if "renew" in line:
-                    # adding background color to indicator
-                    checkbox.setStyleSheet("QCheckBox::indicator"
-                                           "{"
-                                           "background-color : lightgreen;"
-                                           "}")
-                else:
-                    checkbox.setStyleSheet("QCheckBox::indicator"
-                                           "{"
-                                           "background-color : red;"
-                                           "}")
-
 
         #Start button 6
         button = QPushButton('Enable auto renewing \n SSL certificate', main)
@@ -1101,17 +1100,12 @@ certbot --nginx" (Domain needed) ')
             Please restart Raspihive that changes take effect")
 
     def enable_auto_renew_ssl(self):
-        os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/")
-        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
-        subprocess.Popen((' echo "0 12 * * * /usr/bin/certbot renew --quiet" |\
-            tee -a /var/spool/cron/crontabs/pi'), stdout=subprocess.PIPE, shell=True)
-        os.system("sudo chown root:root -R /var/spool/cron/crontabs/pi")
+        app = enable_auto_ssl()
         QMessageBox.about(self, "SSL-certificate", "Auto renewing enabled\n\
             Please restart Raspihive that changes take effect")
 
     def disable_auto_renew_ssl(self):
-        #os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/pi")
-        subprocess.Popen("crontab -r", stdout=subprocess.PIPE, shell=True)
+        app = disable_auto_ssl()
         QMessageBox.about(self, "Automatic update", "Auto renewing disabled\n\
             Please restart Raspihive that changes take effect")
 ###########
