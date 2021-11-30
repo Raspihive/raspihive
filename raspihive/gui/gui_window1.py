@@ -296,7 +296,6 @@ class Window1(QMainWindow):
         checkbox = QCheckBox('Status Auto update', main)
         # setting geometry of check box
         checkbox.setGeometry(20, 220, 170, 50)
-
         if path.exists("/etc/crontab") == True:
             with open('/etc/crontab') as f:
                 datafile = f.readlines()
@@ -319,9 +318,12 @@ class Window1(QMainWindow):
         checkbox_renew_ssl = QCheckBox('Status ssl renew', main)
         # setting geometry of check box
         checkbox_renew_ssl.setGeometry(220, 220, 170, 50)
-        if os.path.isfile('/var/spool/cron/crontabs/paul'):
+        username = os.getenv("USER")
+        pathcrontabs = "/var/spool/cron/crontabs/"
+        #if os.path.isfile(pathcrontabs+username):
+        if path.exists(pathcrontabs+username) == True:
             print ("File exist")
-            with open('/var/spool/cron/crontabs/paul') as f:
+            with open(pathcrontabs+username) as f:
                 datafile2 = f.readlines()
             #found = False  # This isn't really necessary
                 for line in datafile2:
@@ -338,6 +340,10 @@ class Window1(QMainWindow):
                                                "}")
         else:
             print ("File not exist")
+            checkbox_renew_ssl.setStyleSheet("QCheckBox::indicator"
+                                               "{"
+                                               "background-color: red;"
+                                               "}")
 
         #Start button 1
         button = QPushButton(' Enable auto updates ', main)
@@ -793,23 +799,6 @@ certbot --nginx" (Domain needed) ')
         button.clicked.connect(self.hornet_dashboard_access)
         #End button 3
 
-        """
-        #Start button 2
-        button = QPushButton(' Uninstall Hornet ', main)
-        #Hover text
-        button.setToolTip(' Uninstall IOTA Hornet Fullnode ')
-        #button.move(150 ,50)
-        # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 150, 50)
-        #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        #add action
-        button.clicked.connect(self.hornet_uninstall)
-        #End button 2
-        """
-
-
         #Create label
         main.labelA = QtWidgets.QLabel(main)
         #Set label text
@@ -876,22 +865,6 @@ certbot --nginx" (Domain needed) ')
         #add action to the button
         button.clicked.connect(self.report)
         #End button 3
-
-        """
-        #Start button 2
-        button = QPushButton(' Uninstall Hornet ', main)
-        #Hover text
-        button.setToolTip(' Uninstall IOTA Hornet Fullnode ')
-        #button.move(150 ,50)
-        # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 150, 50)
-        #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        #add action
-        button.clicked.connect(self.hornet_uninstall)
-        #End button 2
-        """
 
         #Create label
         main.labelA = QtWidgets.QLabel(main)
