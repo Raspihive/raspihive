@@ -98,3 +98,19 @@ class MyThread_nginx_certbot_uninstall(QThread):
                     sys.stdout.flush()
         else:
             print("Nginx not installed")
+
+##############################################################################
+# Activate automatic renewing ssl cert
+def enable_auto_ssl():
+    os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/")
+    #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
+    subprocess.Popen((' echo "0 12 * * * /usr/bin/certbot renew --quiet" |\
+        tee -a /var/spool/cron/crontabs/$USER'), stdout=subprocess.PIPE, shell=True)
+    os.system("sudo chown root:root -R /var/spool/cron/crontabs/$USER")
+
+##############################################################################
+# Deactivate automatic renewing ssl cert
+def disable_auto_ssl():
+    #os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/pi")
+    subprocess.Popen("crontab -r", stdout=subprocess.PIPE, shell=True)
+
