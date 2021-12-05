@@ -3,7 +3,6 @@ from os import path
 from pathlib import Path
 import sys
 import os
-import stat
 import subprocess
 import pexpect
 from PyQt5.QtWidgets import (
@@ -27,16 +26,17 @@ from PyQt5.QtWidgets import (
     QWidget,
     QLabel
 )
-
+from time import sleep
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PyQt5.QtWidgets import QCheckBox
-
+import os.path
 #imports
 from raspihive.hornet.hornet_log_stat_windows.log_win import *
 from raspihive.hornet.hornet_log_stat_windows.status_win import *
+from raspihive.os_update.update_os import *
 from .progress_bars.progress_bars import *
 
 
@@ -296,12 +296,10 @@ class Window1(QMainWindow):
         checkbox = QCheckBox('Status Auto update', main)
         # setting geometry of check box
         checkbox.setGeometry(20, 220, 170, 50)
-
-
         if path.exists("/etc/crontab") == True:
             with open('/etc/crontab') as f:
                 datafile = f.readlines()
-            found = False  # This isn't really necessary
+            #found = False  # This isn't really necessary
             for line in datafile:
                 if "update.sh" in line:
                     #print("success")
@@ -310,12 +308,42 @@ class Window1(QMainWindow):
                                            "{"
                                            "background-color : lightgreen;"
                                            "}")
-                else:
+                elif "update.sh" not in line:
                     checkbox.setStyleSheet("QCheckBox::indicator"
                                            "{"
                                            "background-color : red;"
                                            "}")
-
+        
+        # creating the check-box
+        checkbox_renew_ssl = QCheckBox('Status ssl renew', main)
+        # setting geometry of check box
+        checkbox_renew_ssl.setGeometry(220, 220, 170, 50)
+        username = os.getenv("USER")
+        pathcrontabs = "/var/spool/cron/crontabs/"
+        #if os.path.isfile(pathcrontabs+username):
+        if path.exists(pathcrontabs+username) == True:
+            print ("File exist")
+            with open(pathcrontabs+username) as f:
+                datafile2 = f.readlines()
+            #found = False  # This isn't really necessary
+                for line in datafile2:
+                    if "renew" in line:
+                        # adding background color to indicator
+                        checkbox_renew_ssl.setStyleSheet("QCheckBox::indicator"
+                                               "{"
+                                               "background-color: lightgreen;"
+                                               "}")
+                    elif "renew" not in line:
+                        checkbox_renew_ssl.setStyleSheet("QCheckBox::indicator"
+                                               "{"
+                                               "background-color: red;"
+                                               "}")
+        else:
+            print ("File not exist")
+            checkbox_renew_ssl.setStyleSheet("QCheckBox::indicator"
+                                               "{"
+                                               "background-color: red;"
+                                               "}")
 
         #Start button 1
         button = QPushButton(' Enable auto updates ', main)
@@ -491,29 +519,6 @@ certbot --nginx" (Domain needed) ')
         #add action to the button
         button.clicked.connect(self.uninstall_nginx_certbot)
         #End button 5
-
-         # creating the check-box
-        checkbox = QCheckBox('Status automatic \ncertificate renewal', main)
-        # setting geometry of check box
-        checkbox.setGeometry(440, 220, 170, 50)
-
-        if path.exists("/var/spool/cron/crontabs/pi") == True:
-            with open('/var/spool/cron/crontabs/pi') as f:
-                datafile = f.readlines()
-            found = False  # This isn't really necessary
-            for line in datafile:
-                if "renew" in line:
-                    # adding background color to indicator
-                    checkbox.setStyleSheet("QCheckBox::indicator"
-                                           "{"
-                                           "background-color : lightgreen;"
-                                           "}")
-                else:
-                    checkbox.setStyleSheet("QCheckBox::indicator"
-                                           "{"
-                                           "background-color : red;"
-                                           "}")
-
 
         #Start button 6
         button = QPushButton('Enable auto renewing \n SSL certificate', main)
@@ -794,23 +799,6 @@ certbot --nginx" (Domain needed) ')
         button.clicked.connect(self.hornet_dashboard_access)
         #End button 3
 
-        """
-        #Start button 2
-        button = QPushButton(' Uninstall Hornet ', main)
-        #Hover text
-        button.setToolTip(' Uninstall IOTA Hornet Fullnode ')
-        #button.move(150 ,50)
-        # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 150, 50)
-        #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        #add action
-        button.clicked.connect(self.hornet_uninstall)
-        #End button 2
-        """
-
-
         #Create label
         main.labelA = QtWidgets.QLabel(main)
         #Set label text
@@ -877,22 +865,6 @@ certbot --nginx" (Domain needed) ')
         #add action to the button
         button.clicked.connect(self.report)
         #End button 3
-
-        """
-        #Start button 2
-        button = QPushButton(' Uninstall Hornet ', main)
-        #Hover text
-        button.setToolTip(' Uninstall IOTA Hornet Fullnode ')
-        #button.move(150 ,50)
-        # setting geometry of button x, y, width, height
-        button.setGeometry(220, 50, 150, 50)
-        #Setting background color or transparency
-        button.setStyleSheet('background-color: #2B3440; color: white')
-        #Background image for button
-        #add action
-        button.clicked.connect(self.hornet_uninstall)
-        #End button 2
-        """
 
         #Create label
         main.labelA = QtWidgets.QLabel(main)
@@ -1061,40 +1033,7 @@ certbot --nginx" (Domain needed) ')
                 if the progress bar reaches 100 %, #IOTAstrong")
             msg.exec_()  # this will show our messagebox
 
-        # Nginx configuration
-        if path.exists("/etc/nginx/sites-available/") == True:
-            os.system("sudo chown $USER:$GROUPS -R /etc/nginx/")
-            #os.chown("/etc/nginx/sites-available/default", 100, -1)
-            try: # temporarily fix that raspihive does not crash after function call
-                f = open("/etc/nginx/sites-available/default", "w")
-                f.write("server { \n listen 80 default_server; \
-                \n listen [::]:80 default_server; \n server_tokens off;  \
-                \n server_name _; \n location /node { \
-                \n proxy_pass http://127.0.0.1:14265/; \n } \
-                \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \
-                \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \
-                \n proxy_set_header Connection "'"upgrade"'"; \
-                \n proxy_read_timeout 86400; \n } \n \n location / { \
-                \n proxy_pass http://127.0.0.1:8081; \n   } \n } \n")
-                f.close()
-                os.system('sudo systemctl start nginx && sudo systemctl enable nginx')
-            except: # occurs because of permission denied error
-                print("An exception occurred - Config not written - FAILURE")
-        else:
-            print("Config not written - FAILURE")
-        """
-        #Open LX Terminal (Raspberry Pi OS)
-        cmd = "lxterminal "
-        subprocess.check_output(cmd, shell=True)
-        #Open Gnome-Terminal (Ubuntu)
-        cmd = "gnome-terminal "
-        subprocess.check_output(cmd, shell=True)
-        #print("I'm done!")
-        print(cmd)
-        """
 
-        #os.system(('sudo certbot --nginx'))
-        #QMessageBox.about(self, "Certbot", "Certbot")
 
     def certbot(self):
         os.system("lxterminal") #just opens the terminal
@@ -1124,94 +1063,37 @@ certbot --nginx" (Domain needed) ')
             print("Nginx + Certbot is not installed. Please install it first")
 
     def enable_automatic_updates(self):
-        os.system("pkexec chown $USER:$GROUPS -R /etc/crontab &&\
-            sudo chown $USER:$GROUPS -R /home/")
-        f = open("/home/update.sh", "w")
-        f.write("apt-get update && apt-get full-upgrade -y")
-        f.close()
-        os.chmod('/home/update.sh', stat.S_IEXEC)
-        subprocess.Popen((' echo "0 20 * * * root /home/update.sh >>\
-             /var/log/update_raspihive.log" |\
-                tee -a /etc/crontab'), stdout=subprocess.PIPE, shell=True)
-        os.system("sudo chown root:root -R /etc/crontab")
+        app = enable_automatic_system_updates()
         QMessageBox.about(self, "Automatic update", "Automatic updates enabled\n\
             Please restart Raspihive that changes take effect")
 
     def disable_automatic_updates(self):
-        os.system("pkexec rm -r /home/update.sh ")
-        os.system("sudo chown $USER:$GROUPS -R /etc/crontab")
-        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
-        filename = '/etc/crontab'
-        line_to_delete = 23
-        line_to_delete2 = 24
-        initial_line = 1
-        file_lines = {}
-
-        with open(filename) as f:
-            content = f.readlines()
-
-        for line in content:
-            file_lines[initial_line] = line.strip()
-            initial_line += 1
-
-        f = open(filename, "w")
-        for line_number, line_content in file_lines.items():
-            if ((line_number != line_to_delete) and (line_number != line_to_delete2)):
-                f.write('{}\n'.format(line_content))
-
-        f.close()
-        os.system("sudo chown root:root -R /etc/crontab")
+        app = disable_automatic_system_updates()
         QMessageBox.about(self, "Automatic update", "Automatic updates disabled\n\
             Please restart Raspihive that changes take effect")
 
     def enable_auto_renew_ssl(self):
-        os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/")
-        #p=subprocess.Popen("crontab -e", stdout=subprocess.PIPE, shell = True)
-        subprocess.Popen((' echo "0 12 * * * /usr/bin/certbot renew --quiet" |\
-            tee -a /var/spool/cron/crontabs/pi'), stdout=subprocess.PIPE, shell=True)
-        os.system("sudo chown root:root -R /var/spool/cron/crontabs/pi")
+        app = enable_auto_ssl()
         QMessageBox.about(self, "SSL-certificate", "Auto renewing enabled\n\
             Please restart Raspihive that changes take effect")
 
     def disable_auto_renew_ssl(self):
-        #os.system("pkexec chown $USER:$GROUPS -R /var/spool/cron/crontabs/pi")
-        subprocess.Popen("crontab -r", stdout=subprocess.PIPE, shell=True)
+        app = disable_auto_ssl()
         QMessageBox.about(self, "Automatic update", "Auto renewing disabled\n\
             Please restart Raspihive that changes take effect")
-
+###########
     def start_hornet(self):
-        p = subprocess.Popen("pkexec service hornet start", stdout=subprocess.PIPE, shell=True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print(line.strip())
-            sys.stdout.flush()
+        app = Hornet_start()
         QMessageBox.about(self, "Hornet", "Hornet node started")
 
     def stop_hornet(self):
-        p = subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell=True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print(line.strip())
-            sys.stdout.flush()
+        app = Hornet_stop()
         QMessageBox.about(self, "Hornet", "Hornet node stopped")
 
     def restart_hornet(self):
-        p = subprocess.Popen("pkexec service hornet restart", stdout=subprocess.PIPE, shell=True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print(line.strip())
-            sys.stdout.flush()
+        app = Hornet_restart()
         QMessageBox.about(self, "Hornet", "Hornet node restarted")
-
+###############################
     def status_hornet(self):
         self.cams = hornet_status_win()
         self.cams.show()
@@ -1223,83 +1105,24 @@ certbot --nginx" (Domain needed) ')
         #self.close()
 
     def mainnetDB_hornet(self):
-        p = subprocess.Popen("pkexec service hornet stop && \
-            sudo rm -r /var/lib/hornet/mainnetdb &&\
-                sudo rm -r /var/lib/hornet/snapshots &&\
-            sudo service hornet start", stdout=subprocess.PIPE, shell=True)
-        while True:
-            #print ("Looping")
-            line = p.stdout.readline()
-            if not line:
-                break
-            print(line.strip())
-            sys.stdout.flush()
+        app = Hornet_reset_mainnetDB()
         QMessageBox.about(self, "Hornet", "Hornet DB successfully deleted")
 
     def config_reset(self):
         app = Hornet_config_reset()
+        sleep(5)
         QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
-        """
-        msg = QMessageBox()
-        msg.setStyleSheet("background-color: #2B3440 ; color: \
-        rgb(255, 255, 255)") #rgb(0, 0, 0)   #0B3861
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Config reset")
-        msg.setInformativeText("Click on Show Details for more informations")
-        msg.setWindowTitle("Hornet config reset")
-        msg.setDetailedText("Please set a new username\
-            and password.")
-        msg.exec_()  # this will show our messagebox
-        """
 
     def hornet_dashboard_access(self):
-        if path.exists("/etc/letsencrypt/live") == True:
-            subprocess.Popen("sudo -upi chromium http://127.0.0.1", shell=True)
-            subprocess.Popen("sudo -upi firefox http://127.0.0.1", shell=True)
-            #os.system('sudo -upi chromium http://localhost')
-            subprocess.Popen("sudo -uubuntu firefox http://127.0.0.1", shell=True)
-            #os.system('sudo -uubuntu firefox http://localhost')
-            subprocess.Popen("sudo -ubeekeeper firefox http://127.0.0.1", shell=True)
-            #os.system('sudo -ubeekeeper firefox http://localhost')
-        else:
-            subprocess.Popen("sudo -upi chromium http://localhost:8081", shell=True)
-            subprocess.Popen("sudo -upi firefox http://localhost:8081", shell=True)
-            #os.system('sudo -upi chromium http://localhost')
-            subprocess.Popen("sudo -uubuntu firefox http://localhost:8081", shell=True)
-            #os.system('sudo -uubuntu firefox http://localhost')
-            subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081", shell=True)
-            #os.system('sudo -ubeekeeper firefox http://localhost')
+        app = Hornet_dashboard_access()
 
     def autopeering_activation(self):
-        # Define search string/pattern
-        string1 = "Spammer"
-
-        try:
-            #Get permission for config.json
-            os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
-            # opening and reading the text file
-            file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
-            readfile = file1.read()
-
-            # checking condition for string found or not
-            if string1 in readfile:
-                path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
-                #print('String', string1, 'Found In File')
-                text = path.read_text()
-                text = text.replace("Spammer", "autopeering") #text to search / replacement text #replace text
-                path.write_text(text)
-                QMessageBox.about(self, "Activation autopeering", "Autopeering is now enabled\nPlease restart Hornet.")
-            elif string1 not in readfile:
-                print("Error - autopeering could not be enabled")
-            # closing a file
-            file1.close()
-            os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
-        except OSError as ose:
-            print('os err:', ose)
-        except Exception as e:
-            print("Other Exception:", e)
+        app = Hornet_activation_autopeering()
+        #QMessageBox.about(self, "Hornet autopeering", "Hornet autopeering activated")
 
     def hornet_dashboard_username(self):
+        #app = Hornet_dash_username()
+
         # Define search string/pattern
         string1 = "admin"
         string2 = "admin"
@@ -1427,14 +1250,14 @@ certbot --nginx" (Domain needed) ')
                                 sudo rm -r /var/lib/hornet/snapshots &&\
                                 sudo service hornet start")
                     """
-######################################################################################################################################
+
             #Set new password
             #elif old_pw_hashvalue not in readfile:
             #    print("Need new password")
 
         except Exception as ex:
             print('ex:', ex)
-
+######################################################################################################################################
     def about(self):
         msg = QMessageBox()
         msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
@@ -1442,9 +1265,9 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version \2.4.2 \n Special thanks to: \n Anistark \n Martin N \n\
-    Bernardo \n\n Thanks for testing and bug reporting to\n\
-        Olsche from www.easy-passphrase-saver.de")
+Raspihive: Version: 2.4.2 \nSpecial thanks to: \nAnistark\nMartin N\n\
+Bernardo \n\nThanks for testing and bug reporting to\n\
+Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
         msg.exec_()  # this will show our messagebox
 
@@ -1466,8 +1289,8 @@ operation. Allow the following basic ports in your router settings: \n \n 14626 
         msg.setIcon(QMessageBox.Information)
         msg.setWindowTitle("Report")
         msg.setText("If you found a bug or experience any issues, please write us \
-as at: www.raspihive.org or get directly in touch by sending \
-an e-mail to: piota@mail.de \nThanks for your feedback!")
+as at:\nwww.raspihive.org\nor get directly in touch by sending \
+an e-mail to:\npiota@mail.de\nThanks for your feedback!")
         #msg.setInformativeText("informative text, ya!")
         msg.exec_()  # this will show our messagebox
 

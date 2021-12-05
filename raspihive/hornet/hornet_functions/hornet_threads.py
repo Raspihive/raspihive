@@ -140,59 +140,137 @@ class MyThread_hornet_uninstall(QThread):
                 sys.stdout.flush()
 ##############################################################################
 #Thread for hornet config reset
-class  MyThreadhornetconfigreset(QThread):
-    # Create a counter thread
-    change_value = pyqtSignal(int)
-    def run(self):
-        if path.exists("/tmp/hornet/") == True:
-            print("Test1")
-            os.system("pkexec chown $USER:$GROUPS -R /var/lib/hornet/")
-            subprocess.Popen(("sudo service hornet stop \
-            && sudo chown $USER:$GROUPS -R /tmp/ \
-            && sudo rm -r /tmp/hornet/ \
-            && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json -P /tmp/hornet \
-            && sudo mv /tmp/hornet/config.json /var/lib/hornet/ \
-            && sudo chown root:root -R /tmp/ \
-            && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
-            #QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
-            """
-            cnt = 5
-            while cnt <= 100:
-                cnt += 1
-                time.sleep(1)
-                #line = process.stdout.readline()
-                self.change_value.emit(cnt)
-                #print(line.strip())
-                sys.stdout.flush()
-                if cnt == 100:
-                    print("CNT 100 erreicht")
-                    sys.stdout.flush()
-                sys.stdout.flush()
-            """
-        elif path.exists("/tmp/hornet/") == False:
-            print("Test2")
+##############################################################################
+# Hornet config reset
+def Hornet_config_reset():
+    if path.exists("/tmp/hornet/") == True:
+        os.system("pkexec chown $USER:$GROUPS -R /var/lib/hornet/")
+        subprocess.Popen(("sudo service hornet stop \
+        && sudo chown $USER:$GROUPS -R /tmp/ \
+        && sudo rm -r /tmp/hornet/ \
+        && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json -P /tmp/hornet \
+        && sudo mv /tmp/hornet/config.json /var/lib/hornet/ \
+        && sudo chown root:root -R /tmp/ \
+        && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
+        #QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
+    elif path.exists("/tmp/hornet/") == False:
+        os.system("pkexec chown $USER:$GROUPS -R /tmp/")
+        subprocess.Popen(("sudo service hornet stop \
+        && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json -P /tmp/hornet \
+        && sudo mv /tmp/hornet/config.json /var/lib/hornet/ \
+        && sudo chown root:root -R /tmp/ \
+        && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
+        #QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
+##############################################################################
+# Hornet activation autopeering
+def Hornet_activation_autopeering():
+    # Define search string/pattern
+    string1 = "Spammer"
+    try:
+        #Get permission for config.json
+        os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
+        # opening and reading the text file
+        file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+        readfile = file1.read()
+        # checking condition for string found or not
+        if string1 in readfile:
+            path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+            #print('String', string1, 'Found In File')
+            text = path.read_text()
+            text = text.replace("Spammer", "autopeering") #text to search / replacement text #replace text
+            path.write_text(text)
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("About")
+            msg.setText("Autopeering activated")
+            #msg.setInformativeText("informative text, ya!")
+            msg.exec_()  # this will show our messagebox
+        elif string1 not in readfile:
+            print("Error - autopeering could not be enabled")
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("About")
+            msg.setText("Autopeering could not be activated")
+            #msg.setInformativeText("informative text, ya!")
+            msg.exec_()  # this will show our messagebox
+        # closing a file
+        file1.close()
+        os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+    except OSError as ose:
+        print('os err:', ose)
+    except Exception as e:
+        print("Other Exception:", e)
 
-            os.system("pkexec chown $USER:$GROUPS -R /tmp/")
-            subprocess.Popen(("sudo service hornet stop \
-            && sudo wget https://raw.githubusercontent.com/gohornet/hornet/main/config.json -P /tmp/hornet \
-            && sudo mv /tmp/hornet/config.json /var/lib/hornet/ \
-            && sudo chown root:root -R /tmp/ \
-            && sudo service hornet start"), stdout=subprocess.PIPE, shell=True)
-            #QMessageBox.about(self, "Hornet config", "Hornet config successfully reset")
-            """
-            cnt = 1
-            while cnt <= 100:
-                cnt += 1
-                time.sleep(1)
-                #line = process.stdout.readline()
-                self.change_value.emit(cnt)
-                #print(line.strip())
-                sys.stdout.flush()
-                if cnt == 100:
-                    print("CNT 100 erreicht")
-                    sys.stdout.flush()
-                sys.stdout.flush()
-            """
-            #print("Test packages")
-            #stdout.readline()
-            # Do something else
+##############################################################################
+# Hornet activation autopeering
+def Hornet_dashboard_access():
+    if path.exists("/etc/letsencrypt/live") == True:
+        subprocess.Popen("sudo -upi chromium http://127.0.0.1", shell=True)
+        subprocess.Popen("sudo -upi firefox http://127.0.0.1", shell=True)
+        #os.system('sudo -upi chromium http://localhost')
+        subprocess.Popen("sudo -uubuntu firefox http://127.0.0.1", shell=True)
+        #os.system('sudo -uubuntu firefox http://localhost')
+        subprocess.Popen("sudo -ubeekeeper firefox http://127.0.0.1", shell=True)
+        #os.system('sudo -ubeekeeper firefox http://localhost')
+    else:
+        subprocess.Popen("sudo -upi chromium http://localhost:8081", shell=True)
+        subprocess.Popen("sudo -upi firefox http://localhost:8081", shell=True)
+        #os.system('sudo -upi chromium http://localhost')
+        subprocess.Popen("sudo -uubuntu firefox http://localhost:8081", shell=True)
+        #os.system('sudo -uubuntu firefox http://localhost')
+        subprocess.Popen("sudo -ubeekeeper firefox http://localhost:8081", shell=True)
+        #os.system('sudo -ubeekeeper firefox http://localhost')
+
+##############################################################################
+# Start Hornet
+def Hornet_start():
+    p = subprocess.Popen("pkexec service hornet start", stdout=subprocess.PIPE, shell=True)
+    while True:
+        #print ("Looping")
+        line = p.stdout.readline()
+        if not line:
+            break
+        print(line.strip())
+        sys.stdout.flush()
+
+##############################################################################
+# Stop Hornet
+def Hornet_stop():
+    p = subprocess.Popen("pkexec service hornet stop", stdout=subprocess.PIPE, shell=True)
+    while True:
+        #print ("Looping")
+        line = p.stdout.readline()
+        if not line:
+            break
+        print(line.strip())
+        sys.stdout.flush()
+
+##############################################################################
+# Restart Hornet
+def Hornet_restart():
+    p = subprocess.Popen("pkexec service hornet restart", stdout=subprocess.PIPE, shell=True)
+    while True:
+        #print ("Looping")
+        line = p.stdout.readline()
+        if not line:
+            break
+        print(line.strip())
+        sys.stdout.flush()
+
+##############################################################################
+# Remove Hornet DB in case of failures
+def Hornet_reset_mainnetDB():
+    p = subprocess.Popen("pkexec service hornet stop && \
+        sudo rm -r /var/lib/hornet/mainnetdb &&\
+            sudo rm -r /var/lib/hornet/snapshots &&\
+        sudo service hornet start", stdout=subprocess.PIPE, shell=True)
+    while True:
+        #print ("Looping")
+        line = p.stdout.readline()
+        if not line:
+            break
+        print(line.strip())
+        sys.stdout.flush()
+
