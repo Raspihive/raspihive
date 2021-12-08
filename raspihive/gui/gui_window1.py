@@ -339,7 +339,7 @@ class Window1(QMainWindow):
                                                "background-color: red;"
                                                "}")
         else:
-            print ("File not exist")
+            #print ("File not exist")
             checkbox_renew_ssl.setStyleSheet("QCheckBox::indicator"
                                                "{"
                                                "background-color: red;"
