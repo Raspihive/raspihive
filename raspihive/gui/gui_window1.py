@@ -322,7 +322,7 @@ class Window1(QMainWindow):
         pathcrontabs = "/var/spool/cron/crontabs/"
         #if os.path.isfile(pathcrontabs+username):
         if path.exists(pathcrontabs+username) == True:
-            print ("File exist")
+            #print ("File exist")
             with open(pathcrontabs+username) as f:
                 datafile2 = f.readlines()
             #found = False  # This isn't really necessary
