@@ -318,7 +318,6 @@ def Hornet_reset_mainnetDB():
     os.system('pkexec systemctl stop hornet')
     p = subprocess.Popen("sudo rm -r /var/lib/hornet/mainnetdb &&\
             sudo rm -r /var/lib/hornet/snapshots", stdout=subprocess.PIPE, shell=True)
-    os.system('pkexec systemctl start hornet')
     while True:
         #print ("Looping")
         line = p.stdout.readline()
