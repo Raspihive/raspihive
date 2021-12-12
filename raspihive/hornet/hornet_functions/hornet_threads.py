@@ -203,8 +203,61 @@ def Hornet_activation_autopeering():
     except Exception as e:
         print("Other Exception:", e)
 
+
 ##############################################################################
 # Hornet activation autopeering
+def Hornet_activation_participation_plugin():
+    # Define search string/pattern
+    string1 = "Spammer"
+    string2 = "autopeering"
+    try:
+        #Get permission for config.json
+        os.system("pkexec chown $USER:$GROUPS /var/lib/hornet/config.json")             #/var/lib/hornet/config.json
+        # opening and reading the text file
+        file1 = open("/var/lib/hornet/config.json", "r")  #/var/lib/hornet/config.json
+        readfile = file1.read()
+        # checking condition for string found or not
+        if string1 in readfile:
+            path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+            #print('String', string1, 'Found In File')
+            text = path.read_text()
+            text = text.replace("Spammer", "autopeering"", ""Participation") #text to search / replacement text #replace text
+            path.write_text(text)
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("About")
+            msg.setText("Participation plugin activated")
+            #msg.setInformativeText("informative text, ya!")
+            msg.exec_()  # this will show our messagebox
+        elif string2 in readfile:
+            path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
+            #print('String', string1, 'Found In File')
+            text = path.read_text()
+            text = text.replace("autopeering", """autopeering", "Participation""") #text to search / replacement text #replace text
+            path.write_text(text)
+            msg = QMessageBox()
+            msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("About")
+            msg.setText("Participation plugin activated")
+            #msg.setInformativeText("informative text, ya!")
+            msg.exec_()  # this will show our messagebox
+
+
+        # closing a file
+        file1.close()
+        os.system("sudo chown hornet:hornet /var/lib/hornet/config.json")
+    except OSError as ose:
+        print('os err:', ose)
+    except Exception as e:
+        print("Other Exception:", e)
+
+##############################################################################
+
+
+##############################################################################
+# Hornet dashboard access
 def Hornet_dashboard_access():
     if path.exists("/etc/letsencrypt/live") == True:
         subprocess.Popen("sudo -upi chromium http://127.0.0.1", shell=True)
@@ -262,10 +315,10 @@ def Hornet_restart():
 ##############################################################################
 # Remove Hornet DB in case of failures
 def Hornet_reset_mainnetDB():
-    p = subprocess.Popen("pkexec service hornet stop && \
-        sudo rm -r /var/lib/hornet/mainnetdb &&\
-            sudo rm -r /var/lib/hornet/snapshots &&\
-        sudo service hornet start", stdout=subprocess.PIPE, shell=True)
+    os.system('pkexec systemctl stop hornet')
+    p = subprocess.Popen("sudo rm -r /var/lib/hornet/mainnetdb &&\
+            sudo rm -r /var/lib/hornet/snapshots", stdout=subprocess.PIPE, shell=True)
+    os.system('pkexec systemctl start hornet')
     while True:
         #print ("Looping")
         line = p.stdout.readline()
@@ -273,4 +326,3 @@ def Hornet_reset_mainnetDB():
             break
         print(line.strip())
         sys.stdout.flush()
-
