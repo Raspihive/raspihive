@@ -208,7 +208,7 @@ def Hornet_activation_autopeering():
 # Hornet activation autopeering
 def Hornet_activation_participation_plugin():
     # Define search string/pattern
-    string1 = "Spammer"
+    string1 = """enablePlugins": ["""
     string2 = "autopeering"
     try:
         #Get permission for config.json
@@ -221,7 +221,7 @@ def Hornet_activation_participation_plugin():
             path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
             #print('String', string1, 'Found In File')
             text = path.read_text()
-            text = text.replace("Spammer", """autopeering", "Participation""") #text to search / replacement text #replace text
+            text = text.replace(string1, """enablePlugins": "autopeering","participation",""""")              #"""autopeering", "Participation""") #text to search / replacement text #replace text
             path.write_text(text)
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
@@ -234,7 +234,7 @@ def Hornet_activation_participation_plugin():
             path = Path("/var/lib/hornet/config.json")      #/var/lib/hornet/config.json
             #print('String', string1, 'Found In File')
             text = path.read_text()
-            text = text.replace("autopeering", """autopeering", "Participation""") #text to search / replacement text #replace text
+            text = text.replace("autopeering", """autopeering""") #text to search / replacement text #replace text
             path.write_text(text)
             msg = QMessageBox()
             msg.setStyleSheet("background-color: #2B3440 ; color: rgb(255, 255, 255)") #rgb(0, 0, 0)
