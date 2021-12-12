@@ -217,7 +217,7 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.4.2')
+        self.statusBar().showMessage('Raspihive Version 2.4.3')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
 
         #End of status bar
@@ -1282,7 +1282,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version: 2.4.2 \nSpecial thanks to: \nAnistark\nMartin N\n\
+Raspihive: Version: 2.4.3 \nSpecial thanks to: \nAnistark\nMartin N\n\
 Bernardo \n\nThanks for testing and bug reporting to\n\
 Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
