@@ -733,6 +733,19 @@ certbot --nginx" (Domain needed) ')
         button.clicked.connect(self.autopeering_activation)
         #End button 8
 
+        #Start button 9
+        button = QPushButton('Participation plugin', main)
+        #Hover text
+        button.setToolTip('Activate participation plugin')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(420, 210, 180, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.activation_participation_plugin)
+        #End button 9
+
         #Create label
         main.labelA = QtWidgets.QLabel(main)
         #Set label text
@@ -1118,6 +1131,10 @@ certbot --nginx" (Domain needed) ')
 
     def autopeering_activation(self):
         app = Hornet_activation_autopeering()
+        #QMessageBox.about(self, "Hornet autopeering", "Hornet autopeering activated")
+    
+    def activation_participation_plugin(self):
+        app = Hornet_activation_participation_plugin()
         #QMessageBox.about(self, "Hornet autopeering", "Hornet autopeering activated")
 
     def hornet_dashboard_username(self):
