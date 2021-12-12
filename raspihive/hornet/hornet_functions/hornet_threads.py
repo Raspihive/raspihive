@@ -315,10 +315,10 @@ def Hornet_restart():
 ##############################################################################
 # Remove Hornet DB in case of failures
 def Hornet_reset_mainnetDB():
-    p = subprocess.Popen("pkexec service hornet stop && \
-        sudo rm -r /var/lib/hornet/mainnetdb &&\
-            sudo rm -r /var/lib/hornet/snapshots &&\
-        sudo service hornet start", stdout=subprocess.PIPE, shell=True)
+    os.system('pkexec systemctl stop hornet')
+    p = subprocess.Popen("sudo rm -r /var/lib/hornet/mainnetdb &&\
+            sudo rm -r /var/lib/hornet/snapshots", stdout=subprocess.PIPE, shell=True)
+    os.system('pkexec systemctl start hornet')
     while True:
         #print ("Looping")
         line = p.stdout.readline()
@@ -326,4 +326,3 @@ def Hornet_reset_mainnetDB():
             break
         print(line.strip())
         sys.stdout.flush()
-
