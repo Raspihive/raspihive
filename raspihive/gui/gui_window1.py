@@ -960,7 +960,7 @@ certbot --nginx" (Domain needed) ')
             print(line.strip())
             sys.stdout.flush()
         QMessageBox.about(self, "Raspihive", "Raspihive updated.\
-             Please close and start Raspihive again, \
+            Please close and start Raspihive again,\
             that changes take effect")
 
     def hornet_update(self):
