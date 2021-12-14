@@ -50,7 +50,7 @@ class MyThread_nginx_certbot_install(QThread):
                 f = open("/etc/nginx/sites-available/default", "w")
                 f.write("server { \n listen 80 default_server; \
                 \n listen [::]:80 default_server; \n server_tokens off;  \
-                \n server_name _; \n location /node { \
+                \n server_name _; \n location /info { \
                 \n proxy_pass http://127.0.0.1:14265/; \n } \
                 \n \n location /ws {   \n proxy_pass http://127.0.0.1:8081/ws; \
                 \n proxy_http_version 1.1; \n proxy_set_header Upgrade $http_upgrade; \

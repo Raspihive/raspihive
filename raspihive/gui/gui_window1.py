@@ -217,7 +217,7 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.4.2')
+        self.statusBar().showMessage('Raspihive Version 2.4.3')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
 
         #End of status bar
@@ -322,7 +322,7 @@ class Window1(QMainWindow):
         pathcrontabs = "/var/spool/cron/crontabs/"
         #if os.path.isfile(pathcrontabs+username):
         if path.exists(pathcrontabs+username) == True:
-            print ("File exist")
+            #print ("File exist")
             with open(pathcrontabs+username) as f:
                 datafile2 = f.readlines()
             #found = False  # This isn't really necessary
@@ -339,7 +339,7 @@ class Window1(QMainWindow):
                                                "background-color: red;"
                                                "}")
         else:
-            print ("File not exist")
+            #print ("File not exist")
             checkbox_renew_ssl.setStyleSheet("QCheckBox::indicator"
                                                "{"
                                                "background-color: red;"
@@ -733,6 +733,19 @@ certbot --nginx" (Domain needed) ')
         button.clicked.connect(self.autopeering_activation)
         #End button 8
 
+        #Start button 9
+        button = QPushButton('Participation plugin', main)
+        #Hover text
+        button.setToolTip('Activate participation plugin')
+        #button.move(10,50)
+        # setting geometry of button x, y, width, height
+        button.setGeometry(420, 210, 180, 60)
+        #button regular state
+        button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
+        #add action to the button
+        button.clicked.connect(self.activation_participation_plugin)
+        #End button 9
+
         #Create label
         main.labelA = QtWidgets.QLabel(main)
         #Set label text
@@ -946,9 +959,8 @@ certbot --nginx" (Domain needed) ')
                 break
             print(line.strip())
             sys.stdout.flush()
-        QMessageBox.about(self, "Raspihive", "Raspihive updated.\
-             Please close and start Raspihive again, \
-            that changes take effect")
+        QMessageBox.about(self, "Raspihive", "Raspihive updated. Please close and start Raspihive again,\
+        that changes take effect")
 
     def hornet_update(self):
         app = Window_hornet_update()
@@ -1119,6 +1131,10 @@ certbot --nginx" (Domain needed) ')
     def autopeering_activation(self):
         app = Hornet_activation_autopeering()
         #QMessageBox.about(self, "Hornet autopeering", "Hornet autopeering activated")
+    
+    def activation_participation_plugin(self):
+        app = Hornet_activation_participation_plugin()
+        #QMessageBox.about(self, "Hornet autopeering", "Hornet autopeering activated")
 
     def hornet_dashboard_username(self):
         #app = Hornet_dash_username()
@@ -1265,7 +1281,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version: 2.4.2 \nSpecial thanks to: \nAnistark\nMartin N\n\
+Raspihive: Version: 2.4.3 \nSpecial thanks to: \nAnistark\nMartin N\n\
 Bernardo \n\nThanks for testing and bug reporting to\n\
 Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
