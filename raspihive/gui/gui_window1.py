@@ -217,7 +217,7 @@ class Window1(QMainWindow):
 
 
         #Add Status Bar
-        self.statusBar().showMessage('Raspihive Version 2.4.3')
+        self.statusBar().showMessage('Raspihive Version 2.4.4')
         #self.statusBar().setStyleSheet("background-image: url(assets/Logo/TheHive.png);")
 
         #End of status bar
@@ -370,7 +370,7 @@ class Window1(QMainWindow):
         #add action to the button
         button.clicked.connect(self.disable_automatic_updates)
         #End button 2
-
+        """
         #Start button 3
         button = QPushButton('Update OS', main)
         #Hover text
@@ -397,14 +397,14 @@ class Window1(QMainWindow):
         #add action to the button
         button.clicked.connect(self.packages_update)
         #End button 4
-
+        """
         #Start button 5
         button = QPushButton('Update Raspihive', main)
         #Hover text
         button.setToolTip('Update Raspihive')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(420, 50, 180, 60)
+        button.setGeometry(220, 50, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -417,7 +417,7 @@ class Window1(QMainWindow):
         button.setToolTip('Update Hornet-Node')
         #button.move(10,50)
         # setting geometry of button x, y, width, height
-        button.setGeometry(420, 130, 180, 60)
+        button.setGeometry(220, 130, 180, 60)
         #button regular state
         button.setStyleSheet('QPushButton {background-color: #2e3031; color: white; }')
         #add action to the button
@@ -1281,7 +1281,7 @@ certbot --nginx" (Domain needed) ')
         msg.setWindowTitle("About")
         msg.setText("The Plug and Play solution for a Raspberry Pi\n\
 IOTA Fullnode!\n\n\
-Raspihive: Version: 2.4.3 \nSpecial thanks to: \nAnistark\nMartin N\n\
+Raspihive: Version: 2.4.4 \nSpecial thanks to: \nAnistark\nMartin N\n\
 Bernardo \n\nThanks for testing and bug reporting to\n\
 Olsche from www.easy-passphrase-saver.de")
         #msg.setInformativeText("informative text, ya!")
